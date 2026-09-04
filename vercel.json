@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/",
+      "destination": "/website-that-books-fixed.html"
+    }
+  ]
+}
