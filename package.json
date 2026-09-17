@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --env-file-if-exists=.env scripts/dev.mjs",
     "start": "node --env-file-if-exists=.env scripts/dev.mjs",
-    "build": "node scripts/build.mjs",
+    "build": "node --env-file-if-exists=.env scripts/build.mjs",
+    "google:auth": "node --env-file-if-exists=.env scripts/google-auth.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:browser": "playwright test"
   },

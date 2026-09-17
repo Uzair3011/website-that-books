@@ -11,31 +11,61 @@ npm run dev
 
 Open http://localhost:4174. Node 22+ is required. `npm run build` writes static production assets into `dist/`; Vercel builds the root `api/` functions separately. The local server provides the same clean page routes, legacy redirects, and API behavior.
 
-## Connect the real business
+## Configuration
 
-The repository did not contain a real calendar link, phone number, WhatsApp number, contact email, or lead backend. These have deliberately not been invented. The website is fully previewable, but production lead delivery needs the following configuration:
+All configuration lives in environment variables: `.env` locally (copy `.env.example`) and **Vercel → Project → Settings → Environment Variables** in production. Nothing business-specific or secret is committed. Vercel builds read Vercel variables, not GitHub repository variables, so set them in Vercel. After changing a `PUBLIC_*` variable, redeploy, because those values are written into `/assets/config.js` at build time. A malformed value fails the build instead of shipping a broken page.
 
-1. Put the Google Calendar **appointment-schedule booking URL** or Calendly URL into `assets/config.js`. A private calendar ID or calendar sharing link is not a public booking page. The direct booking button appears on `/contact` when configured.
-2. Add the real `email`, international `phone`, and digits-only international `whatsapp` number in the same public configuration. Only configured, valid contact methods are rendered. Never put secrets here.
-3. Copy `.env.example` to `.env` locally. Configure `LEAD_WEBHOOK_URL` as an HTTPS endpoint that accepts the JSON inquiry and returns a 2xx response after acceptance. Set optional `LEAD_WEBHOOK_TOKEN` for Bearer authentication. For Vercel, set these in project environment settings.
-4. Set `SITE_URL` to the final HTTPS domain and run a production build. This generates canonical URLs, absolute social-image URLs, and `sitemap.xml` without inventing the business domain.
+| Variable                                                                 | Scope            | Purpose                                                                  |
+| ------------------------------------------------------------------------ | ---------------- | ------------------------------------------------------------------------ |
+| `PUBLIC_CONTACT_EMAIL`, `PUBLIC_CONTACT_PHONE`, `PUBLIC_WHATSAPP_NUMBER` | Public           | Email, click-to-call, and WhatsApp buttons                               |
+| `PUBLIC_BOOKING_URL`                                                     | Public, optional | External scheduler link, shown only when live booking is unavailable     |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`       | **Secret**       | Live booking in Google Calendar                                          |
+| `GOOGLE_CALENDAR_ID`                                                     | Server           | Calendar that receives bookings (default `primary`)                      |
+| `BOOKING_*`                                                              | Server           | Time zone, hours, duration, interval, buffer, notice, horizon, Meet link |
+| `LEAD_WEBHOOK_URL`, `LEAD_WEBHOOK_TOKEN`                                 | **Secret**       | CRM/automation webhook for inquiries and bookings                        |
+| `SITE_URL`                                                               | Build            | Canonical URLs, social image URLs, sitemap                               |
 
-The inquiry form validates on both client and server. An accepted request is forwarded with a UUID, timestamp, consent wording, and privacy-policy version. It is never logged or saved to browser storage. Unconfigured intake returns 503 and tells the visitor no request was sent. Upstream failure returns 502 without a fake success. A strategy-call inquiry does not reserve a calendar slot. Booking is handled by the configured scheduling provider.
+Mark secrets as **Sensitive** in Vercel. Never prefix a secret with `PUBLIC_`.
 
-The endpoint accepts JSON only, rejects cross-origin browser submissions, caps payload size, includes a honeypot, times out the upstream request, and limits repeated requests. The in-memory limiter is per serverless instance, not a global durable anti-abuse system. Use host/provider protection for global limits. There is no delivery queue: failed submissions remain in the visitor’s form for retry, and a timeout is reported as unconfirmed delivery.
+## Live booking (Google Calendar)
+
+`/contact` shows real open times from the business calendar. Visitors pick a date and time (shown in their own time zone), add their details, and receive a Google Calendar invitation with a Meet link. The event lands in your calendar with the lead details in its description.
+
+How it works:
+
+- `GET /api/availability` builds slots from `BOOKING_HOURS` in `BOOKING_TIMEZONE`. It handles daylight saving time, removes busy time from Google free/busy (including buffers), and applies minimum notice and the booking horizon.
+- `POST /api/book` validates the form, then re-checks the chosen slot against live rules and busy time before creating the event, so the client is never trusted. The event ID is derived from a per-visit booking key, so a retry after a timeout can't double-book. If two visitors book the same slot at once, the earliest event wins and the other visitor is asked to choose again. Bookings are also forwarded to `LEAD_WEBHOOK_URL` when it is set; that forwarding is best effort, because the calendar is the system of record.
+- If Google isn't configured or is unreachable, the page falls back to the call-request form, and never shows a false confirmation.
+
+One-time setup:
+
+1. In [Google Cloud Console](https://console.cloud.google.com/), create a project and enable the **Google Calendar API**.
+2. Configure the **OAuth consent screen**. With Google Workspace, choose **Internal**. With a personal Google account, choose **External** and then **publish the app (In production)**. Refresh tokens for apps left in _Testing_ expire after 7 days, and booking would stop working.
+3. Create an **OAuth client ID** of type **Desktop app**. Put its ID and secret in `.env` as `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+4. Run `npm run google:auth`, open the printed link, and sign in with the account that owns the booking calendar. Copy the printed `GOOGLE_REFRESH_TOKEN`.
+5. Add the three `GOOGLE_*` values (Sensitive), plus any `BOOKING_*` overrides, in Vercel for Production (and Preview if wanted). Then redeploy.
+6. Make a test booking on the live site and confirm the event and invitation arrive.
+
+Scopes requested: `calendar.events` and `calendar.freebusy` only. To revoke access, remove the app at myaccount.google.com/permissions.
+
+## Lead intake
+
+The request form validates on both client and server. An accepted request is forwarded with a UUID, timestamp, consent wording, and privacy-policy version. It is never logged or saved to browser storage. Unconfigured intake returns 503 and tells the visitor no request was sent. Upstream failure returns 502 without a fake success.
+
+The endpoints accept same-origin JSON only, cap payload size, include a honeypot, time out upstream requests, and limit repeated requests. The in-memory limiter works per serverless instance, not as a global anti-abuse system; use host or provider protection for global limits.
 
 ## Structure
 
 - `index.html`: complete funnel with system walkthrough, ROI calculator, offer, and FAQs.
-- `contact.html`: lead form and optional calendar, phone, WhatsApp, and email links.
+- `contact.html`: live booking picker, request form fallback, and phone, WhatsApp, and email links.
 - `privacy.html`, `terms.html`, `404.html`: real supporting pages.
 - `assets/styles.css`: responsive design system, product illustrations, light/dark themes, reduced motion, and print behavior.
 - `assets/app.js`: navigation, accessible tabs, calculator, contact-link wiring, inquiry states.
 - `assets/business.js`: fixed offer expiry, pricing, and ROI math.
 - `assets/validation.js`: shared field validation and normalization.
-- `assets/config.js`: public contact configuration.
-- `api/`: Vercel inquiry and readiness handlers.
-- `scripts/`: dependency-free local server and production build.
+- `lib/`: shared request guards, availability rules, Google Calendar client, and public config generation.
+- `api/`: Vercel availability, booking, inquiry, and readiness handlers.
+- `scripts/`: dependency-free local server, production build, and Google authorization helper.
 - `tests/`: business/endpoint unit tests and desktop/mobile browser tests.
 - `docs/positioning.md`: sourced niche research and rationale for the offer.
 

@@ -153,6 +153,74 @@ test("form validates, preserves failed entries, and accepts confirmed delivery",
   ).toEqual([]);
 });
 
+test("live booking picks a slot, retries a taken slot, and confirms", async ({
+  page,
+}) => {
+  const base = Date.UTC(2030, 0, 7, 10);
+  const slots = [0, 30, 24 * 60].map((m) =>
+    new Date(base + m * 60000).toISOString(),
+  );
+  let available = slots;
+  await page.route("**/api/availability", (route) =>
+    route.fulfill({
+      json: {
+        ok: true,
+        timezone: "Europe/London",
+        duration: 20,
+        slots: available,
+      },
+    }),
+  );
+  await page.goto("/contact");
+  await expect(page.locator("#form-heading")).toHaveText(
+    "Book your free strategy call.",
+  );
+  await expect(page.locator("#slot-legend")).toContainText("20-minute");
+  await fillForm(page);
+  await page.locator("#submit-inquiry").click();
+  await expect(page.locator("#slot-error")).toContainText("choose a time");
+  await expect(page.locator("#slot-days label")).toHaveCount(2);
+  await page.locator("#slot-days label").first().click();
+  await expect(page.locator("#slot-times label")).toHaveCount(2);
+  await page.locator("#slot-times label").nth(1).click();
+  let payloads = [];
+  await page.route("**/api/book", async (route) => {
+    const body = route.request().postDataJSON();
+    payloads.push(body);
+    if (payloads.length === 1) {
+      available = [slots[2]];
+      return route.fulfill({
+        status: 409,
+        json: {
+          ok: false,
+          code: "slot_unavailable",
+          message: "Sorry, that time is no longer available.",
+        },
+      });
+    }
+    await route.fulfill({
+      json: { ok: true, booking: { start: body.start, end: body.start } },
+    });
+  });
+  await page.locator("#submit-inquiry").click();
+  await expect(page.locator("#form-message")).toContainText(
+    "no longer available",
+  );
+  await expect(page.locator("#slot-days label")).toHaveCount(1);
+  expect(payloads[0].start).toBe(slots[1]);
+  await page.locator("#slot-days label").first().click();
+  await page.locator("#slot-times label").first().click();
+  await page.locator("#submit-inquiry").click();
+  await expect(page.locator("#booking-confirmed")).toBeVisible();
+  await expect(page.locator("#booking-confirmed-email")).toHaveText(
+    "owner@example.com",
+  );
+  await expect(page.locator("#inquiry-form")).toBeHidden();
+  expect(payloads[1].start).toBe(slots[2]);
+  expect(payloads[1].bookingKey).toBe(payloads[0].bookingKey);
+  expect(payloads[1].consent).toBe(true);
+});
+
 test("unconfigured intake never pretends to accept a lead", async ({
   page,
 }) => {

@@ -1,6 +1,6 @@
 # What Veltra Media needs to go live
 
-The site and form infrastructure are implemented. The business has not yet supplied the real contact or delivery destinations.
+The site, live booking, and form infrastructure are implemented. Contact details are known (hello@veltramedia.com, +44 7466 539736). Google Calendar credentials and the lead destination still need to be connected in Vercel; see the README.
 
 | Needed from the owner                                       | Used for                                                                      |
 | ----------------------------------------------------------- | ----------------------------------------------------------------------------- |
@@ -14,7 +14,7 @@ The site and form infrastructure are implemented. The business has not yet suppl
 | Initial target country/region                               | Localized positioning, currency, scheduling, and contact expectations         |
 | Legal business name and operating location                  | Accurate business identity and final policy details                           |
 
-The current website is in English and prices are USD. Public contact values belong in `assets/config.js`. The form currently delivers through an HTTPS webhook, configured server-side as `LEAD_WEBHOOK_URL` with an optional `LEAD_WEBHOOK_TOKEN`. If inquiries should go to email, connect a suitable email/automation provider to that intake path. An email address alone does not activate the backend. Secrets belong in hosting environment settings, not in this repository or public chat.
+The current website is in English and prices are USD. Public contact values belong in the `PUBLIC_*` environment variables. The form currently delivers through an HTTPS webhook, configured server-side as `LEAD_WEBHOOK_URL` with an optional `LEAD_WEBHOOK_TOKEN`. If inquiries should go to email, connect a suitable email/automation provider to that intake path. An email address alone does not activate the backend. Secrets belong in hosting environment settings, not in this repository or public chat.
 
 The exact provider is a setup decision; the owner only needs to identify the desired inbox/CRM first. The recipient must accept a test request before the site is treated as ready for live lead capture. Until then, the form clearly reports unavailability instead of showing a fake receipt.
 

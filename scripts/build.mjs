@@ -1,5 +1,7 @@
 import { cp, mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import { resolve } from "node:path";
+import { publicConfig, renderConfigScript } from "../lib/public-config.js";
+import { bookingSettings } from "../lib/schedule.js";
 const output = resolve("dist");
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
@@ -50,6 +52,14 @@ for (const file of pages) {
   await writeFile(resolve(output, file), html);
 }
 await cp("assets", resolve(output, "assets"), { recursive: true });
+// Fail the deploy on malformed public contact or booking settings instead of shipping a broken page.
+await writeFile(resolve(output, "assets/config.js"), renderConfigScript());
+bookingSettings();
+const missing = Object.entries(publicConfig())
+  .filter(([key, value]) => !value && key !== "bookingUrl")
+  .map(([key]) => key);
+if (missing.length)
+  console.warn(`Public contact options not configured: ${missing.join(", ")}.`);
 await cp("favicon.ico", resolve(output, "favicon.ico"));
 await writeFile(
   resolve(output, "robots.txt"),

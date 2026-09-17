@@ -243,10 +243,25 @@
             ></a>
           </div>
           <h2 id="form-heading">Tell us a little about your business.</h2>
-          <p>
+          <p id="form-intro">
             Request a strategy call. We’ll confirm the time with you; this form
             doesn’t reserve a calendar slot.
           </p>
+          <div
+            class="booking-confirmed"
+            id="booking-confirmed"
+            tabindex="-1"
+            hidden
+          >
+            <svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>
+            <h3>You’re booked.</h3>
+            <p id="booking-confirmed-time"></p>
+            <p>
+              A calendar invitation with your video call link is on its way to
+              <strong id="booking-confirmed-email"></strong>. Need to change the
+              time? Reply to the invitation and we’ll sort it out.
+            </p>
+          </div>
           <form
             class="inquiry-form"
             id="inquiry-form"
@@ -258,6 +273,24 @@
               <label for="fax">Leave this blank</label
               ><input id="fax" name="fax" tabindex="-1" autocomplete="off" />
             </div>
+            <fieldset
+              class="slot-picker"
+              id="slot-picker"
+              aria-describedby="slot-timezone slot-error"
+              hidden
+            >
+              <legend id="slot-legend">Choose a time for your call</legend>
+              <p class="slot-timezone" id="slot-timezone"></p>
+              <fieldset class="slot-group">
+                <legend>Date</legend>
+                <div class="slot-options slot-days" id="slot-days"></div>
+              </fieldset>
+              <fieldset class="slot-group" id="slot-time-group" hidden>
+                <legend id="slot-time-legend">Time</legend>
+                <div class="slot-options slot-times" id="slot-times"></div>
+              </fieldset>
+              <p class="field-error" id="slot-error"></p>
+            </fieldset>
             <div class="form-grid">
               <div class="field">
                 <label for="full-name">Your name</label
@@ -363,7 +396,7 @@
               id="submit-inquiry"
               disabled
             >
-              Request my free strategy call
+              <span id="submit-label">Request my free strategy call</span>
               <svg class="icon" aria-hidden="true">
                 <use href="#i-arrow-up" />
               </svg>

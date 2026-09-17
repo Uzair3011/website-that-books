@@ -237,6 +237,49 @@ const form = $("#inquiry-form");
 if (form) {
   const message = $("#form-message");
   const submit = $("#submit-inquiry");
+  const submitLabel = $("#submit-label");
+  const picker = $("#slot-picker");
+  const heading = $("#form-heading");
+  const intro = $("#form-intro");
+  const inquiryCopy = [
+    heading.textContent,
+    intro.textContent,
+    submitLabel.textContent,
+  ];
+  // A booking key is reused across retries so a timed-out attempt can't create a second event.
+  const booking = {
+    enabled: false,
+    slots: [],
+    start: "",
+    key: crypto.randomUUID(),
+  };
+  const dayKey = new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const dayLabel = new Intl.DateTimeFormat(undefined, { weekday: "short" });
+  const dateLabel = new Intl.DateTimeFormat(undefined, {
+    day: "numeric",
+    month: "short",
+  });
+  const longDayLabel = new Intl.DateTimeFormat(undefined, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+  const timeLabel = new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  const fullLabel = new Intl.DateTimeFormat(undefined, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
   submit.disabled = false;
   function setMessage(text, kind = "") {
     message.textContent = text;
@@ -254,6 +297,13 @@ if (form) {
   function showErrors(errors) {
     let first;
     Object.entries(errors).forEach(([name, text]) => {
+      if (name === "start") {
+        $("#slot-error").textContent = text;
+        first ||= form.querySelector('[name="slotDay"]:checked')
+          ? form.querySelector('[name="start"]')
+          : form.querySelector('[name="slotDay"]');
+        return;
+      }
       const input = form.elements.namedItem(name);
       if (!input) return;
       input.setAttribute("aria-invalid", "true");
@@ -273,52 +323,198 @@ if (form) {
     const error = document.getElementById(`${input.id}-error`);
     if (error) error.textContent = "";
   });
-  // Tell visitors about unavailable intake before asking them to submit.
-  fetch("/api/status", { headers: { Accept: "application/json" } })
-    .then((response) => response.json())
-    .then((status) => {
-      if (!status.intakeAvailable)
-        setMessage(
-          `Online call requests are temporarily unavailable.${Object.values(contacts).some(Boolean) ? " Please use one of the direct contact options on this page." : " Please try again later."}`,
-        );
-    })
-    .catch(() => {
-      /* Submission handles connectivity issues explicitly. */
+
+  function addOption(container, name, value, lines, checked) {
+    const id = `${name}-${container.children.length}`;
+    const wrap = document.createElement("div");
+    wrap.className = "slot-option";
+    const input = Object.assign(document.createElement("input"), {
+      type: "radio",
+      name,
+      value,
+      id,
+      checked,
     });
+    const label = Object.assign(document.createElement("label"), {
+      htmlFor: id,
+    });
+    lines.forEach((line) =>
+      label.append(
+        Object.assign(document.createElement("span"), { textContent: line }),
+      ),
+    );
+    wrap.append(input, label);
+    container.append(wrap);
+  }
+  function renderTimes(day) {
+    const times = $("#slot-times");
+    times.replaceChildren();
+    const slots = booking.slots.filter(
+      (slot) => dayKey.format(new Date(slot)) === day,
+    );
+    if (!slots.includes(booking.start)) booking.start = "";
+    slots.forEach((slot) =>
+      addOption(
+        times,
+        "start",
+        slot,
+        [timeLabel.format(new Date(slot))],
+        slot === booking.start,
+      ),
+    );
+    $("#slot-time-group").hidden = !slots.length;
+    $("#slot-time-legend").textContent = slots.length
+      ? `Time on ${longDayLabel.format(new Date(slots[0]))}`
+      : "Time";
+  }
+  function renderSlots() {
+    const days = $("#slot-days");
+    const selected = form.querySelector('[name="slotDay"]:checked')?.value;
+    const keys = [
+      ...new Set(booking.slots.map((slot) => dayKey.format(new Date(slot)))),
+    ];
+    days.replaceChildren();
+    keys.forEach((key) => {
+      const sample = new Date(
+        booking.slots.find((slot) => dayKey.format(new Date(slot)) === key),
+      );
+      addOption(
+        days,
+        "slotDay",
+        key,
+        [dayLabel.format(sample), dateLabel.format(sample)],
+        key === selected,
+      );
+    });
+    renderTimes(keys.includes(selected) ? selected : "");
+  }
+  picker.addEventListener("change", (event) => {
+    if (event.target.name === "slotDay") renderTimes(event.target.value);
+    if (event.target.name === "start") booking.start = event.target.value;
+    $("#slot-error").textContent = "";
+  });
+  function setBookingMode(enabled) {
+    booking.enabled = enabled;
+    picker.hidden = !enabled;
+    [heading.textContent, intro.textContent, submitLabel.textContent] = enabled
+      ? [
+          "Book your free strategy call.",
+          "Pick a time that suits you and tell us a little about your business. You’ll get a calendar invitation straight away.",
+          "Confirm my strategy call",
+        ]
+      : inquiryCopy;
+    const external = $("[data-booking-option]");
+    if (external) external.hidden = enabled || !contacts.booking;
+  }
+  async function loadAvailability() {
+    try {
+      const response = await fetch("/api/availability", {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(10000),
+      });
+      const result = await response.json();
+      if (!response.ok || result.ok !== true || !Array.isArray(result.slots))
+        throw new Error();
+      booking.slots = result.slots;
+      $("#slot-legend").textContent =
+        `Choose a time for your ${result.duration}-minute call`;
+      $("#slot-timezone").textContent =
+        `Times are shown in your time zone (${Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g, " ")}).`;
+      renderSlots();
+      setBookingMode(booking.slots.length > 0);
+      return result;
+    } catch {
+      booking.slots = [];
+      setBookingMode(false);
+      return null;
+    }
+  }
+  // Offer live booking when the calendar is connected; otherwise fall back to a call request.
+  loadAvailability().then((availability) => {
+    if (booking.enabled) return;
+    fetch("/api/status", { headers: { Accept: "application/json" } })
+      .then((response) => response.json())
+      .then((status) => {
+        if (!status.intakeAvailable)
+          setMessage(
+            `Online call requests are temporarily unavailable.${Object.values(contacts).some(Boolean) ? " Please use one of the direct contact options on this page." : " Please try again later."}`,
+          );
+        else if (availability)
+          setMessage(
+            "There are no open times online right now. Send a request and we’ll find a time with you.",
+          );
+      })
+      .catch(() => {
+        /* Submission handles connectivity issues explicitly. */
+      });
+  });
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (submit.disabled) return;
     clearErrors();
     const raw = Object.fromEntries(new FormData(form));
-    const { data, errors, valid } = validateInquiry(raw);
-    if (!valid) {
+    const checked = validateInquiry(raw);
+    const bookingMode = booking.enabled;
+    const errors = {
+      ...(bookingMode &&
+        !booking.start && { start: "Please choose a time for your call." }),
+      ...checked.errors,
+    };
+    const { data } = checked;
+    if (Object.keys(errors).length) {
       showErrors(errors);
       setMessage("Please check the highlighted fields.", "error");
       return;
     }
     submit.disabled = true;
     form.setAttribute("aria-busy", "true");
-    const label = submit.innerHTML;
-    submit.textContent = "Sending your request…";
+    submitLabel.textContent = bookingMode
+      ? "Booking your call…"
+      : "Sending your request…";
     setMessage("");
     try {
-      const response = await fetch("/api/inquiry", {
+      const response = await fetch(bookingMode ? "/api/book" : "/api/inquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ ...data, fax: raw.fax || "" }),
-        signal: AbortSignal.timeout(15000),
+        body: JSON.stringify({
+          ...data,
+          ...(bookingMode && { start: booking.start, bookingKey: booking.key }),
+          fax: raw.fax || "",
+        }),
+        signal: AbortSignal.timeout(20000),
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || result.ok !== true) {
         if (result.errors) showErrors(result.errors);
+        if (result.code === "slot_unavailable") {
+          booking.start = "";
+          await loadAvailability();
+          (
+            form.querySelector('[name="slotDay"]:checked') ||
+            form.querySelector('[name="slotDay"]')
+          )?.focus();
+        }
         throw new Error(
           result.message || "We couldn’t send your request. Please try again.",
         );
       }
       form.reset();
+      if (bookingMode) {
+        booking.key = crypto.randomUUID();
+        $("#booking-confirmed-time").textContent = fullLabel.format(
+          new Date(result.booking.start),
+        );
+        $("#booking-confirmed-email").textContent = data.email;
+        form.hidden = true;
+        intro.hidden = true;
+        $("#booking-confirmed").hidden = false;
+        $("#booking-confirmed").focus({ preventScroll: true });
+        return;
+      }
       setMessage(
         "Your request has been delivered. We’ll follow up using the details you shared to arrange your strategy call. A calendar time is not reserved yet.",
         "success",
@@ -327,7 +523,9 @@ if (form) {
     } catch (error) {
       setMessage(
         error.name === "TimeoutError" || error.name === "AbortError"
-          ? "The request timed out. Delivery is unconfirmed. Please use a direct contact option or try again."
+          ? bookingMode
+            ? "The request timed out, so we couldn’t confirm your booking. Please try again — retrying won’t create a double booking."
+            : "The request timed out. Delivery is unconfirmed. Please use a direct contact option or try again."
           : error instanceof TypeError
             ? "We couldn’t connect. Your details are still here — please check your connection and try again."
             : error.message,
@@ -335,8 +533,11 @@ if (form) {
       );
     } finally {
       submit.disabled = false;
-      submit.innerHTML = label;
       form.removeAttribute("aria-busy");
+      if (!form.hidden)
+        submitLabel.textContent = booking.enabled
+          ? "Confirm my strategy call"
+          : inquiryCopy[2];
     }
   });
 }

@@ -108,7 +108,7 @@ test("forwards a valid lead once with consent provenance and returns success aft
   assert.equal(sent.length, 1);
   assert.equal(sent[0].email, valid.email);
   assert.equal(sent[0].consent, true);
-  assert.equal(sent[0].privacyVersion, "2026-09-13");
+  assert.equal(sent[0].privacyVersion, "2026-09-16");
   assert.match(sent[0].requestId, /^[0-9a-f-]{36}$/);
 });
 test("repeated submissions are limited and recover after the window", async () => {

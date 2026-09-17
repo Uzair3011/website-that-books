@@ -2,8 +2,11 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { resolve, extname } from "node:path";
+import availability from "../api/availability.js";
+import book from "../api/book.js";
 import inquiry from "../api/inquiry.js";
 import status from "../api/status.js";
+import { renderConfigScript } from "../lib/public-config.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const port = Number(process.env.PORT || 4174);
@@ -46,22 +49,27 @@ const server = createServer(async (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const pathname = decodeURIComponent(url.pathname).replace(/\/$/, "") || "/";
     if (pathname === "/api/status") return status(req, res);
-    if (pathname === "/api/inquiry") {
+    if (pathname === "/api/availability") return await availability(req, res);
+    if (pathname === "/assets/config.js") {
+      res.setHeader("Content-Type", mime[".js"]);
+      res.setHeader("Cache-Control", "no-store");
+      return res.end(renderConfigScript());
+    }
+    const handler = { "/api/inquiry": inquiry, "/api/book": book }[pathname];
+    if (handler) {
       let bytes = 0;
       const chunks = [];
       for await (const chunk of req) {
         bytes += chunk.length;
         if (bytes > 8192)
-          return res
-            .status(413)
-            .json({
-              ok: false,
-              message: "Your request is too long. Please shorten your message.",
-            });
+          return res.status(413).json({
+            ok: false,
+            message: "Your request is too long. Please shorten your message.",
+          });
         chunks.push(chunk);
       }
       req.body = Buffer.concat(chunks).toString();
-      return await inquiry(req, res);
+      return await handler(req, res);
     }
     if (redirects[pathname]) {
       res.writeHead(308, { Location: redirects[pathname] + url.search });
