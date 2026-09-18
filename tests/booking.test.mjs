@@ -91,6 +91,7 @@ async function book(req, options = {}) {
     configured: () => true,
     settings: () => settings,
     notify: async () => {},
+    sendBookingEmails: async () => {},
     now: () => NOW,
     rateLimit: false,
     ...options,
@@ -242,14 +243,16 @@ test("booking rejects times outside the live rules or already busy", async () =>
   assert.equal(calendar.events.length + busy.events.length, 0);
 });
 
-test("a valid booking creates one invited event and forwards it to the CRM", async () => {
+test("a valid booking creates one invited event and forwards it to the CRM and by email", async () => {
   const calendar = fakeCalendar();
   const notified = [];
+  const emailed = [];
   const result = await book(
     request({ body: { ...valid, challenge: "Missed calls" } }),
     {
       calendar,
       notify: async (payload) => notified.push(payload),
+      sendBookingEmails: async (payload) => emailed.push(payload),
     },
   );
   assert.equal(result.statusCode, 200);
@@ -267,6 +270,34 @@ test("a valid booking creates one invited event and forwards it to the CRM", asy
   assert.equal(event.extendedProperties.private.source, "veltra-media-booking");
   assert.equal(notified.length, 1);
   assert.equal(notified[0].bookedStart, valid.start);
+  assert.equal(emailed.length, 1);
+  assert.equal(emailed[0].email, valid.email);
+  assert.equal(emailed[0].bookedStart, valid.start);
+  assert.equal(emailed[0].timezone, "Europe/London");
+});
+
+test("retrying an already-confirmed booking does not re-send notifications", async () => {
+  const calendar = fakeCalendar();
+  const notified = [];
+  const emailed = [];
+  const options = {
+    calendar,
+    notify: async (payload) => notified.push(payload),
+    sendBookingEmails: async (payload) => emailed.push(payload),
+  };
+  assert.equal((await book(request(), options)).statusCode, 200);
+  const event = calendar.events[0];
+  // The slot now shows as busy, same as the live calendar would after the first booking.
+  calendar.busy = async () => [
+    {
+      start: Date.parse(event.start.dateTime),
+      end: Date.parse(event.end.dateTime),
+    },
+  ];
+  assert.equal((await book(request(), options)).statusCode, 200);
+  assert.equal(calendar.events.length, 1);
+  assert.equal(notified.length, 1);
+  assert.equal(emailed.length, 1);
 });
 
 test("retrying the same submission is idempotent, even after it made the slot busy", async () => {

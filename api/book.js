@@ -1,6 +1,13 @@
 import { createHash, randomUUID } from "node:crypto";
 import { validateInquiry } from "../assets/validation.js";
 import {
+  bookingAdminEmail,
+  bookingConfirmationEmail,
+  formatDateLabel,
+  formatTimeLabel,
+} from "../lib/email-templates.js";
+import { adminAddress, emailConfigured, sendEmail } from "../lib/email.js";
+import {
   BOOKING_SOURCE,
   googleCalendar,
   googleConfigured,
@@ -27,6 +34,14 @@ const unavailable = {
     "Sorry, that time is no longer available. Please choose another time.",
 };
 
+function extractMeetLink(event) {
+  return (
+    event.conferenceData?.entryPoints?.find(
+      (entryPoint) => entryPoint.entryPointType === "video",
+    )?.uri || null
+  );
+}
+
 function describe(data, requestId) {
   return [
     `Name: ${data.name}`,
@@ -48,6 +63,23 @@ export function createBookingHandler({
   settings = () => bookingSettings(),
   notify = async (payload) => {
     if (hasIntake()) await deliverToWebhook(payload);
+  },
+  sendBookingEmails = async (payload) => {
+    if (!emailConfigured()) return;
+    const to = adminAddress();
+    await Promise.allSettled([
+      sendEmail({
+        html: bookingConfirmationEmail(payload),
+        subject: `Your Veltra Media call is booked - ${formatDateLabel(payload.bookedStart, payload.timezone)} at ${formatTimeLabel(payload.bookedStart, payload.timezone)}`,
+        to: payload.email,
+      }),
+      sendEmail({
+        html: bookingAdminEmail(payload),
+        replyTo: payload.email,
+        subject: `New strategy call booked - ${payload.name}`,
+        to,
+      }),
+    ]);
   },
   now = Date.now,
   rateLimit = true,
@@ -172,9 +204,9 @@ export function createBookingHandler({
           return res.status(409).json(unavailable);
         }
       } catch {
-        // The event exists and the invite was sent; a failed race check must not hide a real booking.
+        // The event already exists; a failed race check must not hide a real booking.
       }
-      await notify({
+      const payload = {
         ...data,
         source: BOOKING_SOURCE,
         bookedStart: startIso,
@@ -184,9 +216,14 @@ export function createBookingHandler({
         requestId,
         consentText: CONSENT_TEXT,
         privacyVersion: PRIVACY_VERSION,
-      }).catch(() => {
-        /* The calendar is the system of record; CRM forwarding is best effort. */
-      });
+        htmlLink: event.htmlLink || null,
+        meetLink: extractMeetLink(event),
+      };
+      // The calendar is the system of record; CRM forwarding and email notification are best effort.
+      await Promise.allSettled([
+        notify(payload),
+        sendBookingEmails(payload),
+      ]);
     }
     return res.status(200).json({
       ok: true,

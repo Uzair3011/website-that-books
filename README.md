@@ -22,20 +22,25 @@ All configuration lives in environment variables: `.env` locally (copy `.env.exa
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`       | **Secret**       | Live booking in Google Calendar                                          |
 | `GOOGLE_CALENDAR_ID`                                                     | Server           | Calendar that receives bookings (default `primary`)                      |
 | `BOOKING_*`                                                              | Server           | Time zone, hours, duration, interval, buffer, notice, horizon, Meet link |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`        | **Secret**       | Booking confirmation and internal notification email (Zoho Mail SMTP)    |
+| `SMTP_FROM_NAME`, `SMTP_FROM_EMAIL`                                      | Server           | Sender identity on booking emails                                        |
+| `ADMIN_EMAIL`                                                            | Server, optional | Where the internal "new booking" email is sent (defaults to `SMTP_FROM_EMAIL`) |
 | `LEAD_WEBHOOK_URL`, `LEAD_WEBHOOK_TOKEN`                                 | **Secret**       | CRM/automation webhook for inquiries and bookings                        |
 | `SITE_URL`                                                               | Build            | Canonical URLs, social image URLs, sitemap                               |
 
 Mark secrets as **Sensitive** in Vercel. Never prefix a secret with `PUBLIC_`.
 
-## Live booking (Google Calendar)
+## Live booking (Google Calendar + email)
 
-`/contact` shows real open times from the business calendar. Visitors pick a date and time (shown in their own time zone), add their details, and receive a Google Calendar invitation with a Meet link. The event lands in your calendar with the lead details in its description.
+`/contact` shows real open times from the business calendar. Visitors pick a date and time (shown in their own time zone), add their details, and get a booked call. The event lands in your calendar (Meet link included) with the lead details in its description, and two branded emails go out over SMTP: a confirmation to the client from `SMTP_FROM_EMAIL`, and an internal notification to `ADMIN_EMAIL`.
+
+Google Calendar events are created with `sendUpdates: "none"`, so Google never sends its own guest-invite email — that email always comes from whichever account holds `GOOGLE_REFRESH_TOKEN` (your personal Google account, if that's who ran `npm run google:auth`), not the business address, and there was previously no separate internal notification at all. `lib/email.js` (a small hand-rolled SMTP client, in keeping with this project having no runtime dependency) and `lib/email-templates.js` own that instead.
 
 How it works:
 
 - `GET /api/availability` builds slots from `BOOKING_HOURS` in `BOOKING_TIMEZONE`. It handles daylight saving time, removes busy time from Google free/busy (including buffers), and applies minimum notice and the booking horizon.
-- `POST /api/book` validates the form, then re-checks the chosen slot against live rules and busy time before creating the event, so the client is never trusted. The event ID is derived from a per-visit booking key, so a retry after a timeout can't double-book. If two visitors book the same slot at once, the earliest event wins and the other visitor is asked to choose again. Bookings are also forwarded to `LEAD_WEBHOOK_URL` when it is set; that forwarding is best effort, because the calendar is the system of record.
-- If Google isn't configured or is unreachable, the page falls back to the call-request form, and never shows a false confirmation.
+- `POST /api/book` validates the form, then re-checks the chosen slot against live rules and busy time before creating the event, so the client is never trusted. The event ID is derived from a per-visit booking key, so a retry after a timeout can't double-book. If two visitors book the same slot at once, the earliest event wins and the other visitor is asked to choose again. Once confirmed, the booking is forwarded to `LEAD_WEBHOOK_URL` (when set) and both booking emails are sent; both are best effort, because the calendar is the system of record — a delivery failure never undoes a real booking or reports a false one.
+- If Google isn't configured or is unreachable, the page falls back to the call-request form, and never shows a false confirmation. If SMTP isn't configured, the calendar event and CRM forwarding still happen; only the two emails are skipped.
 
 One-time setup:
 
@@ -44,7 +49,8 @@ One-time setup:
 3. Create an **OAuth client ID** of type **Desktop app**. Put its ID and secret in `.env` as `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
 4. Run `npm run google:auth`, open the printed link, and sign in with the account that owns the booking calendar. Copy the printed `GOOGLE_REFRESH_TOKEN`.
 5. Add the three `GOOGLE_*` values (Sensitive), plus any `BOOKING_*` overrides, in Vercel for Production (and Preview if wanted). Then redeploy.
-6. Make a test booking on the live site and confirm the event and invitation arrive.
+6. In [Zoho Mail](https://mail.zoho.com/) → **Security** → **App Passwords**, create an app password for the mailbox that should send booking emails (e.g. `hello@veltramedia.com`). Set `SMTP_HOST` (`smtp.zoho.com`, or `smtp.zoho.eu` for an EU-hosted mailbox), `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM_EMAIL`, `SMTP_FROM_NAME`, and `ADMIN_EMAIL` (Sensitive) in Vercel. Then redeploy.
+7. Make a test booking on the live site and confirm the calendar event, the client confirmation email, and the internal notification email all arrive — and that the confirmation email's sender is `SMTP_FROM_EMAIL`, not a personal Gmail address.
 
 Scopes requested: `calendar.events` and `calendar.freebusy` only. To revoke access, remove the app at myaccount.google.com/permissions.
 
@@ -63,7 +69,7 @@ The endpoints accept same-origin JSON only, cap payload size, include a honeypot
 - `assets/app.js`: navigation, accessible tabs, calculator, contact-link wiring, inquiry states.
 - `assets/business.js`: fixed offer expiry, pricing, and ROI math.
 - `assets/validation.js`: shared field validation and normalization.
-- `lib/`: shared request guards, availability rules, Google Calendar client, and public config generation.
+- `lib/`: shared request guards, availability rules, Google Calendar client, SMTP email client and templates, and public config generation.
 - `api/`: Vercel availability, booking, inquiry, and readiness handlers.
 - `scripts/`: dependency-free local server, production build, and Google authorization helper.
 - `tests/`: business/endpoint unit tests and desktop/mobile browser tests.
