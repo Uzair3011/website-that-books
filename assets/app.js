@@ -107,6 +107,13 @@ function updateOffer() {
   $$("[data-setup-price]").forEach((el) => {
     el.textContent = money(offer.setup);
   });
+  $$("[data-offer-original]").forEach((el) => {
+    el.textContent = money(offer.standardSetup);
+    el.hidden = !offer.isLaunch;
+  });
+  $$("[data-offer-launch-note]").forEach((el) => {
+    el.hidden = !offer.isLaunch;
+  });
   $$("[data-offer-savings]").forEach((el) => {
     el.textContent = `${money(offer.savings)} less than the individual setup estimates`;
   });

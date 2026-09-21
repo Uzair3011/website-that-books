@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="An AI receptionist for med spas that answers calls, books consultations, and hands off to your team — so no inquiry goes unanswered."
+    />
+    <meta name="theme-color" content="#faf9f6" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Veltra Media" />
+    <meta
+      property="og:title"
+      content="AI Receptionist for Med Spas | Veltra Media"
+    />
+    <meta
+      property="og:description"
+      content="An AI receptionist for med spas that answers calls, books consultations, and hands off to your team — so no inquiry goes unanswered."
+    />
+    <meta property="og:image" content="/assets/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>AI Receptionist for Med Spas | Veltra Media</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script src="/assets/theme.js"></script>
+    <script src="/assets/config.js" defer></script>
+    <script src="/assets/app.js" type="module"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "Veltra Media",
+            "url": "https://www.veltramedia.com/",
+            "logo": "https://www.veltramedia.com/assets/apple-touch-icon.png",
+            "description": "Veltra Media builds AI receptionist, chat, online booking, and conversion-focused websites for med spas and aesthetic clinics."
+          },
+          {
+            "@type": "WebSite",
+            "name": "Veltra Media",
+            "url": "https://www.veltramedia.com/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M4 12h15m-6-6 6 6-6 6" />
+      </symbol>
+      <symbol id="i-arrow-up" viewBox="0 0 24 24">
+        <path d="M6 18 18 6M6 6h12v12" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4L19 6" />
+      </symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24">
+        <path
+          d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a15 15 0 0 1-7-7l2-2-2-5Z"
+        />
+      </symbol>
+      <symbol id="i-missed" viewBox="0 0 24 24">
+        <path
+          d="m4 4 6 6 6-6m-6 6V3M3 19l2-4c4-3 10-3 14 0l2 4-5 1-1-3H9l-1 3-5-1Z"
+        />
+      </symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24">
+        <path d="M20 11a8 8 0 0 1-8 8H4l-2 3V11a9 9 0 1 1 18 0Z" />
+        <path d="M6 10h9m-9 4h5" />
+      </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M7 3v4m10-4v4M3 10h18m-13 4h2m4 0h2m-8 3h2" />
+      </symbol>
+      <symbol id="i-web" viewBox="0 0 24 24">
+        <rect x="2" y="3" width="20" height="18" rx="2" />
+        <path d="M2 8h20M6 5.5h.1M9 5.5h.1M6 12h6m-6 4h12" />
+      </symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <rect x="14" y="14" width="7" height="7" rx="1" />
+      </symbol>
+      <symbol id="i-flow" viewBox="0 0 24 24">
+        <rect x="2" y="8" width="6" height="8" rx="2" />
+        <rect x="16" y="2" width="6" height="6" rx="1" />
+        <rect x="16" y="16" width="6" height="6" rx="1" />
+        <path d="M8 12h4m4-7h-4v14h4" />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3" />
+        <path
+          d="M3 21v-3a6 6 0 0 1 12 0v3m1-16a3 3 0 0 1 0 6m3 10v-3a6 6 0 0 0-2-4"
+        />
+      </symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24">
+        <path
+          d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7L12 2Z"
+        />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path d="m12 2 8 3v6c0 5-4 9-8 11-4-2-8-6-8-11V5l8-3Z" />
+        <path d="m8 12 3 3 5-6" />
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24">
+        <rect x="5" y="10" width="14" height="11" rx="2" />
+        <path d="M8 10V6a4 4 0 0 1 8 0v4m-4 5v2" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M20 14A9 9 0 0 1 10 3 9 9 0 1 0 20 14Z" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24">
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m2 6 10 7L22 6" />
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24">
+        <path d="M3 3v18h18M7 15l4-5 4 3 6-8" />
+      </symbol>
+      <symbol id="i-gift" viewBox="0 0 24 24">
+        <rect x="3" y="8" width="18" height="4" rx="1" />
+        <path
+          d="M5 12v9h14v-9M12 8v13m0-13C2 9 4 0 8 3l4 5Zm0 0c10 1 8-8 4-5l-4 5Z"
+        />
+      </symbol></svg
+    ><a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="wordmark" href="/" aria-label="VeltraMedia home"
+          >Veltra<span>Media</span></a
+        >
+        <nav class="nav-links" id="nav-links" aria-label="Main navigation">
+          <a href="/#system">The system</a
+          ><a href="/#results">Your opportunity</a
+          ><a href="/#pricing">Pricing</a><a href="/#faq">FAQs</a
+          ><a href="/contact">Let’s talk</a>
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="icon-btn"
+            id="theme-toggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="#i-moon" />
+            </svg></button
+          ><a class="btn small" href="/contact"
+            >Book a free call<svg class="icon" aria-hidden="true">
+              <use href="#i-arrow-up" /></svg></a
+          ><button
+            class="icon-btn menu-toggle"
+            id="menu-toggle"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded="false"
+            aria-controls="nav-links"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#i-menu" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="section">
+        <div class="container">
+          <div class="section-heading center reveal">
+            <div class="eyebrow center">AI reception, built for the clinic</div>
+            <h1>An AI receptionist built for med spas.</h1>
+            <p>
+              It answers the phone and your website chat, in your clinic’s
+              voice, using only the information your team approves. It books
+              consultations when it can, captures the details when it can’t,
+              and hands off to a real person the moment a question needs one.
+            </p>
+          </div>
+          <div class="button-row center">
+            <a class="btn" href="/contact"
+              >Book a free strategy call<svg class="icon" aria-hidden="true">
+                <use href="#i-arrow-up" /></svg
+            ></a>
+            <a class="btn secondary" href="/pricing"
+              >See pricing<svg class="icon" aria-hidden="true">
+                <use href="#i-arrow-up" /></svg
+            ></a>
+          </div>
+        </div>
+      </section>
+      <section class="section problem-section">
+        <div class="container">
+          <div class="split-heading reveal">
+            <div>
+              <div class="eyebrow">Why it matters</div>
+              <h2>
+                Every unanswered call<br />is a
+                <span class="text-accent">client you already earned.</span>
+              </h2>
+            </div>
+            <p>
+              You paid for the interest that made them call. A receptionist
+              that never misses that moment protects the marketing you’ve
+              already done.
+            </p>
+          </div>
+          <div class="evidence-grid">
+            <article class="evidence-card">
+              <strong>$527</strong>
+              <p>Average spend per medical spa visit in AmSpa’s 2024 survey.</p>
+              <a
+                href="https://www.americanmedspa.org/news/2024-medical-spa-state-of-the-industry-executive-report-recap/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >AmSpa · 2024 industry report ↗</a
+              >
+            </article>
+            <article class="evidence-card">
+              <strong>73%</strong>
+              <p>
+                Of med spa patients were repeat patients in the same survey —
+                a first call is often the start of a long relationship.
+              </p>
+              <a
+                href="https://www.americanmedspa.org/news/2024-medical-spa-state-of-the-industry-executive-report-recap/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >AmSpa · 2024 industry report ↗</a
+              >
+            </article>
+            <article class="evidence-card">
+              <strong>24/7</strong>
+              <p>
+                When your AI receptionist is available to answer, ask
+                questions, and offer a next step — not just during business
+                hours.
+              </p>
+            </article>
+          </div>
+          <p class="evidence-note">
+            Industry research, not Veltra Media client results. Survey
+            populations and reporting periods differ.
+          </p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div class="eyebrow">What it actually does</div>
+            <h2>
+              A calm, capable first hello.<br /><span class="text-accent"
+                >Every time the phone rings.</span
+              >
+            </h2>
+            <p>
+              We configure the AI around your services, hours, and pricing
+              guidance — the questions your front desk answers most often.
+            </p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg>
+              <h3>Answers calls, day or night.</h3>
+              <p>
+                Business hours, location, pricing guidance, and treatment
+                overviews — answered in your clinic’s approved voice, even
+                after close.
+              </p>
+            </article>
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true"><use href="#i-chat" /></svg>
+              <h3>Chats on your website too.</h3>
+              <p>
+                The same approved answers are available as a chatbot, so
+                visitors get a response while their interest is highest.
+              </p>
+            </article>
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true">
+                <use href="#i-calendar" />
+              </svg>
+              <h3>Moves callers toward booking.</h3>
+              <p>
+                Where a calendar is connected, it can offer real consultation
+                times. Otherwise, it captures the details for a fast
+                follow-up.
+              </p>
+            </article>
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true"><use href="#i-grid" /></svg>
+              <h3>Gives your team the full picture.</h3>
+              <p>
+                Every call and chat lands in your dashboard, so nothing
+                depends on someone remembering to write it down.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section problem-section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div class="eyebrow">Clear boundaries, by design</div>
+            <h2>
+              A real person always<br /><span class="text-accent"
+                >takes over where it counts.</span
+              >
+            </h2>
+          </div>
+          <div class="problem-grid">
+            <article class="problem-card reveal">
+              <div class="problem-icon">
+                <svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg>
+              </div>
+              <h3>Not a clinical decision-maker.</h3>
+              <p>
+                Treatment advice, suitability decisions, and emergencies are
+                directed to your team. The AI works from approved information
+                only.
+              </p>
+            </article>
+            <article class="problem-card reveal">
+              <div class="problem-icon">
+                <svg class="icon" aria-hidden="true"><use href="#i-users" /></svg>
+              </div>
+              <h3>Your scripts. Your approval.</h3>
+              <p>
+                Your clinic reviews and approves what it can say and when it
+                hands off, before it ever answers a real call.
+              </p>
+            </article>
+            <article class="problem-card reveal">
+              <div class="problem-icon">
+                <svg class="icon" aria-hidden="true"><use href="#i-lock" /></svg>
+              </div>
+              <h3>Business details, not clinical records.</h3>
+              <p>
+                Intake stays focused on booking and business information.
+                Clinical records stay in your clinical system.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="section-heading center reveal">
+            <div class="eyebrow center">Part of one connected system</div>
+            <h2>
+              Reception is one piece.<br /><span class="text-accent"
+                >Here’s the rest of it.</span
+              >
+            </h2>
+            <p>
+              Your AI receptionist works alongside the rest of the Veltra
+              system, not as a separate tool bolted on top.
+            </p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true"><use href="#i-web" /></svg>
+              <h3>Med spa website design</h3>
+              <p>
+                A fast, branded website with a clear path from treatment page
+                to consultation.
+              </p>
+              <a class="text-link" href="/med-spa-website-design"
+                >See website design
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow" /></svg
+              ></a>
+            </article>
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true">
+                <use href="#i-calendar" />
+              </svg>
+              <h3>Med spa online booking</h3>
+              <p>
+                Calendar connections, live availability, and reminders that
+                cut down on no-shows.
+              </p>
+              <a class="text-link" href="/med-spa-online-booking"
+                >See online booking
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow" /></svg
+              ></a>
+            </article>
+            <article class="feature-item">
+              <svg class="icon" aria-hidden="true"><use href="#i-gift" /></svg>
+              <h3>One clear price</h3>
+              <p>
+                Every capability is part of a single setup fee and monthly
+                plan — no separate subscriptions to manage.
+              </p>
+              <a class="text-link" href="/pricing"
+                >See full pricing
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow" /></svg
+              ></a>
+            </article>
+          </div>
+          <p class="evidence-note">
+            Read more about <a href="/about">who Veltra Media builds for</a>
+            or explore <a href="/#system">the complete client journey</a> on
+            the homepage.
+          </p>
+        </div>
+      </section>
+      <section class="final-section">
+        <div class="container">
+          <div class="final-card">
+            <div>
+              <div class="eyebrow">Your next client is calling</div>
+              <h2>Let’s make sure<br />someone always answers.</h2>
+              <p>
+                In 20 minutes, we’ll look at your call and inquiry patterns
+                and show you what an AI receptionist could handle for your
+                clinic.
+              </p>
+            </div>
+            <div class="final-actions">
+              <a class="btn" href="/contact"
+                >Book a free strategy call<svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow-up" /></svg
+              ></a>
+              <p class="fine-print">
+                No pressure. No obligation. Just a useful conversation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="wordmark" href="/" aria-label="VeltraMedia home"
+              >Veltra<span>Media</span></a
+            >
+            <p>
+              More conversations. More bookings.<br />One connected system for a
+              business<br />that’s ready to grow.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h2>Explore</h2>
+            <a href="/#system">The Veltra system</a
+            ><a href="/#pricing">The complete offer</a
+            ><a href="/#setup">How we get you live</a
+            ><a href="/#faq">Common questions</a>
+          </div>
+          <div class="footer-col">
+            <h2>Solutions</h2>
+            <a href="/ai-receptionist-for-med-spas">AI receptionist</a
+            ><a href="/med-spa-website-design">Website design</a
+            ><a href="/med-spa-online-booking">Online booking</a
+            ><a href="/pricing">Pricing</a><a href="/about">About Veltra Media</a>
+          </div>
+          <div class="footer-col">
+            <h2>Let’s build your next chapter</h2>
+            <a href="/contact">Book a free strategy call ↗</a
+            ><a href="/privacy">Privacy policy</a
+            ><a href="/terms">Offer & guarantee terms</a
+            ><a data-contact="email" hidden>Email Veltra Media</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span
+            >© <span data-year>2026</span> Veltra Media. All rights
+            reserved.</span
+          ><span>Thoughtfully built. Intelligently connected.</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -10,6 +10,11 @@ const pages = [
   "contact.html",
   "privacy.html",
   "terms.html",
+  "ai-receptionist-for-med-spas.html",
+  "med-spa-website-design.html",
+  "med-spa-online-booking.html",
+  "pricing.html",
+  "about.html",
   "404.html",
 ];
 const paths = {
@@ -17,22 +22,26 @@ const paths = {
   "contact.html": "/contact",
   "privacy.html": "/privacy",
   "terms.html": "/terms",
+  "ai-receptionist-for-med-spas.html": "/ai-receptionist-for-med-spas",
+  "med-spa-website-design.html": "/med-spa-website-design",
+  "med-spa-online-booking.html": "/med-spa-online-booking",
+  "pricing.html": "/pricing",
+  "about.html": "/about",
 };
-let origin;
-if (process.env.SITE_URL) {
-  const site = new URL(process.env.SITE_URL);
-  if (
-    site.protocol !== "https:" ||
-    site.pathname !== "/" ||
-    site.username ||
-    site.password
-  )
-    throw new Error("SITE_URL must be a public HTTPS origin.");
-  origin = site.origin;
-}
+// Falls back to the canonical production domain so canonical tags, robots.txt's Sitemap
+// line, and sitemap.xml always ship — an unset SITE_URL previously shipped none of them.
+const site = new URL(process.env.SITE_URL || "https://www.veltramedia.com");
+if (
+  site.protocol !== "https:" ||
+  site.pathname !== "/" ||
+  site.username ||
+  site.password
+)
+  throw new Error("SITE_URL must be a public HTTPS origin.");
+const origin = site.origin;
 for (const file of pages) {
   let html = await readFile(file, "utf8");
-  if (origin && paths[file]) {
+  if (paths[file]) {
     const canonical = origin + paths[file];
     html = html
       .replace(
@@ -63,17 +72,16 @@ if (missing.length)
 await cp("favicon.ico", resolve(output, "favicon.ico"));
 await writeFile(
   resolve(output, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /api/\n${origin ? `Sitemap: ${origin}/sitemap.xml\n` : ""}`,
+  `User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${origin}/sitemap.xml\n`,
 );
-if (origin)
-  await writeFile(
-    resolve(output, "sitemap.xml"),
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${Object.values(
-      paths,
-    )
-      .map((path) => `<url><loc>${origin}${path}</loc></url>`)
-      .join("")}</urlset>`,
-  );
+await writeFile(
+  resolve(output, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${Object.values(
+    paths,
+  )
+    .map((path) => `<url><loc>${origin}${path}</loc></url>`)
+    .join("")}</urlset>`,
+);
 console.log(
-  `Built Veltra Media into dist/. ${origin ? "Canonical URLs and sitemap included." : "Set SITE_URL to include production canonical URLs and sitemap."}`,
+  `Built Veltra Media into dist/. Canonical URLs and sitemap included for ${origin}.`,
 );

@@ -19,7 +19,17 @@ test("all pages render, have no overflow or runtime errors, and local links reso
 }) => {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  const paths = ["/", "/contact", "/privacy", "/terms"];
+  const paths = [
+    "/",
+    "/contact",
+    "/privacy",
+    "/terms",
+    "/ai-receptionist-for-med-spas",
+    "/med-spa-website-design",
+    "/med-spa-online-booking",
+    "/pricing",
+    "/about",
+  ];
   const links = new Set();
   for (const path of paths) {
     expect((await page.goto(path)).status()).toBe(200);

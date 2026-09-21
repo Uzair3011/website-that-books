@@ -15,6 +15,11 @@ const routes = {
   "/contact": "contact.html",
   "/privacy": "privacy.html",
   "/terms": "terms.html",
+  "/ai-receptionist-for-med-spas": "ai-receptionist-for-med-spas.html",
+  "/med-spa-website-design": "med-spa-website-design.html",
+  "/med-spa-online-booking": "med-spa-online-booking.html",
+  "/pricing": "pricing.html",
+  "/about": "about.html",
 };
 const redirects = {
   "/index.html": "/",
@@ -22,6 +27,11 @@ const redirects = {
   "/contact.html": "/contact",
   "/privacy.html": "/privacy",
   "/terms.html": "/terms",
+  "/ai-receptionist-for-med-spas.html": "/ai-receptionist-for-med-spas",
+  "/med-spa-website-design.html": "/med-spa-website-design",
+  "/med-spa-online-booking.html": "/med-spa-online-booking",
+  "/pricing.html": "/pricing",
+  "/about.html": "/about",
 };
 const mime = {
   ".html": "text/html; charset=utf-8",

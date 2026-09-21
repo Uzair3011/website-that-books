@@ -264,6 +264,9 @@ textarea {
   gap: 14px;
   flex-wrap: wrap;
 }
+.button-row.center {
+  justify-content: center;
+}
 .fine-print {
   font-size: 11px;
   color: var(--muted);
@@ -1028,6 +1031,10 @@ textarea {
 .feature-item p {
   font-size: 13px;
 }
+.feature-item .text-link {
+  margin-top: 14px;
+  font-size: 12px;
+}
 /* Financial illustration */
 .roi-section {
   background: var(--surface);
@@ -1300,6 +1307,18 @@ input[type="range"] {
   font-size: 11px;
   color: #686868;
 }
+.offer-price-original {
+  font-size: 22px;
+  font-weight: 600;
+  color: #686868;
+  text-decoration-thickness: 1.5px;
+}
+.offer-launch-note {
+  font-size: 11px !important;
+  font-weight: 700;
+  color: #3f5f94 !important;
+  margin-top: 6px !important;
+}
 .monthly-price {
   font-size: 12px !important;
   color: #5e5e5e !important;
@@ -1547,7 +1566,7 @@ input[type="range"] {
 }
 .footer-top {
   display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 50px;
   padding-bottom: 45px;
 }

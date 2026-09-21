@@ -4,6 +4,12 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "veltramedia.com" }],
+      "destination": "https://www.veltramedia.com/$1",
+      "permanent": true
+    },
+    {
       "source": "/website-that-books-fixed.html",
       "destination": "/",
       "permanent": true
