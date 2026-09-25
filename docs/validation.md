@@ -1,34 +1,87 @@
 # Validation and handoff
 
-Completed September 14, 2026. Preview: http://localhost:4174.
+Last run 22 September 2026, after the agency redesign. Preview: http://localhost:4174.
 
-- Latest source was pulled at `e08eeb4`; both original pages were inspected and run before the redesign. The old waitlist failed against its missing endpoint, and the old contact form simulated success without delivery.
-- `npm test`: **11/11 passed**. Covers fixed offer expiry, margin-aware ROI, zero/negative contribution, shared validation, method/origin/payload checks, delivery acceptance/rejection, missing configuration, and rate limiting.
-- `npx playwright test --workers=2`: **27/27 passed** across desktop Chromium, mobile Chromium, and iPhone Safari emulation. Covers routes, legacy redirect and 404, internal links, navigation, keyboard tabs, FAQs, theme persistence, calculator, form validation and data preservation, confirmed-delivery states, configured contact links, no-JavaScript fallback, and widths from 320 to 1920 pixels.
-- Automated axe WCAG 2/2.1 A and AA checks passed on home, contact, privacy, and terms in both themes for all three browser projects. These are automated checks, not a compliance certification or a substitute for comprehensive assistive-technology testing.
-- `npm run build`: passed. Production canonical/social URLs, robots, sitemap generation, and 404 noindex were additionally checked with a temporary test origin, then the normal build was restored. No placeholder production domain was published.
-- `git diff --check`: passed.
-- Manual visual review: desktop/mobile hero, full funnel, contact in both themes, SVG wordmarks, and mobile page layout. Fixed low-contrast example-dashboard text and iPhone form font sizes. All visual assets and the font are locally hosted.
+## Automated results
 
-## Lighthouse
+| Suite                                        | Result           |
+| -------------------------------------------- | ---------------- |
+| `npm test` (Node, unit + build/SEO)          | **29/29 passed** |
+| `npx playwright test` (3 browser projects)   | **36/36 passed** |
+| `npm run build`                              | passed, 15 pages |
 
-Local lab checks against the running site, with default mobile throttling and the actual desktop configuration:
+`npm test` covers the composed med-spa price and its agreement with `/pricing`,
+margin-aware opportunity maths, zero and negative contribution, shared validation, method/origin/payload guards, delivery
+acceptance and rejection, missing configuration, rate limiting, booking
+idempotency and race resolution, and the new build assertions: every route
+emitted with a correct absolute canonical and absolute `og:image`, exactly one
+`<h1>` per page, `noindex` on 404, a sitemap that lists every route and no
+redirect source or 404, a robots file that disallows `/api/` and points at the
+sitemap, a rejected non-HTTPS `SITE_URL`, every internal link and same-page
+fragment resolving, and structured data that parses and claims no
+`aggregateRating`, `reviewCount`, `ratingValue` or `streetAddress`.
 
-| Category       | Mobile | Desktop |
-| -------------- | -----: | ------: |
-| Performance    |     99 |     100 |
-| Accessibility  |    100 |     100 |
-| Best practices |    100 |     100 |
-| SEO            |    100 |     100 |
+Browser tests run on desktop Chromium (1440×1000), mobile Chromium (Pixel 7) and
+mobile Safari (iPhone 13). They cover all fifteen routes plus 404, internal link
+resolution, legacy and med-spa redirects returning 308 to the right target,
+unique canonical/title/description per page, valid JSON-LD, no horizontal
+overflow at 320/375/768/1024/1920, theme persistence, the mobile menu, FAQ
+disclosure, the med-spa calculator, form validation and entry preservation,
+confirmed delivery, the unconfigured-intake path, live booking including a
+taken-slot retry and idempotent booking key, configured contact links, and the
+no-JavaScript fallback.
 
-Lighthouse measurements were recorded before the final palette refinements. The final navy/cobalt/cyan palette subsequently passed the automated WCAG route checks in both themes on desktop Chromium, mobile Chromium, and mobile Safari.
+Automated axe WCAG 2.0/2.1 A and AA checks pass on `/`, `/pricing`, `/work`,
+`/free-website-audit`, `/contact` and `/med-spa-growth-system`, in both light
+and dark themes, on all three browser projects. These are automated checks, not
+a compliance certification or a substitute for assistive-technology testing.
 
-Isolated mobile run: LCP 1.8s, total blocking time 60ms, cumulative layout shift 0. Earlier measurements varied while other browser jobs were competing for CPU; these scores are lab measurements, not production field guarantees. Raw HTML/JSON reports and review screenshots are in `/tmp/veltra-review/` for this workspace session.
+## Currency consolidation — 22 September 2026
 
-## Activation still required
+The med-spa page previously priced in USD ($2,490 launch / $3,490 standard /
+$399 per month) on an otherwise GBP site. It is now composed from the standard
+GBP service list — £895 + £495 + £295 + £395 = £2,080, plus optional care at
+£49 a month — with no invented figures. The retired launch offer, the
+client/admin dashboard line and the voice-minute/SMS allowances are gone; the
+opportunity calculator now computes against £49 and £2,080 in `en-GB`.
 
-The site has no invented phone number, calendar URL, email address, or CRM endpoint. Set the real Google Calendar appointment-schedule / Calendly URL and phone, WhatsApp, and email in `assets/config.js`. Configure the HTTPS lead webhook and optional token in server environment variables, plus `SITE_URL` for the final domain. See the README for the exact configuration.
+Converted in: `assets/business.js`, `assets/app.js`, `/med-spa-growth-system`
+(card, FAQs, calculator, hero, meta description), `/terms`, and the docs. No
+structured data contained a price. Two new tests fail the build if any page
+shows a dollar amount or "USD", if the med-spa figures drift from `/pricing`,
+or if the retired offer reappears in copy.
 
-Until a lead destination is configured, the form clearly reports that online requests are unavailable; it never reports a fictitious delivery. Browser success-path tests intercept the response, and endpoint tests independently verify delivery/error handling. A live provider submission cannot be verified until the business supplies that destination. No appointment is reserved by the inquiry form; the external calendar handles confirmed scheduling.
+## Issues found and fixed during this pass
 
-Repository publication is tracked in Git history. A successful push does not by itself verify the hosting deployment or activate a missing lead destination.
+- The footer's fourth column forced 7px of horizontal overflow at 768px, because
+  an email address has no break opportunity. Fixed with a two-column footer
+  breakpoint and `overflow-wrap: anywhere`.
+- Two portfolio mockups were authored on a 1000×900 canvas while the rest were
+  1280×900, which misaligned the captions in the two-column work grid. All
+  mockups are now 1280×900.
+- The hero mockup carried three small callout labels that were illegible at
+  render size and duplicated the hero's own "Get found. Build trust. Respond
+  fast." line. Removed.
+- Two browser tests depended on whether a real Google Calendar happened to be
+  connected. They now pin `/api/availability` explicitly.
+- The dev server rejected its own form POSTs whenever `SITE_URL` pointed at the
+  production domain. `playwright.config.js` now runs the server with a matching
+  `SITE_URL`; the README documents the same for manual local testing.
+
+## Manual review
+
+Desktop and mobile hero, services, portfolio, pricing and audit sections
+reviewed in both themes at 1440px and 390px. Sticky mobile action bar (call +
+audit) verified for touch-target size. All imagery is locally hosted SVG; the
+font is self-hosted.
+
+## Still required before production
+
+- **Analytics and Search Console are not installed.** See the README section of
+  the same name; neither can be completed from code alone.
+- `LEAD_WEBHOOK_URL` is still unset, so the enquiry form correctly reports that
+  requests cannot be sent. Connect a destination and submit a real test request.
+- Client case studies on `/work` are labelled design examples. Replace them with
+  real screenshots and evidenced results as permission allows.
+- Confirm the med-spa page's composed price (£2,080) and the £49 care plan are
+  commercially supported before taking a deposit against them.

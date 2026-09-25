@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" width="1280" height="900" role="img" aria-label="A single-offer landing page design: no site navigation, one headline about a free gutter survey, three proof points, and a short form visible above the fold.">
+  <defs>
+    <clipPath id="l-clip"><rect x="170" y="88" width="940" height="772" rx="8"/></clipPath>
+  </defs>
+  <rect width="1280" height="900" fill="#f4f5ef"/>
+  <rect x="170" y="40" width="940" height="820" rx="14" fill="#ffffff" stroke="#d5d7d2"/>
+  <g fill="#d5d7d2"><circle cx="200" cy="64" r="6"/><circle cx="222" cy="64" r="6"/><circle cx="244" cy="64" r="6"/></g>
+  <rect x="278" y="52" width="320" height="22" rx="11" fill="#f4f5ef"/>
+  <text x="296" y="68" font-family="Manrope, Arial, sans-serif" font-size="12" fill="#a7b6b3">/free-gutter-survey</text>
+
+  <g clip-path="url(#l-clip)" font-family="Manrope, Inter, Segoe UI, Arial, sans-serif">
+    <!-- no nav: logo and phone only -->
+    <text x="212" y="130" font-size="18" font-weight="700" fill="#071313">Northside Roofline</text>
+    <rect x="898" y="110" width="184" height="34" rx="17" fill="#f4f5ef"/>
+    <text x="990" y="132" font-size="14" font-weight="600" fill="#071313" text-anchor="middle">01642 000 000</text>
+    <rect x="170" y="160" width="940" height="1" fill="#d5d7d2"/>
+
+    <!-- single offer -->
+    <rect x="212" y="196" width="168" height="32" rx="16" fill="#c9ff4a"/>
+    <text x="296" y="218" font-size="13" font-weight="700" letter-spacing="1.4" fill="#071313" text-anchor="middle">FREE THIS MONTH</text>
+    <g font-size="42" font-weight="700" letter-spacing="-1.7" fill="#071313">
+      <text x="212" y="284">Blocked gutters?</text>
+      <text x="212" y="332">Book a free survey</text>
+      <text x="212" y="380">this week.</text>
+    </g>
+    <text x="212" y="424" font-size="16" fill="#66706d">A 20-minute check of your gutters, fascias and downpipes,</text>
+    <text x="212" y="448" font-size="16" fill="#66706d">with photographs and a fixed price. No obligation.</text>
+
+    <!-- three proof points -->
+    <g font-size="16" font-weight="600" fill="#071313">
+      <circle cx="222" cy="492" r="9" fill="#83e7da"/>
+      <path d="m217 492 4 4 7-8" stroke="#071313" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <text x="244" y="498">Photographs of every problem found</text>
+      <circle cx="222" cy="530" r="9" fill="#83e7da"/>
+      <path d="m217 530 4 4 7-8" stroke="#071313" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <text x="244" y="536">Fixed written price, valid 30 days</text>
+      <circle cx="222" cy="568" r="9" fill="#83e7da"/>
+      <path d="m217 568 4 4 7-8" stroke="#071313" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <text x="244" y="574">No pressure, no doorstep selling</text>
+    </g>
+
+    <!-- form above the fold -->
+    <rect x="698" y="196" width="384" height="404" rx="18" fill="#071313"/>
+    <text x="730" y="242" font-size="20" font-weight="700" fill="#ffffff">Book your free survey</text>
+    <text x="730" y="268" font-size="13" fill="#a7b6b3">Takes about 30 seconds.</text>
+    <g>
+      <rect x="730" y="290" width="320" height="48" rx="12" fill="#112624"/>
+      <text x="750" y="320" font-size="14" fill="#66706d">Your name</text>
+      <rect x="730" y="350" width="320" height="48" rx="12" fill="#112624"/>
+      <text x="750" y="380" font-size="14" fill="#66706d">Phone number</text>
+      <rect x="730" y="410" width="320" height="48" rx="12" fill="#112624"/>
+      <text x="750" y="440" font-size="14" fill="#66706d">Postcode</text>
+    </g>
+    <rect x="730" y="478" width="320" height="54" rx="27" fill="#c9ff4a"/>
+    <text x="890" y="511" font-size="16" font-weight="700" fill="#071313" text-anchor="middle">Book my free survey</text>
+    <text x="890" y="558" font-size="13" fill="#a7b6b3" text-anchor="middle">We call back within one working hour.</text>
+
+    <!-- one conversion section below -->
+    <rect x="170" y="636" width="940" height="224" fill="#f4f5ef"/>
+    <text x="212" y="686" font-size="24" font-weight="700" letter-spacing="-1" fill="#071313">What happens next</text>
+    <g>
+      <rect x="212" y="712" width="268" height="118" rx="12" fill="#ffffff" stroke="#d5d7d2"/>
+      <text x="236" y="748" font-size="13" font-weight="700" letter-spacing="1.6" fill="#66706d">STEP 01</text>
+      <text x="236" y="778" font-size="16" font-weight="700" fill="#071313">We call you back</text>
+      <text x="236" y="802" font-size="13" fill="#66706d">Within one working hour.</text>
+      <rect x="504" y="712" width="268" height="118" rx="12" fill="#ffffff" stroke="#d5d7d2"/>
+      <text x="528" y="748" font-size="13" font-weight="700" letter-spacing="1.6" fill="#66706d">STEP 02</text>
+      <text x="528" y="778" font-size="16" font-weight="700" fill="#071313">We survey</text>
+      <text x="528" y="802" font-size="13" fill="#66706d">20 minutes, with photos.</text>
+      <rect x="796" y="712" width="286" height="118" rx="12" fill="#071313"/>
+      <text x="820" y="748" font-size="13" font-weight="700" letter-spacing="1.6" fill="#c9ff4a">STEP 03</text>
+      <text x="820" y="778" font-size="16" font-weight="700" fill="#ffffff">You decide</text>
+      <text x="820" y="802" font-size="13" fill="#a7b6b3">Fixed price, no obligation.</text>
+    </g>
+  </g>
+</svg>

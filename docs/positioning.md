@@ -30,26 +30,31 @@ Sell one managed acquisition and booking system, not a menu of agency tasks. The
 
 The site describes intake and administrative AI, with approved information, handoff, and consent-based follow-up. It does not imply clinical advice, universal integration support, revenue guarantees, or compliance certification. Industry findings are visibly separate from the dashboard’s fictional example data. No testimonials, client logos, fake results, or fabricated live activity are used.
 
-## Proposed commercial offer implemented in the site
+## Commercial offer implemented in the site
 
-| Individual setup estimate  |       USD |
-| -------------------------- | --------: |
-| Up to five website pages   |     1,500 |
-| AI phone receptionist      |     1,200 |
-| Website chatbot            |       600 |
-| Booking connection         |       450 |
-| Client/admin dashboard     |       500 |
-| Lead capture and follow-up |       750 |
-| **Estimated total**        | **5,000** |
+Superseded 22 September 2026. The site now sells in GBP only, and the med-spa
+system is not a separately priced bundle. It is four standard services at their
+standard `/pricing` prices:
 
-The estimates are proposed Veltra standalone setup estimates, not historical selling prices. The regular bundle is $3,490 setup. The launch bundle is $2,490 for an agreed scope and setup deposit by October 31, 2026, 23:59 America/Los_Angeles. JavaScript applies this single fixed deadline; it never creates a visitor-specific countdown. Without JavaScript the page conservatively shows the standard offer. Monthly management remains $399. Pricing logic is centralized in `assets/business.js`.
+| Service                               |    GBP |
+| ------------------------------------- | -----: |
+| Business website, up to five pages    |    895 |
+| AI receptionist                       |    495 |
+| Website chat                          |    295 |
+| CRM, booking and follow-up automation |    395 |
+| **One-off total**                     | **2,080** |
 
-Included allowances: one location, up to five website pages, one calendar, 200 AI voice minutes and 500 SMS segments monthly, hosting, monitoring, and support. Additional usage and premium integrations require prior approval. The offer includes templates, analytics setup, training, campaign planning, and a launch check-in. Advertising and paid traffic are separate.
+Optional website care is £49 a month. AI provider usage is passed through at
+cost. All prices exclude VAT. There is no bundle discount and no expiring launch
+price; the figures live in `assets/business.js` and a test fails if the page,
+the calculator and `/terms` disagree.
 
-These are newly designed commercial terms, not verified existing business practices. Before publication, the business should operationally honor the prices, allowances, fixed deadline, and written launch guarantee. No money is collected by this website. Validate delivery/vendor costs against this scope when quoting the first customer.
-
-The guarantee covers the signed launch acceptance checks with a defined 14-day fix window and setup-fee refund option. It does not promise bookings or revenue. Complete conditions are on `/terms` and summarized beside pricing.
+Retired in the same change: the USD bundle ($2,490 launch through 31 October
+2026 / $3,490 standard / $399 per month), the client/admin dashboard line — which
+has no GBP price and is not one of the five services the agency now sells — and
+the 200 AI voice minutes / 500 SMS segments monthly allowance, replaced by
+at-cost provider usage. The earlier USD figures remain in git history.
 
 ## ROI methodology
 
-Additional completed visits × average visit revenue × contribution margin − $399 monthly plan = illustrative incremental monthly contribution. The margin represents revenue remaining after variable treatment costs, not net business profit. The model separately computes visits needed to cover the plan and setup payback using positive contribution. Zero or negative contribution explicitly shows no setup payback. Fixed overhead, taxes, advertising and extra usage are excluded and labeled. Defaults are example inputs, not a claim about likely results.
+Additional completed visits × average visit revenue × contribution margin − £49 monthly care plan = illustrative incremental monthly contribution. The margin represents revenue remaining after variable treatment costs, not net business profit. The model separately computes visits needed to cover the plan and setup payback using positive contribution. Zero or negative contribution explicitly shows no setup payback. Fixed overhead, VAT, advertising and AI provider usage are excluded and labeled. Defaults are example inputs, not a claim about likely results.

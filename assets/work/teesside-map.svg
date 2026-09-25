@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720" role="img" aria-label="A simplified map of the Tees Valley showing Middlesbrough, Stockton-on-Tees, Billingham, Redcar and Hartlepool, with the River Tees running to the North Sea.">
+  <defs>
+    <pattern id="m-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#d5d7d2" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <g font-family="Manrope, Inter, Segoe UI, Arial, sans-serif">
+    <rect width="1000" height="720" fill="#f4f5ef"/>
+    <rect width="1000" height="720" fill="url(#m-grid)" opacity="0.7"/>
+
+    <!-- North Sea -->
+    <path d="M1000 0H850C830 60 812 110 786 152C742 210 694 250 652 288C704 326 758 378 782 440C806 504 850 566 900 620L1000 660Z" fill="#83e7da" opacity="0.55"/>
+    <text x="900" y="360" font-size="15" font-weight="700" letter-spacing="3" fill="#071313" opacity="0.55" text-anchor="middle">NORTH SEA</text>
+
+    <!-- Main roads -->
+    <g fill="none" stroke="#c4c8c1" stroke-width="5" stroke-linecap="round">
+      <path d="M40 200C180 190 260 260 300 330S430 420 470 400 600 470 700 470"/>
+      <path d="M330 60C350 140 380 170 400 190S460 300 470 400 480 560 470 700"/>
+      <path d="M400 190C520 160 640 130 730 124"/>
+    </g>
+
+    <!-- River Tees -->
+    <path d="M30 580C140 540 200 410 300 340C380 292 424 356 484 322C552 286 600 302 652 288" fill="none" stroke="#83e7da" stroke-width="16" stroke-linecap="round"/>
+    <path d="M30 580C140 540 200 410 300 340C380 292 424 356 484 322C552 286 600 302 652 288" fill="none" stroke="#071313" stroke-width="1.5" stroke-dasharray="2 8" stroke-linecap="round" opacity="0.5"/>
+    <text x="160" y="520" font-size="14" font-weight="600" fill="#071313" opacity="0.6" transform="rotate(-38 160 520)">River Tees</text>
+
+    <!-- Middlesbrough: the hub -->
+    <circle cx="470" cy="400" r="46" fill="#c9ff4a" opacity="0.4"/>
+    <circle cx="470" cy="400" r="26" fill="#c9ff4a" opacity="0.7"/>
+    <circle cx="470" cy="400" r="12" fill="#071313"/>
+    <circle cx="470" cy="400" r="4.5" fill="#c9ff4a"/>
+    <text x="470" y="462" font-size="22" font-weight="800" fill="#071313" text-anchor="middle">Middlesbrough</text>
+
+    <!-- Other towns -->
+    <g>
+      <circle cx="300" cy="336" r="9" fill="#071313"/><circle cx="300" cy="336" r="3.5" fill="#c9ff4a"/>
+      <text x="300" y="312" font-size="18" font-weight="700" fill="#071313" text-anchor="middle">Stockton-on-Tees</text>
+
+      <circle cx="400" cy="190" r="9" fill="#071313"/><circle cx="400" cy="190" r="3.5" fill="#c9ff4a"/>
+      <text x="400" y="166" font-size="18" font-weight="700" fill="#071313" text-anchor="middle">Billingham</text>
+
+      <circle cx="730" cy="124" r="9" fill="#071313"/><circle cx="730" cy="124" r="3.5" fill="#c9ff4a"/>
+      <text x="700" y="100" font-size="18" font-weight="700" fill="#071313" text-anchor="middle">Hartlepool</text>
+
+      <circle cx="700" cy="470" r="9" fill="#071313"/><circle cx="700" cy="470" r="3.5" fill="#c9ff4a"/>
+      <text x="680" y="510" font-size="18" font-weight="700" fill="#071313" text-anchor="middle">Redcar</text>
+    </g>
+
+    <text x="40" y="690" font-size="13" font-weight="600" letter-spacing="1.5" fill="#66706d">SCHEMATIC MAP &#8212; NOT TO SCALE</text>
+  </g>
+</svg>

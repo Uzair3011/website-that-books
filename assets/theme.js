@@ -1,4 +1,5 @@
-// Run before first paint; storage access may be blocked in private contexts.
+// Runs before first paint. Storage access may be blocked in private contexts.
+document.documentElement.classList.add("js");
 try {
   const saved = localStorage.getItem("veltra-theme");
   if (

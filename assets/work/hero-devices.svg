@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 880" width="1200" height="880" role="img" aria-label="A local electrical contractor's website shown on a laptop and a phone: a headline stating the services and areas covered, a prominent phone number, and a tap-to-call button on mobile.">
+  <defs>
+    <clipPath id="h-lap"><rect x="64" y="96" width="884" height="520" rx="8"/></clipPath>
+    <clipPath id="h-ph"><rect x="836" y="330" width="304" height="470" rx="32"/></clipPath>
+    <linearGradient id="h-img" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#83e7da"/><stop offset="1" stop-color="#112624"/>
+    </linearGradient>
+  </defs>
+  <g font-family="Manrope, Inter, Segoe UI, Arial, sans-serif">
+
+    <!-- Laptop -->
+    <rect x="48" y="64" width="916" height="584" rx="18" fill="#112624"/>
+    <rect x="64" y="96" width="884" height="520" rx="8" fill="#ffffff"/>
+    <g clip-path="url(#h-lap)">
+      <!-- site header -->
+      <rect x="64" y="96" width="884" height="62" fill="#071313"/>
+      <text x="96" y="134" font-size="20" font-weight="700" fill="#ffffff">Teesside Electrical</text>
+      <g font-size="14" font-weight="500" fill="#a7b6b3">
+        <text x="520" y="133">Services</text><text x="602" y="133">Areas</text><text x="666" y="133">Reviews</text><text x="740" y="133">About</text>
+      </g>
+      <rect x="806" y="112" width="118" height="32" rx="16" fill="#c9ff4a"/>
+      <text x="865" y="133" font-size="14" font-weight="700" fill="#071313" text-anchor="middle">Get a quote</text>
+
+      <!-- hero -->
+      <text x="96" y="222" font-size="13" font-weight="700" letter-spacing="2" fill="#66706d">NICEIC APPROVED · 24/7 CALLOUT</text>
+      <g font-size="40" font-weight="700" fill="#071313" letter-spacing="-1.4">
+        <text x="96" y="278">Rewires, EV chargers</text>
+        <text x="96" y="326">and emergency</text>
+      </g>
+      <text x="96" y="374" font-size="40" font-weight="700" letter-spacing="-1.4" fill="#071313">callouts in
+        <tspan fill="#071313">Teesside</tspan></text>
+      <rect x="96" y="386" width="232" height="14" fill="#c9ff4a" opacity=".85"/>
+      <text x="96" y="428" font-size="16" fill="#66706d">Domestic and commercial electricians covering</text>
+      <text x="96" y="452" font-size="16" fill="#66706d">Middlesbrough, Stockton and Redcar.</text>
+
+      <rect x="96" y="482" width="190" height="52" rx="26" fill="#071313"/>
+      <text x="191" y="514" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">01642 000 000</text>
+      <rect x="300" y="482" width="160" height="52" rx="26" fill="none" stroke="#071313" stroke-width="1.6"/>
+      <text x="380" y="514" font-size="16" font-weight="600" fill="#071313" text-anchor="middle">Book a visit</text>
+
+      <!-- hero image -->
+      <rect x="556" y="196" width="360" height="252" rx="16" fill="url(#h-img)"/>
+      <circle cx="736" cy="300" r="42" fill="#071313" opacity=".55"/>
+      <path d="M724 282h24l-6 14h10l-18 24 4-18h-12Z" fill="#c9ff4a"/>
+      <rect x="580" y="382" width="150" height="12" rx="6" fill="#ffffff" opacity=".92"/>
+      <rect x="580" y="406" width="106" height="10" rx="5" fill="#ffffff" opacity=".6"/>
+
+      <!-- service cards -->
+      <rect x="556" y="482" width="172" height="106" rx="12" fill="#f4f5ef"/>
+      <circle cx="584" cy="510" r="10" fill="#c9ff4a"/>
+      <text x="578" y="546" font-size="15" font-weight="700" fill="#071313">EV chargers</text>
+      <text x="578" y="568" font-size="13" fill="#66706d">From £649 fitted</text>
+      <rect x="744" y="482" width="172" height="106" rx="12" fill="#071313"/>
+      <circle cx="772" cy="510" r="10" fill="#83e7da"/>
+      <text x="766" y="546" font-size="15" font-weight="700" fill="#ffffff">Full rewires</text>
+      <text x="766" y="568" font-size="13" fill="#a7b6b3">Free written quote</text>
+    </g>
+    <rect x="64" y="96" width="884" height="520" rx="8" fill="none" stroke="#263a38" stroke-width="1.5"/>
+    <path d="M8 648h996l-28 36H36Z" fill="#112624"/>
+    <rect x="456" y="658" width="100" height="6" rx="3" fill="#2c3636"/>
+
+    <!-- Phone -->
+    <rect x="820" y="314" width="336" height="502" rx="44" fill="#112624"/>
+    <rect x="836" y="330" width="304" height="470" rx="32" fill="#ffffff"/>
+    <g clip-path="url(#h-ph)">
+      <rect x="836" y="330" width="304" height="72" fill="#071313"/>
+      <text x="862" y="374" font-size="17" font-weight="700" fill="#ffffff">Teesside Electrical</text>
+      <text x="862" y="440" font-size="26" font-weight="700" letter-spacing="-0.9" fill="#071313">Need an</text>
+      <text x="862" y="472" font-size="26" font-weight="700" letter-spacing="-0.9" fill="#071313">electrician today?</text>
+      <text x="862" y="508" font-size="14" fill="#66706d">Same-day callouts across Teesside.</text>
+      <!-- tap to call -->
+      <rect x="862" y="532" width="252" height="56" rx="28" fill="#c9ff4a"/>
+      <text x="988" y="566" font-size="17" font-weight="700" fill="#071313" text-anchor="middle">Call 01642 000 000</text>
+      <rect x="862" y="602" width="252" height="48" rx="24" fill="none" stroke="#d5d7d2" stroke-width="1.5"/>
+      <text x="988" y="632" font-size="15" font-weight="600" fill="#071313" text-anchor="middle">Request a quote</text>
+      <!-- trust row -->
+      <circle cx="874" cy="694" r="6" fill="#83e7da"/>
+      <text x="892" y="699" font-size="14" fill="#66706d">NICEIC approved</text>
+      <circle cx="874" cy="726" r="6" fill="#83e7da"/>
+      <text x="892" y="731" font-size="14" fill="#66706d">No callout fee</text>
+      <circle cx="874" cy="758" r="6" fill="#83e7da"/>
+      <text x="892" y="763" font-size="14" fill="#66706d">Covering TS1–TS26</text>
+    </g>
+    <rect x="836" y="330" width="304" height="470" rx="32" fill="none" stroke="#2c3636" stroke-width="1.5"/>
+  </g>
+</svg>

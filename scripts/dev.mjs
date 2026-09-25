@@ -7,32 +7,12 @@ import book from "../api/book.js";
 import inquiry from "../api/inquiry.js";
 import status from "../api/status.js";
 import { renderConfigScript } from "../lib/public-config.js";
+import { renderPage } from "../src/layout.js";
+import { notFoundPage, pageByPath, pages, redirects } from "../src/pages.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const port = Number(process.env.PORT || 4174);
-const routes = {
-  "/": "index.html",
-  "/contact": "contact.html",
-  "/privacy": "privacy.html",
-  "/terms": "terms.html",
-  "/ai-receptionist-for-med-spas": "ai-receptionist-for-med-spas.html",
-  "/med-spa-website-design": "med-spa-website-design.html",
-  "/med-spa-online-booking": "med-spa-online-booking.html",
-  "/pricing": "pricing.html",
-  "/about": "about.html",
-};
-const redirects = {
-  "/index.html": "/",
-  "/website-that-books-fixed.html": "/",
-  "/contact.html": "/contact",
-  "/privacy.html": "/privacy",
-  "/terms.html": "/terms",
-  "/ai-receptionist-for-med-spas.html": "/ai-receptionist-for-med-spas",
-  "/med-spa-website-design.html": "/med-spa-website-design",
-  "/med-spa-online-booking.html": "/med-spa-online-booking",
-  "/pricing.html": "/pricing",
-  "/about.html": "/about",
-};
+const origin = process.env.SITE_URL || "https://www.veltramedia.com";
 const mime = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css",
@@ -44,6 +24,10 @@ const mime = {
   ".txt": "text/plain",
   ".xml": "application/xml",
 };
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages
+  .map((page) => `<url><loc>${origin}${page.path}</loc></url>`)
+  .join("")}</urlset>`;
+
 const server = createServer(async (req, res) => {
   res.status = (code) => {
     res.statusCode = code;
@@ -89,29 +73,45 @@ const server = createServer(async (req, res) => {
       res.setHeader("Allow", "GET, HEAD");
       return res.status(405).json({ message: "Method not allowed." });
     }
-    const allowed =
-      routes[pathname] ||
-      (/^\/assets\/[a-zA-Z0-9_./-]+$/.test(pathname) && !pathname.includes("..")
-        ? pathname.slice(1)
-        : ["/favicon.ico", "/robots.txt", "/sitemap.xml"].includes(pathname)
-          ? pathname.slice(1)
-          : null);
-    let data;
-    let file = allowed;
-    try {
-      if (!file) throw new Error();
-      data = await readFile(resolve(root, file));
-    } catch {
-      file = "404.html";
-      data = await readFile(resolve(root, file));
-      res.statusCode = 404;
-    }
-    res.setHeader(
-      "Content-Type",
-      mime[extname(file)] || "application/octet-stream",
-    );
     res.setHeader("Cache-Control", "no-store");
-    res.end(req.method === "HEAD" ? undefined : data);
+
+    const page = pageByPath.get(pathname);
+    if (page) {
+      res.setHeader("Content-Type", mime[".html"]);
+      return res.end(
+        req.method === "HEAD" ? undefined : renderPage(page, { origin }),
+      );
+    }
+    if (pathname === "/sitemap.xml") {
+      res.setHeader("Content-Type", mime[".xml"]);
+      return res.end(req.method === "HEAD" ? undefined : sitemap);
+    }
+
+    const file =
+      (/^\/assets\/[a-zA-Z0-9_./-]+$/.test(pathname) &&
+      !pathname.includes("..")
+        ? pathname.slice(1)
+        : null) ||
+      (["/favicon.ico", "/robots.txt"].includes(pathname)
+        ? pathname.slice(1)
+        : null);
+    if (file) {
+      try {
+        const data = await readFile(resolve(root, file));
+        res.setHeader(
+          "Content-Type",
+          mime[extname(file)] || "application/octet-stream",
+        );
+        return res.end(req.method === "HEAD" ? undefined : data);
+      } catch {
+        /* Falls through to the 404 page below. */
+      }
+    }
+    res.statusCode = 404;
+    res.setHeader("Content-Type", mime[".html"]);
+    res.end(
+      req.method === "HEAD" ? undefined : renderPage(notFoundPage, { origin }),
+    );
   } catch {
     res.status(400).json({ message: "Invalid request." });
   }

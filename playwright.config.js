@@ -8,6 +8,10 @@ export default defineConfig({
     command: "npm run dev",
     url: "http://localhost:4174",
     reuseExistingServer: !process.env.CI,
+    // The form endpoints enforce a same-origin POST against SITE_URL. Without
+    // this the local server rejects its own forms, so the suite would only ever
+    // exercise the 403 path. Shell variables take precedence over .env.
+    env: { ...process.env, SITE_URL: "http://localhost:4174" },
   },
   projects: [
     {

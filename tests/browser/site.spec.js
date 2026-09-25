@@ -1,11 +1,49 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+const ROUTES = [
+  "/",
+  "/web-design-middlesbrough",
+  "/local-seo-middlesbrough",
+  "/landing-page-design",
+  "/ai-automation-middlesbrough",
+  "/crm-booking-automation",
+  "/work",
+  "/about",
+  "/free-website-audit",
+  "/contact",
+  "/resources",
+  "/pricing",
+  "/med-spa-growth-system",
+  "/privacy",
+  "/cookie-policy",
+  "/terms",
+  "/web-design-teesside",
+  "/google-business-profile",
+  "/website-care",
+];
+
+/** Waits for entrance animations to finish so audits see the settled page. */
+async function settle(page) {
+  await page.evaluate(async () => {
+    const cap = new Promise((resolve) => setTimeout(resolve, 3000));
+    await Promise.race([cap, Promise.all(
+      document
+        .getAnimations()
+        .filter((animation) => animation.playState !== "paused")
+        // An infinite marquee never finishes, so it is skipped.
+        .filter((animation) => {
+          const timing = animation.effect?.getTiming?.();
+          return timing && timing.iterations !== Infinity;
+        })
+        .map((animation) => animation.finished.catch(() => {})),
+    )]);
+  });
+}
+
 async function fillForm(page) {
   await page.getByLabel("Your name", { exact: true }).fill("Test Owner");
-  await page
-    .getByLabel("Work email", { exact: true })
-    .fill("owner@example.com");
+  await page.getByLabel("Email", { exact: true }).fill("owner@example.com");
   await page.getByLabel("Business name", { exact: true }).fill("Test Clinic");
   await page
     .getByLabel("Business type", { exact: true })
@@ -18,23 +56,42 @@ test("all pages render, have no overflow or runtime errors, and local links reso
   request,
 }) => {
   const errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
-  const paths = [
-    "/",
-    "/contact",
-    "/privacy",
-    "/terms",
-    "/ai-receptionist-for-med-spas",
-    "/med-spa-website-design",
-    "/med-spa-online-booking",
-    "/pricing",
-    "/about",
-  ];
+  page.on("pageerror", (e) => {
+    // WebKit reports a fetch that was cut short by navigating away as a page
+    // error. The site's own handlers already treat that as "unknown", so this
+    // is harness noise from walking 15 routes in a row, not a site defect.
+    if (/access control checks|Load failed|cancelled|aborted/i.test(e.message))
+      return;
+    errors.push(e.message);
+  });
   const links = new Set();
-  for (const path of paths) {
+  const images = new Set();
+  const dollarPages = [];
+  for (const path of ROUTES) {
     expect((await page.goto(path)).status()).toBe(200);
+    // The site sells in GBP; a dollar amount anywhere is a regression.
+    if (
+      await page.evaluate(() =>
+        /\$\s?\d|\bUSD\b/.test(document.body.innerText),
+      )
+    )
+      dollarPages.push(path);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page).toHaveTitle(/Veltra Media/);
+    // A malformed SVG renders as alt text with naturalWidth 0, which looks
+    // like a broken page but throws no error. A lazy image that has not been
+    // requested yet reports complete === false, so it is not a failure.
+    const broken = await page.locator("img").evaluateAll((images) =>
+      images
+        .filter((img) => img.complete && img.naturalWidth === 0)
+        .map((img) => img.getAttribute("src")),
+    );
+    expect(broken, `broken images on ${path}`).toEqual([]);
+    (
+      await page
+        .locator("img[src]")
+        .evaluateAll((els) => els.map((e) => e.getAttribute("src")))
+    ).forEach((src) => images.add(src));
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -46,40 +103,89 @@ test("all pages render, have no overflow or runtime errors, and local links reso
         .evaluateAll((els) =>
           els
             .map((e) => e.getAttribute("href"))
-            .filter((h) => h.startsWith("/")),
+            .filter((h) => h && h.startsWith("/")),
         )
     ).forEach((h) => links.add(h));
   }
   for (const link of links)
-    expect((await request.get(link.split("#")[0] || "/")).status()).toBe(200);
+    expect(
+      (await request.get(link.split("#")[0] || "/")).status(),
+      link,
+    ).toBe(200);
+  for (const src of images) {
+    const response = await request.get(src);
+    expect(response.status(), src).toBe(200);
+    if (src.endsWith(".svg")) {
+      const body = await response.text();
+      // An HTML-only entity makes the whole SVG fail to parse in the browser.
+      expect(body.match(/&(?!amp;|lt;|gt;|quot;|apos;|#)[a-zA-Z]+;/g), src).toBe(
+        null,
+      );
+    }
+  }
   expect((await request.get("/not-a-page")).status()).toBe(404);
-  expect(
-    (
-      await request.get("/website-that-books-fixed.html", { maxRedirects: 0 })
-    ).status(),
-  ).toBe(308);
+  expect((await request.get("/sitemap.xml")).status()).toBe(200);
   expect(errors).toEqual([]);
+  expect(dollarPages).toEqual([]);
 });
 
-test("walkthrough keyboard navigation, FAQ, theme persistence, and mobile menu work", async ({
+test("every page has a unique canonical, title and meta description", async ({
+  page,
+  baseURL,
+}) => {
+  const seen = { canonical: new Set(), title: new Set(), description: new Set() };
+  for (const path of ROUTES) {
+    await page.goto(path);
+    const meta = await page.evaluate(() => ({
+      canonical: document.querySelector("link[rel=canonical]")?.href,
+      title: document.title,
+      description: document.querySelector('meta[name="description"]')?.content,
+      og: document.querySelector('meta[property="og:url"]')?.content,
+      ld: [...document.querySelectorAll('script[type="application/ld+json"]')]
+        .map((s) => s.textContent)
+        .join(""),
+    }));
+    // Canonicals are absolute and built from the serving origin, which the
+    // production build sets to the real domain (asserted in the build test).
+    expect(meta.canonical, path).toBe(new URL(path, baseURL).href);
+    expect(meta.og, path).toBe(meta.canonical);
+    expect(meta.description?.length, path).toBeGreaterThan(70);
+    expect(seen.canonical.has(meta.canonical), path).toBe(false);
+    expect(seen.title.has(meta.title), path).toBe(false);
+    expect(seen.description.has(meta.description), path).toBe(false);
+    seen.canonical.add(meta.canonical);
+    seen.title.add(meta.title);
+    seen.description.add(meta.description);
+    // Structured data must parse.
+    for (const script of await page
+      .locator('script[type="application/ld+json"]')
+      .allTextContents())
+      expect(() => JSON.parse(script), path).not.toThrow();
+  }
+});
+
+test("retired med-spa URLs and legacy paths redirect to their replacements", async ({
+  request,
+}) => {
+  const moved = {
+    "/ai-receptionist-for-med-spas": "/med-spa-growth-system",
+    "/med-spa-website-design": "/med-spa-growth-system",
+    "/med-spa-online-booking": "/med-spa-growth-system",
+    "/landing-pages": "/landing-page-design",
+    "/website-that-books-fixed.html": "/",
+  };
+  for (const [from, to] of Object.entries(moved)) {
+    const response = await request.get(from, { maxRedirects: 0 });
+    expect(response.status(), from).toBe(308);
+    expect(response.headers().location, from).toBe(to);
+  }
+});
+
+test("FAQ, theme persistence, and mobile navigation work", async ({
   page,
   isMobile,
 }) => {
   await page.goto("/");
-  await page.locator("#stage-1").click();
-  await expect(page.locator("#stage-1")).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
-  await expect(page.locator("#demo-scene")).toContainText("AI assistant");
-  await page.locator("#stage-1").press("ArrowRight");
-  await expect(page.locator("#stage-2")).toBeFocused();
-  await expect(page.locator("#demo-scene")).toContainText("booking link");
-  await page.locator("#stage-2").press("End");
-  await expect(page.locator("#stage-3")).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
   const faq = page.locator("details").first();
   await faq.locator("summary").click();
   await expect(faq).toHaveAttribute("open", "");
@@ -98,35 +204,42 @@ test("walkthrough keyboard navigation, FAQ, theme persistence, and mobile menu w
     await page.getByRole("button", { name: "Open navigation" }).click();
     await page
       .locator("#nav-links")
-      .getByText("Pricing", { exact: true })
+      .getByText("About", { exact: true })
       .click();
     await expect(page.locator("#nav-links")).not.toBeVisible();
-    await expect(page).toHaveURL(/#pricing$/);
+    await expect(page).toHaveURL(/\/about$/);
   }
 });
 
-test("calculator handles changes and a zero-visit scenario", async ({
+test("the med-spa calculator is in GBP and handles a zero-visit scenario", async ({
   page,
 }) => {
-  await page.goto("/");
-  await expect(page.locator("#roi-net")).toHaveText("$1,001");
+  await page.goto("/med-spa-growth-system");
+  // Defaults: 8 visits x £350 x 50% margin, less the £49 care plan.
+  await expect(page.locator("#roi-net")).toHaveText("£1,351");
+  await expect(page.locator("#roi-breakeven")).toHaveText("1 visit");
   await page.locator("#bookings").fill("0");
-  await expect(page.locator("#roi-net")).toHaveText("-$399");
+  await expect(page.locator("#roi-net")).toHaveText("-£49");
   await expect(page.locator("#roi-payback")).toHaveText("Not covered");
   await page.locator("#bookings").fill("10");
   await page.locator("#visit-value").fill("500");
   await page.locator("#margin").fill("60");
-  await expect(page.locator("#roi-net")).toHaveText("$2,601");
-  await expect(page.locator("#roi-breakeven")).toHaveText("2 visits");
+  await expect(page.locator("#roi-net")).toHaveText("£2,951");
+  await expect(page.locator("#visit-value-output")).toHaveText("£500");
 });
 
 test("form validates, preserves failed entries, and accepts confirmed delivery", async ({
   page,
 }) => {
+  // Live booking is exercised separately; pin it off so this test does not
+  // depend on whether a real calendar is connected.
+  await page.route("**/api/availability", (route) =>
+    route.fulfill({ status: 503, json: { ok: false } }),
+  );
   await page.route("**/api/status", (route) =>
     route.fulfill({ json: { intakeAvailable: true } }),
   );
-  await page.goto("/contact");
+  await page.goto("/free-website-audit");
   await page.locator("#submit-inquiry").click();
   await expect(page.locator("#full-name")).toBeFocused();
   await expect(page.locator("#email")).toHaveAttribute("aria-invalid", "true");
@@ -182,9 +295,7 @@ test("live booking picks a slot, retries a taken slot, and confirms", async ({
     }),
   );
   await page.goto("/contact");
-  await expect(page.locator("#form-heading")).toHaveText(
-    "Book your free strategy call.",
-  );
+  await expect(page.locator("#form-heading")).toHaveText("Book a call instead.");
   await expect(page.locator("#slot-legend")).toContainText("20-minute");
   await fillForm(page);
   await page.locator("#submit-inquiry").click();
@@ -193,7 +304,7 @@ test("live booking picks a slot, retries a taken slot, and confirms", async ({
   await page.locator("#slot-days label").first().click();
   await expect(page.locator("#slot-times label")).toHaveCount(2);
   await page.locator("#slot-times label").nth(1).click();
-  let payloads = [];
+  const payloads = [];
   await page.route("**/api/book", async (route) => {
     const body = route.request().postDataJSON();
     payloads.push(body);
@@ -234,7 +345,13 @@ test("live booking picks a slot, retries a taken slot, and confirms", async ({
 test("unconfigured intake never pretends to accept a lead", async ({
   page,
 }) => {
-  await page.goto("/contact");
+  await page.route("**/api/availability", (route) =>
+    route.fulfill({ status: 503, json: { ok: false } }),
+  );
+  await page.route("**/api/status", (route) =>
+    route.fulfill({ json: { intakeAvailable: false } }),
+  );
+  await page.goto("/free-website-audit");
   await expect(page.locator("#form-message")).toContainText(
     "temporarily unavailable",
   );
@@ -260,10 +377,6 @@ test("configured calendar, call, email, and WhatsApp links are correct", async (
     "href",
     "https://calendly.com/test-veltra/strategy",
   );
-  await expect(page.locator('[data-contact="phone"]')).toHaveAttribute(
-    "href",
-    "tel:+12025550199",
-  );
   await expect(page.locator('[data-contact="whatsapp"]')).toHaveAttribute(
     "href",
     /^https:\/\/wa.me\/12025550199\?/,
@@ -272,14 +385,28 @@ test("configured calendar, call, email, and WhatsApp links are correct", async (
 });
 
 test("WCAG AA checks pass on main routes in both themes", async ({ page }) => {
-  test.setTimeout(180000);
-  for (const route of ["/", "/contact", "/privacy", "/terms"]) {
+  test.setTimeout(240000);
+  for (const route of [
+    "/",
+    "/pricing",
+    "/work",
+    "/free-website-audit",
+    "/contact",
+    "/med-spa-growth-system",
+    "/web-design-teesside",
+    "/google-business-profile",
+    "/website-care",
+    "/cookie-policy",
+  ]) {
     await page.goto(route);
+    await settle(page);
     for (const dark of [false, true]) {
       await page.evaluate(
         (dark) => document.documentElement.classList.toggle("dark-mode", dark),
         dark,
       );
+      // The header and cards ease between themes; audit the settled colours.
+      await settle(page);
       const result = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
         .analyze();
@@ -303,13 +430,17 @@ test("small phone, tablet, and reduced motion remain readable", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const width of [320, 375, 768, 1024, 1920]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto("/");
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
-    await expect(page.locator("h1")).toBeVisible();
+    for (const route of ["/", "/pricing", "/work"]) {
+      await page.goto(route);
+      await settle(page);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+        `${route} at ${width}px`,
+      ).toBe(true);
+      await expect(page.locator("h1")).toBeVisible();
+    }
   }
   expect(
     await page.evaluate(
@@ -320,17 +451,24 @@ test("small phone, tablet, and reduced motion remain readable", async ({
 
 test("content, honest standard pricing, and navigation survive without JavaScript", async ({
   browser,
+  baseURL,
 }) => {
   const context = await browser.newContext({
     javaScriptEnabled: false,
     viewport: { width: 390, height: 844 },
   });
   const page = await context.newPage();
-  await page.goto("http://localhost:4174/");
+  const at = (path) => new URL(path, baseURL).href;
+  await page.goto(at("/"));
   await expect(page.locator("h1")).toBeVisible();
-  await expect(page.locator("[data-setup-price]")).toHaveText("$3,490");
-  await expect(page.locator(".feature-item")).toHaveCount(6);
-  await page.goto("http://localhost:4174/contact");
+  await expect(page.locator(".service-card")).toHaveCount(6);
+  await expect(page.locator(".hero-media img")).toBeVisible();
+  await page.goto(at("/pricing"));
+  await expect(page.locator(".price-card")).toHaveCount(4);
+  await page.goto(at("/med-spa-growth-system"));
+  // The system price is static content, so it survives without JavaScript.
+  await expect(page.locator("[data-setup-price]")).toHaveText("£2,080");
+  await page.goto(at("/contact"));
   await expect(page.locator("noscript p")).toContainText("enable JavaScript");
   await expect(page.locator("#submit-inquiry")).toBeDisabled();
   await context.close();

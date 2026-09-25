@@ -1,32 +1,45 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getOffer, calculateOpportunity } from "../assets/business.js";
+import {
+  SETUP_TOTAL,
+  SYSTEM,
+  calculateOpportunity,
+} from "../assets/business.js";
 import { validateInquiry } from "../assets/validation.js";
 
-test("launch offer ends at the fixed Los Angeles midnight and never resets", () => {
-  assert.equal(getOffer(new Date("2026-11-01T06:59:59Z")).setup, 2490);
-  assert.equal(getOffer(new Date("2026-11-01T07:00:00Z")).setup, 3490);
-  assert.equal(getOffer(new Date("2028-01-01T00:00:00Z")).isLaunch, false);
+test("the med-spa system price is the sum of approved GBP service prices", () => {
+  // Every component must match a price published on /pricing. If one changes
+  // there and not here, this fails rather than shipping two different numbers.
+  assert.deepEqual(
+    SYSTEM.components.map((component) => component.price),
+    [895, 495, 295, 395],
+  );
+  assert.equal(SETUP_TOTAL, 2080);
+  assert.equal(SYSTEM.care, 49);
+  assert.equal(SYSTEM.currency, "GBP");
 });
-test("ROI deducts treatment costs and monthly management; setup payback uses contribution", () => {
-  const result = calculateOpportunity({
-    visits: 8,
-    value: 350,
-    margin: 50,
-    setup: 2490,
-  });
+test("the offer carries no bundle discount and no expiring launch price", () => {
+  // A discount or a deadline would be a commercial term nobody approved.
+  const sum = SYSTEM.components.reduce((total, c) => total + c.price, 0);
+  assert.equal(SETUP_TOTAL, sum);
+  assert.equal(Object.keys(SYSTEM).includes("expiresAt"), false);
+});
+test("opportunity deducts treatment costs and the care plan; payback uses contribution", () => {
+  const result = calculateOpportunity({ visits: 8, value: 350, margin: 50 });
   assert.equal(result.gross, 2800);
-  assert.equal(result.contribution, 1001);
-  assert.equal(result.breakeven, 3);
-  assert.equal(result.payback, 2490 / 1001);
+  assert.equal(result.contribution, 1351);
+  assert.equal(result.breakeven, 1);
+  assert.equal(result.payback, 2080 / 1351);
 });
 test("zero visits and unprofitable scenarios do not imply setup payback", () => {
-  assert.deepEqual(
-    calculateOpportunity({ visits: 0, value: 350, margin: 50, setup: 2490 }),
-    { gross: 0, contribution: -399, breakeven: 3, payback: null },
-  );
+  assert.deepEqual(calculateOpportunity({ visits: 0, value: 350, margin: 50 }), {
+    gross: 0,
+    contribution: -49,
+    breakeven: 1,
+    payback: null,
+  });
   assert.equal(
-    calculateOpportunity({ visits: 1, value: 50, margin: 10 }).payback,
+    calculateOpportunity({ visits: 1, value: 20, margin: 10 }).payback,
     null,
   );
 });

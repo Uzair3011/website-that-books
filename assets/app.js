@@ -1,11 +1,11 @@
-import { getOffer, calculateOpportunity } from "./business.js";
+import { SYSTEM, calculateOpportunity } from "./business.js";
 import { validateInquiry } from "./validation.js";
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 const money = (number) =>
-  new Intl.NumberFormat("en-US", {
+  new Intl.NumberFormat("en-GB", {
     style: "currency",
-    currency: "USD",
+    currency: SYSTEM.currency,
     maximumFractionDigits: 0,
   }).format(number);
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -39,7 +39,7 @@ document.addEventListener("click", (event) => {
   if (!event.target.closest(".site-header") && nav.classList.contains("open"))
     closeMenu();
 });
-matchMedia("(min-width: 761px)").addEventListener("change", closeMenu);
+matchMedia("(min-width: 1121px)").addEventListener("change", closeMenu);
 const themeButton = $("#theme-toggle");
 function updateThemeButton() {
   const dark = document.documentElement.classList.contains("dark-mode");
@@ -50,7 +50,7 @@ function updateThemeButton() {
   );
   $('meta[name="theme-color"]')?.setAttribute(
     "content",
-    dark ? "#101b30" : "#faf9f6",
+    dark ? "#071313" : "#f4f5ef",
   );
 }
 updateThemeButton();
@@ -63,6 +63,15 @@ themeButton?.addEventListener("click", () => {
   }
   updateThemeButton();
 });
+// A package button carries the choice into the plan form's goal field.
+$$("[data-package]").forEach((link) =>
+  link.addEventListener("click", () => {
+    const goal = $("#challenge");
+    if (goal && !goal.value.trim())
+      goal.value = `I’m interested in the ${link.dataset.package} package.`;
+  }),
+);
+
 $$("[data-year]").forEach((el) => {
   el.textContent = new Date().getFullYear();
 });
@@ -88,7 +97,7 @@ const contacts = {
     ? `tel:${config.phone.replace(/[^+\d]/g, "")}`
     : null,
   whatsapp: /^\d{7,15}$/.test(config.whatsapp || "")
-    ? `https://wa.me/${config.whatsapp}?text=${encodeURIComponent("Hi Veltra Media, I’d like to explore a growth system for my business.")}`
+    ? `https://wa.me/${config.whatsapp}?text=${encodeURIComponent("Hi Veltra Media, I’d like a free website and Google audit for my business.")}`
     : null,
 };
 $$("[data-contact]").forEach((link) => {
@@ -101,29 +110,8 @@ $$("[data-contact]").forEach((link) => {
 if (contacts.booking && $("[data-booking-option]"))
   $("[data-booking-option]").hidden = false;
 
-// A fixed offer expiry, with standard pricing as the no-JavaScript fallback.
-function updateOffer() {
-  const offer = getOffer();
-  $$("[data-setup-price]").forEach((el) => {
-    el.textContent = money(offer.setup);
-  });
-  $$("[data-offer-original]").forEach((el) => {
-    el.textContent = money(offer.standardSetup);
-    el.hidden = !offer.isLaunch;
-  });
-  $$("[data-offer-launch-note]").forEach((el) => {
-    el.hidden = !offer.isLaunch;
-  });
-  $$("[data-offer-savings]").forEach((el) => {
-    el.textContent = `${money(offer.savings)} less than the individual setup estimates`;
-  });
-  $$("[data-offer-banner]").forEach((el) => {
-    el.textContent = offer.isLaunch
-      ? "Launch offer · Through October 31, 2026"
-      : "The complete system · One location";
-  });
-  updateCalculator();
-}
+// The system price is static content in the page; only the visitor-driven
+// opportunity calculator needs JavaScript.
 function updateCalculator() {
   if (!$("#bookings")) return;
   const visits = Number($("#bookings").value);
@@ -146,83 +134,7 @@ function updateCalculator() {
 $$(".range-field input").forEach((range) =>
   range.addEventListener("input", updateCalculator),
 );
-updateOffer();
-// Recheck when a visitor returns to a tab that was open across the deadline.
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden) updateOffer();
-});
-setInterval(updateOffer, 60000);
-
-// A manually controlled walkthrough. No auto-advancing or distracting animation.
-const scenes = [
-  [
-    "Your clinic. Your personality.",
-    "I’ve been thinking about a skin consultation. Where do I start?",
-    "You’re in the right place. Explore your options, meet the team, and find a consultation that works for you.",
-    "web",
-    "A thoughtful first impression.",
-    "Branded website → Consultation inquiry",
-    "01 / A clear path from discovery to inquiry.",
-  ],
-  [
-    "A helpful hello. Any time.",
-    "Hi! Are you open on Saturdays? I’d love to book a consultation.",
-    "I’m the clinic’s AI assistant. Yes, Saturday consultations are available. I can help you find a time or ask the team to call you.",
-    "phone",
-    "Questions answered. Interest captured.",
-    "Approved answers → Human handoff when needed",
-    "02 / AI phone and chat, with your team in control.",
-  ],
-  [
-    "A time that works for everyone.",
-    "Saturday at 10:30 would be perfect.",
-    "Here’s the booking link with the clinic’s available times. Once you confirm, we’ll send your appointment details and a reminder.",
-    "calendar",
-    "A clear next step.",
-    "Live availability → Booking → Reminder",
-    "03 / Fewer back-and-forth messages. Easier booking.",
-  ],
-  [
-    "A conversation worth continuing.",
-    "I’ll check my schedule and come back to you.",
-    "Of course. With your permission, we can send a follow-up with the booking link. You can opt out at any time.",
-    "flow",
-    "Helpful follow-up. One shared history.",
-    "Consent-based reminders → Stop on reply or opt-out",
-    "04 / Your team sees the context, not just a name.",
-  ],
-];
-const tabs = $$(".system-tab");
-function selectStage(index, focus = false) {
-  tabs.forEach((tab, i) => {
-    tab.setAttribute("aria-selected", String(i === index));
-    tab.tabIndex = i === index ? 0 : -1;
-  });
-  const [title, client, response, icon, event, detail, caption] = scenes[index];
-  // These values are authored static content, never visitor input.
-  $(".demo-browser-head").innerHTML = `${title}<span>EXAMPLE JOURNEY</span>`;
-  $("#demo-scene").innerHTML =
-    `<div class="message from-client">${client}</div><div class="message">${response}</div><div class="demo-event"><svg class="icon" aria-hidden="true"><use href="#i-${icon}"/></svg><div>${event}<small>${detail}</small></div></div>`;
-  $("#stage-caption").textContent = caption;
-  $("#journey-panel").setAttribute("aria-labelledby", `stage-${index}`);
-  if (focus) tabs[index].focus();
-}
-tabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => selectStage(index));
-  tab.addEventListener("keydown", (event) => {
-    let next;
-    if (["ArrowDown", "ArrowRight"].includes(event.key))
-      next = (index + 1) % tabs.length;
-    if (["ArrowUp", "ArrowLeft"].includes(event.key))
-      next = (index - 1 + tabs.length) % tabs.length;
-    if (event.key === "Home") next = 0;
-    if (event.key === "End") next = tabs.length - 1;
-    if (next !== undefined) {
-      event.preventDefault();
-      selectStage(next, true);
-    }
-  });
-});
+updateCalculator();
 
 // Content remains visible if JavaScript fails or motion is disabled.
 if ("IntersectionObserver" in window && !reducedMotion.matches) {
@@ -405,15 +317,21 @@ if (form) {
     picker.hidden = !enabled;
     [heading.textContent, intro.textContent, submitLabel.textContent] = enabled
       ? [
-          "Book your free strategy call.",
-          "Pick a time that suits you and tell us a little about your business. You’ll get a calendar invitation straight away.",
-          "Confirm my strategy call",
+          "Book a call instead.",
+          "Pick a time that suits you and tell us a little about your business. You’ll get a calendar invitation straight away, and we’ll bring the audit findings to the call.",
+          "Confirm my call",
         ]
       : inquiryCopy;
     const external = $("[data-booking-option]");
     if (external) external.hidden = enabled || !contacts.booking;
   }
   async function loadAvailability() {
+    // A form marked data-booking="off" is a plain request form: no calendar.
+    if (form.dataset.booking === "off") {
+      booking.slots = [];
+      setBookingMode(false);
+      return null;
+    }
     try {
       const response = await fetch("/api/availability", {
         headers: { Accept: "application/json" },
@@ -523,7 +441,9 @@ if (form) {
         return;
       }
       setMessage(
-        "Your request has been delivered. We’ll follow up using the details you shared to arrange your strategy call. A calendar time is not reserved yet.",
+        form.dataset.booking === "off"
+          ? "Your request has been delivered. A real person will reply with your website plan using the details you shared."
+          : "Your request has been delivered. We’ll follow up using the details you shared to arrange your strategy call. A calendar time is not reserved yet.",
         "success",
       );
       message.focus({ preventScroll: true });
@@ -543,7 +463,7 @@ if (form) {
       form.removeAttribute("aria-busy");
       if (!form.hidden)
         submitLabel.textContent = booking.enabled
-          ? "Confirm my strategy call"
+          ? "Confirm my call"
           : inquiryCopy[2];
     }
   });

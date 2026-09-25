@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" width="1280" height="900" role="img" aria-label="A local search presence design: a search result and business profile card for a joinery company, a service-area map, and matching service pages showing the same business details in both places.">
+  <defs>
+    <clipPath id="s-clip"><rect x="40" y="88" width="1200" height="772" rx="8"/></clipPath>
+    <radialGradient id="s-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#83e7da" stop-opacity=".35"/><stop offset="1" stop-color="#83e7da" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="900" fill="#071313"/>
+  <rect x="40" y="40" width="1200" height="820" rx="14" fill="#112624" stroke="#263a38"/>
+  <g fill="#263a38"><circle cx="72" cy="64" r="6"/><circle cx="94" cy="64" r="6"/><circle cx="116" cy="64" r="6"/></g>
+  <rect x="150" y="52" width="360" height="22" rx="11" fill="#071313"/>
+
+  <g clip-path="url(#s-clip)" font-family="Manrope, Inter, Segoe UI, Arial, sans-serif">
+    <!-- search bar -->
+    <rect x="88" y="124" width="600" height="52" rx="26" fill="#071313" stroke="#263a38"/>
+    <circle cx="124" cy="150" r="10" fill="none" stroke="#83e7da" stroke-width="2.5"/>
+    <path d="m132 158 8 8" stroke="#83e7da" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="152" y="156" font-size="16" fill="#ffffff">joiner middlesbrough</text>
+
+    <!-- business profile result -->
+    <rect x="88" y="200" width="600" height="212" rx="14" fill="#071313" stroke="#263a38"/>
+    <text x="116" y="240" font-size="19" font-weight="700" fill="#ffffff">Ashfield Joinery</text>
+    <rect x="116" y="254" width="94" height="22" rx="11" fill="#c9ff4a"/>
+    <text x="163" y="270" font-size="12" font-weight="700" fill="#071313" text-anchor="middle">OPEN NOW</text>
+    <text x="226" y="270" font-size="14" fill="#a7b6b3">Closes 5pm · Joinery &amp; carpentry</text>
+    <text x="116" y="306" font-size="14" fill="#a7b6b3">Fitted wardrobes, staircases and bespoke</text>
+    <text x="116" y="328" font-size="14" fill="#a7b6b3">kitchens across Middlesbrough and Stockton.</text>
+    <g font-size="13" font-weight="600">
+      <rect x="116" y="348" width="110" height="34" rx="17" fill="#83e7da"/>
+      <text x="171" y="370" fill="#071313" text-anchor="middle">Call</text>
+      <rect x="238" y="348" width="110" height="34" rx="17" fill="#263a38"/>
+      <text x="293" y="370" fill="#ffffff" text-anchor="middle">Website</text>
+      <rect x="360" y="348" width="110" height="34" rx="17" fill="#263a38"/>
+      <text x="415" y="370" fill="#ffffff" text-anchor="middle">Directions</text>
+    </g>
+
+    <!-- service area map -->
+    <rect x="716" y="124" width="464" height="288" rx="14" fill="#071313" stroke="#263a38"/>
+    <path d="M716 220h464M716 316h464M840 124v288M1010 124v288" stroke="#263a38" stroke-width="1.5"/>
+    <circle cx="930" cy="268" r="78" fill="url(#s-glow)"/>
+    <circle cx="930" cy="268" r="12" fill="#c9ff4a"/>
+    <text x="930" y="360" font-size="14" font-weight="600" fill="#a7b6b3" text-anchor="middle">Service area · 20 miles</text>
+
+    <!-- matching site content -->
+    <text x="88" y="466" font-size="13" font-weight="700" letter-spacing="2.2" fill="#83e7da">ONE PAGE PER SERVICE</text>
+    <text x="88" y="508" font-size="28" font-weight="700" letter-spacing="-1.1" fill="#ffffff">The website says the same thing.</text>
+
+    <g>
+      <rect x="88" y="544" width="350" height="164" rx="14" fill="#071313" stroke="#263a38"/>
+      <text x="116" y="586" font-size="17" font-weight="700" fill="#c9ff4a">Fitted wardrobes</text>
+      <text x="116" y="616" font-size="14" fill="#a7b6b3">Made to measure, installed in</text>
+      <text x="116" y="638" font-size="14" fill="#a7b6b3">a day. Middlesbrough and</text>
+      <text x="116" y="660" font-size="14" fill="#a7b6b3">surrounding areas.</text>
+      <text x="116" y="692" font-size="13" font-weight="700" fill="#ffffff">/fitted-wardrobes-middlesbrough</text>
+
+      <rect x="462" y="544" width="350" height="164" rx="14" fill="#071313" stroke="#263a38"/>
+      <text x="490" y="586" font-size="17" font-weight="700" fill="#83e7da">Staircases</text>
+      <text x="490" y="616" font-size="14" fill="#a7b6b3">Replacement and renovation,</text>
+      <text x="490" y="638" font-size="14" fill="#a7b6b3">oak and painted finishes.</text>
+      <text x="490" y="692" font-size="13" font-weight="700" fill="#ffffff">/staircases-teesside</text>
+
+      <rect x="836" y="544" width="344" height="164" rx="14" fill="#c9ff4a"/>
+      <text x="864" y="586" font-size="17" font-weight="700" fill="#071313">Reviews feed back in</text>
+      <text x="864" y="616" font-size="14" fill="#071313" opacity=".7">Every finished job asks for a</text>
+      <text x="864" y="638" font-size="14" fill="#071313" opacity=".7">review, which lifts the profile.</text>
+      <rect x="864" y="658" width="150" height="34" rx="17" fill="#071313"/>
+      <text x="939" y="680" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Request a review</text>
+    </g>
+
+    <!-- consistency row -->
+    <rect x="88" y="736" width="1092" height="120" rx="14" fill="#071313" stroke="#263a38"/>
+    <text x="116" y="776" font-size="15" font-weight="700" fill="#ffffff">Identical everywhere it appears</text>
+    <g font-size="14">
+      <text x="116" y="812" fill="#a7b6b3">Ashfield Joinery</text>
+      <text x="116" y="836" fill="#a7b6b3">01642 000 000</text>
+      <circle cx="372" cy="807" r="6" fill="#83e7da"/>
+      <circle cx="372" cy="831" r="6" fill="#83e7da"/>
+      <text x="400" y="812" fill="#a7b6b3">Website footer</text>
+      <text x="400" y="836" fill="#a7b6b3">Business profile</text>
+      <circle cx="656" cy="807" r="6" fill="#83e7da"/>
+      <circle cx="656" cy="831" r="6" fill="#83e7da"/>
+      <text x="684" y="812" fill="#a7b6b3">Directory listings</text>
+      <text x="684" y="836" fill="#a7b6b3">Local schema</text>
+      <rect x="940" y="786" width="216" height="44" rx="22" fill="#83e7da"/>
+      <text x="1048" y="814" font-size="14" font-weight="700" fill="#071313" text-anchor="middle">No conflicting details</text>
+    </g>
+  </g>
+</svg>

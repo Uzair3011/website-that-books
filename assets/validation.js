@@ -1,8 +1,15 @@
+// Append-only: these values are stored against past submissions and are
+// asserted in tests, so existing entries keep their exact wording.
 export const businessTypes = [
+  "Trades / home services",
+  "Professional / financial services",
+  "Health, dental or veterinary practice",
   "Med spa / aesthetic clinic",
   "Salon / beauty business",
   "Gym / fitness studio",
-  "Trades / home services",
+  "Hospitality / food and drink",
+  "Retail or ecommerce",
+  "Property / lettings",
   "Other service business",
 ];
 export function validateInquiry(raw) {
