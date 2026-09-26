@@ -13,7 +13,9 @@ const NAME = "Veltra Media website voice assistant";
 const KB_NAME = "Veltra Media website";
 const SECRET_NAME = "veltra_lead_ingest";
 const VOICE_ID = env.ELEVENLABS_VOICE_ID || "pFZP5JQG7iQjIQuC4Bku"; // "Lily": warm British
-const LLM = env.ELEVENLABS_LLM || "gemini-2.5-flash-lite";
+// Flash-Lite sometimes claimed to save a lead without calling the tool in live tests; Flash
+// calls it reliably and is still fast.
+const LLM = env.ELEVENLABS_LLM || "gemini-2.5-flash";
 const SITE_URL = env.SITE_URL || SITE.origin;
 
 if (!env.ELEVENLABS_API_KEY || !env.LEAD_INGEST_TOKEN) {
@@ -50,10 +52,11 @@ How to speak
 
 Your main job: arrange a call back
 - Ask for their name, then the best phone number to reach them.
-- Always read the phone number back, digit by digit, and wait for them to confirm it before saving. If they correct it, read the corrected number back too.
-- Ask for their business name and what they need help with. Ask for an email address only if they want information sent.
+- Always read the phone number back, digit by digit, and wait for them to confirm it. If they correct it, read the corrected number back too.
+- Ask for their business name and what they need help with. If they have no business name, that is fine. Never guess or make up any detail; leave out anything they have not told you.
 - Check they are happy for the team to contact them about this request; it does not sign them up to marketing. A clear request for a call back counts as agreement.
-- Then call the save_lead tool. If they give more details afterwards, call save_lead again with everything you know; the team sees the latest version.
+- Once you have their name, confirmed number, business name (or they have none) and agreement, call save_lead with exactly what they told you. This is the only way their details reach the team: never say their details are saved, noted or passed on unless save_lead has just returned ok.
+- If they change or add details after that, call save_lead again with the full, corrected details before confirming anything.
 - When it succeeds, say the team will be in touch soon and ask if there is anything else.
 - When they have nothing else or say goodbye, say a short goodbye and then use the end_call tool. Do not keep the line open.
 - If they want to speak to a person now, give the office number: ${spokenPhone}.
@@ -89,7 +92,7 @@ function leadTool(secretId) {
     type: "webhook",
     name: "save_lead",
     description:
-      "Save the caller's details so the Veltra Media team can call them back. Use once, after they have given their name and phone number and agreed to be contacted.",
+      "Save the caller's details so the Veltra Media team can call them back. Required: nothing reaches the team unless you call this. Call it once you have their name, confirmed phone number and agreement, and again if they add details.",
     response_timeout_secs: 20,
     api_schema: {
       url: `${SITE_URL}/api/leads`,
@@ -111,7 +114,9 @@ function leadTool(secretId) {
             "The caller's phone number exactly as confirmed, including the country code if outside the UK.",
           ),
           email: text("The caller's email address, if they gave one."),
-          businessName: text("The caller's business name, if given."),
+          businessName: text(
+            "The business name exactly as the caller said it. Leave empty if they have not said it; never guess.",
+          ),
           service: {
             type: "string",
             description: "The service they need, if known.",
@@ -163,6 +168,8 @@ function agentConfig({ toolId, knowledge }) {
           prompt: PROMPT,
           llm: LLM,
           temperature: 0.3,
+          // No hidden "thinking": in live tests it leaked into what the agent said aloud.
+          thinking_budget: 0,
           tool_ids: [toolId],
           knowledge_base: [knowledge],
           // Lets the agent hang up after goodbye instead of waiting on an idle line.
