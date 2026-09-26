@@ -7,9 +7,7 @@ import { leadsConfigured, saveLead } from "../lib/leads.js";
 
 const MAX_BODY_BYTES = 256 * 1024;
 const text = (value, max) =>
-  typeof value === "string" && value.trim()
-    ? value.trim().slice(0, max)
-    : null;
+  typeof value === "string" && value.trim() ? value.trim().slice(0, max) : null;
 const digest = (value) => createHash("sha256").update(String(value)).digest();
 
 function authorized(req, token) {

@@ -4,11 +4,14 @@ import { fileURLToPath } from "node:url";
 import { resolve, extname } from "node:path";
 import availability from "../api/availability.js";
 import book from "../api/book.js";
+import chat from "../api/chat.js";
+import voice from "../api/voice.js";
 import inquiry from "../api/inquiry.js";
 import leads from "../api/leads.js";
 import status from "../api/status.js";
 import { renderConfigScript } from "../lib/public-config.js";
 import { renderAdminPage } from "../src/admin.js";
+import { vendorFiles } from "./vendor.mjs";
 import { renderPage } from "../src/layout.js";
 import { notFoundPage, pageByPath, pages, redirects } from "../src/pages.js";
 
@@ -55,10 +58,13 @@ const server = createServer(async (req, res) => {
       "/api/inquiry": inquiry,
       "/api/book": book,
       "/api/leads": leads,
+      "/api/chat": chat,
+      "/api/voice": voice,
     }[pathname];
     if (handler) {
       // AI-agent leads carry call transcripts, so they get more room than the forms.
-      const limit = pathname === "/api/leads" ? 256 * 1024 : 8192;
+      const limit =
+        { "/api/leads": 256 * 1024, "/api/chat": 32 * 1024 }[pathname] || 8192;
       let bytes = 0;
       const chunks = [];
       for await (const chunk of req) {
@@ -88,13 +94,9 @@ const server = createServer(async (req, res) => {
       res.setHeader("X-Robots-Tag", "noindex, nofollow");
       return res.end(req.method === "HEAD" ? undefined : renderAdminPage());
     }
-    if (pathname === "/assets/vendor/supabase.js") {
+    if (vendorFiles[pathname]) {
       res.setHeader("Content-Type", mime[".js"]);
-      return res.end(
-        await readFile(
-          resolve(root, "node_modules/@supabase/supabase-js/dist/umd/supabase.js"),
-        ),
-      );
+      return res.end(await readFile(resolve(root, vendorFiles[pathname])));
     }
     const page = pageByPath.get(pathname);
     if (page) {

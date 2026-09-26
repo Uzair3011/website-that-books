@@ -494,3 +494,94 @@ test("the lead dashboard is private, unindexed, and fails safe without a databas
   await expect(page.locator("#login-submit")).toBeDisabled();
   expect(errors).toEqual([]);
 });
+
+test("the main number rings the team directly, separate from the AI call and chat buttons", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const numbers = await page.$$eval('a[href^="tel:"]', (links) => [
+    ...new Set(links.map((link) => link.getAttribute("href"))),
+  ]);
+  expect(numbers).toEqual(["tel:+447466539736"]);
+  await expect(page.locator(".voice-launcher")).toBeVisible();
+  await expect(page.locator(".chat-launcher")).toBeVisible();
+  const voiceBox = await page.locator(".voice-launcher").boundingBox();
+  const chatBox = await page.locator(".chat-launcher").boundingBox();
+  expect(voiceBox.y + voiceBox.height).toBeLessThanOrEqual(chatBox.y);
+  const bar = page.locator(".mobile-bar");
+  if (await bar.isVisible()) {
+    const barBox = await bar.boundingBox();
+    expect(chatBox.y + chatBox.height).toBeLessThanOrEqual(barBox.y);
+  }
+});
+
+test("chat answers in the panel, links only safe targets, and remembers the conversation", async ({
+  page,
+}) => {
+  let sent;
+  await page.route("**/api/chat", async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({
+      json: {
+        ok: true,
+        reply: "Websites start at £495, see /pricing or call +44 7466 539736. <img src=x onerror=alert(1)>",
+        leadSaved: false,
+      },
+    });
+  });
+  await page.goto("/pricing");
+  await page.locator(".chat-launcher").click();
+  await expect(page.locator("#chat-panel")).toBeVisible();
+  await expect(page.locator(".assist-dock")).toBeHidden();
+  await page.locator(".chat-suggestions button").first().click();
+  const reply = page.locator(".chat-msg.assistant").last();
+  await expect(reply).toContainText("Websites start at £495");
+  await expect(reply.locator('a[href="/pricing"]')).toHaveCount(1);
+  await expect(reply.locator('a[href="tel:+447466539736"]')).toHaveCount(1);
+  await expect(reply.locator("img")).toHaveCount(0);
+  expect(sent.messages).toEqual([{ role: "user", text: "How much does a website cost?" }]);
+  expect(sent.page).toBe("/pricing");
+  expect(sent.sessionId).toMatch(/^[\w-]{16,64}$/);
+  await page.goto("/about");
+  await expect(page.locator("#chat-panel")).toBeVisible();
+  await expect(page.locator(".chat-msg.user")).toHaveText("How much does a website cost?");
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#chat-panel")).toBeHidden();
+  await expect(page.locator(".assist-dock")).toBeVisible();
+});
+
+test("the AI call button explains a missing microphone or an unavailable service", async ({
+  page,
+}) => {
+  await page.route("**/api/voice", (route) =>
+    route.fulfill({
+      status: 503,
+      json: { ok: false, message: "Voice calls are unavailable right now. Please use the chat or call us." },
+    }),
+  );
+  // A scripted microphone. WebKit only honours an override on the prototype.
+  await page.addInitScript(() => {
+    window.__micAllowed = false;
+    Object.defineProperty(MediaDevices.prototype, "getUserMedia", {
+      configurable: true,
+      value: async () => {
+        if (!window.__micAllowed) throw new DOMException("denied", "NotAllowedError");
+        return { getTracks: () => [] };
+      },
+    });
+  });
+  await page.goto("/");
+  await page.locator(".voice-launcher").click();
+  const panel = page.locator("#voice-panel");
+  await expect(panel).toBeVisible();
+  await expect(panel.locator(".voice-human a")).toHaveAttribute("href", "tel:+447466539736");
+  await panel.locator(".voice-action").click();
+  await expect(panel.locator(".voice-status")).toContainText("Microphone access is needed");
+  await page.evaluate(() => {
+    window.__micAllowed = true;
+  });
+  await panel.locator(".voice-action").click();
+  await expect(panel.locator(".voice-status")).toContainText("Voice calls are unavailable");
+  await page.keyboard.press("Escape");
+  await expect(panel).toBeHidden();
+});

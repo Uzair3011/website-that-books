@@ -43,7 +43,9 @@ export const DEFAULT_DIAL_CODE = dialCodes[0][1];
 // number ("07123 456789") gets the chosen dial code with its leading trunk 0 dropped.
 export function normalizePhone(phone, dialCode = DEFAULT_DIAL_CODE) {
   // "(0)" is the UK habit of showing the trunk prefix inside an international number.
-  const value = String(phone ?? "").trim().replace(/\(0\)/g, "");
+  const value = String(phone ?? "")
+    .trim()
+    .replace(/\(0\)/g, "");
   if (!value || !/^[+\d\s().-]+$/.test(value)) return "";
   const digits = value.replace(/\D/g, "");
   let international;

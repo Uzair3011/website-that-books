@@ -14,7 +14,14 @@ export function renderPage(
     noindex = false,
     bodyClass = "",
   },
-  { origin = SITE.origin } = {},
+  // The chat and AI-call buttons only ship when their services are configured to answer.
+  {
+    origin = SITE.origin,
+    chat = Boolean(process.env.GEMINI_API_KEY),
+    voice = Boolean(
+      process.env.ELEVENLABS_API_KEY && process.env.ELEVENLABS_AGENT_ID,
+    ),
+  } = {},
 ) {
   const canonical = origin + path;
   const ld = jsonLd
@@ -66,6 +73,8 @@ export function renderPage(
     <script src="/assets/config.js" defer></script>
     <script src="/assets/app.js" type="module"></script>
     <script src="/_vercel/insights/script.js" defer></script>
+    ${voice ? '<script src="/assets/voice.js" defer></script>' : ""}
+    ${chat ? '<script src="/assets/chat.js" defer></script>' : ""}
     ${ld}
   </head>
   <body${bodyClass ? ` class="${bodyClass}"` : ""}>

@@ -246,6 +246,29 @@ locally. `externalId` makes provider retries safe: the same id is stored once.
 Supabase pauses free projects after a week without activity. The daily Vercel cron
 `/api/keepalive` (authorised by `CRON_SECRET`) prevents that.
 
+### Contact options: phone, AI call, chat
+
+Three separate routes, each with its own button:
+
+- **Main phone number** (`PUBLIC_CONTACT_PHONE`, header, footer and mobile bar) rings the
+  team's own phone directly. No AI is involved.
+- **"Talk to AI"** (`assets/voice.js`, `/api/voice`) starts an in-browser voice call with the
+  ElevenLabs agent. The agent only accepts signed URLs from `/api/voice` (same-origin, 4 calls
+  per visitor per 10 minutes, 5-minute cap per call, concurrency and daily limits on the
+  agent). Its `save_lead` tool posts to `/api/leads`, so callers appear on the dashboard as
+  `call`. The SDK and its audio worklets are self-hosted (`scripts/vendor.mjs`), keeping the
+  CSP at `script-src 'self'`; `Permissions-Policy` allows the microphone for this origin only.
+- **Chat** (`assets/chat.js`, `/api/chat`) is Gemini answering from the site's own pages
+  (`lib/site-knowledge.js`, rebuilt from `src/pages.js` on every deploy). When a visitor asks
+  to be contacted it calls `save_lead`, stored as `chat` with the transcript. 30 messages per
+  visitor per 10 minutes; if Gemini's free quota runs out, visitors get the phone number and
+  email instead.
+
+Each button is only rendered when its service is configured (`GEMINI_API_KEY`;
+`ELEVENLABS_API_KEY` + `ELEVENLABS_AGENT_ID`). Set up or update the voice agent with
+`npm run voice:agent` (needs `ELEVENLABS_API_KEY` and `LEAD_INGEST_TOKEN`), then put the
+printed id in `ELEVENLABS_AGENT_ID`.
+
 ## Analytics and Search Console
 
 **Vercel Web Analytics is installed.** `src/layout.js` loads

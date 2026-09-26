@@ -107,7 +107,11 @@ create trigger only_lead_admin_signups before insert on auth.users
 // Readable but strong: five groups of five from an alphabet without look-alike characters,
 // with at least one upper, lower and digit so any password policy accepts it (~140 bits).
 function newPassword() {
-  const sets = ["ABCDEFGHJKMNPQRSTUVWXYZ", "abcdefghijkmnpqrstuvwxyz", "23456789"];
+  const sets = [
+    "ABCDEFGHJKMNPQRSTUVWXYZ",
+    "abcdefghijkmnpqrstuvwxyz",
+    "23456789",
+  ];
   const all = sets.join("");
   for (;;) {
     const chars = Array.from({ length: 25 }, () => all[randomInt(all.length)]);
@@ -128,7 +132,9 @@ async function auth(path, { method = "GET", body } = {}) {
   });
   const result = await response.json().catch(() => ({}));
   if (!response.ok)
-    throw new Error(`Auth API ${method} ${path}: ${result.msg || result.message || response.status}`);
+    throw new Error(
+      `Auth API ${method} ${path}: ${result.msg || result.message || response.status}`,
+    );
   return result;
 }
 
@@ -145,7 +151,9 @@ try {
     await sql.unsafe(signupLock(`'${adminEmail.replaceAll("'", "''")}'`));
     console.log("✓ public sign-ups blocked");
   } catch (error) {
-    console.warn(`! Could not block sign-ups (${error.message}). Leads stay private either way.`);
+    console.warn(
+      `! Could not block sign-ups (${error.message}). Leads stay private either way.`,
+    );
   }
 } finally {
   await sql.end();
@@ -172,7 +180,11 @@ if (!existing) {
     method: "PUT",
     body: { app_metadata, ...(password && { password }) },
   });
-  console.log(`✓ admin account ${adminEmail} ${password ? "given a new password" : "confirmed"}`);
+  console.log(
+    `✓ admin account ${adminEmail} ${password ? "given a new password" : "confirmed"}`,
+  );
 }
 if (password)
-  console.log(`\nDashboard login\n  email:    ${adminEmail}\n  password: ${password}\nStore it in a password manager; it is not saved anywhere else.`);
+  console.log(
+    `\nDashboard login\n  email:    ${adminEmail}\n  password: ${password}\nStore it in a password manager; it is not saved anywhere else.`,
+  );

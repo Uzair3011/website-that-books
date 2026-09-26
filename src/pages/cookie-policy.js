@@ -21,6 +21,7 @@ const body = `      <section class="hero">
             <h2>Local storage</h2>
             <p>If you switch between light and dark appearance, the site remembers your choice in your browser's local storage, under the name <strong>veltra-theme</strong>. It stays on your device, is never sent to us and is used only to show the site the way you chose. You can remove it at any time by clearing this site's data in your browser.</p>
             <p>Form entries are not saved to browser storage. If you do not submit a form, nothing you typed is kept.</p>
+            <p>If you use the chat assistant, the conversation is kept in your browser's session storage under the name <strong>veltra-chat</strong>, so it stays open as you move between pages. It is deleted when you close the tab.</p>
             <p>Veltra Media staff who sign in to our private lead dashboard keep their sign-in session in their own browser's local storage. This applies only to that staff page, not to visitors of the public site.</p>
 
             <h2>What your host may record</h2>

@@ -4,8 +4,19 @@
 // transcripts, so it is only ever rendered with textContent, never as HTML.
 (() => {
   const LIMIT = 1000;
-  const SOURCES = { website: "Website", booking: "Booking", call: "Call", chat: "Chat" };
-  const STATUSES = { new: "New", contacted: "Contacted", qualified: "Qualified", won: "Won", lost: "Lost" };
+  const SOURCES = {
+    website: "Website",
+    booking: "Booking",
+    call: "Call",
+    chat: "Chat",
+  };
+  const STATUSES = {
+    new: "New",
+    contacted: "Contacted",
+    qualified: "Qualified",
+    won: "Won",
+    lost: "Lost",
+  };
   const $ = (selector) => document.querySelector(selector);
 
   function el(tag, props = {}, ...children) {
@@ -29,22 +40,38 @@
       return null;
     }
   };
-  const telUrl = (phone) => (/^\+\d{8,15}$/.test(phone || "") ? `tel:${phone}` : null);
+  const telUrl = (phone) =>
+    /^\+\d{8,15}$/.test(phone || "") ? `tel:${phone}` : null;
   const phoneLabel = (phone) =>
     /^\+44\d{10}$/.test(phone || "")
       ? `+44 ${phone.slice(3, 7)} ${phone.slice(7)}`
       : phone || "";
 
   const dateTime = new Intl.DateTimeFormat("en-GB", {
-    day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
   const relative = new Intl.RelativeTimeFormat("en-GB", { numeric: "auto" });
   function ago(iso) {
     const seconds = (Date.parse(iso) - Date.now()) / 1000;
-    const steps = [[60, "second"], [60, "minute"], [24, "hour"], [7, "day"], [4.35, "week"], [12, "month"], [Infinity, "year"]];
+    const steps = [
+      [60, "second"],
+      [60, "minute"],
+      [24, "hour"],
+      [7, "day"],
+      [4.35, "week"],
+      [12, "month"],
+      [Infinity, "year"],
+    ];
     let value = seconds;
     for (const [size, unit] of steps) {
-      if (Math.abs(value) < size) return unit === "second" ? "just now" : relative.format(Math.round(value), unit);
+      if (Math.abs(value) < size)
+        return unit === "second"
+          ? "just now"
+          : relative.format(Math.round(value), unit);
       value /= size;
     }
   }
@@ -54,13 +81,18 @@
   const app = $("#app");
   if (!config.supabaseUrl || !config.supabaseKey || !window.supabase) {
     login.hidden = false;
-    $("#login-error").textContent = "The dashboard isn’t connected to the database yet.";
+    $("#login-error").textContent =
+      "The dashboard isn’t connected to the database yet.";
     $("#login-submit").disabled = true;
     return;
   }
-  const db = window.supabase.createClient(config.supabaseUrl, config.supabaseKey, {
-    auth: { persistSession: true, autoRefreshToken: true },
-  });
+  const db = window.supabase.createClient(
+    config.supabaseUrl,
+    config.supabaseKey,
+    {
+      auth: { persistSession: true, autoRefreshToken: true },
+    },
+  );
 
   const state = {
     leads: new Map(),
@@ -77,7 +109,8 @@
   const baseTitle = document.title;
 
   // ── Auth ────────────────────────────────────────────────────────────────
-  const isAdmin = (session) => session?.user?.app_metadata?.role === "lead_admin";
+  const isAdmin = (session) =>
+    session?.user?.app_metadata?.role === "lead_admin";
 
   function showLogin(message = "") {
     stop();
@@ -99,7 +132,10 @@
     button.disabled = true;
     button.textContent = "Signing in…";
     $("#login-error").textContent = "";
-    const { data, error } = await db.auth.signInWithPassword({ email, password });
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password,
+    });
     button.disabled = false;
     button.textContent = "Sign in";
     if (error) {
@@ -111,7 +147,8 @@
     }
     if (!isAdmin(data.session)) {
       await db.auth.signOut();
-      $("#login-error").textContent = "This account doesn’t have dashboard access.";
+      $("#login-error").textContent =
+        "This account doesn’t have dashboard access.";
       return;
     }
     $("#login-password").value = "";
@@ -124,7 +161,8 @@
   });
 
   db.auth.onAuthStateChange((event) => {
-    if (event === "SIGNED_OUT" && state.started) showLogin("You’ve been signed out.");
+    if (event === "SIGNED_OUT" && state.started)
+      showLogin("You’ve been signed out.");
   });
 
   // ── Data ────────────────────────────────────────────────────────────────
@@ -135,8 +173,11 @@
       .order("created_at", { ascending: false })
       .limit(LIMIT);
     if (error) {
-      if (error.code === "PGRST301" || /JWT/i.test(error.message)) return showLogin("Your session expired. Sign in again.");
-      return banner("Couldn’t load leads. Check your connection; the page will retry when it reconnects.");
+      if (error.code === "PGRST301" || /JWT/i.test(error.message))
+        return showLogin("Your session expired. Sign in again.");
+      return banner(
+        "Couldn’t load leads. Check your connection; the page will retry when it reconnects.",
+      );
     }
     banner("");
     state.leads = new Map(data.map((lead) => [lead.id, lead]));
@@ -146,18 +187,23 @@
   function subscribe() {
     state.channel = db
       .channel("leads-dashboard")
-      .on("postgres_changes", { event: "*", schema: "public", table: "leads" }, (change) => {
-        if (change.eventType === "DELETE") {
-          state.leads.delete(change.old.id);
-          if (state.openId === change.old.id) closeDrawer();
-        } else {
-          const isNew = change.eventType === "INSERT" && !state.leads.has(change.new.id);
-          state.leads.set(change.new.id, change.new);
-          if (isNew) announce(change.new);
-          if (state.openId === change.new.id) renderDrawer();
-        }
-        render();
-      })
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "leads" },
+        (change) => {
+          if (change.eventType === "DELETE") {
+            state.leads.delete(change.old.id);
+            if (state.openId === change.old.id) closeDrawer();
+          } else {
+            const isNew =
+              change.eventType === "INSERT" && !state.leads.has(change.new.id);
+            state.leads.set(change.new.id, change.new);
+            if (isNew) announce(change.new);
+            if (state.openId === change.new.id) renderDrawer();
+          }
+          render();
+        },
+      )
       // The socket joins (SUBSCRIBED) a moment before the database listener is attached, and
       // only this message confirms changes will flow. Re-reading at that point also picks up
       // anything saved in the gap, whether on first load or after a reconnect.
@@ -169,7 +215,8 @@
         } else setLive("offline");
       })
       .subscribe((status) => {
-        if (["CHANNEL_ERROR", "TIMED_OUT", "CLOSED"].includes(status)) setLive("offline");
+        if (["CHANNEL_ERROR", "TIMED_OUT", "CLOSED"].includes(status))
+          setLive("offline");
       });
   }
 
@@ -223,7 +270,11 @@
 
   async function remove(id) {
     const lead = state.leads.get(id);
-    if (!lead || !confirm(`Delete the lead from ${lead.name}? This can’t be undone.`)) return;
+    if (
+      !lead ||
+      !confirm(`Delete the lead from ${lead.name}? This can’t be undone.`)
+    )
+      return;
     const { error } = await db.from("leads").delete().eq("id", id);
     if (error) return toast("Couldn’t delete that lead.", "error");
     state.leads.delete(id);
@@ -236,7 +287,11 @@
   function setLive(mode) {
     const live = $("#live");
     live.dataset.state = mode;
-    $("#live-label").textContent = { live: "Live", connecting: "Connecting…", offline: "Reconnecting…" }[mode];
+    $("#live-label").textContent = {
+      live: "Live",
+      connecting: "Connecting…",
+      offline: "Reconnecting…",
+    }[mode];
   }
 
   function banner(text) {
@@ -253,7 +308,10 @@
   const alertsKey = "veltra-lead-alerts";
   const alertsOn = () => {
     try {
-      return localStorage.getItem(alertsKey) === "on" && Notification.permission === "granted";
+      return (
+        localStorage.getItem(alertsKey) === "on" &&
+        Notification.permission === "granted"
+      );
     } catch {
       return false;
     }
@@ -268,7 +326,10 @@
   $("#alerts-toggle").addEventListener("click", async () => {
     const enable = !alertsOn();
     if (enable && (await Notification.requestPermission()) !== "granted")
-      toast("Allow notifications for this site in your browser settings.", "error");
+      toast(
+        "Allow notifications for this site in your browser settings.",
+        "error",
+      );
     try {
       localStorage.setItem(alertsKey, enable ? "on" : "off");
     } catch {
@@ -282,9 +343,14 @@
     state.fresh.add(lead.id);
     setTimeout(() => {
       state.fresh.delete(lead.id);
-      document.querySelector(`[data-id="${lead.id}"]`)?.classList.remove("fresh");
+      document
+        .querySelector(`[data-id="${lead.id}"]`)
+        ?.classList.remove("fresh");
     }, 6000);
-    toast(`New lead: ${lead.name} · ${SOURCES[lead.source] || lead.source}`, "new");
+    toast(
+      `New lead: ${lead.name} · ${SOURCES[lead.source] || lead.source}`,
+      "new",
+    );
     if (document.hidden) {
       state.unseen += 1;
       document.title = `(${state.unseen}) ${baseTitle}`;
@@ -310,7 +376,9 @@
   const statusFilter = $("#status-filter");
   statusFilter.append(
     el("option", { value: "all", text: "All statuses" }),
-    ...Object.entries(STATUSES).map(([value, text]) => el("option", { value, text })),
+    ...Object.entries(STATUSES).map(([value, text]) =>
+      el("option", { value, text }),
+    ),
   );
   statusFilter.addEventListener("change", () => {
     state.status = statusFilter.value;
@@ -329,10 +397,17 @@
       .filter((lead) => state.status === "all" || lead.status === state.status)
       .filter((lead) => {
         if (!q) return true;
-        const text = [lead.name, lead.email, lead.business_name, lead.service].join(" ").toLowerCase();
+        const text = [lead.name, lead.email, lead.business_name, lead.service]
+          .join(" ")
+          .toLowerCase();
         const phone = (lead.phone || "").replace(/\D/g, "");
         // "07123…" should find "+447123…".
-        return text.includes(q) || (digits.length >= 3 && (phone.includes(digits) || phone.includes(digits.replace(/^0/, ""))));
+        return (
+          text.includes(q) ||
+          (digits.length >= 3 &&
+            (phone.includes(digits) ||
+              phone.includes(digits.replace(/^0/, ""))))
+        );
       })
       .sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
   }
@@ -341,7 +416,11 @@
   function statusSelect(lead, className = "status-select") {
     const select = el(
       "select",
-      { class: className, "data-status": lead.status, "aria-label": `Status for ${lead.name}` },
+      {
+        class: className,
+        "data-status": lead.status,
+        "aria-label": `Status for ${lead.name}`,
+      },
       Object.entries(STATUSES).map(([value, text]) =>
         el("option", { value, text, selected: value === lead.status }),
       ),
@@ -355,7 +434,10 @@
   }
 
   function sourceBadge(source) {
-    return el("span", { class: `badge source-${source}`, text: SOURCES[source] || source });
+    return el("span", {
+      class: `badge source-${source}`,
+      text: SOURCES[source] || source,
+    });
   }
 
   function renderStats() {
@@ -363,15 +445,22 @@
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const week = Date.now() - 7 * 864e5;
-    $("#stat-today").textContent = leads.filter((l) => Date.parse(l.created_at) >= today.getTime()).length;
-    $("#stat-week").textContent = leads.filter((l) => Date.parse(l.created_at) >= week).length;
+    $("#stat-today").textContent = leads.filter(
+      (l) => Date.parse(l.created_at) >= today.getTime(),
+    ).length;
+    $("#stat-week").textContent = leads.filter(
+      (l) => Date.parse(l.created_at) >= week,
+    ).length;
     $("#stat-new").textContent = leads.filter((l) => l.status === "new").length;
-    $("#stat-calls").textContent = leads.filter((l) => l.booked_start && Date.parse(l.booked_start) > Date.now()).length;
+    $("#stat-calls").textContent = leads.filter(
+      (l) => l.booked_start && Date.parse(l.booked_start) > Date.now(),
+    ).length;
   }
 
   function renderSources() {
     const counts = { all: state.leads.size };
-    for (const lead of state.leads.values()) counts[lead.source] = (counts[lead.source] || 0) + 1;
+    for (const lead of state.leads.values())
+      counts[lead.source] = (counts[lead.source] || 0) + 1;
     $("#source-filter").replaceChildren(
       ...[["all", "All"], ...Object.entries(SOURCES)].map(([value, label]) =>
         el(
@@ -415,16 +504,56 @@
               }
             },
           },
-          el("td", { class: "c-time", "data-label": "Received" },
-            el("time", { datetime: lead.created_at, title: dateTime.format(new Date(lead.created_at)), text: ago(lead.created_at) })),
-          el("td", { class: "c-name", "data-label": "Name" }, el("strong", { text: lead.name })),
-          el("td", { class: "c-email", "data-label": "Email", text: lead.email || "—" }),
-          el("td", { class: "c-phone", "data-label": "Phone" },
-            tel ? el("a", { href: tel, text: phoneLabel(lead.phone), onclick: (e) => e.stopPropagation() }) : "—"),
-          el("td", { class: `c-business${lead.business_name ? "" : " is-empty"}`, "data-label": "Business", text: lead.business_name || "—" }),
-          el("td", { class: `c-service${lead.service ? "" : " is-empty"}`, "data-label": "Service", text: lead.service || "—" }),
-          el("td", { class: "c-source", "data-label": "Source" }, sourceBadge(lead.source)),
-          el("td", { class: "c-status", "data-label": "Status" }, statusSelect(lead)),
+          el(
+            "td",
+            { class: "c-time", "data-label": "Received" },
+            el("time", {
+              datetime: lead.created_at,
+              title: dateTime.format(new Date(lead.created_at)),
+              text: ago(lead.created_at),
+            }),
+          ),
+          el(
+            "td",
+            { class: "c-name", "data-label": "Name" },
+            el("strong", { text: lead.name }),
+          ),
+          el("td", {
+            class: "c-email",
+            "data-label": "Email",
+            text: lead.email || "—",
+          }),
+          el(
+            "td",
+            { class: "c-phone", "data-label": "Phone" },
+            tel
+              ? el("a", {
+                  href: tel,
+                  text: phoneLabel(lead.phone),
+                  onclick: (e) => e.stopPropagation(),
+                })
+              : "—",
+          ),
+          el("td", {
+            class: `c-business${lead.business_name ? "" : " is-empty"}`,
+            "data-label": "Business",
+            text: lead.business_name || "—",
+          }),
+          el("td", {
+            class: `c-service${lead.service ? "" : " is-empty"}`,
+            "data-label": "Service",
+            text: lead.service || "—",
+          }),
+          el(
+            "td",
+            { class: "c-source", "data-label": "Source" },
+            sourceBadge(lead.source),
+          ),
+          el(
+            "td",
+            { class: "c-status", "data-label": "Status" },
+            statusSelect(lead),
+          ),
         );
         return row;
       }),
@@ -450,7 +579,12 @@
   const backdrop = $("#drawer-backdrop");
 
   function field(label, value) {
-    return el("div", { class: "field-row" }, el("dt", { text: label }), el("dd", {}, value || "—"));
+    return el(
+      "div",
+      { class: "field-row" },
+      el("dt", { text: label }),
+      el("dd", {}, value || "—"),
+    );
   }
 
   function renderDrawer() {
@@ -464,57 +598,142 @@
     );
     $("#drawer-title").textContent = lead.name;
 
-    const actions = el("div", { class: "actions" },
+    const actions = el(
+      "div",
+      { class: "actions" },
       tel && el("a", { class: "a-btn primary", href: tel, text: "Call" }),
-      tel && el("a", { class: "a-btn", href: `https://wa.me/${lead.phone.slice(1)}`, target: "_blank", rel: "noopener noreferrer", text: "WhatsApp" }),
-      lead.email && el("a", { class: "a-btn", href: `mailto:${lead.email}`, text: "Email" }),
+      tel &&
+        el("a", {
+          class: "a-btn",
+          href: `https://wa.me/${lead.phone.slice(1)}`,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          text: "WhatsApp",
+        }),
+      lead.email &&
+        el("a", {
+          class: "a-btn",
+          href: `mailto:${lead.email}`,
+          text: "Email",
+        }),
     );
 
-    const facts = el("dl", { class: "facts" },
+    const facts = el(
+      "dl",
+      { class: "facts" },
       field("Email", lead.email),
       field("Phone", phoneLabel(lead.phone)),
       field("Business", lead.business_name),
       field("Service needed", lead.service),
-      lead.booked_start && field("Booked call", dateTime.format(new Date(lead.booked_start))),
+      lead.booked_start &&
+        field("Booked call", dateTime.format(new Date(lead.booked_start))),
       details.page && field("Sent from", details.page),
     );
 
-    const links = el("div", { class: "actions" },
-      safeUrl(details.meetLink) && el("a", { class: "a-btn", href: details.meetLink, target: "_blank", rel: "noopener noreferrer", text: "Join Meet" }),
-      safeUrl(details.calendarLink) && el("a", { class: "a-btn", href: details.calendarLink, target: "_blank", rel: "noopener noreferrer", text: "Calendar event" }),
-      safeUrl(details.recordingUrl) && el("a", { class: "a-btn", href: details.recordingUrl, target: "_blank", rel: "noopener noreferrer", text: "Call recording" }),
+    const links = el(
+      "div",
+      { class: "actions" },
+      safeUrl(details.meetLink) &&
+        el("a", {
+          class: "a-btn",
+          href: details.meetLink,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          text: "Join Meet",
+        }),
+      safeUrl(details.calendarLink) &&
+        el("a", {
+          class: "a-btn",
+          href: details.calendarLink,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          text: "Calendar event",
+        }),
+      safeUrl(details.recordingUrl) &&
+        el("a", {
+          class: "a-btn",
+          href: details.recordingUrl,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          text: "Call recording",
+        }),
     );
 
-    const conversation = el("div", {},
-      details.summary && el("section", { class: "block" }, el("h3", { text: "Summary" }), el("p", { class: "prewrap", text: details.summary })),
-      details.transcript && el("details", { class: "block" }, el("summary", { text: "Transcript" }), el("p", { class: "prewrap transcript", text: details.transcript })),
-      details.durationSeconds != null && el("p", { class: "muted small", text: `Call length: ${Math.floor(details.durationSeconds / 60)}m ${details.durationSeconds % 60}s` }),
+    const conversation = el(
+      "div",
+      {},
+      details.summary &&
+        el(
+          "section",
+          { class: "block" },
+          el("h3", { text: "Summary" }),
+          el("p", { class: "prewrap", text: details.summary }),
+        ),
+      details.transcript &&
+        el(
+          "details",
+          { class: "block" },
+          el("summary", { text: "Transcript" }),
+          el("p", { class: "prewrap transcript", text: details.transcript }),
+        ),
+      details.durationSeconds != null &&
+        el("p", {
+          class: "muted small",
+          text: `Call length: ${Math.floor(details.durationSeconds / 60)}m ${details.durationSeconds % 60}s`,
+        }),
     );
 
-    const notes = el("textarea", { id: "lead-notes", maxlength: "5000", rows: "5", placeholder: "Private notes about this lead" });
+    const notes = el("textarea", {
+      id: "lead-notes",
+      maxlength: "5000",
+      rows: "5",
+      placeholder: "Private notes about this lead",
+    });
     notes.value = lead.notes || "";
     const saved = el("span", { class: "muted small", role: "status" });
     const saveNotes = el("button", {
-      class: "a-btn", type: "button", text: "Save notes",
+      class: "a-btn",
+      type: "button",
+      text: "Save notes",
       onclick: async () => {
         saved.textContent = "Saving…";
-        const ok = await update(lead.id, { notes: notes.value }, "Couldn’t save your notes.");
+        const ok = await update(
+          lead.id,
+          { notes: notes.value },
+          "Couldn’t save your notes.",
+        );
         saved.textContent = ok ? "Saved" : "";
       },
     });
 
     $("#drawer-body").replaceChildren(
       actions,
-      el("div", { class: "block status-block" }, el("label", { for: "drawer-status", text: "Status" }), (() => {
-        const select = statusSelect(lead, "status-select large");
-        select.id = "drawer-status";
-        return select;
-      })()),
+      el(
+        "div",
+        { class: "block status-block" },
+        el("label", { for: "drawer-status", text: "Status" }),
+        (() => {
+          const select = statusSelect(lead, "status-select large");
+          select.id = "drawer-status";
+          return select;
+        })(),
+      ),
       facts,
       links.childElementCount ? links : "",
       conversation,
-      el("section", { class: "block" }, el("label", { for: "lead-notes", text: "Notes" }), notes, el("div", { class: "row" }, saveNotes, saved)),
-      el("button", { class: "a-btn danger", type: "button", text: "Delete lead", onclick: () => remove(lead.id) }),
+      el(
+        "section",
+        { class: "block" },
+        el("label", { for: "lead-notes", text: "Notes" }),
+        notes,
+        el("div", { class: "row" }, saveNotes, saved),
+      ),
+      el("button", {
+        class: "a-btn danger",
+        type: "button",
+        text: "Delete lead",
+        onclick: () => remove(lead.id),
+      }),
     );
   }
 
@@ -546,7 +765,11 @@
     if (event.key === "Escape" && !drawer.hidden) closeDrawer();
     // Keep keyboard focus inside the open drawer.
     if (event.key === "Tab" && !drawer.hidden) {
-      const focusable = [...drawer.querySelectorAll("a[href], button, select, textarea, input, summary")].filter((n) => !n.disabled);
+      const focusable = [
+        ...drawer.querySelectorAll(
+          "a[href], button, select, textarea, input, summary",
+        ),
+      ].filter((n) => !n.disabled);
       const first = focusable[0];
       const last = focusable.at(-1);
       if (event.shiftKey && document.activeElement === first) {
@@ -567,15 +790,42 @@
     return `"${text.replaceAll('"', '""')}"`;
   };
   $("#export").addEventListener("click", () => {
-    const header = ["Received", "Name", "Email", "Phone", "Business", "Service", "Source", "Status", "Booked call", "Notes"];
+    const header = [
+      "Received",
+      "Name",
+      "Email",
+      "Phone",
+      "Business",
+      "Service",
+      "Source",
+      "Status",
+      "Booked call",
+      "Notes",
+    ];
     const lines = visible().map((lead) =>
-      [lead.created_at, lead.name, lead.email, lead.phone, lead.business_name, lead.service,
-        SOURCES[lead.source] || lead.source, STATUSES[lead.status] || lead.status, lead.booked_start, lead.notes]
+      [
+        lead.created_at,
+        lead.name,
+        lead.email,
+        lead.phone,
+        lead.business_name,
+        lead.service,
+        SOURCES[lead.source] || lead.source,
+        STATUSES[lead.status] || lead.status,
+        lead.booked_start,
+        lead.notes,
+      ]
         .map(cell)
         .join(","),
     );
-    const blob = new Blob([`﻿${[header.map(cell).join(","), ...lines].join("\r\n")}`], { type: "text/csv;charset=utf-8" });
-    const link = el("a", { href: URL.createObjectURL(blob), download: `veltra-leads-${new Date().toISOString().slice(0, 10)}.csv` });
+    const blob = new Blob(
+      [`﻿${[header.map(cell).join(","), ...lines].join("\r\n")}`],
+      { type: "text/csv;charset=utf-8" },
+    );
+    const link = el("a", {
+      href: URL.createObjectURL(blob),
+      download: `veltra-leads-${new Date().toISOString().slice(0, 10)}.csv`,
+    });
     link.click();
     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   });

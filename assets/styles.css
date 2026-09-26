@@ -3503,3 +3503,377 @@ svg.icon {
     padding-inline: max(var(--gutter), calc((100% - 1200px) / 2));
   }
 }
+
+/* ───────────────────────── Chat assistant (assets/chat.js) ─────────────────────────
+   Sits above the header (40) and the mobile call bar (45); on phones the launcher
+   floats clear of that bar and the panel becomes a bottom sheet. */
+/* Corner dock holding the Call (AI voice) and Chat launchers. */
+.assist-dock {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+:root.chat-open .assist-dock,
+:root.voice-open .assist-dock,
+:root:has(#nav-links.open) .assist-dock {
+  display: none;
+}
+.chat-launcher,
+.voice-launcher {
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 20px 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--canvas);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  box-shadow: 0 10px 30px rgba(7, 19, 19, 0.22);
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+.voice-launcher {
+  order: 1;
+  background: var(--accent-lime);
+  color: #071313;
+}
+.chat-launcher:hover,
+.voice-launcher:hover {
+  transform: translateY(-2px);
+}
+.chat-launcher svg,
+.voice-launcher svg,
+.chat-send svg,
+.chat-close svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.chat-launcher svg {
+  color: var(--accent-lime);
+}
+.chat-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: min(390px, calc(100vw - 40px));
+  height: min(620px, calc(100dvh - 40px));
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px rgba(7, 19, 19, 0.28);
+  overflow: hidden;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  animation: chat-rise 0.2s ease-out;
+}
+@keyframes chat-rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.chat-head h2 {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.chat-head p {
+  font-size: 0.8125rem;
+  color: var(--body);
+}
+.chat-mark {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--accent-lime);
+  color: #071313;
+  font-weight: 800;
+}
+.chat-close {
+  display: inline-grid;
+  place-items: center;
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.chat-close:hover {
+  background: var(--canvas);
+}
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  overscroll-behavior: contain;
+}
+.chat-msg {
+  max-width: 86%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.chat-msg.assistant {
+  align-self: flex-start;
+  background: var(--canvas);
+  border-bottom-left-radius: 6px;
+}
+.chat-msg.user {
+  align-self: flex-end;
+  background: var(--ink);
+  color: var(--canvas);
+  border-bottom-right-radius: 6px;
+}
+.chat-msg.error {
+  border: 1px solid #8c1d18;
+}
+.chat-msg a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+.chat-msg.typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 14px 16px;
+}
+.chat-msg.typing i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--body);
+  animation: chat-dot 1.2s infinite ease-in-out;
+}
+.chat-msg.typing i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.chat-msg.typing i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes chat-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chat-suggestions button {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chat-suggestions button:hover {
+  border-color: var(--ink);
+}
+.chat-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 12px 12px 8px;
+  border-top: 1px solid var(--line);
+}
+.chat-form textarea {
+  flex: 1;
+  min-height: 44px;
+  max-height: 120px;
+  padding: 10px 14px;
+  resize: none;
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+}
+.chat-form textarea:focus-visible {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--accent-mint);
+}
+.chat-send {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+.chat-send:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+.chat-note {
+  padding: 0 16px 12px;
+  font-size: 0.75rem;
+  color: var(--body);
+}
+.chat-note a {
+  text-decoration: underline;
+}
+/* AI voice call panel (assets/voice.js): same frame as the chat panel. */
+.voice-panel {
+  height: auto;
+  max-height: calc(100dvh - 40px);
+}
+.voice-body {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: 28px 20px 20px;
+  text-align: center;
+}
+.voice-orb {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-lime) 30%, transparent);
+}
+.voice-orb span {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  transition: transform 0.2s ease;
+}
+.voice-panel[data-state="starting"] .voice-orb span {
+  animation: voice-breathe 1.2s infinite ease-in-out;
+}
+.voice-panel[data-state="listening"] .voice-orb {
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-lime) 60%, transparent);
+  animation: voice-ring 1.8s infinite;
+}
+.voice-panel[data-state="speaking"] .voice-orb span {
+  animation: voice-talk 0.5s infinite alternate ease-in-out;
+}
+.voice-panel[data-state="ended"] .voice-orb span,
+.voice-panel[data-state="idle"] .voice-orb span {
+  transform: scale(0.85);
+}
+@keyframes voice-breathe {
+  50% {
+    transform: scale(0.7);
+  }
+}
+@keyframes voice-ring {
+  70% {
+    box-shadow: 0 0 0 18px transparent;
+  }
+}
+@keyframes voice-talk {
+  to {
+    transform: scale(1.18);
+  }
+}
+.voice-status {
+  min-height: 3em;
+  max-width: 30ch;
+  color: var(--body);
+}
+.voice-action {
+  min-height: 48px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-weight: 700;
+  cursor: pointer;
+}
+.voice-action.end {
+  background: #b3261e;
+  color: #fff;
+}
+.voice-human {
+  padding: 0 20px 10px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+.voice-human a {
+  font-weight: 700;
+  text-decoration: underline;
+}
+@media (max-width: 760px) {
+  .assist-dock {
+    right: 16px;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+  .chat-launcher,
+  .voice-launcher {
+    width: 52px;
+    padding: 0;
+    justify-content: center;
+  }
+  .dock-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .chat-panel {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: min(88dvh, 640px);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .voice-panel {
+    height: auto;
+  }
+}

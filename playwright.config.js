@@ -11,7 +11,14 @@ export default defineConfig({
     // The form endpoints enforce a same-origin POST against SITE_URL. Without
     // this the local server rejects its own forms, so the suite would only ever
     // exercise the 403 path. Shell variables take precedence over .env.
-    env: { ...process.env, SITE_URL: "http://localhost:4174" },
+    // Placeholder keys make the chat and AI-call buttons render; the tests mock their APIs.
+    env: {
+      ...process.env,
+      SITE_URL: "http://localhost:4174",
+      GEMINI_API_KEY: "test-key",
+      ELEVENLABS_API_KEY: "test-key",
+      ELEVENLABS_AGENT_ID: "test-agent",
+    },
   },
   projects: [
     {

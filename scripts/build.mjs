@@ -5,6 +5,7 @@ import { renderPage } from "../src/layout.js";
 import { notFoundPage, pages } from "../src/pages.js";
 import { publicConfig, renderConfigScript } from "../lib/public-config.js";
 import { bookingSettings } from "../lib/schedule.js";
+import { vendorFiles } from "./vendor.mjs";
 
 const output = resolve("dist");
 await rm(output, { recursive: true, force: true });
@@ -43,10 +44,12 @@ await cp("assets", resolve(output, "assets"), { recursive: true });
 // shipping a broken page.
 await writeFile(resolve(output, "assets/config.js"), renderConfigScript());
 // Served from our own origin, so the Content-Security-Policy's script-src 'self' still holds.
-await cp(
-  "node_modules/@supabase/supabase-js/dist/umd/supabase.js",
-  resolve(output, "assets/vendor/supabase.js"),
-);
+for (const [published, source] of Object.entries(vendorFiles)) {
+  await mkdir(dirname(resolve(output, published.slice(1))), {
+    recursive: true,
+  });
+  await cp(source, resolve(output, published.slice(1)));
+}
 bookingSettings();
 const missing = Object.entries(publicConfig())
   .filter(([key, value]) => !value && key !== "bookingUrl")

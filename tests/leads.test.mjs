@@ -40,10 +40,7 @@ async function ingest(body, { auth = `Bearer ${TOKEN}`, ...options } = {}) {
     stored: () => true,
     store: async () => {},
     ...options,
-  })(
-    { method: "POST", headers: { authorization: auth }, body },
-    res,
-  );
+  })({ method: "POST", headers: { authorization: auth }, body }, res);
   return res;
 }
 
@@ -63,7 +60,9 @@ test("agent leads need the shared token and a configured database", async () => 
 
 test("a call lead is normalised, deduplicated by its id, and stored once", async () => {
   const stored = [];
-  const result = await ingest(call, { store: async (lead) => stored.push(lead) });
+  const result = await ingest(call, {
+    store: async (lead) => stored.push(lead),
+  });
   assert.equal(result.statusCode, 200);
   assert.deepEqual(stored[0], {
     source: "call",
@@ -130,10 +129,16 @@ test("rows map to the table's columns, and storage is idempotent on reference", 
   );
   assert.equal(leadsConfigured({}), false);
   assert.equal(
-    leadsConfigured({ SUPABASE_URL: "http://x.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "k" }),
+    leadsConfigured({
+      SUPABASE_URL: "http://x.supabase.co",
+      SUPABASE_SERVICE_ROLE_KEY: "k",
+    }),
     false,
   );
-  const env = { SUPABASE_URL: "https://x.supabase.co/", SUPABASE_SERVICE_ROLE_KEY: "service" };
+  const env = {
+    SUPABASE_URL: "https://x.supabase.co/",
+    SUPABASE_SERVICE_ROLE_KEY: "service",
+  };
   assert.equal(leadsConfigured(env), true);
   const original = globalThis.fetch;
   const calls = [];
@@ -142,12 +147,21 @@ test("rows map to the table's columns, and storage is idempotent on reference", 
     return new Response(null, { status: 201 });
   };
   try {
-    await saveLead({ name: "A", phone: "+447123456789", source: "website", reference: "r1" }, env);
+    await saveLead(
+      { name: "A", phone: "+447123456789", source: "website", reference: "r1" },
+      env,
+    );
   } finally {
     globalThis.fetch = original;
   }
-  assert.equal(calls[0].url, "https://x.supabase.co/rest/v1/leads?on_conflict=reference");
-  assert.equal(calls[0].init.headers.Prefer, "return=minimal,resolution=ignore-duplicates");
+  assert.equal(
+    calls[0].url,
+    "https://x.supabase.co/rest/v1/leads?on_conflict=reference",
+  );
+  assert.equal(
+    calls[0].init.headers.Prefer,
+    "return=minimal,resolution=ignore-duplicates",
+  );
   assert.equal(calls[0].init.headers.Authorization, "Bearer service");
   assert.equal(JSON.parse(calls[0].init.body).reference, "r1");
 });
@@ -160,7 +174,10 @@ test("the keep-alive cron only runs with Vercel's cron secret", async () => {
     await keepalive({ headers: { authorization: "Bearer nope" } }, denied);
     assert.equal(denied.statusCode, 401);
     const unconfigured = response();
-    await keepalive({ headers: { authorization: "Bearer cron-secret" } }, unconfigured);
+    await keepalive(
+      { headers: { authorization: "Bearer cron-secret" } },
+      unconfigured,
+    );
     assert.equal(unconfigured.statusCode, 503);
   } finally {
     if (original === undefined) delete process.env.CRON_SECRET;
