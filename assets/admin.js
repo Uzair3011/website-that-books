@@ -71,7 +71,6 @@
     unseen: 0,
     fresh: new Set(),
     channel: null,
-    wasLive: false,
     started: false,
     returnFocus: null,
   };
@@ -159,13 +158,18 @@
         }
         render();
       })
-      .subscribe((status) => {
-        if (status === "SUBSCRIBED") {
+      // The socket joins (SUBSCRIBED) a moment before the database listener is attached, and
+      // only this message confirms changes will flow. Re-reading at that point also picks up
+      // anything saved in the gap, whether on first load or after a reconnect.
+      .on("system", {}, (message) => {
+        if (message.extension !== "postgres_changes") return;
+        if (message.status === "ok") {
           setLive("live");
-          // Anything that arrived while disconnected is picked up by a fresh read.
-          if (state.wasLive) load();
-          state.wasLive = true;
-        } else if (["CHANNEL_ERROR", "TIMED_OUT", "CLOSED"].includes(status)) setLive("offline");
+          load();
+        } else setLive("offline");
+      })
+      .subscribe((status) => {
+        if (["CHANNEL_ERROR", "TIMED_OUT", "CLOSED"].includes(status)) setLive("offline");
       });
   }
 
@@ -181,7 +185,6 @@
 
   function stop() {
     state.started = false;
-    state.wasLive = false;
     if (state.channel) db.removeChannel(state.channel);
     state.channel = null;
     state.leads = new Map();
