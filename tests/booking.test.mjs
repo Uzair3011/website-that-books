@@ -24,8 +24,9 @@ const settings = bookingSettings({
 const valid = {
   name: "Test Owner",
   email: "test@example.com",
+  phone: "+44 7123 456789",
   business: "Test Clinic",
-  businessType: "Med spa / aesthetic clinic",
+  service: "Website Design",
   consent: true,
   start: "2026-09-15T08:00:00.000Z",
   bookingKey: "0123456789abcdef0123",
@@ -92,6 +93,7 @@ async function book(req, options = {}) {
     settings: () => settings,
     notify: async () => {},
     sendBookingEmails: async () => {},
+    storeLead: async () => {},
     now: () => NOW,
     rateLimit: false,
     ...options,
@@ -247,14 +249,13 @@ test("a valid booking creates one invited event and forwards it to the CRM and b
   const calendar = fakeCalendar();
   const notified = [];
   const emailed = [];
-  const result = await book(
-    request({ body: { ...valid, challenge: "Missed calls" } }),
-    {
-      calendar,
-      notify: async (payload) => notified.push(payload),
-      sendBookingEmails: async (payload) => emailed.push(payload),
-    },
-  );
+  const stored = [];
+  const result = await book(request({ body: { ...valid, page: "/contact" } }), {
+    calendar,
+    notify: async (payload) => notified.push(payload),
+    sendBookingEmails: async (payload) => emailed.push(payload),
+    storeLead: async (payload, eventId) => stored.push({ payload, eventId }),
+  });
   assert.equal(result.statusCode, 200);
   assert.deepEqual(result.body.booking, {
     start: valid.start,
@@ -266,7 +267,12 @@ test("a valid booking creates one invited event and forwards it to the CRM and b
     { email: valid.email, displayName: valid.name },
   ]);
   assert.equal(event.start.timeZone, "Europe/London");
-  assert.match(event.description, /Missed calls/);
+  assert.match(event.description, /Phone: \+447123456789/);
+  assert.match(event.description, /Service needed: Website Design/);
+  assert.equal(stored.length, 1);
+  assert.equal(stored[0].eventId, event.id);
+  assert.equal(stored[0].payload.phone, "+447123456789");
+  assert.equal(stored[0].payload.page, "/contact");
   assert.equal(event.extendedProperties.private.source, "veltra-media-booking");
   assert.equal(notified.length, 1);
   assert.equal(notified[0].bookedStart, valid.start);

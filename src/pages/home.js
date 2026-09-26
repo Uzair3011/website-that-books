@@ -437,8 +437,6 @@ ${inquiryForm({
   intro: "It takes about a minute. We reply with the package that fits and any gaps worth fixing first.",
   submitLabel: CTA.primary,
   booking: false,
-  goalLabel: "Main goal",
-  goalPlaceholder: "More enquiries, a fresh design, better local visibility, a new offer page…",
 })}
             <div class="plan-copy">
               <p class="eyebrow">Free website plan</p>

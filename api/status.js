@@ -1,4 +1,5 @@
 import { googleConfigured } from "../lib/google-calendar.js";
+import { leadsConfigured } from "../lib/leads.js";
 import { hasIntake } from "./inquiry.js";
 export default function status(req, res) {
   res.setHeader("Cache-Control", "no-store");
@@ -9,7 +10,7 @@ export default function status(req, res) {
   return res
     .status(200)
     .json({
-      intakeAvailable: hasIntake(),
+      intakeAvailable: hasIntake() || leadsConfigured(),
       bookingAvailable: googleConfigured(),
     });
 }

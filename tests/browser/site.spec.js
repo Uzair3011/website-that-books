@@ -44,10 +44,10 @@ async function settle(page) {
 async function fillForm(page) {
   await page.getByLabel("Your name", { exact: true }).fill("Test Owner");
   await page.getByLabel("Email", { exact: true }).fill("owner@example.com");
-  await page.getByLabel("Business name", { exact: true }).fill("Test Clinic");
-  await page
-    .getByLabel("Business type", { exact: true })
-    .selectOption("Med spa / aesthetic clinic");
+  await expect(page.getByLabel("Country code")).toHaveValue("+44");
+  await page.locator("#phone").fill("07123 456789");
+  await page.locator("#business").fill("Test Clinic");
+  await page.locator("#service").selectOption("Website Design");
   await page.getByLabel("I agree to be contacted").check();
 }
 
@@ -265,7 +265,9 @@ test("form validates, preserves failed entries, and accepts confirmed delivery",
     "Your request has been delivered",
   );
   await expect(page.locator("#email")).toHaveValue("");
-  expect(payload.businessType).toBe("Med spa / aesthetic clinic");
+  expect(payload.phone).toBe("+447123456789");
+  expect(payload.service).toBe("Website Design");
+  expect(payload.page).toBe("/free-website-audit");
   expect(payload.consent).toBe(true);
   expect(
     await page.evaluate(() =>
@@ -472,4 +474,23 @@ test("content, honest standard pricing, and navigation survive without JavaScrip
   await expect(page.locator("noscript p")).toContainText("enable JavaScript");
   await expect(page.locator("#submit-inquiry")).toBeDisabled();
   await context.close();
+});
+
+test("the lead dashboard is private, unindexed, and fails safe without a database", async ({
+  page,
+}) => {
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  const response = await page.goto("/admin");
+  expect(response.status()).toBe(200);
+  expect(response.headers()["x-robots-tag"]).toBe("noindex, nofollow");
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    "content",
+    "noindex, nofollow",
+  );
+  await expect(page.locator("#login")).toBeVisible();
+  await expect(page.locator("#app")).toBeHidden();
+  await expect(page.locator("#login-error")).toContainText("isn’t connected");
+  await expect(page.locator("#login-submit")).toBeDisabled();
+  expect(errors).toEqual([]);
 });

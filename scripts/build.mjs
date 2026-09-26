@@ -1,5 +1,6 @@
 import { cp, mkdir, writeFile, rm } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import { renderAdminPage } from "../src/admin.js";
 import { renderPage } from "../src/layout.js";
 import { notFoundPage, pages } from "../src/pages.js";
 import { publicConfig, renderConfigScript } from "../lib/public-config.js";
@@ -34,11 +35,18 @@ for (const page of pages) {
   await emit(file, renderPage(page, { origin }));
 }
 await emit("404.html", renderPage(notFoundPage, { origin }));
+// Private lead dashboard: noindex, never in the sitemap, and holds no lead data itself.
+await emit("admin.html", renderAdminPage());
 
 await cp("assets", resolve(output, "assets"), { recursive: true });
 // Fail the deploy on malformed public contact or booking settings instead of
 // shipping a broken page.
 await writeFile(resolve(output, "assets/config.js"), renderConfigScript());
+// Served from our own origin, so the Content-Security-Policy's script-src 'self' still holds.
+await cp(
+  "node_modules/@supabase/supabase-js/dist/umd/supabase.js",
+  resolve(output, "assets/vendor/supabase.js"),
+);
 bookingSettings();
 const missing = Object.entries(publicConfig())
   .filter(([key, value]) => !value && key !== "bookingUrl")

@@ -1,6 +1,6 @@
 // The enquiry / booking form. Markup contract is shared with assets/app.js,
 // api/inquiry.js and api/book.js — element ids here must not change casually.
-import { businessTypes } from "../assets/validation.js";
+import { dialCodes, serviceOptions } from "../assets/validation.js";
 import { SITE, icon } from "./site.js";
 
 export function inquiryForm({
@@ -9,11 +9,15 @@ export function inquiryForm({
   submitLabel = "Get my free website plan",
   // The homepage form is a short plan request; it skips the calendar picker.
   booking = true,
-  goalLabel = "What do you want the website to achieve?",
-  goalPlaceholder = "More enquiries, more bookings, better quality leads, ranking for a specific service…",
 } = {}) {
-  const options = businessTypes
-    .map((type) => `<option>${type}</option>`)
+  const services = serviceOptions
+    .map((service) => `<option>${service}</option>`)
+    .join("");
+  const countries = dialCodes
+    .map(
+      ([country, dial], index) =>
+        `<option value="${dial}"${index === 0 ? " selected" : ""}>${dial} ${country}</option>`,
+    )
     .join("");
 
   return `<div class="form-shell" id="audit-form">
@@ -57,32 +61,27 @@ export function inquiryForm({
         <p class="field-error" id="email-error"></p>
       </div>
       <div class="field">
-        <label for="business">Business name</label>
-        <input id="business" name="business" autocomplete="organization" required maxlength="150" placeholder="Your business" />
-        <p class="field-error" id="business-error"></p>
-      </div>
-      <div class="field">
-        <label for="business-type">Business type</label>
-        <select id="business-type" name="businessType" required>
-          <option value="">Choose your business type</option>
-          ${options}
-        </select>
-        <p class="field-error" id="business-type-error"></p>
-      </div>
-      <div class="field">
-        <label for="website">Website <span>(optional)</span></label>
-        <input id="website" name="website" inputmode="url" autocomplete="url" maxlength="300" placeholder="yourbusiness.co.uk" />
-        <p class="field-error" id="website-error"></p>
-      </div>
-      <div class="field">
-        <label for="phone">Phone <span>(optional)</span></label>
-        <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="Including country code" />
+        <label for="phone">Phone</label>
+        <div class="phone-input">
+          <select id="dial-code" name="dialCode" aria-label="Country code" autocomplete="tel-country-code">
+            ${countries}
+          </select>
+          <input id="phone" name="phone" type="tel" autocomplete="tel-national" required maxlength="30" placeholder="07123 456789" />
+        </div>
         <p class="field-error" id="phone-error"></p>
       </div>
+      <div class="field">
+        <label for="business">Business name <span>(optional)</span></label>
+        <input id="business" name="business" autocomplete="organization" maxlength="150" placeholder="Your business" />
+        <p class="field-error" id="business-error"></p>
+      </div>
       <div class="field full">
-        <label for="challenge">${goalLabel} <span>(optional)</span></label>
-        <textarea id="challenge" name="challenge" maxlength="2000" placeholder="${goalPlaceholder}"></textarea>
-        <p class="field-error" id="challenge-error"></p>
+        <label for="service">Service needed <span>(optional)</span></label>
+        <select id="service" name="service">
+          <option value="">Choose a service</option>
+          ${services}
+        </select>
+        <p class="field-error" id="service-error"></p>
       </div>
     </div>
     <label class="consent" for="consent">

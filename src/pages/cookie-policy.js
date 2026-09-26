@@ -21,6 +21,7 @@ const body = `      <section class="hero">
             <h2>Local storage</h2>
             <p>If you switch between light and dark appearance, the site remembers your choice in your browser's local storage, under the name <strong>veltra-theme</strong>. It stays on your device, is never sent to us and is used only to show the site the way you chose. You can remove it at any time by clearing this site's data in your browser.</p>
             <p>Form entries are not saved to browser storage. If you do not submit a form, nothing you typed is kept.</p>
+            <p>Veltra Media staff who sign in to our private lead dashboard keep their sign-in session in their own browser's local storage. This applies only to that staff page, not to visitors of the public site.</p>
 
             <h2>What your host may record</h2>
             <p>Like any website, this one is served by a hosting provider, which may keep ordinary security and access logs, such as IP addresses and the pages requested. These are operational records, not tracking profiles.</p>

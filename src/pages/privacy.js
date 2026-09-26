@@ -14,14 +14,14 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <div class="prose">
             <h2>What you share with us</h2>
-            <p>The form asks for your name, email, business name, business type, and consent to a response. Your phone number, website and goal are optional. Please do not include customer records, patient information, medical records or sensitive personal details.</p>
+            <p>The form asks for your name, email, phone number, and consent to a response. Your business name and the service you need are optional. Please do not include customer records, patient information, medical records or sensitive personal details.</p>
 
             <h2>How we use it</h2>
             <p>We use an enquiry to assess your needs, reply, and arrange a call or produce your free audit. Submitting it does not subscribe you to marketing, or consent to automated marketing calls or texts. If online delivery is unavailable, we show an error and do not claim your enquiry has been received.</p>
 
             <h2>Service providers and booking</h2>
             <p>Website hosting providers may process normal security and access logs. When you book a call, the time you choose and the details you enter are added to our Google Calendar, and a calendar invitation is sent to you (with a video link, where enabled). Google's privacy terms apply to that invitation. Confirmation and notification emails are sent over our own configured mail provider.</p>
-            <p>Successfully submitted enquiries and bookings are also forwarded to our configured business intake provider for follow-up, where one is configured. Call, email and WhatsApp links open the relevant external service, whose own privacy terms apply. The website does not embed a booking tracker or load these services automatically.</p>
+            <p>Enquiries and bookings are stored in our private lead database, hosted by Supabase in the United States, so we can follow them up. Only Veltra Media staff can sign in to view them. Successfully submitted enquiries and bookings are also forwarded to our configured business intake provider for follow-up, where one is configured. Call, email and WhatsApp links open the relevant external service, whose own privacy terms apply. The website does not embed a booking tracker or load these services automatically.</p>
 
             <h2>Browser storage and analytics</h2>
             <p>This site stores only your selected light or dark appearance in your browser. Form entries are not saved to browser storage. See the <a href="/cookie-policy">cookie policy</a> for detail.</p>

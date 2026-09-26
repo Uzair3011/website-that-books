@@ -5,8 +5,10 @@ import { resolve, extname } from "node:path";
 import availability from "../api/availability.js";
 import book from "../api/book.js";
 import inquiry from "../api/inquiry.js";
+import leads from "../api/leads.js";
 import status from "../api/status.js";
 import { renderConfigScript } from "../lib/public-config.js";
+import { renderAdminPage } from "../src/admin.js";
 import { renderPage } from "../src/layout.js";
 import { notFoundPage, pageByPath, pages, redirects } from "../src/pages.js";
 
@@ -49,13 +51,19 @@ const server = createServer(async (req, res) => {
       res.setHeader("Cache-Control", "no-store");
       return res.end(renderConfigScript());
     }
-    const handler = { "/api/inquiry": inquiry, "/api/book": book }[pathname];
+    const handler = {
+      "/api/inquiry": inquiry,
+      "/api/book": book,
+      "/api/leads": leads,
+    }[pathname];
     if (handler) {
+      // AI-agent leads carry call transcripts, so they get more room than the forms.
+      const limit = pathname === "/api/leads" ? 256 * 1024 : 8192;
       let bytes = 0;
       const chunks = [];
       for await (const chunk of req) {
         bytes += chunk.length;
-        if (bytes > 8192)
+        if (bytes > limit)
           return res.status(413).json({
             ok: false,
             message: "Your request is too long. Please shorten your message.",
@@ -75,6 +83,19 @@ const server = createServer(async (req, res) => {
     }
     res.setHeader("Cache-Control", "no-store");
 
+    if (pathname === "/admin") {
+      res.setHeader("Content-Type", mime[".html"]);
+      res.setHeader("X-Robots-Tag", "noindex, nofollow");
+      return res.end(req.method === "HEAD" ? undefined : renderAdminPage());
+    }
+    if (pathname === "/assets/vendor/supabase.js") {
+      res.setHeader("Content-Type", mime[".js"]);
+      return res.end(
+        await readFile(
+          resolve(root, "node_modules/@supabase/supabase-js/dist/umd/supabase.js"),
+        ),
+      );
+    }
     const page = pageByPath.get(pathname);
     if (page) {
       res.setHeader("Content-Type", mime[".html"]);

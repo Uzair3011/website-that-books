@@ -4,8 +4,9 @@ import { createInquiryHandler, hasIntake } from "../api/inquiry.js";
 const valid = {
   name: "Test Owner",
   email: "test@example.com",
+  phone: "07123 456789",
   business: "Test Clinic",
-  businessType: "Med spa / aesthetic clinic",
+  service: "Website Design",
   consent: true,
 };
 const request = (patch = {}) => ({
@@ -41,6 +42,9 @@ async function run(req, options = {}) {
   await createInquiryHandler({
     configured: () => true,
     deliver: async () => {},
+    stored: () => false,
+    store: async () => {},
+    notifyAdmin: async () => {},
     rateLimit: false,
     ...options,
   })(req, res);
@@ -108,7 +112,8 @@ test("forwards a valid lead once with consent provenance and returns success aft
   assert.equal(sent.length, 1);
   assert.equal(sent[0].email, valid.email);
   assert.equal(sent[0].consent, true);
-  assert.equal(sent[0].privacyVersion, "2026-09-16");
+  assert.equal(sent[0].privacyVersion, "2026-09-26");
+  assert.equal(sent[0].phone, "+447123456789");
   assert.match(sent[0].requestId, /^[0-9a-f-]{36}$/);
 });
 test("repeated submissions are limited and recover after the window", async () => {
@@ -130,4 +135,57 @@ test("webhook readiness requires an HTTPS destination", () => {
   assert.equal(hasIntake(), true);
   if (original === undefined) delete process.env.LEAD_WEBHOOK_URL;
   else process.env.LEAD_WEBHOOK_URL = original;
+});
+
+test("stores the lead in the database, which alone is enough to accept it", async () => {
+  const stored = [];
+  const notified = [];
+  const result = await run(
+    request({ body: { ...valid, page: "/pricing" } }),
+    {
+      configured: () => false,
+      stored: () => true,
+      store: async (lead) => stored.push(lead),
+      notifyAdmin: async (payload) => notified.push(payload),
+    },
+  );
+  assert.equal(result.statusCode, 200);
+  assert.equal(stored.length, 1);
+  assert.equal(stored[0].source, "website");
+  assert.equal(stored[0].phone, "+447123456789");
+  assert.equal(stored[0].service, "Website Design");
+  assert.equal(stored[0].details.page, "/pricing");
+  assert.match(stored[0].reference, /^[0-9a-f-]{36}$/);
+  assert.equal(notified.length, 1);
+  assert.equal(notified[0].page, "/pricing");
+});
+test("one working destination is enough; both failing is a 502", async () => {
+  const fail = async () => {
+    throw new Error("down");
+  };
+  const both = { configured: () => true, stored: () => true };
+  assert.equal(
+    (await run(request(), { ...both, deliver: fail })).statusCode,
+    200,
+  );
+  assert.equal((await run(request(), { ...both, store: fail })).statusCode, 200);
+  assert.equal(
+    (await run(request(), { ...both, store: fail, deliver: fail })).statusCode,
+    502,
+  );
+});
+test("a failed admin email never fails an accepted lead, and odd page values are dropped", async () => {
+  const stored = [];
+  const result = await run(
+    request({ body: { ...valid, page: "javascript:alert(1)" } }),
+    {
+      stored: () => true,
+      store: async (lead) => stored.push(lead),
+      notifyAdmin: async () => {
+        throw new Error("smtp down");
+      },
+    },
+  );
+  assert.equal(result.statusCode, 200);
+  assert.equal(stored[0].details.page, null);
 });

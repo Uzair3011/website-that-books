@@ -408,6 +408,7 @@ if (form) {
         body: JSON.stringify({
           ...data,
           ...(bookingMode && { start: booking.start, bookingKey: booking.key }),
+          page: location.pathname,
           fax: raw.fax || "",
         }),
         signal: AbortSignal.timeout(20000),

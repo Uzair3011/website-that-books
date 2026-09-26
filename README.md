@@ -191,6 +191,61 @@ npm run build
 
 Browser tests cover desktop Chromium, mobile Chromium and mobile Safari: every route, internal links, 404 and legacy redirects, unique canonical/title/description per page, valid structured data, responsive widths from 320px to 1920px, theme persistence, menu, FAQs, ROI changes, form validation, success/error preservation, configured contact links, the no-JavaScript fallback, and WCAG AA automated checks in both themes. `npm test` additionally asserts the production build's canonicals, sitemap, robots file and one-H1-per-page rule, and fails if any structured data claims a rating, review count or street address. Form success tests use an intercepted provider response; the endpoint tests independently exercise accepted and rejected deliveries. An actual live destination still needs to be connected and verified before production use.
 
+## Lead database and dashboard
+
+Every lead lands in one Supabase Postgres table, `public.leads`, and appears on the
+private dashboard at **`/admin`** the moment it is saved (Supabase Realtime, no refresh).
+
+| Source | How it arrives | Stored as |
+| --- | --- | --- |
+| Enquiry forms (home, pricing) | `POST /api/inquiry` | `website` |
+| Calendar bookings (contact, audit) | `POST /api/book` | `booking`, with the call time and Meet link |
+| AI calling agent | `POST /api/leads` with `LEAD_INGEST_TOKEN` | `call`, with summary, transcript and recording link |
+| Website chatbot | `POST /api/leads` with `LEAD_INGEST_TOKEN` | `chat` |
+
+Each lead has: name, email, phone (stored as `+44…`), business name (optional),
+service needed (optional), source, status (new → contacted → qualified → won/lost),
+private notes, and a `details` JSON column for everything source-specific.
+
+**Security.** The website writes with the service role key, server-side only. The
+browser dashboard signs in with Supabase Auth and reads through row-level security,
+which only answers an account whose `app_metadata.role` is `lead_admin`; only the
+service role can set that. The public anon key can read nothing, and a database
+trigger rejects every sign-up except the dashboard owner's email. The dashboard page
+itself contains no data, is `noindex`, and is not in the sitemap.
+
+**Setup (already done for production; re-runnable):**
+
+```sh
+vercel env pull .env.local          # Supabase variables from the Vercel integration
+npm run db:setup                    # table, security rules, realtime, admin account
+npm run db:setup -- --reset-password  # issue a new dashboard password
+```
+
+**AI agent payload** (`POST /api/leads`, `Authorization: Bearer $LEAD_INGEST_TOKEN`):
+
+```json
+{
+  "source": "call",
+  "name": "Jane Smith",
+  "phone": "07123 456789",
+  "email": "jane@example.com",
+  "businessName": "Smith Plumbing",
+  "service": "Website Design",
+  "externalId": "provider-call-id",
+  "summary": "Wants a quote for a new site.",
+  "transcript": "…",
+  "recordingUrl": "https://…",
+  "durationSeconds": 184
+}
+```
+
+`source` (`call` or `chat`) and `phone` are required; UK numbers may be written
+locally. `externalId` makes provider retries safe: the same id is stored once.
+
+Supabase pauses free projects after a week without activity. The daily Vercel cron
+`/api/keepalive` (authorised by `CRON_SECRET`) prevents that.
+
 ## Analytics and Search Console
 
 **Vercel Web Analytics is installed.** `src/layout.js` loads

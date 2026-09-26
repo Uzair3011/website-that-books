@@ -17,11 +17,13 @@ import {
   readJsonPost,
   sendRateLimited,
 } from "../lib/http.js";
+import { leadsConfigured, saveLead } from "../lib/leads.js";
 import { availableSlots, bookingSettings } from "../lib/schedule.js";
 import {
   CONSENT_TEXT,
   PRIVACY_VERSION,
   deliverToWebhook,
+  formPage,
   hasIntake,
 } from "./inquiry.js";
 
@@ -46,11 +48,9 @@ function describe(data, requestId) {
   return [
     `Name: ${data.name}`,
     `Email: ${data.email}`,
-    data.phone && `Phone: ${data.phone}`,
-    `Business: ${data.business}`,
-    `Business type: ${data.businessType}`,
-    data.website && `Website: ${data.website}`,
-    data.challenge && `\nWhere they could use a hand:\n${data.challenge}`,
+    `Phone: ${data.phone}`,
+    data.business && `Business: ${data.business}`,
+    data.service && `Service needed: ${data.service}`,
     `\nBooked on the Veltra Media website. Reference: ${requestId}`,
   ]
     .filter(Boolean)
@@ -63,6 +63,25 @@ export function createBookingHandler({
   settings = () => bookingSettings(),
   notify = async (payload) => {
     if (hasIntake()) await deliverToWebhook(payload);
+  },
+  // The event id is the reference, so a retried booking is stored once.
+  storeLead = async (payload, eventId) => {
+    if (!leadsConfigured()) return;
+    await saveLead({
+      ...payload,
+      source: "booking",
+      reference: `booking:${eventId}`,
+      bookedStart: payload.bookedStart,
+      details: {
+        page: payload.page,
+        bookedEnd: payload.bookedEnd,
+        timezone: payload.timezone,
+        meetLink: payload.meetLink,
+        calendarLink: payload.htmlLink,
+        consentText: CONSENT_TEXT,
+        privacyVersion: PRIVACY_VERSION,
+      },
+    });
   },
   sendBookingEmails = async (payload) => {
     if (!emailConfigured()) return;
@@ -209,6 +228,7 @@ export function createBookingHandler({
       const payload = {
         ...data,
         source: BOOKING_SOURCE,
+        page: formPage(raw),
         bookedStart: startIso,
         bookedEnd: new Date(end).toISOString(),
         timezone: rules.timezone,
@@ -219,8 +239,10 @@ export function createBookingHandler({
         htmlLink: event.htmlLink || null,
         meetLink: extractMeetLink(event),
       };
-      // The calendar is the system of record; CRM forwarding and email notification are best effort.
+      // The calendar is the system of record; the lead row, CRM forwarding and email
+      // notification are best effort.
       await Promise.allSettled([
+        storeLead(payload, event.id),
         notify(payload),
         sendBookingEmails(payload),
       ]);

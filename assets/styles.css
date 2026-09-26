@@ -1507,6 +1507,12 @@ svg.icon {
 .field select {
   height: 54px;
 }
+/* Country code + number read as one control; the code shrinks to its dial prefix. */
+.phone-input {
+  display: grid;
+  grid-template-columns: minmax(0, 6.75rem) minmax(0, 1fr);
+  gap: 8px;
+}
 .field input::placeholder,
 .field textarea::placeholder {
   color: var(--body);

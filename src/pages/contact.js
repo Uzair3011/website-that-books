@@ -46,9 +46,6 @@ ${inquiryForm({
   intro:
     "If live call times are available you can pick one here. Otherwise send the details and we will come back to you with a time.",
   submitLabel: "Send my message",
-  goalLabel: "What do you want to achieve?",
-  goalPlaceholder:
-    "More enquiries, more bookings, better quality leads, showing up for a particular service…",
 })}
         </div>
       </section>

@@ -9,13 +9,16 @@
     "build": "node --env-file-if-exists=.env scripts/build.mjs",
     "google:auth": "node --env-file-if-exists=.env scripts/google-auth.mjs",
     "test": "node --test tests/*.test.mjs",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "db:setup": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/db-setup.mjs"
   },
   "engines": {
     "node": ">=22"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.58.2",
+    "@supabase/supabase-js": "^2.117.2",
+    "postgres": "^3.4.9"
   }
 }
