@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   FALLBACK,
+  SAVED,
   createChatHandler,
   leadFromArgs,
   systemPrompt,
@@ -129,6 +130,21 @@ test("save_lead stores a normalised chat lead, emails once, and echoes the call 
     id: "call_1",
     response: { ok: true },
   });
+});
+
+test("if the reply after saving fails, the visitor is still told their details were saved", async () => {
+  let calls = 0;
+  const result = await run(ask("Call me: Jane, 07700 900123, yes"), {
+    model: async () => {
+      calls += 1;
+      if (calls === 1)
+        return callSave({ name: "Jane", phone: "07700 900123", consent: true });
+      throw Object.assign(new Error("quota"), { status: 429 });
+    },
+  });
+  assert.equal(result.statusCode, 200);
+  assert.equal(result.body.leadSaved, true);
+  assert.equal(result.body.reply, SAVED);
 });
 
 test("an updated save in the same conversation does not email again", async () => {

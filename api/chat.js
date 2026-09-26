@@ -22,6 +22,9 @@ const limiter = createRateLimiter({ limit: 30, windowMs: 10 * 60 * 1000 });
 
 export const FALLBACK = `Sorry, I can’t reply right now. You can call us on ${SITE.phoneLabel}, email ${SITE.email}, or book a call at /contact.`;
 
+export const SAVED =
+  "Thanks, I’ve passed your details to the team and they’ll be in touch soon.";
+
 export function systemPrompt(knowledge = siteKnowledge()) {
   return `You are the website assistant for ${SITE.name}, a web design and local growth studio for businesses in ${SITE.areas.join(", ")}. You chat with visitors on ${SITE.origin}.
 
@@ -276,6 +279,9 @@ export function createChatHandler({
         .status(200)
         .json({ ok: true, reply: reply || FALLBACK, leadSaved });
     } catch (error) {
+      // Details already saved: confirm that, even if the follow-up reply failed.
+      if (leadSaved)
+        return res.status(200).json({ ok: true, reply: SAVED, leadSaved });
       // Quota exhaustion (429) and outages get the same friendly fallback; no details leak.
       return res
         .status(error.status === 429 ? 503 : 502)
