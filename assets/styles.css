@@ -1456,11 +1456,15 @@ svg.icon {
   font-size: 0.9375rem;
   max-width: 48ch;
 }
+/* Two columns only when the form itself has room for them, not the viewport:
+   the same form sits full width on /contact and in a half-width panel on the
+   homepage, and at half width two columns clipped every placeholder. */
 .form-grid {
   display: grid;
-  gap: 18px;
+  gap: 20px 16px;
+  align-items: start;
 }
-@media (min-width: 620px) {
+@container (min-width: 520px) {
   .form-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1507,11 +1511,107 @@ svg.icon {
 .field select {
   height: 54px;
 }
-/* Country code + number read as one control; the code shrinks to its dial prefix. */
+/* Country code + number read as one control: a single bordered box with the
+   dial prefix on the left. The real <select> is stretched invisibly over the
+   prefix, so it keeps native keyboard, screen-reader and mobile-picker
+   behaviour while the box only ever shows "+44". */
 .phone-input {
-  display: grid;
-  grid-template-columns: minmax(0, 6.75rem) minmax(0, 1fr);
-  gap: 8px;
+  display: flex;
+  height: 54px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+.phone-input:hover {
+  border-color: var(--body);
+}
+.phone-input:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--accent-mint);
+}
+.phone-input:has([aria-invalid="true"]) {
+  border-color: #8c1d18;
+}
+:root.dark-mode .phone-input:has([aria-invalid="true"]),
+.band-dark .phone-input:has([aria-invalid="true"]) {
+  border-color: #ffb4ab;
+}
+.dial-code {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px 0 15px;
+  border-right: 1px solid var(--line);
+  border-radius: var(--radius) 0 0 var(--radius);
+  font-weight: 600;
+  color: var(--ink);
+  transition: background-color 0.2s var(--ease);
+}
+.dial-code:hover,
+.dial-code:has(select:focus-visible) {
+  background: color-mix(in srgb, var(--accent-mint) 22%, transparent);
+}
+.dial-code .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--body);
+}
+.field .dial-code select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.field .phone-input input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: none;
+}
+/* The box draws the focus ring and the dark fill; the inner input must not
+   repeat them. */
+.field .phone-input input:focus-visible {
+  box-shadow: none;
+}
+:root.dark-mode .phone-input {
+  background: var(--sunken);
+}
+:root.dark-mode .field .phone-input input {
+  background: transparent;
+}
+/* Service picker: the same chevron as the dial code, in the theme's colours,
+   instead of each browser's own arrow. */
+.select-wrap {
+  position: relative;
+}
+.field .select-wrap select {
+  appearance: none;
+  padding-right: 46px;
+  cursor: pointer;
+}
+.select-wrap .icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 18px;
+  height: 18px;
+  color: var(--body);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 .field input::placeholder,
 .field textarea::placeholder {
@@ -3177,8 +3277,9 @@ svg.icon {
   overflow: hidden;
 }
 @media (min-width: 960px) {
+  /* The form takes the wider share, so its two columns have room to breathe. */
   .plan-split {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   }
 }
 .plan-split .form-shell {
@@ -3317,6 +3418,7 @@ svg.icon {
 }
 .form-main {
   display: block;
+  container-type: inline-size;
 }
 @media (min-width: 900px) {
   .form-shell:has(.slot-picker:not([hidden])) .inquiry-form {
@@ -3501,6 +3603,106 @@ svg.icon {
     flex-wrap: wrap;
     gap: 12px 44px;
     padding-inline: max(var(--gutter), calc((100% - 1200px) / 2));
+  }
+}
+
+/* ───────────────────────── Services page ─────────────────────────
+   One full-width row per service: name on the left, detail on the right,
+   stacking on narrow screens. */
+.service-rows {
+  display: grid;
+  gap: 20px;
+}
+.service-row {
+  display: grid;
+  gap: 22px 56px;
+  padding: clamp(24px, 3.4vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+@media (min-width: 880px) {
+  .service-row {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  }
+}
+.service-row-head {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  justify-items: start;
+}
+.service-row-head .service-badge {
+  margin: 0;
+}
+.service-row-head h3 {
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  max-width: 16ch;
+}
+.service-row-body {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+.service-row-body > p:first-child {
+  max-width: 62ch;
+}
+@media (min-width: 600px) {
+  .service-row .tick-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 28px;
+  }
+}
+.service-row-fit {
+  display: grid;
+  gap: 4px 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+@media (min-width: 560px) {
+  .service-row-fit {
+    grid-template-columns: 6rem minmax(0, 1fr);
+  }
+}
+.service-row-fit b {
+  padding-top: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+/* Homepage signposts to the Work, How it works and About pages. */
+.related.explore a {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(24px, 3vw, 32px);
+}
+.related.explore .card-icon {
+  margin-bottom: 8px;
+}
+.related.explore b {
+  font-size: 1.25rem;
+}
+.related.explore p {
+  margin-bottom: 10px;
+  font-size: 0.9375rem;
+}
+.related.explore .text-link {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* How it works: three timeline columns rather than the chain's four. */
+@media (min-width: 780px) {
+  .chain.timeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

@@ -3,6 +3,8 @@ import AxeBuilder from "@axe-core/playwright";
 
 const ROUTES = [
   "/",
+  "/services",
+  "/how-it-works",
   "/web-design-middlesbrough",
   "/local-seo-middlesbrough",
   "/landing-page-design",

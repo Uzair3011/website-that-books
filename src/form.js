@@ -13,10 +13,12 @@ export function inquiryForm({
   const services = serviceOptions
     .map((service) => `<option>${service}</option>`)
     .join("");
+  // The open list names each country; the closed control shows only the dial
+  // prefix (#dial-code-value, kept in step by assets/app.js).
   const countries = dialCodes
     .map(
       ([country, dial], index) =>
-        `<option value="${dial}"${index === 0 ? " selected" : ""}>${dial} ${country}</option>`,
+        `<option value="${dial}"${index === 0 ? " selected" : ""}>${country} (${dial})</option>`,
     )
     .join("");
 
@@ -63,9 +65,12 @@ export function inquiryForm({
       <div class="field">
         <label for="phone">Phone</label>
         <div class="phone-input">
-          <select id="dial-code" name="dialCode" aria-label="Country code" autocomplete="tel-country-code">
-            ${countries}
-          </select>
+          <div class="dial-code">
+            <span class="dial-code-value" id="dial-code-value" aria-hidden="true">${dialCodes[0][1]}</span>${icon("chevron")}
+            <select id="dial-code" name="dialCode" aria-label="Country code" autocomplete="tel-country-code">
+              ${countries}
+            </select>
+          </div>
           <input id="phone" name="phone" type="tel" autocomplete="tel-national" required maxlength="30" placeholder="07123 456789" />
         </div>
         <p class="field-error" id="phone-error"></p>
@@ -77,10 +82,12 @@ export function inquiryForm({
       </div>
       <div class="field full">
         <label for="service">Service needed <span>(optional)</span></label>
-        <select id="service" name="service">
-          <option value="">Choose a service</option>
-          ${services}
-        </select>
+        <div class="select-wrap">
+          <select id="service" name="service">
+            <option value="">Choose a service</option>
+            ${services}
+          </select>${icon("chevron")}
+        </div>
         <p class="field-error" id="service-error"></p>
       </div>
     </div>

@@ -200,6 +200,19 @@ if (form) {
     timeZoneName: "short",
   });
   submit.disabled = false;
+  // The country-code control shows only the dial prefix; the native list it
+  // opens still names each country.
+  const dialCode = $("#dial-code");
+  const dialValue = $("#dial-code-value");
+  const syncDialCode = () => {
+    dialValue.textContent = dialCode.value;
+  };
+  dialCode.addEventListener("change", syncDialCode);
+  // Reset fires before the values are restored, and a back navigation can
+  // restore a different choice after load.
+  form.addEventListener("reset", () => setTimeout(syncDialCode));
+  addEventListener("pageshow", syncDialCode);
+  syncDialCode();
   function setMessage(text, kind = "") {
     message.textContent = text;
     message.className = `form-message ${kind}`;

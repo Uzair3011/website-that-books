@@ -23,7 +23,7 @@ export const SITE = {
 export const CTA = {
   primary: "Get my free website plan",
   primaryShort: "Get a plan",
-  secondary: "See website packages",
+  secondary: "Explore our services",
   href: "/free-website-audit",
 };
 
@@ -39,6 +39,7 @@ export const esc = (value) =>
 const ICONS = {
   arrow: '<path d="M5 12h13m-5-6 6 6-6 6"/>',
   "arrow-up": '<path d="M6 18 18 6M6 6h12v12"/>',
+  chevron: '<path d="m6 9 6 6 6-6"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
   phone:
     '<path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a15 15 0 0 1-7-7l2-2-2-5Z"/>',
@@ -62,12 +63,13 @@ export const icon = (name, extraClass = "") =>
   `<svg class="icon${extraClass ? ` ${extraClass}` : ""}" aria-hidden="true" viewBox="0 0 24 24">${ICONS[name]}</svg>`;
 
 // ───────────────────────── Navigation ─────────────────────────
-// Five primary links maximum, per the strategy brief.
+// Five primary links maximum, per the strategy brief. Each is its own page;
+// the homepage is an overview that links out to them.
 export const NAV = [
-  { href: "/#services", label: "Services" },
-  { href: "/#packages", label: "Website packages" },
+  { href: "/services", label: "Services" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/work", label: "Work" },
-  { href: "/#process", label: "How it works" },
+  { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
 ];
 
@@ -166,7 +168,7 @@ export function footer() {
       </div>
       <div class="footer-col footer-services">
         <h2>Services</h2>
-        <div class="footer-links">${services}
+        <div class="footer-links"><a href="/services">All services</a>${services}
           <a href="/google-business-profile">Google Business Profile</a>
           <a href="/website-care">Website care</a>
           <a href="/med-spa-growth-system">Med-spa growth system</a>
@@ -175,7 +177,7 @@ export function footer() {
       <div class="footer-col footer-company">
         <h2>Company</h2>
         <div class="footer-links">
-          <a href="/work">Work</a><a href="/about">About</a><a href="/resources">Resources</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a>
+          <a href="/work">Work</a><a href="/how-it-works">How it works</a><a href="/about">About</a><a href="/resources">Resources</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a>
         </div>
       </div>
       <div class="footer-col footer-contact">

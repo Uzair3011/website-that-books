@@ -8,6 +8,7 @@ import crmBooking from "./pages/crm-booking-automation.js";
 import freeAudit from "./pages/free-website-audit.js";
 import googleBusinessProfile from "./pages/google-business-profile.js";
 import home from "./pages/home.js";
+import howItWorks from "./pages/how-it-works.js";
 import landingPages from "./pages/landing-page-design.js";
 import localSeo from "./pages/local-seo-middlesbrough.js";
 import medSpa from "./pages/med-spa-growth-system.js";
@@ -15,6 +16,7 @@ import notFound from "./pages/not-found.js";
 import pricing from "./pages/pricing.js";
 import privacy from "./pages/privacy.js";
 import resources from "./pages/resources.js";
+import services from "./pages/services.js";
 import terms from "./pages/terms.js";
 import webDesign from "./pages/web-design-middlesbrough.js";
 import webDesignTeesside from "./pages/web-design-teesside.js";
@@ -23,6 +25,7 @@ import work from "./pages/work.js";
 
 export const pages = [
   home,
+  services,
   webDesign,
   webDesignTeesside,
   localSeo,
@@ -32,6 +35,7 @@ export const pages = [
   crmBooking,
   websiteCare,
   work,
+  howItWorks,
   about,
   freeAudit,
   contact,

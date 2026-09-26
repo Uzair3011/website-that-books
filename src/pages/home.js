@@ -10,20 +10,15 @@ import {
   organizationJsonLd,
   serviceJsonLd,
 } from "../site.js";
-import { packages } from "./pricing.js";
 
 const FAQS = [
-  {
-    q: "How much does a Veltra website cost?",
-    a: "<p>Website packages start at £495 for a focused one-page site. Our five-page Business package is £895 and our larger Growth package is £1,495. Larger or more complex projects receive a fixed custom quote. <a href=\"/pricing\">See the full price list.</a></p>",
-  },
   {
     q: "How long will the website take?",
     a: "<p>A Launch site typically takes around seven working days after the content is approved. Business and Growth sites usually take ten to twenty working days, depending on the scope and how quickly feedback is supplied.</p>",
   },
   {
     q: "Do I have to pay for a monthly plan?",
-    a: "<p>No. Ongoing care is optional. If you prefer to manage the website yourself, we will explain the handover. If you want us to handle hosting, updates and maintenance, care plans start at £49 a month.</p>",
+    a: "<p>No. Ongoing care is optional. If you prefer to manage the website yourself, we will explain the handover. If you want us to handle hosting, updates and maintenance, we offer an optional <a href=\"/website-care\">website care plan</a>.</p>",
   },
   {
     q: "Will I own the website?",
@@ -106,45 +101,6 @@ const SERVICES = [
   },
 ];
 
-const WORK = [
-  {
-    src: "/assets/work/example-clinic.svg",
-    alt: "A clinic website design with a treatment list and a live booking panel showing selectable dates and times.",
-    tags: ["Website design", "Booking automation", "AI reception"],
-    title: "Med-spa growth system",
-    problem: "Clinic enquiries arrive out of hours, and booking means a phone call.",
-    built:
-      "A clinic website wired to live Google Calendar availability, with confirmation emails and an AI receptionist.",
-    result: "Live: you can use the booking flow on this site.",
-    href: "/med-spa-growth-system",
-    cta: "View project",
-  },
-  {
-    src: "/assets/work/example-trades.svg",
-    alt: "Design example: a home-services website with a dark hero, prominent phone number, covered-areas list and a quote request form.",
-    tags: ["Website design", "Local SEO"],
-    title: "Home services website",
-    problem: "Trades win work by phone, but many sites bury the number and the areas covered.",
-    built:
-      "A phone-first layout, service areas stated plainly and a quote form where the decision is made.",
-    result: "Design example, not a client project. No results claimed.",
-    href: "/work",
-    cta: "View work",
-  },
-  {
-    src: "/assets/work/example-landing.svg",
-    alt: "Design example: a single-offer landing page with one headline, three proof points and a short form above the fold.",
-    tags: ["Landing pages", "CRO"],
-    title: "Single-offer landing page",
-    problem: "Campaign traffic leaves when it has to hunt for the form.",
-    built:
-      "One offer, one audience and one action, with no site navigation and the form above the fold.",
-    result: "Design example, not a client project. No results claimed.",
-    href: "/work",
-    cta: "View work",
-  },
-];
-
 const STANDARDS = [
   "A clear recommendation instead of a menu of things you do not need",
   "A written scope and price before work begins",
@@ -154,7 +110,7 @@ const STANDARDS = [
 ];
 
 const HIGHLIGHTS = [
-  "Website packages from £495",
+  "Fixed price agreed upfront",
   "Custom quotes available",
   "No forced bundle",
   "Clear written scope",
@@ -163,23 +119,28 @@ const HIGHLIGHTS = [
   "Optional ongoing support",
 ];
 
-const PROCESS = [
-  [
-    "Choose the right starting point",
-    "Tell us what the business does, what is not working and what you want the website to achieve. We will recommend a package or custom scope.",
-  ],
-  [
-    "Agree the message and structure",
-    "We map the pages, offers, calls to action and local search priorities before design begins.",
-  ],
-  [
-    "Review the working site",
-    "You receive a private preview, give focused feedback and see the site take shape on desktop and mobile.",
-  ],
-  [
-    "Launch with the essentials connected",
-    "We complete final checks, connect analytics and search tools, then hand over a site that is ready to use.",
-  ],
+const EXPLORE = [
+  {
+    href: "/work",
+    icon: "layout",
+    label: "Our work",
+    text: "What we build, clearly labelled, including a live booking system you can try for yourself.",
+    cta: "See the work",
+  },
+  {
+    href: "/how-it-works",
+    icon: "flow",
+    label: "How it works",
+    text: "Four steps from the first conversation to a live website, with a written scope before anything starts.",
+    cta: "See the process",
+  },
+  {
+    href: "/about",
+    icon: "shield",
+    label: "About Veltra",
+    text: "A local studio that sells one service at a time, writes the scope down and never invents results.",
+    cta: "Meet Veltra",
+  },
 ];
 
 const tick = (text) => `<li>${icon("check")}<span>${text}</span></li>`;
@@ -202,42 +163,6 @@ const services = SERVICES.map(
 </article>`,
 ).join("\n");
 
-const packageCards = packages
-  .map(
-    (pkg) => `<article class="price-card${pkg.featured ? " featured" : ""}">
-  <div class="price-head">
-    <p class="price-name">${pkg.name}</p>
-    ${pkg.flag ? `<p class="price-flag">${pkg.flag}</p>` : ""}
-  </div>
-  <p class="price-amount"><strong>${pkg.price}</strong><span>${pkg.unit}</span></p>
-  <p>${pkg.summary}</p>
-  <ul class="tick-list">${pkg.features.map(tick).join("")}</ul>
-  <a class="btn${pkg.featured ? "" : " secondary"}" href="#plan">${pkg.cta}</a>
-</article>`,
-  )
-  .join("\n");
-
-const workCards = WORK.map(
-  (item) => `<article class="work-item">
-  <figure class="work-figure"><img src="${item.src}" width="1280" height="900" loading="lazy" alt="${item.alt}" /></figure>
-  <ul class="work-tags">${item.tags.map((tag) => `<li>${tag}</li>`).join("")}</ul>
-  <h3>${item.title}</h3>
-  <ul class="work-facts">
-    <li><b>The problem</b><span>${item.problem}</span></li>
-    <li><b>What Veltra built</b><span>${item.built}</span></li>
-    <li><b>Result</b><span>${item.result}</span></li>
-  </ul>
-  <a class="text-link" href="${item.href}">${item.cta}${icon("arrow-up")}</a>
-</article>`,
-).join("\n");
-
-const processSteps = PROCESS.map(
-  ([title, text]) => `<li>
-  <h3>${title}</h3>
-  <p>${text}</p>
-</li>`,
-).join("\n");
-
 const body = `      <section class="hero hero-feature">
         <div class="container">
           <div class="hero-grid">
@@ -247,7 +172,7 @@ const body = `      <section class="hero hero-feature">
               <p class="lede">Veltra creates conversion-focused websites for businesses in Middlesbrough and across Teesside. Start with the website you need today, then add local SEO, landing pages, booking and AI automation when they make sense for your business.</p>
               <div class="button-row">
                 <a class="btn" href="#plan">${CTA.primary}${icon("arrow-up")}</a>
-                <a class="btn secondary" href="#packages">${CTA.secondary}</a>
+                <a class="btn secondary" href="/services">${CTA.secondary}</a>
               </div>
             </div>
             <div class="hero-media">
@@ -298,6 +223,9 @@ ${outcomes}
           <div class="service-grid reveal">
 ${services}
           </div>
+          <div class="section-action">
+            <a class="btn secondary" href="/services">See all services and how they fit together${icon("arrow-up")}</a>
+          </div>
         </div>
       </section>
 
@@ -306,30 +234,7 @@ ${marquee(
   { label: "Veltra services", duration: "48s" },
 )}
 
-      <section class="section" id="packages">
-        <div class="container">
-          <div class="head-split">
-            <div>
-              <p class="eyebrow">Website packages</p>
-              <h2>Know what your website will cost before the work starts</h2>
-            </div>
-            <p>Choose a package when the scope is straightforward. If your site needs ecommerce, member areas, unusual integrations or a larger content structure, we will provide a custom written quote.</p>
-          </div>
-          <div class="price-grid reveal">
-${packageCards}
-          </div>
-          <div class="custom-row">
-            <div>
-              <h3>Need something different?</h3>
-              <p>Ecommerce, memberships, directories, complex integrations and larger sites are scoped separately. You will receive a written proposal with the work, timeline and price before you commit.</p>
-            </div>
-            <a class="btn secondary" href="/contact">Request a custom quote</a>
-          </div>
-          <p class="price-note">Optional website care from £49 a month. No care plan is required. Final scope and any third-party costs are confirmed in writing before work begins. All prices exclude VAT.</p>
-        </div>
-      </section>
-
-      <section class="section band-light" id="why-veltra">
+      <section class="section" id="why-veltra">
         <div class="container">
           <div class="head-split">
             <div>
@@ -364,34 +269,19 @@ ${packageCards}
         </div>
       </section>
 
-      <section class="section" id="work">
+      <section class="section band-light" id="explore">
         <div class="container">
           <div class="head-split">
             <div>
-              <p class="eyebrow">Selected work</p>
-              <h2>Work that is easy to judge</h2>
+              <p class="eyebrow">Take a closer look</p>
+              <h2>See the work, the process and the people behind it</h2>
             </div>
-            <p>Good work should not need vague claims. Every project shows what the client needed, what we built and what happened next.</p>
           </div>
-          <div class="work-grid three reveal">
-${workCards}
-          </div>
-          <p class="disclosure">Items marked “design example” show how we build, not a client project. Client case studies are published only with permission and only with results we can evidence.</p>
-        </div>
-      </section>
-
-      <section class="section band-light" id="process">
-        <div class="container">
-          <div class="section-head">
-            <p class="eyebrow">How it works</p>
-            <h2>From first conversation to live website</h2>
-          </div>
-          <ol class="steps reveal">
-${processSteps}
-          </ol>
-          <div class="section-action">
-            <a class="btn" href="#plan">${CTA.primary}${icon("arrow-up")}</a>
-          </div>
+          <ul class="related explore reveal">
+${EXPLORE.map(
+  (item) => `            <li><a href="${item.href}"><span class="card-icon" aria-hidden="true">${icon(item.icon)}</span><b>${item.label}</b><p>${item.text}</p><span class="text-link">${item.cta}${icon("arrow-up")}</span></a></li>`,
+).join("\n")}
+          </ul>
         </div>
       </section>
 
@@ -453,15 +343,15 @@ ${inquiryForm({
 
 export default {
   path: "/",
-  title: "Web Design Middlesbrough | Clear Website Packages | Veltra Media",
+  title: "Web Design Middlesbrough & Teesside | Websites That Win Enquiries | Veltra Media",
   description:
-    "Premium conversion-focused websites for Middlesbrough and Teesside businesses. Clear packages from £495, local SEO foundations and custom options.",
+    "Premium conversion-focused websites for Middlesbrough and Teesside businesses, with local SEO foundations, a written scope before work starts, and booking and AI automation when you need them.",
   jsonLd: [
     organizationJsonLd(),
     serviceJsonLd({
       name: "Website design",
       description:
-        "Conversion-focused websites with local search foundations for Middlesbrough and Teesside businesses, sold as clear packages or a custom written quote.",
+        "Conversion-focused websites with local search foundations for Middlesbrough and Teesside businesses, each with a fixed written scope before work begins.",
       path: "/",
     }),
     faqJsonLd(FAQS),
