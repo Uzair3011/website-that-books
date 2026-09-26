@@ -585,3 +585,36 @@ test("the AI call button explains a missing microphone or an unavailable service
   await page.keyboard.press("Escape");
   await expect(panel).toBeHidden();
 });
+
+test("the call and chat buttons and panels meet WCAG AA in both themes", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  const audit = async (selector, label) => {
+    for (const dark of [false, true]) {
+      await page.evaluate(
+        (dark) => document.documentElement.classList.toggle("dark-mode", dark),
+        dark,
+      );
+      await settle(page);
+      const result = await new AxeBuilder({ page })
+        .include(selector)
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      expect(
+        result.violations.map((v) => ({
+          id: v.id,
+          nodes: v.nodes.map((n) => n.target),
+        })),
+        `${label}, dark=${dark}`,
+      ).toEqual([]);
+    }
+  };
+  await page.goto("/");
+  await audit(".assist-dock", "dock");
+  await page.locator(".chat-launcher").click();
+  await audit("#chat-panel", "chat panel");
+  await page.keyboard.press("Escape");
+  await page.locator(".voice-launcher").click();
+  await audit("#voice-panel", "call panel");
+});
