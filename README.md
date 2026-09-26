@@ -256,7 +256,9 @@ Three separate routes, each with its own button:
   ElevenLabs agent. The agent only accepts signed URLs from `/api/voice` (same-origin, 4 calls
   per visitor per 10 minutes, 5-minute cap per call, concurrency and daily limits on the
   agent). Its `save_lead` tool posts to `/api/leads`, so callers appear on the dashboard as
-  `call`. The SDK and its audio worklets are self-hosted (`scripts/vendor.mjs`), keeping the
+  `call`; later saves in the same call (or chat) merge into that lead, and the team is emailed
+  once per new lead. The agent reads phone numbers back before saving and hangs up after
+  goodbye or 20 seconds of silence. The SDK and its audio worklets are self-hosted (`scripts/vendor.mjs`), keeping the
   CSP at `script-src 'self'`; `Permissions-Policy` allows the microphone for this origin only.
 - **Chat** (`assets/chat.js`, `/api/chat`) is Gemini answering from the site's own pages
   (`lib/site-knowledge.js`, rebuilt from `src/pages.js` on every deploy). When a visitor asks

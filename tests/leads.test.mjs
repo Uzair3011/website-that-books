@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import keepalive from "../api/keepalive.js";
 import { createLeadIngestHandler, validateAgentLead } from "../api/leads.js";
-import { leadRow, leadsConfigured, saveLead } from "../lib/leads.js";
+import { leadRow, leadsConfigured, mergeLead, saveLead } from "../lib/leads.js";
 
 const TOKEN = "test-token-0123456789";
 function response() {
@@ -183,4 +183,81 @@ test("the keep-alive cron only runs with Vercel's cron secret", async () => {
     if (original === undefined) delete process.env.CRON_SECRET;
     else process.env.CRON_SECRET = original;
   }
+});
+
+test("later saves in one conversation add to the lead instead of wiping it", async () => {
+  const env = {
+    SUPABASE_URL: "https://x.supabase.co",
+    SUPABASE_SERVICE_ROLE_KEY: "service",
+  };
+  const original = globalThis.fetch;
+  const calls = [];
+  const existing = [
+    { details: { summary: "Wants a website", transcript: "Visitor: hi" } },
+  ];
+  globalThis.fetch = async (url, init = {}) => {
+    calls.push({ url, init });
+    return init.method === "POST"
+      ? new Response(null, { status: 201 })
+      : Response.json(calls.length === 1 ? existing : []);
+  };
+  try {
+    const later = await mergeLead(
+      {
+        name: "Jane",
+        phone: "+447700900007",
+        business: "Jane's Salon",
+        email: "",
+        source: "call",
+        reference: "call:conv_1",
+        details: { summary: null, recordingUrl: "https://r.example/1.mp3" },
+      },
+      env,
+    );
+    assert.equal(later.created, false);
+    assert.match(calls[0].url, /reference=eq\.call%3Aconv_1$/);
+    const body = JSON.parse(calls[1].init.body);
+    assert.equal(
+      calls[1].init.headers.Prefer,
+      "return=minimal,resolution=merge-duplicates",
+    );
+    assert.equal(body.business_name, "Jane's Salon");
+    assert.equal(
+      "email" in body,
+      false,
+      "a blank email must not erase a known one",
+    );
+    assert.equal("status" in body, false, "the team's status is never touched");
+    assert.deepEqual(body.details, {
+      summary: "Wants a website",
+      transcript: "Visitor: hi",
+      recordingUrl: "https://r.example/1.mp3",
+    });
+    const first = await mergeLead(
+      {
+        name: "Sam",
+        phone: "+447700900008",
+        source: "chat",
+        reference: "chat:s",
+        details: {},
+      },
+      env,
+    );
+    assert.equal(first.created, true);
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("the team is emailed once per new call lead, not on every save", async () => {
+  const notified = [];
+  for (const created of [true, false]) {
+    const result = await ingest(call, {
+      store: async () => ({ created }),
+      notifyAdmin: async (lead) => notified.push(lead),
+    });
+    assert.equal(result.statusCode, 200);
+  }
+  assert.equal(notified.length, 1);
+  assert.equal(notified[0].reference, "call:call_123");
 });

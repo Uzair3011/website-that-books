@@ -3,7 +3,9 @@
 // make these bodies larger than the website forms', so it has its own size limit.
 import { createHash, timingSafeEqual } from "node:crypto";
 import { normalizePhone } from "../assets/validation.js";
-import { leadsConfigured, saveLead } from "../lib/leads.js";
+import { inquiryAdminEmail } from "../lib/email-templates.js";
+import { adminAddress, emailConfigured, sendEmail } from "../lib/email.js";
+import { leadsConfigured, mergeLead, saveLead } from "../lib/leads.js";
 
 const MAX_BODY_BYTES = 256 * 1024;
 const text = (value, max) =>
@@ -64,8 +66,32 @@ export function validateAgentLead(raw) {
   };
 }
 
+// A lead with a provider id (a call or chat) merges later saves from the same conversation;
+// one without is simply stored.
+async function storeLead(lead) {
+  if (lead.reference) return mergeLead(lead);
+  await saveLead(lead);
+  return { created: true };
+}
+
 export function createLeadIngestHandler({
-  store = saveLead,
+  store = storeLead,
+  notifyAdmin = async (lead) => {
+    if (!emailConfigured()) return;
+    await sendEmail({
+      html: inquiryAdminEmail(
+        {
+          ...lead,
+          summary: lead.details.summary,
+          requestId: lead.reference || "",
+        },
+        lead.source === "call" ? "New call lead" : "New chat lead",
+      ),
+      replyTo: lead.email || undefined,
+      subject: `New ${lead.source} lead - ${lead.name}`,
+      to: adminAddress(),
+    });
+  },
   stored = leadsConfigured,
   token = () => process.env.LEAD_INGEST_TOKEN,
 } = {}) {
@@ -95,7 +121,8 @@ export function createLeadIngestHandler({
     const { valid, errors, lead } = validateAgentLead(raw);
     if (!valid) return res.status(422).json({ ok: false, errors });
     try {
-      await store(lead);
+      const { created } = (await store(lead)) || {};
+      if (created) await notifyAdmin(lead).catch(() => {});
       return res.status(200).json({ ok: true });
     } catch {
       return res

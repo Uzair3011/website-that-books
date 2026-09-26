@@ -11,7 +11,7 @@ import {
   readJsonPost,
   sendRateLimited,
 } from "../lib/http.js";
-import { leadsConfigured, upsertLead } from "../lib/leads.js";
+import { leadsConfigured, mergeLead } from "../lib/leads.js";
 import { siteKnowledge } from "../lib/site-knowledge.js";
 import { SITE } from "../src/site.js";
 import { formPage } from "./inquiry.js";
@@ -168,7 +168,7 @@ export function createChatHandler({
   model = generate,
   configured = geminiConfigured,
   stored = leadsConfigured,
-  store = upsertLead,
+  store = mergeLead,
   notifyAdmin = async (payload) => {
     if (!emailConfigured()) return;
     await sendEmail({
