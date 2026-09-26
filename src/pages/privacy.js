@@ -6,7 +6,7 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Privacy</p>
           <h1>Your information, handled with care.</h1>
-          <p class="lede">Last updated 22 September 2026. This page explains the information used by the Veltra Media marketing website, its audit and enquiry forms, and its strategy-call booking.</p>
+          <p class="lede">Last updated 26 September 2026. This page explains the information used by the Veltra Media marketing website, its audit and enquiry forms, and its strategy-call booking.</p>
         </div>
       </section>
 
@@ -25,7 +25,7 @@ const body = `      <section class="hero">
 
             <h2>Browser storage and analytics</h2>
             <p>This site stores only your selected light or dark appearance in your browser. Form entries are not saved to browser storage. See the <a href="/cookie-policy">cookie policy</a> for detail.</p>
-            <p>Where website analytics and Google Search Console are connected for this site, they are used to understand aggregate traffic and search performance, not to build advertising profiles. No advertising pixels or third-party advertising trackers are installed. Your host may retain operational access logs.</p>
+            <p>We use Vercel Web Analytics to understand aggregate traffic, such as which pages are visited. It does not use cookies and does not identify individual visitors. Where Google Search Console is connected, it is used to understand search performance. Neither is used to build advertising profiles. No advertising pixels or third-party advertising trackers are installed. Your host may retain operational access logs.</p>
 
             <h2>Access, corrections and deletion</h2>
             <p>You can request access to, correction of, or deletion of information by using our <a href="/contact">contact page</a> or replying to an existing conversation. We retain enquiry information only as needed to handle your request, maintain the business relationship, or satisfy applicable obligations. Actual retention in connected providers depends on their configured policies.</p>

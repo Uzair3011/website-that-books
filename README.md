@@ -193,26 +193,28 @@ Browser tests cover desktop Chromium, mobile Chromium and mobile Safari: every r
 
 ## Analytics and Search Console
 
-**Nothing is installed.** There is no Google Analytics, no Google Tag Manager,
-no Search Console verification tag and no third-party pixel anywhere in this
-repository, and the privacy policy says so. The redesign did not remove any
-tracking, because there was none to remove.
+**Vercel Web Analytics is installed.** `src/layout.js` loads
+`/_vercel/insights/script.js` on every page. Vercel serves it from the site's own
+domain, so the existing `'self'` Content-Security-Policy already allows it. It is
+cookieless, and `/privacy` and `/cookie-policy` name it. The script only exists
+on Vercel deployments, so it 404s harmlessly under `npm run dev`. Page views
+appear in the Vercel project's Analytics tab.
 
-Connecting them cannot be done from code alone. To do it:
+There is no Google Analytics, no Google Tag Manager, no Search Console
+verification tag and no third-party pixel. Search Console cannot be connected
+from code alone. To do it:
 
 1. **Search Console** — add `https://www.veltramedia.com` as a property. Prefer
    DNS (TXT record) verification, which needs no site change. If you use the
    HTML-tag method instead, add the `<meta name="google-site-verification">` tag
    to the `<head>` in `src/layout.js` so it ships on every page.
 2. **Submit the sitemap** at `https://www.veltramedia.com/sitemap.xml`.
-3. **Analytics** — GA4, or a lighter privacy-friendly alternative. Either way the
-   script is third-party, so the Content-Security-Policy in `vercel.json` must be
-   widened to allow that origin in `script-src` and `connect-src`. Do not loosen
-   the policy to a wildcard.
-4. **Update `/privacy`** (`src/pages/privacy.js`) to name whatever you connect.
-   The current wording covers the case where analytics exist but does not name a
-   provider.
-5. **Conversion events** — once analytics exists, the events worth tracking are
+3. **Other analytics** — if you add GA4 or another third-party tool, the
+   Content-Security-Policy in `vercel.json` must be widened to allow that origin
+   in `script-src` and `connect-src`. Do not loosen the policy to a wildcard.
+4. **Update `/privacy`** (`src/pages/privacy.js`) and `/cookie-policy` to name
+   whatever else you connect.
+5. **Conversion events** — the events worth tracking are
    primary CTA click, form start, form submit, booking confirmed, phone click and
    email click. `assets/app.js` already has the exact points in the submit and
    booking-confirmation paths where these should fire.

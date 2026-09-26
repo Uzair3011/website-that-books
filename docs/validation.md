@@ -77,8 +77,9 @@ font is self-hosted.
 
 ## Still required before production
 
-- **Analytics and Search Console are not installed.** See the README section of
-  the same name; neither can be completed from code alone.
+- **Search Console is not connected.** Vercel Web Analytics is installed, but
+  Search Console needs DNS or tag verification. See the README section
+  "Analytics and Search Console".
 - `LEAD_WEBHOOK_URL` is still unset, so the enquiry form correctly reports that
   requests cannot be sent. Connect a destination and submit a real test request.
 - Client case studies on `/work` are labelled design examples. Replace them with

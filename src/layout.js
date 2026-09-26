@@ -65,6 +65,7 @@ export function renderPage(
     <script src="/assets/theme.js"></script>
     <script src="/assets/config.js" defer></script>
     <script src="/assets/app.js" type="module"></script>
+    <script src="/_vercel/insights/script.js" defer></script>
     ${ld}
   </head>
   <body${bodyClass ? ` class="${bodyClass}"` : ""}>

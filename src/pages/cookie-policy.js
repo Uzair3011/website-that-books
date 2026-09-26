@@ -1,13 +1,14 @@
 import { SITE, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
 
 // Written from what the site actually does: it sets no cookies of its own, keeps
-// one appearance preference in local storage, and loads no third-party scripts.
-// If analytics or any other tracker is ever added, update this page first.
+// one appearance preference in local storage, and loads only Vercel Web
+// Analytics (cookieless, served from our own domain). If any other analytics or
+// tracker is ever added, update this page first.
 const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Cookies</p>
           <h1>Cookie policy.</h1>
-          <p class="lede">Last updated 24 September 2026. This page explains what this website stores in your browser and why. In short: no cookies are set by this site, and nothing is used to track you for advertising.</p>
+          <p class="lede">Last updated 26 September 2026. This page explains what this website stores in your browser and why. In short: no cookies are set by this site, and nothing is used to track you for advertising.</p>
         </div>
       </section>
 
@@ -28,7 +29,7 @@ const body = `      <section class="hero">
             <p>Call, email and WhatsApp links open your phone, mail app or the relevant external service. Those services have their own privacy terms and may use their own cookies once you leave this site.</p>
 
             <h2>Analytics</h2>
-            <p>This site does not currently load an analytics tool. If we add one, we will say so here first. If it needs cookies that require your consent, we will ask for it before they are set.</p>
+            <p>This site uses Vercel Web Analytics to count page visits and see which pages are viewed. It does not set cookies or store anything in your browser, and it does not identify you or follow you across other websites. Visits are counted in aggregate only. If we ever add a tool that needs cookies requiring your consent, we will say so here first and ask before they are set.</p>
 
             <h2>More about your information</h2>
             <p>How we handle information you send through our forms is explained in the <a href="/privacy">privacy policy</a>. Questions about this page can be sent to <a href="mailto:${SITE.email}">${SITE.email}</a> or raised on <a href="tel:${SITE.phone}">${SITE.phoneLabel}</a>.</p>
