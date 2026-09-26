@@ -542,9 +542,14 @@ test("chat answers in the panel, links only safe targets, and remembers the conv
   expect(sent.messages).toEqual([{ role: "user", text: "How much does a website cost?" }]);
   expect(sent.page).toBe("/pricing");
   expect(sent.sessionId).toMatch(/^[\w-]{16,64}$/);
+  // The visitor's own words are never turned into links.
+  await page.locator("#chat-input").fill("Call me on 07700 900123 or me@example.com");
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".chat-msg.assistant:not(.typing)")).toHaveCount(3);
+  await expect(page.locator(".chat-msg.user a")).toHaveCount(0);
   await page.goto("/about");
   await expect(page.locator("#chat-panel")).toBeVisible();
-  await expect(page.locator(".chat-msg.user")).toHaveText("How much does a website cost?");
+  await expect(page.locator(".chat-msg.user").first()).toHaveText("How much does a website cost?");
   await page.keyboard.press("Escape");
   await expect(page.locator("#chat-panel")).toBeHidden();
   await expect(page.locator(".assist-dock")).toBeVisible();

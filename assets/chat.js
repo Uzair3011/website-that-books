@@ -154,7 +154,8 @@
     return el(
       "div",
       { class: `chat-msg ${message.role}${message.error ? " error" : ""}` },
-      rich(message.text),
+      // Only replies get links; the visitor's own words stay as typed.
+      message.role === "assistant" ? rich(message.text) : message.text,
     );
   }
 
