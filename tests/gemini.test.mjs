@@ -29,7 +29,7 @@ const input = {
 test("the chain is the main model then a different fallback, both overridable", () => {
   assert.deepEqual(modelChain({}), [
     "gemini-3.5-flash-lite",
-    "gemini-2.5-flash-lite",
+    "gemini-3.1-flash-lite",
   ]);
   assert.deepEqual(
     modelChain({ GEMINI_MODEL: "a", GEMINI_FALLBACK_MODEL: "b" }),
@@ -60,10 +60,10 @@ test("a timeout, quota error or outage on the main model falls through to the fa
     );
     assert.deepEqual(called, [
       "gemini-3.5-flash-lite",
-      "gemini-2.5-flash-lite",
+      "gemini-3.1-flash-lite",
     ]);
     assert.equal(result.parts[0].text, "from fallback");
-    assert.equal(result[MODEL], "gemini-2.5-flash-lite");
+    assert.equal(result[MODEL], "gemini-3.1-flash-lite");
     assert.equal(
       JSON.stringify(result).includes("gemini"),
       false,
@@ -97,9 +97,9 @@ test("both failing throws the last error; a pinned model is the only one tried",
   const pinned = await withFetch(
     () => new Response(null, { status: 503 }),
     () =>
-      generate({ ...input, model: "gemini-2.5-flash-lite" }, env).catch(
+      generate({ ...input, model: "gemini-3.1-flash-lite" }, env).catch(
         (e) => e,
       ),
   );
-  assert.deepEqual(pinned.called, ["gemini-2.5-flash-lite"]);
+  assert.deepEqual(pinned.called, ["gemini-3.1-flash-lite"]);
 });
