@@ -8,6 +8,7 @@ import {
   systemPrompt,
   toContents,
 } from "../api/chat.js";
+import { MODEL } from "../lib/gemini.js";
 import { htmlToText, siteKnowledge } from "../lib/site-knowledge.js";
 
 const SESSION = "0123456789abcdef-session";
@@ -280,4 +281,23 @@ test("the assistant's knowledge is the live site text, without form markup or le
     "A & B £5",
   );
   assert.match(systemPrompt("KNOWLEDGE"), /save_lead[\s\S]*KNOWLEDGE$/);
+});
+
+test("the reply after a save goes to the same model that asked to save", async () => {
+  const inputs = [];
+  const first = callSave({
+    name: "Jane",
+    phone: "07700 900123",
+    consent: true,
+  });
+  first[MODEL] = "gemini-2.5-flash-lite";
+  const turns = [first, say("Saved.")];
+  await run(ask("Call me: Jane, 07700 900123, yes"), {
+    model: async (input) => {
+      inputs.push(input);
+      return turns.shift();
+    },
+  });
+  assert.equal(inputs[0].model, undefined);
+  assert.equal(inputs[1].model, "gemini-2.5-flash-lite");
 });

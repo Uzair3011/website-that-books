@@ -5,7 +5,7 @@
 import { normalizePhone, serviceOptions } from "../assets/validation.js";
 import { inquiryAdminEmail } from "../lib/email-templates.js";
 import { adminAddress, emailConfigured, sendEmail } from "../lib/email.js";
-import { generate, geminiConfigured } from "../lib/gemini.js";
+import { MODEL, generate, geminiConfigured } from "../lib/gemini.js";
 import {
   createRateLimiter,
   readJsonPost,
@@ -253,8 +253,11 @@ export function createChatHandler({
             };
           }
         }
+        const caller = content[MODEL];
         content = await model({
           system,
+          // Function-call signatures are only valid on the model that made the call.
+          model: caller,
           contents: [
             ...contents,
             content,

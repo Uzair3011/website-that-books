@@ -12,6 +12,9 @@
   ];
   const OFFLINE =
     "Sorry, I couldn’t connect. Please check your connection, or call us on +44 7466 539736.";
+  // The server answered too slowly: not the visitor's connection, so don't blame it.
+  const SLOW =
+    "Sorry, I can’t reply right now. You can call us on +44 7466 539736, email hello@veltramedia.com, or book a call at /contact.";
 
   function read() {
     try {
@@ -238,8 +241,11 @@
               text: result.reply || result.message || OFFLINE,
               error: result.ok !== true,
             };
-    } catch {
-      reply = { text: OFFLINE, error: true };
+    } catch (error) {
+      reply = {
+        text: error?.name === "TimeoutError" ? SLOW : OFFLINE,
+        error: true,
+      };
     }
     state.messages.push({ role: "assistant", ...reply });
     state.messages = state.messages.slice(-40);

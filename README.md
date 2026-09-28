@@ -263,8 +263,9 @@ Three separate routes, each with its own button:
 - **Chat** (`assets/chat.js`, `/api/chat`) is Gemini answering from the site's own pages
   (`lib/site-knowledge.js`, rebuilt from `src/pages.js` on every deploy). When a visitor asks
   to be contacted it calls `save_lead`, stored as `chat` with the transcript. 30 messages per
-  visitor per 10 minutes; if Gemini's free quota runs out, visitors get the phone number and
-  email instead.
+  visitor per 10 minutes; if the main model (`GEMINI_MODEL`) fails or takes over 9 seconds, a second model
+  (`GEMINI_FALLBACK_MODEL`, default `gemini-2.5-flash-lite`) answers instead; if both fail, visitors
+  get the phone number and email.
 
 Each button is only rendered when its service is configured (`GEMINI_API_KEY`;
 `ELEVENLABS_API_KEY` + `ELEVENLABS_AGENT_ID`). Set up or update the voice agent with
