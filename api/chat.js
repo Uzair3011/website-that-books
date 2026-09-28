@@ -12,7 +12,7 @@ import {
   sendRateLimited,
 } from "../lib/http.js";
 import { leadsConfigured, mergeLead } from "../lib/leads.js";
-import { siteKnowledge } from "../lib/site-knowledge.js";
+import { relevantKnowledge, siteKnowledge } from "../lib/site-knowledge.js";
 import { SITE } from "../src/site.js";
 import { formPage } from "./inquiry.js";
 
@@ -201,12 +201,21 @@ export function createChatHandler({
     }
 
     const system = systemPrompt();
+    // The backup model only gets the passages matching the visitor's recent questions.
+    const recent = raw.messages
+      .filter((m) => m.role === "user")
+      .slice(-3)
+      .map((m) => m.text)
+      .join(" ");
+    const backupSystem = systemPrompt(
+      relevantKnowledge(recent, { page: formPage(raw) }),
+    );
     const tools = stored()
       ? [{ functionDeclarations: [SAVE_LEAD] }]
       : undefined;
     let leadSaved = false;
     try {
-      let content = await model({ system, contents, tools });
+      let content = await model({ system, backupSystem, contents, tools });
       // At most one save per message: the model calls save_lead, sees the outcome, then replies.
       const call = content.parts?.find(
         (part) => part.functionCall,
@@ -256,6 +265,7 @@ export function createChatHandler({
         const caller = content[MODEL];
         content = await model({
           system,
+          backupSystem,
           // Function-call signatures are only valid on the model that made the call.
           model: caller,
           contents: [

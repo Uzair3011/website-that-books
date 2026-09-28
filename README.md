@@ -264,8 +264,8 @@ Three separate routes, each with its own button:
   (`lib/site-knowledge.js`, rebuilt from `src/pages.js` on every deploy). When a visitor asks
   to be contacted it calls `save_lead`, stored as `chat` with the transcript. 30 messages per
   visitor per 10 minutes; if the main model (`GEMINI_MODEL`) fails or takes over 9 seconds, a second model
-  (`GEMINI_FALLBACK_MODEL`, default `gemini-3.1-flash-lite`) answers instead, then Zhipu's free
-  `glm-4.7-flash` (`GLM_API_KEY`, `lib/glm.js`) if Google is busy; if all fail, visitors
+  (`GEMINI_FALLBACK_MODEL`, default `gemini-3.1-flash-lite`) answers instead, then Groq's free
+  `llama-3.3-70b-versatile` (`GROQ_API_KEY`, `lib/backup-llm.js`, given only the relevant pages) if Google is busy; if all fail, visitors
   get the phone number and email.
 
 Each button is only rendered when its service is configured (`GEMINI_API_KEY`;

@@ -76,6 +76,9 @@ test("answers from a single model turn, with markdown stripped", async () => {
   assert.equal(result.body.reply, "Websites start from £495. See /pricing.");
   assert.equal(result.body.leadSaved, false);
   assert.match(seen[0].system, /WEBSITE CONTENT/);
+  // The backup model gets the same rules with only the relevant slice of the site.
+  assert.match(seen[0].backupSystem, /WEBSITE CONTENT/);
+  assert.ok(seen[0].backupSystem.length < seen[0].system.length / 4);
   assert.equal(seen[0].tools[0].functionDeclarations[0].name, "save_lead");
 });
 

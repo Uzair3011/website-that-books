@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { MODEL, generate, modelChain } from "../lib/gemini.js";
-import { toContent, toMessages, toTools } from "../lib/glm.js";
+import { toContent, toMessages, toTools } from "../lib/backup-llm.js";
 
-const env = { GEMINI_API_KEY: "g", GLM_API_KEY: "z" };
+const env = { GEMINI_API_KEY: "g", GROQ_API_KEY: "q" };
 const input = {
   system: "rules",
   contents: [{ role: "user", parts: [{ text: "hi" }] }],
@@ -16,19 +16,21 @@ const input = {
   ],
 };
 
-test("GLM joins the chain last, only when its key is set", () => {
+test("Groq joins the chain last, only when its key is set", () => {
   assert.deepEqual(modelChain(env), [
     "gemini-3.5-flash-lite",
     "gemini-3.1-flash-lite",
-    "glm-4.7-flash",
+    "groq/llama-3.3-70b-versatile",
   ]);
   assert.equal(
-    modelChain({ GEMINI_API_KEY: "g" }).includes("glm-4.7-flash"),
+    modelChain({ GEMINI_API_KEY: "g" }).includes(
+      "groq/llama-3.3-70b-versatile",
+    ),
     false,
   );
   assert.equal(
-    modelChain({ ...env, GLM_MODEL: "glm-4.5-flash" }).at(-1),
-    "glm-4.5-flash",
+    modelChain({ ...env, GROQ_MODEL: "openai/gpt-oss-120b" }).at(-1),
+    "groq/openai/gpt-oss-120b",
   );
 });
 
@@ -80,7 +82,7 @@ test("a Gemini conversation, including a save_lead round trip, becomes OpenAI-st
   ]);
 });
 
-test("GLM replies come back in the shape the chat endpoint expects", () => {
+test("Groq replies come back in the shape the chat endpoint expects", () => {
   assert.deepEqual(toContent({ content: "Hello" }), {
     role: "model",
     parts: [{ text: "Hello" }],
@@ -120,46 +122,76 @@ test("GLM replies come back in the shape the chat endpoint expects", () => {
   );
 });
 
-test("when both Gemini models are busy, GLM answers; its reply is tagged so follow-ups stay on it", async () => {
+test("when both Gemini models are busy, Groq answers; its reply is tagged so follow-ups stay on it", async () => {
   const original = globalThis.fetch;
   const called = [];
   globalThis.fetch = async (url, init) => {
-    if (url.includes("api.z.ai")) {
-      called.push("glm");
+    if (url.includes("api.groq.com")) {
+      called.push("groq");
       const body = JSON.parse(init.body);
-      assert.equal(init.headers.Authorization, "Bearer z");
-      assert.equal(body.model, "glm-4.7-flash");
+      assert.equal(init.headers.Authorization, "Bearer q");
+      assert.equal(body.model, "llama-3.3-70b-versatile");
+      assert.equal(
+        body.messages[0].content,
+        "slim rules",
+        "the backup gets the slim instructions",
+      );
       assert.equal(body.messages[0].role, "system");
       assert.equal(body.tools[0].function.name, "save_lead");
       return Response.json({
-        choices: [{ message: { content: "Hi from GLM" } }],
+        choices: [{ message: { content: "Hi from Groq" } }],
       });
     }
     called.push("gemini");
     return new Response('{"error":{"code":503}}', { status: 503 });
   };
   try {
-    const content = await generate(input, env);
-    assert.deepEqual(called, ["gemini", "gemini", "glm"]);
-    assert.equal(content.parts[0].text, "Hi from GLM");
-    assert.equal(content[MODEL], "glm-4.7-flash");
+    const content = await generate(
+      { ...input, backupSystem: "slim rules" },
+      env,
+    );
+    assert.deepEqual(called, ["gemini", "gemini", "groq"]);
+    assert.equal(content.parts[0].text, "Hi from Groq");
+    assert.equal(content[MODEL], "groq/llama-3.3-70b-versatile");
     called.length = 0;
-    await generate({ ...input, model: "glm-4.7-flash" }, env);
-    assert.deepEqual(called, ["glm"], "a pinned GLM follow-up skips Gemini");
+    await generate(
+      {
+        ...input,
+        backupSystem: "slim rules",
+        model: "groq/llama-3.3-70b-versatile",
+      },
+      env,
+    );
+    assert.deepEqual(called, ["groq"], "a pinned Groq follow-up skips Gemini");
     called.length = 0;
     globalThis.fetch = async (url) => {
-      called.push(url.includes("api.z.ai") ? "glm" : "gemini");
-      return url.includes("api.z.ai")
+      called.push(url.includes("api.groq.com") ? "groq" : "gemini");
+      return url.includes("api.groq.com")
         ? Response.json({ choices: [{ message: { content: "ok" } }] })
         : new Response("{}", { status: 400 });
     };
-    await generate(input, env);
+    await generate({ ...input, backupSystem: "slim rules" }, env);
     assert.deepEqual(
       called,
-      ["gemini", "glm"],
-      "a Gemini 400 skips the other Gemini model but not GLM",
+      ["gemini", "groq"],
+      "a Gemini 400 skips the other Gemini model but not Groq",
     );
   } finally {
     globalThis.fetch = original;
   }
+});
+
+test("the backup's knowledge is a small, relevant slice of the site", async () => {
+  const { relevantKnowledge, siteKnowledge } =
+    await import("../lib/site-knowledge.js");
+  const slim = relevantKnowledge(
+    "How much does Google Business Profile setup cost?",
+  );
+  assert.ok(
+    slim.length < siteKnowledge().length / 4,
+    "at least four times smaller",
+  );
+  assert.match(slim, /Google Business Profile/);
+  assert.match(slim, /£195/);
+  assert.match(slim, /ALL PAGES ON THE SITE[\s\S]*\(\/pricing\)/);
 });
