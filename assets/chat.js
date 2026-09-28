@@ -228,7 +228,7 @@
           // Only real turns go back to the model; local errors stay on screen.
           messages: state.messages.filter((m) => !m.error).slice(-20),
         }),
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(35000),
       });
       const result = await response.json().catch(() => ({}));
       reply =
