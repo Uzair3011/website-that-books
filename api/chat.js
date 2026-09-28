@@ -35,8 +35,8 @@ How to answer
 - To book a call: /contact. Phone: ${SITE.phoneLabel}. Email: ${SITE.email}.
 
 Capturing leads
-- When a visitor wants a quote, a call back, advice for their business or help getting started, offer to have the team get in touch. Collect their full name, phone number, email, business name (optional) and the service they need (optional). Ask for one or two details at a time.
-- They must agree to be contacted about their request before you save anything. A clear request to be called back or contacted counts as agreement; otherwise ask whether it is OK for the team to contact them, making clear it does not sign them up to marketing. Only call save_lead once they have agreed and you have at least their name and phone number.
+- When a visitor wants a quote, a call back, advice for their business or help getting started, offer to have the team get in touch. Collect their full name, phone number and email address (all three are required), plus their business name and the service they need (both optional). Ask for one or two details at a time, and if they skip the email, ask for it before saving.
+- They must agree to be contacted about their request before you save anything. A clear request to be called back or contacted counts as agreement; otherwise ask whether it is OK for the team to contact them, making clear it does not sign them up to marketing. Only call save_lead once they have agreed and you have their name, phone number and email address.
 - UK numbers can be given as 07...; for other countries ask for the country code.
 - After save_lead succeeds, thank them by first name and say the team will be in touch soon. If it reports a problem, ask them to correct that detail.
 - Never ask for payment details, passwords, or health, medical or other sensitive personal information.
@@ -51,7 +51,7 @@ ${knowledge}`;
 export const SAVE_LEAD = {
   name: "save_lead",
   description:
-    "Save the visitor's details so the Veltra Media team can contact them. Call only after they have given their name and phone number and clearly agreed to be contacted.",
+    "Save the visitor's details so the Veltra Media team can contact them. Call only after they have given their name, phone number and email address and clearly agreed to be contacted.",
   parameters: {
     type: "object",
     properties: {
@@ -61,7 +61,7 @@ export const SAVE_LEAD = {
         description:
           "Phone number as given, including a country code if not UK.",
       },
-      email: { type: "string", description: "Email address, if given." },
+      email: { type: "string", description: "Email address (required)." },
       business_name: {
         type: "string",
         description: "Business name, if given.",
@@ -80,7 +80,7 @@ export const SAVE_LEAD = {
         description: "True only if they explicitly agreed to be contacted.",
       },
     },
-    required: ["name", "phone", "consent"],
+    required: ["name", "phone", "email", "consent"],
   },
 };
 
@@ -103,7 +103,11 @@ export function leadFromArgs(args = {}) {
         "That phone number doesn't look valid. Ask them to check it, with the country code if outside the UK.",
     };
   const email = text(args.email, 254);
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+  if (!email)
+    return {
+      error: "Their email address is missing. Ask for it before saving.",
+    };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return {
       error: "That email address doesn't look valid. Ask them to check it.",
     };
@@ -147,6 +151,22 @@ export function toContents(messages) {
   }
   while (contents[0]?.role === "model") contents.shift();
   return contents.length && contents.at(-1).role === "user" ? contents : null;
+}
+
+// True when the visitor's latest message holds a phone number or email, or they gave one earlier and
+// the latest message is a short reply (typically "yes, that's fine" to a consent question).
+const PHONE_LIKE = /\+?\d[\d\s().-]{6,}\d/g;
+const EMAIL_LIKE = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+const hasContact = (text) =>
+  EMAIL_LIKE.test(text) ||
+  (String(text).match(PHONE_LIKE) || []).some((match) => normalizePhone(match));
+export function sharedContactDetails(messages) {
+  const said = messages.filter((m) => m.role === "user").map((m) => m.text);
+  const latest = said.at(-1) || "";
+  return (
+    hasContact(latest) ||
+    (latest.length <= 80 && said.slice(0, -1).some(hasContact))
+  );
 }
 
 const replyText = (content) =>
@@ -214,6 +234,44 @@ export function createChatHandler({
       ? [{ functionDeclarations: [SAVE_LEAD] }]
       : undefined;
     let leadSaved = false;
+    // Validates the model's save_lead arguments like a form, then stores the lead.
+    async function saveCall(call) {
+      const { lead, error } =
+        call.name === "save_lead"
+          ? leadFromArgs(call.args)
+          : { error: "Unknown tool." };
+      if (error) return { ok: false, error };
+      const page = formPage(raw);
+      const history = raw.messages.map((m) => ({ role: m.role, text: m.text }));
+      try {
+        const { created } = await store({
+          ...lead,
+          source: "chat",
+          reference: `chat:${sessionId}`,
+          details: {
+            page,
+            summary: lead.summary || null,
+            transcript: transcript(history),
+            consentText:
+              "Asked or agreed in chat to be contacted about this request (no marketing).",
+          },
+        });
+        leadSaved = true;
+        if (created)
+          await notifyAdmin({
+            ...lead,
+            page,
+            requestId: `chat:${sessionId}`,
+          }).catch(() => {});
+        return { ok: true };
+      } catch {
+        return {
+          ok: false,
+          error:
+            "Saving failed. Apologise and give our phone number and email instead.",
+        };
+      }
+    }
     try {
       let content = await model({ system, backupSystem, contents, tools });
       // At most one save per message: the model calls save_lead, sees the outcome, then replies.
@@ -221,47 +279,7 @@ export function createChatHandler({
         (part) => part.functionCall,
       )?.functionCall;
       if (call) {
-        let outcome;
-        const { lead, error } =
-          call.name === "save_lead"
-            ? leadFromArgs(call.args)
-            : { error: "Unknown tool." };
-        if (error) outcome = { ok: false, error };
-        else {
-          const page = formPage(raw);
-          const history = raw.messages.map((m) => ({
-            role: m.role,
-            text: m.text,
-          }));
-          try {
-            const { created } = await store({
-              ...lead,
-              source: "chat",
-              reference: `chat:${sessionId}`,
-              details: {
-                page,
-                summary: lead.summary || null,
-                transcript: transcript(history),
-                consentText:
-                  "Asked or agreed in chat to be contacted about this request (no marketing).",
-              },
-            });
-            leadSaved = true;
-            outcome = { ok: true };
-            if (created)
-              await notifyAdmin({
-                ...lead,
-                page,
-                requestId: `chat:${sessionId}`,
-              }).catch(() => {});
-          } catch {
-            outcome = {
-              ok: false,
-              error:
-                "Saving failed. Apologise and give our phone number and email instead.",
-            };
-          }
-        }
+        const outcome = await saveCall(call);
         const caller = content[MODEL];
         content = await model({
           system,
@@ -286,6 +304,21 @@ export function createChatHandler({
           ],
           tools,
         });
+      } else if (tools && sharedContactDetails(raw.messages)) {
+        // Safety net: small models sometimes say "I've passed your details on" without calling
+        // save_lead. When the visitor has just given a phone number, ask once more with the
+        // tool forced; leadFromArgs still refuses anything without consent or a valid number.
+        const forced = await model({
+          system,
+          backupSystem,
+          contents,
+          tools,
+          force: "save_lead",
+        }).catch(() => null);
+        const missed = forced?.parts?.find(
+          (part) => part.functionCall,
+        )?.functionCall;
+        if (missed) await saveCall(missed);
       }
       const reply = replyText(content);
       return res

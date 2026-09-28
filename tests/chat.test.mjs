@@ -89,6 +89,7 @@ test("save_lead stores a normalised chat lead, emails once, and echoes the call 
     callSave({
       name: "Jane Smith",
       phone: "07700 900123",
+      email: "jane@example.com",
       service: "Website Design",
       summary: "New site",
       consent: true,
@@ -142,7 +143,12 @@ test("if the reply after saving fails, the visitor is still told their details w
     model: async () => {
       calls += 1;
       if (calls === 1)
-        return callSave({ name: "Jane", phone: "07700 900123", consent: true });
+        return callSave({
+          name: "Jane",
+          phone: "07700 900123",
+          email: "jane@example.com",
+          consent: true,
+        });
       throw Object.assign(new Error("quota"), { status: 429 });
     },
   });
@@ -154,7 +160,12 @@ test("if the reply after saving fails, the visitor is still told their details w
 test("an updated save in the same conversation does not email again", async () => {
   const notified = [];
   const turns = [
-    callSave({ name: "Jane", phone: "07700 900123", consent: true }),
+    callSave({
+      name: "Jane",
+      phone: "07700 900123",
+      email: "jane@example.com",
+      consent: true,
+    }),
     say("Updated."),
   ];
   await run(ask("Actually use this number"), {
@@ -167,9 +178,19 @@ test("an updated save in the same conversation does not email again", async () =
 
 test("without consent, or with a bad phone, nothing is stored and the model is told why", async () => {
   for (const args of [
-    { name: "Jane", phone: "07700 900123", consent: false },
+    {
+      name: "Jane",
+      phone: "07700 900123",
+      email: "jane@example.com",
+      consent: false,
+    },
     { name: "Jane", phone: "12", consent: true },
-    { name: "", phone: "07700 900123", consent: true },
+    {
+      name: "",
+      phone: "07700 900123",
+      email: "jane@example.com",
+      consent: true,
+    },
   ]) {
     const stored = [];
     const inputs = [];
@@ -265,6 +286,7 @@ test("history is merged into alternating turns that end with the visitor", () =>
     leadFromArgs({
       name: "A",
       phone: "07700 900123",
+      email: "jane@example.com",
       consent: true,
       service: "Hacking",
     }).lead.service,
@@ -291,6 +313,7 @@ test("the reply after a save goes to the same model that asked to save", async (
   const first = callSave({
     name: "Jane",
     phone: "07700 900123",
+    email: "jane@example.com",
     consent: true,
   });
   first[MODEL] = "gemini-2.5-flash-lite";
@@ -303,4 +326,69 @@ test("the reply after a save goes to the same model that asked to save", async (
   });
   assert.equal(inputs[0].model, undefined);
   assert.equal(inputs[1].model, "gemini-2.5-flash-lite");
+});
+
+test("chat leads need an email address as well as a phone number", () => {
+  const base = { name: "Jane", phone: "07700 900123", consent: true };
+  assert.match(leadFromArgs(base).error, /email address is missing/);
+  assert.match(
+    leadFromArgs({ ...base, email: "not-an-email" }).error,
+    /doesn't look valid/,
+  );
+  assert.equal(
+    leadFromArgs({ ...base, email: "jane@example.com" }).lead.email,
+    "jane@example.com",
+  );
+});
+
+test("if the model claims a save without calling the tool, the server forces the save", async () => {
+  const stored = [];
+  const inputs = [];
+  const turns = [
+    say("Thanks Jane, I've passed your details to the team."),
+    callSave({
+      name: "Jane",
+      phone: "07700 900123",
+      email: "jane@example.com",
+      consent: true,
+    }),
+  ];
+  const result = await run(
+    ask("I'm Jane, 07700 900123, jane@example.com. Yes, contact me."),
+    {
+      model: async (input) => {
+        inputs.push(input);
+        return turns.shift();
+      },
+      store: async (lead) => {
+        stored.push(lead);
+        return { created: true };
+      },
+    },
+  );
+  assert.equal(inputs[1].force, "save_lead");
+  assert.equal(stored.length, 1);
+  assert.equal(stored[0].email, "jane@example.com");
+  assert.equal(result.body.leadSaved, true);
+  assert.equal(
+    result.body.reply,
+    "Thanks Jane, I've passed your details to the team.",
+  );
+});
+
+test("the forced save only runs when the visitor has just shared contact details", async () => {
+  for (const [text, expected] of [
+    ["How much is a website?", 1],
+    ["My number is 07700 900123", 2],
+    ["Email me at jane@example.com", 2],
+  ]) {
+    let calls = 0;
+    await run(ask(text), {
+      model: async () => {
+        calls += 1;
+        return say("Okay.");
+      },
+    });
+    assert.equal(calls, expected, text);
+  }
 });
