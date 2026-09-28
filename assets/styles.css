@@ -3406,6 +3406,42 @@ svg.icon {
 .contact-methods.row a {
   height: 100%;
 }
+/* A contact option switched off in config leaves an empty item; drop it so
+   the stack has no stray gap. */
+.contact-methods li:has(> a[hidden]) {
+  display: none;
+}
+
+/* Contact page: the ways to reach a person beside the form, both starting on
+   the container's left and right edges like the rest of the page, instead of
+   a narrow form floating in the middle. Stacks below 960px. */
+.contact-split {
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+}
+@media (min-width: 960px) {
+  .contact-split {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+}
+.contact-intro {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+.contact-intro .contact-methods {
+  margin-top: 12px;
+}
+/* In this half-width column the call-time picker sits above the fields, not
+   beside them. */
+.contact-split .form-shell:has(.slot-picker:not([hidden])) .inquiry-form {
+  display: block;
+}
+.contact-split .form-shell:has(.slot-picker:not([hidden])) .slot-picker {
+  position: static;
+  margin: 0 0 28px;
+}
 
 /* Booking form: the time picker sits beside the fields instead of on top of them.
    Only when live times are showing; a plain request form stays single column. */
