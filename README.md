@@ -161,13 +161,13 @@ aligned, and update the `alt` text with it.
 ## Pricing maintenance
 
 The site sells in **GBP only**. There is one price list, on `/pricing`, defined
-in `src/pages/pricing.js`: website packages £99 / £179 / £1,495, individual
+in `src/pages/pricing.js`: website packages £99 / £179, individual
 services priced separately, and an optional £499 Growth Launch Package. The
 package deliberately shows no "regular value" or percentage saving.
 
-`/med-spa-growth-system` has **no bundle price of its own**. It is four of those
-standard services at those same prices — Business website £895, AI receptionist
-£495, website chat £295, CRM/booking/follow-up £395, £2,080 in total — composed
+`/med-spa-growth-system` has **no price of its own**. It is the £499 Growth
+Launch Package — multi-page website £179, local SEO + Google Business Profile
+£99, AI receptionist + website chat £199, CRM/booking/follow-up £199 — defined
 in `assets/business.js`, which is also what the opportunity calculator and the
 `/terms` clauses read from. Optional website care is £49 a month; AI provider
 usage is passed through at cost.

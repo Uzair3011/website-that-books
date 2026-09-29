@@ -66,13 +66,13 @@ export default servicePage({
       },
       {
         label: "With a website",
-        title: "Multi-Page or Growth website",
-        text: "Both website packages include Google Business Profile alignment, so the site and the profile say the same thing.",
+        title: "Multi-page website",
+        text: "The multi-page website includes Google Business Profile alignment, so the site and the profile say the same thing.",
       },
       {
         label: "For reviews",
         title: "Review request flow",
-        text: "The Growth website package includes setting up a simple way to ask happy customers for a review.",
+        text: "Can be added to CRM and follow-up automation, so happy customers are asked for a review.",
       },
       {
         label: "Ongoing",

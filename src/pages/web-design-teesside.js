@@ -34,7 +34,7 @@ export default servicePage({
       },
       {
         title: "Service and location pages",
-        text: "Where a service or a town deserves its own page, we structure it that way. This is part of the Growth package.",
+        text: "Where a service or a town deserves its own page, we structure it that way.",
       },
       {
         title: "Local search foundations",
@@ -83,7 +83,7 @@ export default servicePage({
   },
   price: {
     heading: "Website packages from £99.",
-    body: "Simple landing page £99 for a focused one-page site, multi-page website £179 for up to five pages, Growth £1,495 for up to ten. Prices exclude VAT. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
+    body: "Simple landing page £99 for a focused one-page site, or a multi-page website £179 for up to five pages. Larger sites get a written quote. Prices exclude VAT. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
   },
   faqs: [
     {
@@ -92,7 +92,7 @@ export default servicePage({
     },
     {
       q: "Do I need a separate page for each town?",
-      a: "<p>Not always. A smaller business can often say where it works on one or two pages. If several towns or services matter to you, dedicated pages help, and the Growth package includes that structure. We will recommend what fits rather than adding pages for the sake of it.</p>",
+      a: "<p>Not always. A smaller business can often say where it works on one or two pages. If several towns or services matter to you, dedicated pages help, and local SEO setup includes that structure. We will recommend what fits rather than adding pages for the sake of it.</p>",
     },
     {
       q: "Can we meet in person?",

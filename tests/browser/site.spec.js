@@ -517,10 +517,10 @@ test("content, honest standard pricing, and navigation survive without JavaScrip
   await expect(page.locator(".service-card")).toHaveCount(6);
   await expect(page.locator(".hero-media img")).toBeVisible();
   await page.goto(at("/pricing"));
-  await expect(page.locator(".price-card")).toHaveCount(4);
+  await expect(page.locator(".price-card")).toHaveCount(3);
   await page.goto(at("/med-spa-growth-system"));
   // The system price is static content, so it survives without JavaScript.
-  await expect(page.locator("[data-setup-price]")).toHaveText("£2,080");
+  await expect(page.locator("[data-setup-price]")).toHaveText("£499");
   await page.goto(at("/contact"));
   await expect(page.locator("noscript p")).toContainText("enable JavaScript");
   await expect(page.locator("#submit-inquiry")).toBeDisabled();

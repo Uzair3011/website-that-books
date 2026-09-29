@@ -14,7 +14,7 @@ import {
 const FAQS = [
   {
     q: "How long will the website take?",
-    a: "<p>A simple landing page typically takes around seven working days after the content is approved. Multi-page and Growth sites usually take ten to twenty working days, depending on the scope and how quickly feedback is supplied.</p>",
+    a: "<p>A simple landing page typically takes around seven working days after the content is approved. A multi-page site usually takes ten to fifteen working days, depending on the scope and how quickly feedback is supplied.</p>",
   },
   {
     q: "Do I have to pay for a monthly plan?",

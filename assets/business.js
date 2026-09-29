@@ -1,24 +1,23 @@
-// The med-spa growth system is priced from the standard GBP service list on
-// /pricing — it is not a separate bundle with its own discount. Every figure
-// below is one of those approved prices, or their sum. Do not introduce a
-// number here that does not already appear on /pricing.
+// The med-spa growth system is the Growth Launch Package from /pricing, at the
+// same package price. The components are the standard services it includes,
+// each at its own published price. Do not introduce a number here that does
+// not already appear on /pricing.
 export const SYSTEM = Object.freeze({
   currency: "GBP",
+  package: "Growth Launch Package",
+  price: 499,
   components: Object.freeze([
-    Object.freeze({ name: "Business website, up to five pages", price: 895 }),
-    Object.freeze({ name: "AI receptionist", price: 495 }),
-    Object.freeze({ name: "Website chat", price: 295 }),
-    Object.freeze({ name: "CRM, booking and follow-up automation", price: 395 }),
+    Object.freeze({ name: "Multi-page website, up to five pages", price: 179 }),
+    Object.freeze({ name: "Local SEO and Google Business Profile setup", price: 99 }),
+    Object.freeze({ name: "AI receptionist and website chat", price: 199 }),
+    Object.freeze({ name: "CRM, booking and follow-up automation", price: 199 }),
   ]),
   // Optional website care. The only recurring cost Veltra charges for this
   // system; AI provider usage is passed through at cost.
   care: 49,
 });
 
-export const SETUP_TOTAL = SYSTEM.components.reduce(
-  (total, component) => total + component.price,
-  0,
-);
+export const SETUP_TOTAL = SYSTEM.price;
 
 /**
  * Illustrative monthly contribution from extra completed visits, net of the

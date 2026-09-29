@@ -77,25 +77,6 @@ export const packages = [
     ],
     cta: "Choose Multi-Page",
   },
-  {
-    name: "Growth",
-    price: "£1,495",
-    unit: "one-off",
-    summary:
-      "For an established business that needs more service depth, stronger local coverage and a better enquiry system.",
-    features: [
-      "Up to ten pages",
-      "Everything in Multi-Page Website",
-      "Service and location page structure",
-      "Advanced enquiry or quote form",
-      "Booking or CRM integration",
-      "Review request flow setup",
-      "Conversion event tracking",
-      "Thirty days of post-launch support",
-      "Typically live in fifteen to twenty working days after content approval",
-    ],
-    cta: "Choose Growth",
-  },
 ];
 
 const individual = [
@@ -107,7 +88,7 @@ const individual = [
   ],
   [
     "Multi-page website",
-    "Up to five core pages, built to explain your services and generate enquiries. Larger sites on the Growth package or a written quote.",
+    "Up to five core pages, built to explain your services and generate enquiries. Larger sites get a written quote.",
     "£179 one-off",
     "/web-design-middlesbrough",
   ],
@@ -177,10 +158,10 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="section-head">
             <p class="eyebrow">Website packages</p>
-            <h2>Three ways to start a website.</h2>
+            <h2>Two ways to start a website.</h2>
             <p>Choose a package when the scope is straightforward. If your site needs ecommerce, member areas, unusual integrations or a larger content structure, you get a custom written quote instead.</p>
           </div>
-          <div class="price-grid reveal">
+          <div class="price-grid two reveal">
 ${cards}
           </div>
           <p class="disclosure">All prices exclude VAT. Final scope and any third-party costs are confirmed in writing before work begins. This website does not take payments.</p>

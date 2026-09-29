@@ -1138,6 +1138,10 @@ svg.icon {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
   }
+  .price-grid.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 56rem;
+  }
 }
 /* On a phone the recommended package comes first. */
 @media (max-width: 899px) {

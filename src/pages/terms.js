@@ -15,7 +15,7 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <div class="prose">
             <h2>Standard service pricing</h2>
-            <p>Prices shown on <a href="/pricing">the pricing page</a> are in GBP and exclude VAT. Any VAT that applies is shown on your written proposal and invoice. Website packages are Simple Landing Page £99, Multi-Page Website £179 and Growth £1,495, each as a one-off project fee for the scope described. The Growth Launch Package is £499 as a one-off project fee for the services listed on the pricing page. Individual services are priced separately and may be purchased on their own; no package or bundle is a condition of buying any single service.</p>
+            <p>Prices shown on <a href="/pricing">the pricing page</a> are in GBP and exclude VAT. Any VAT that applies is shown on your written proposal and invoice. Website packages are Simple Landing Page £99 and Multi-Page Website £179, each as a one-off project fee for the scope described. The Growth Launch Package is £499 as a one-off project fee for the services listed on the pricing page. Individual services are priced separately and may be purchased on their own; no package or bundle is a condition of buying any single service.</p>
             <p>Website care, from £49 a month, is provided month to month and may be cancelled with 30 days' written notice. Services already delivered and usage already consumed remain payable.</p>
 
             <h2>Scope, timelines and revisions</h2>
@@ -32,7 +32,7 @@ const body = `      <section class="hero">
             <p>AI features support approved administrative questions, intake and scheduling. They do not provide professional, clinical, legal or financial advice, determine suitability, or replace human judgement. Calculators and interface previews on this site are illustrations, not client results or promised returns. Your results depend on your traffic, demand, offer, team and follow-through.</p>
 
             <h2 id="med-spa-offer">Med-spa growth system</h2>
-            <p>The system described on <a href="/med-spa-growth-system">the med-spa growth system page</a> is not a separately priced bundle and carries no bundle discount. It is four of the standard services listed above, at those same prices: the Business website £895, AI receptionist £495, website chat £295, and CRM, booking and follow-up automation £395. That is £2,080 in total, excluding VAT, as a one-off project fee. Each of the four can be bought on its own.</p>
+            <p>The system described on <a href="/med-spa-growth-system">the med-spa growth system page</a> is the Growth Launch Package, at the same price shown on the pricing page: £499, excluding VAT, as a one-off project fee. It includes a multi-page website (£179 on its own), local SEO and Google Business Profile setup (£99), an AI receptionist and website chat (£199), and CRM, booking and follow-up automation (£199). Each can be bought on its own at those prices.</p>
             <p>The scope covers one business location, up to five website pages, one AI receptionist, one website chat widget, one calendar connection, and agreed lead-capture and follow-up sequences. Analytics configuration, lead-response templates, team training, an initial campaign planning session and a 30-day launch check-in are included. Supported connections and the final content scope are confirmed in writing.</p>
 
             <h3>Recurring costs</h3>

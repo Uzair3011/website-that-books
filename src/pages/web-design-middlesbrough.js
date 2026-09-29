@@ -82,7 +82,7 @@ export default servicePage({
   },
   price: {
     heading: "Website packages from £99.",
-    body: "Simple landing page £99 for a focused one-page site, multi-page website £179 for up to five pages, Growth £1,495 for up to ten. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
+    body: "Simple landing page £99 for a focused one-page site, or a multi-page website £179 for up to five pages. Larger sites get a written quote. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
   },
   faqs: [
     {

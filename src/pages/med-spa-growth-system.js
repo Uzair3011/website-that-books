@@ -15,9 +15,9 @@ import {
 // clinic positioning and the opportunity calculator that no longer belong on
 // the agency homepage.
 //
-// Pricing is composed from the standard GBP service list on /pricing — there is
-// no separate clinic bundle and no discount. Every figure comes from
-// assets/business.js so the page, the calculator and /terms cannot drift.
+// The system is the Growth Launch Package from /pricing, at the same price.
+// Every figure comes from assets/business.js so the page, the calculator and
+// /terms cannot drift.
 const money = (amount) =>
   new Intl.NumberFormat("en-GB", {
     style: "currency",
@@ -28,7 +28,7 @@ const money = (amount) =>
 const components = SYSTEM.components
   .map(
     (component) =>
-      `                <li>${icon("check")}<span>${component.name} &mdash; ${money(component.price)}</span></li>`,
+      `                <li>${icon("check")}<span>${component.name}</span></li>`,
   )
   .join("\n");
 const FAQS = [
@@ -54,7 +54,7 @@ const FAQS = [
   },
   {
     q: "What does the system cost, and how does the guarantee work?",
-    a: '<p>There is no separate clinic bundle price. The system is four standard services at their standard prices: the Business website £895, AI receptionist £495, website chat £295, and CRM, booking and follow-up automation £395 — £2,080 in total, excluding VAT. You can buy any one of them on its own. The delivery guarantee applies to the agreed launch checklist, with a 14-day opportunity to fix failures. <a href="/pricing">See the full price list</a> or <a href="/terms">read all scope and guarantee terms.</a></p>',
+    a: '<p>The system is our Growth Launch Package, at the same £499 any business pays, excluding VAT. It covers a multi-page website, local SEO and Google Business Profile setup, an AI receptionist and website chat, and CRM, booking and follow-up automation. You can also buy any one of them on its own. The delivery guarantee applies to the agreed launch checklist, with a 14-day opportunity to fix failures. <a href="/pricing">See the full price list</a> or <a href="/terms">read all scope and guarantee terms.</a></p>',
   },
   {
     q: "Do I have to sign a long contract?",
@@ -77,7 +77,7 @@ const body = `      <section class="hero">
                 <a class="btn" href="/contact">Book a free strategy call${icon("arrow-up")}</a>
                 <a class="btn secondary" href="#system-pricing">See what it costs</a>
               </div>
-              <p class="hero-note">Four standard services, £2,080 in total, and you can buy any one of them on its own. <a href="/pricing" style="color: inherit; text-decoration: underline">See the full price list.</a></p>
+              <p class="hero-note">The Growth Launch Package, £499 one-off, and you can buy any part of it on its own. <a href="/pricing" style="color: inherit; text-decoration: underline">See the full price list.</a></p>
             </div>
             <figure class="hero-media reveal">
               <img src="/assets/work/example-clinic.svg" width="1280" height="900" alt="A clinic website design with a treatment list and a live booking panel showing selectable dates and times." />
@@ -168,7 +168,7 @@ const body = `      <section class="hero">
                 <small><span id="roi-gross">£2,800</span> revenue &times; <span id="roi-margin">50%</span> margin &minus; £49 monthly care plan</small>
                 <div class="roi-split">
                   <span>Visits to cover the care plan: <b id="roi-breakeven">1 visit</b></span>
-                  <span>Setup payback: <b id="roi-payback">1.5 months</b></span>
+                  <span>Setup payback: <b id="roi-payback">0.4 months</b></span>
                 </div>
               </div>
               <p class="roi-note" style="margin-top: 14px">Excludes VAT, fixed overheads, advertising and AI provider usage. Margin means revenue after variable treatment costs, not net business profit.</p>
@@ -182,8 +182,8 @@ const body = `      <section class="hero">
           <div class="two-col">
             <div class="section-head" style="margin-bottom: 0">
               <p class="eyebrow">Investment</p>
-              <h2>Four services. Standard prices.</h2>
-              <p>There is no separate clinic bundle price. The system is the four services below, at the same prices any business pays on <a href="/pricing" class="text-link">our pricing page</a> &mdash; and you can still buy any one of them on its own.</p>
+              <h2>One package. The same price everyone pays.</h2>
+              <p>The system is the Growth Launch Package from <a href="/pricing" class="text-link">our pricing page</a>, at the same price any business pays &mdash; and you can still buy any part of it on its own.</p>
               <p><a class="text-link" href="/terms#guarantee">How the launch guarantee works${icon("arrow-up")}</a></p>
             </div>
             <article class="price-card featured">
@@ -240,7 +240,7 @@ export default {
   path: "/med-spa-growth-system",
   title: "Med Spa Growth System | Website, AI Reception & Booking | Veltra Media",
   description:
-    "A growth system for med spas and aesthetic clinics in Middlesbrough and Teesside: website, AI receptionist, website chat and booking automation. Four standard services, £2,080 in total, each available on its own.",
+    "A growth system for med spas and aesthetic clinics in Middlesbrough and Teesside: website, AI receptionist, website chat and booking automation. The £499 Growth Launch Package, with each part also available on its own.",
   jsonLd: [
     organizationJsonLd(),
     serviceJsonLd({

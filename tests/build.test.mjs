@@ -131,28 +131,24 @@ test("prices are GBP everywhere, and the med-spa figures match the service list"
   const terms = rendered.find((page) => page.path === "/terms");
   const pricing = rendered.find((page) => page.path === "/pricing");
 
-  // The composed total and every component price must appear on the med-spa
-  // page and in the terms, and each component price must exist on /pricing.
-  for (const target of [medSpa, terms]) {
+  // The package price and care plan must appear on the med-spa page, the terms
+  // and /pricing; the terms and /pricing also name every component price.
+  for (const target of [medSpa, terms, pricing]) {
     assert.ok(
       target.html.includes(money(SETUP_TOTAL)),
-      `${target.path} is missing the ${money(SETUP_TOTAL)} total`,
+      `${target.path} is missing the ${money(SETUP_TOTAL)} package price`,
     );
-    for (const component of SYSTEM.components)
-      assert.ok(
-        target.html.includes(money(component.price)),
-        `${target.path} is missing ${component.name} at ${money(component.price)}`,
-      );
     assert.ok(
       target.html.includes(`£${SYSTEM.care}`),
       `${target.path} is missing the £${SYSTEM.care} care plan`,
     );
   }
-  for (const component of SYSTEM.components)
-    assert.ok(
-      pricing.html.includes(money(component.price)),
-      `/pricing does not publish ${money(component.price)} for ${component.name}`,
-    );
+  for (const target of [terms, pricing])
+    for (const component of SYSTEM.components)
+      assert.ok(
+        target.html.includes(money(component.price)),
+        `${target.path} is missing ${component.name} at ${money(component.price)}`,
+      );
 
   // The retired launch offer must not resurface in copy anywhere.
   for (const { path, html } of rendered)

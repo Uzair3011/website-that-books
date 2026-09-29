@@ -7,21 +7,20 @@ import {
 } from "../assets/business.js";
 import { normalizePhone, validateInquiry } from "../assets/validation.js";
 
-test("the med-spa system price is the sum of approved GBP service prices", () => {
-  // Every component must match a price published on /pricing. If one changes
+test("the med-spa system is the Growth Launch Package at its published price", () => {
+  // Every figure must match a price published on /pricing. If one changes
   // there and not here, this fails rather than shipping two different numbers.
   assert.deepEqual(
     SYSTEM.components.map((component) => component.price),
-    [895, 495, 295, 395],
+    [179, 99, 199, 199],
   );
-  assert.equal(SETUP_TOTAL, 2080);
+  assert.equal(SYSTEM.package, "Growth Launch Package");
+  assert.equal(SETUP_TOTAL, 499);
   assert.equal(SYSTEM.care, 49);
   assert.equal(SYSTEM.currency, "GBP");
 });
-test("the offer carries no bundle discount and no expiring launch price", () => {
-  // A discount or a deadline would be a commercial term nobody approved.
-  const sum = SYSTEM.components.reduce((total, c) => total + c.price, 0);
-  assert.equal(SETUP_TOTAL, sum);
+test("the offer carries no expiring launch price", () => {
+  // A deadline would be a commercial term nobody approved.
   assert.equal(Object.keys(SYSTEM).includes("expiresAt"), false);
 });
 test("opportunity deducts treatment costs and the care plan; payback uses contribution", () => {
@@ -29,7 +28,7 @@ test("opportunity deducts treatment costs and the care plan; payback uses contri
   assert.equal(result.gross, 2800);
   assert.equal(result.contribution, 1351);
   assert.equal(result.breakeven, 1);
-  assert.equal(result.payback, 2080 / 1351);
+  assert.equal(result.payback, 499 / 1351);
 });
 test("zero visits and unprofitable scenarios do not imply setup payback", () => {
   assert.deepEqual(calculateOpportunity({ visits: 0, value: 350, margin: 50 }), {
