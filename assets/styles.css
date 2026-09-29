@@ -1133,21 +1133,31 @@ svg.icon {
   display: grid;
   gap: 20px;
 }
-@media (min-width: 900px) {
-  .price-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: stretch;
-  }
-  .price-grid.two {
+/* The /pricing grid: every service as a compact card, and the package as a
+   wide final card spanning two columns. */
+@media (min-width: 640px) {
+  .price-grid.services {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 56rem;
+  }
+  .price-grid.services .bundle {
+    grid-column: span 2;
   }
 }
-/* On a phone the recommended package comes first. */
-@media (max-width: 899px) {
-  .price-card.featured {
-    order: -1;
+@media (min-width: 1120px) {
+  .price-grid.services {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 .price-card {
   display: flex;
@@ -1247,6 +1257,91 @@ svg.icon {
 }
 .price-card .btn {
   margin-top: 8px;
+}
+/* Compact cards on /pricing: tighter spacing and a smaller headline price. */
+.services .price-card {
+  gap: 12px;
+  padding: 22px;
+}
+.services .price-name {
+  font-size: 1.0625rem;
+  line-height: 1.3;
+}
+.services .price-name a {
+  color: inherit;
+  text-decoration: none;
+}
+.services .price-name a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.services .price-head {
+  align-items: flex-start;
+}
+.services .price-flag {
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  padding: 3px 10px;
+}
+.services .price-amount strong {
+  font-size: clamp(1.9rem, 2.6vw, 2.25rem);
+}
+.services .price-card > p,
+.services .bundle-main > p {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.services .tick-list {
+  gap: 7px;
+  padding-top: 12px;
+  font-size: 0.875rem;
+}
+.services .btn {
+  margin-top: 4px;
+}
+.price-was {
+  color: var(--body);
+  font-size: 1.25rem;
+  text-decoration-thickness: 2px;
+}
+.price-saving {
+  color: var(--accent-lime) !important;
+  font-weight: 600;
+}
+.bundle .price-head {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.bundle .price-flag {
+  order: -1;
+  font-size: 0.75rem;
+  padding: 4px 12px;
+}
+.services .bundle .price-name {
+  font-size: 1.5rem;
+}
+.bundle-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bundle-main .btn {
+  align-self: start;
+}
+@media (min-width: 640px) {
+  .price-card.bundle {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  .price-card.bundle .tick-list {
+    padding-top: 0;
+    padding-left: 24px;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    align-content: center;
+  }
 }
 .price-table {
   width: 100%;

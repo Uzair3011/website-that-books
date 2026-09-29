@@ -25,6 +25,7 @@ const money = (amount) =>
     maximumFractionDigits: 0,
   }).format(amount);
 
+const separately = SYSTEM.components.reduce((total, c) => total + c.price, 0);
 const components = SYSTEM.components
   .map(
     (component) =>
@@ -188,7 +189,9 @@ const body = `      <section class="hero">
             </div>
             <article class="price-card featured">
               <p class="price-name">Med-spa growth system</p>
+              <p class="price-flag">Save ${Math.round(((separately - SETUP_TOTAL) / separately) * 100)}%</p>
               <p class="offer-price">
+                <s class="price-was"><span class="visually-hidden">Bought separately: </span>${money(separately)}</s>
                 <strong data-setup-price>${money(SETUP_TOTAL)}</strong>
                 <span>one-off setup</span>
               </p>

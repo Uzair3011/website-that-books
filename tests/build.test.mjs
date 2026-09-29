@@ -143,6 +143,15 @@ test("prices are GBP everywhere, and the med-spa figures match the service list"
       `${target.path} is missing the £${SYSTEM.care} care plan`,
     );
   }
+  // A struck-through "bought separately" figure must be the real sum of the
+  // included services' published prices, never an invented reference price.
+  const separately = SYSTEM.components.reduce((total, c) => total + c.price, 0);
+  for (const target of [medSpa, pricing]) {
+    const was = [...target.html.matchAll(/<s class="price-was">[\s\S]*?£([\d,]+)<\/s>/g)];
+    assert.ok(was.length > 0, `${target.path} shows no bought-separately figure`);
+    for (const [, amount] of was)
+      assert.equal(Number(amount.replace(",", "")), separately, `${target.path} strikes through £${amount}`);
+  }
   for (const target of [terms, pricing])
     for (const component of SYSTEM.components)
       assert.ok(

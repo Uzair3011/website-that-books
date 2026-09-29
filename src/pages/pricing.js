@@ -1,3 +1,4 @@
+import { SYSTEM } from "../../assets/business.js";
 import { inquiryForm } from "../form.js";
 import {
   CTA,
@@ -13,7 +14,7 @@ import {
 const FAQS = [
   {
     q: "Do I have to buy a package?",
-    a: "<p>No. Every service on this page can be bought on its own. The packages exist because a website is the most common starting point and people want to know what it costs before they get in touch — not because we think everyone should buy all of it.</p>",
+    a: "<p>No. Every service on this page can be bought on its own. The Growth Launch Package is there for businesses that want the whole setup at once, for less than buying each part separately.</p>",
   },
   {
     q: "Are these prices inclusive of VAT?",
@@ -37,108 +38,145 @@ const FAQS = [
   },
 ];
 
-export const packages = [
+// Every service is a card; the Growth Launch Package closes the grid. Its
+// "bought separately" figure is the sum of the included services' own prices,
+// so the saving shown is always one a customer would really make.
+const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
+
+export const services = [
   {
     name: "Simple Landing Page",
-    price: "£99",
+    href: "/landing-page-design",
+    price: 99,
     unit: "one-off",
-    summary:
-      "A sharp one-page website for a new business or a simple offer that needs to look established quickly.",
+    summary: "A sharp one-page site for a new business or a single offer.",
     features: [
-      "One scrolling page with up to six sections",
-      "Custom mobile-first layout",
-      "Message and copy refinement",
-      "Contact form and click-to-call actions",
-      "Basic on-page SEO setup",
-      "Analytics and Search Console setup",
-      "One revision round",
-      "Typically live in seven working days after content approval",
+      "One page, up to six sections",
+      "Mobile-first custom design",
+      "Contact form and click-to-call",
+      "Basic SEO and analytics setup",
     ],
-    cta: "Choose Landing Page",
   },
   {
     name: "Multi-Page Website",
-    price: "£179",
+    href: "/web-design-middlesbrough",
+    price: 179,
     unit: "one-off",
     flag: "Most popular",
-    featured: true,
-    summary:
-      "A complete small-business website built to explain your services, strengthen trust and generate enquiries.",
+    summary: "A complete small-business site that explains your services and wins enquiries.",
     features: [
       "Up to five core pages",
-      "Conversion-focused page structure and copy",
-      "Mobile-first custom design",
+      "Conversion-focused structure and copy",
       "Local keyword and page mapping",
-      "Local business and service schema",
-      "Google Business Profile alignment",
       "Analytics and enquiry tracking",
-      "Two revision rounds",
-      "Typically live in ten to fifteen working days after content approval",
     ],
-    cta: "Choose Multi-Page",
+  },
+  {
+    name: "Local SEO + Google Business Profile",
+    href: "/local-seo-middlesbrough",
+    price: 99,
+    unit: "one-off",
+    summary: "Get found when people nearby search for what you do.",
+    features: [
+      "Google Business Profile setup and optimisation",
+      "Service and area page structure",
+      "Local schema and technical setup",
+      "Consistent business details everywhere",
+    ],
+  },
+  {
+    name: "AI Receptionist + Website Chat",
+    href: "/ai-automation-middlesbrough",
+    price: 199,
+    unit: "setup",
+    summary: "Answer enquiries on the phone and on your site, even at 9pm on a Sunday.",
+    features: [
+      "Approved answers on calls and chat",
+      "Captures enquiry details after hours",
+      "Clear handover to your team",
+      "AI provider usage billed at cost",
+    ],
+  },
+  {
+    name: "CRM + Booking Follow-Up Automation",
+    href: "/crm-booking-automation",
+    price: 199,
+    unit: "setup",
+    summary: "Turn enquiries into booked appointments without chasing.",
+    features: [
+      "Every enquiry captured in one place",
+      "Live calendar booking",
+      "Confirmations and reminders",
+      "Consent-based email follow-up",
+    ],
+  },
+  {
+    name: "Website Care",
+    href: "/website-care",
+    price: 49,
+    unit: "/ month",
+    from: true,
+    summary: "Optional. We look after the site so you do not have to.",
+    features: [
+      "Hosting and updates",
+      "Backups and monitoring",
+      "Practical support when you need it",
+      "Month to month, no long tie-in",
+    ],
   },
 ];
 
-const individual = [
-  [
-    "Simple landing page",
-    "A single focused page for one offer, including copy, design, build and conversion tracking.",
-    "£99 one-off",
-    "/landing-page-design",
+const bundle = {
+  name: SYSTEM.package,
+  price: SYSTEM.price,
+  separately: SYSTEM.components.reduce((total, c) => total + c.price, 0),
+  features: [
+    "Multi-page professional website",
+    "Local SEO setup",
+    "Google Business Profile optimisation",
+    "AI receptionist",
+    "Website AI chat",
+    "CRM setup",
+    "Booking and follow-up automation",
   ],
-  [
-    "Multi-page website",
-    "Up to five core pages, built to explain your services and generate enquiries. Larger sites get a written quote.",
-    "£179 one-off",
-    "/web-design-middlesbrough",
-  ],
-  [
-    "Local SEO + Google Business Profile",
-    "Profile setup and optimisation, service and area page structure, local schema, technical and indexation setup.",
-    "£99 one-off",
-    "/local-seo-middlesbrough",
-  ],
-  [
-    "AI receptionist + website chat",
-    "Approved answer set, handover rules, enquiry capture and after-hours coverage, on the phone and on your site. Provider usage billed at cost.",
-    "£199 setup",
-    "/ai-automation-middlesbrough",
-  ],
-  [
-    "CRM + booking follow-up automation",
-    "Enquiry capture, live calendar booking, confirmations, reminders and consent-based follow-up.",
-    "£199 setup",
-    "/crm-booking-automation",
-  ],
-  [
-    "Website care",
-    "Hosting, updates, backups, monitoring and practical support. Always optional.",
-    "from £49 / month",
-    "/website-care",
-  ],
-];
+};
+bundle.saving = bundle.separately - bundle.price;
+bundle.percent = Math.round((bundle.saving / bundle.separately) * 100);
 
-const cards = packages
+const ticks = (features) =>
+  `<ul class="tick-list">${features.map((f) => `<li>${icon("check")}<span>${f}</span></li>`).join("")}</ul>`;
+
+const serviceCards = services
   .map(
-    (pkg) => `<article class="price-card${pkg.featured ? " featured" : ""}">
+    (service) => `<article class="price-card">
   <div class="price-head">
-    <p class="price-name">${pkg.name}</p>
-    ${pkg.flag ? `<p class="price-flag">${pkg.flag}</p>` : ""}
+    <h3 class="price-name"><a href="${service.href}">${service.name}</a></h3>
+    ${service.flag ? `<p class="price-flag">${service.flag}</p>` : ""}
   </div>
-  <p class="price-amount"><strong>${pkg.price}</strong><span>${pkg.unit}</span></p>
-  <p>${pkg.summary}</p>
-  <ul class="tick-list">${pkg.features.map((f) => `<li>${icon("check")}<span>${f}</span></li>`).join("")}</ul>
-  <a class="btn${pkg.featured ? "" : " secondary"}" href="${CTA.href}">${pkg.cta}</a>
+  <p class="price-amount">${service.from ? "<span>from</span>" : ""}<strong>${gbp(service.price)}</strong><span>${service.unit}</span></p>
+  <p>${service.summary}</p>
+  ${ticks(service.features)}
+  <a class="btn small secondary" href="${CTA.href}">Choose this</a>
 </article>`,
   )
   .join("\n");
 
-const rows = individual
-  .map(
-    ([name, text, price, href]) =>
-      `<tr><th scope="row"><a href="${href}">${name}</a></th><td><p>${text}</p></td><td>${price}</td></tr>`,
-  )
-  .join("");
+const bundleCard = `<article class="price-card featured bundle" id="bundle">
+  <div class="bundle-main">
+    <div class="price-head">
+      <h3 class="price-name">${bundle.name}</h3>
+      <p class="price-flag">Best value &middot; Save ${bundle.percent}%</p>
+    </div>
+    <p class="price-amount">
+      <s class="price-was"><span class="visually-hidden">Bought separately: </span>${gbp(bundle.separately)}</s>
+      <strong>${gbp(bundle.price)}</strong><span>one-off</span>
+    </p>
+    <p class="price-saving">You save ${gbp(bundle.saving)} compared with buying these services separately.</p>
+    <p>One setup. Everything connected. Ready to grow.</p>
+    <a class="btn small" href="${CTA.href}">Get the ${bundle.name}</a>
+  </div>
+  ${ticks(bundle.features)}
+</article>`;
 
 const body = `      <section class="hero">
         <div class="container">
@@ -157,57 +195,15 @@ const body = `      <section class="hero">
       <section class="section tight" id="packages">
         <div class="container">
           <div class="section-head">
-            <p class="eyebrow">Website packages</p>
-            <h2>Two ways to start a website.</h2>
-            <p>Choose a package when the scope is straightforward. If your site needs ecommerce, member areas, unusual integrations or a larger content structure, you get a custom written quote instead.</p>
+            <p class="eyebrow">Services and prices</p>
+            <h2>Buy one service, or get everything together and save.</h2>
+            <p>Every service can be bought on its own. If you want the whole setup, the ${bundle.name} brings it together for ${gbp(bundle.price)}.</p>
           </div>
-          <div class="price-grid two reveal">
-${cards}
+          <div class="price-grid services reveal">
+${serviceCards}
+${bundleCard}
           </div>
-          <p class="disclosure">All prices exclude VAT. Final scope and any third-party costs are confirmed in writing before work begins. This website does not take payments.</p>
-        </div>
-      </section>
-
-      <section class="section band-light" id="individual">
-        <div class="container">
-          <div class="section-head">
-            <p class="eyebrow">Individual services</p>
-            <h2>Buy one service. Not a bundle you did not ask for.</h2>
-          </div>
-          <table class="price-table reveal">
-            <caption>Prices exclude VAT. Website care is month to month with no long tie-in.</caption>
-            <thead>
-              <tr><th scope="col">Service</th><th scope="col">What it covers</th><th scope="col">Price</th></tr>
-            </thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section band-dark" id="bundle">
-        <div class="container">
-          <div class="two-col">
-            <div class="section-head" style="margin-bottom: 0">
-              <p class="eyebrow">Optional package</p>
-              <h2>One setup. Everything connected. Ready to grow.</h2>
-              <p class="lede">Get everything you need to launch a stronger online presence and start capturing more leads, delivered as one project instead of four.</p>
-            </div>
-            <article class="price-card featured">
-              <p class="price-name">Growth Launch Package</p>
-              <p class="price-amount"><strong>£499</strong><span>one-off</span></p>
-              <p>Everything below, scoped and delivered together.</p>
-              <ul class="tick-list">
-                <li>${icon("check")}<span>Multi-page professional website</span></li>
-                <li>${icon("check")}<span>Local SEO setup</span></li>
-                <li>${icon("check")}<span>Google Business Profile optimisation</span></li>
-                <li>${icon("check")}<span>AI receptionist</span></li>
-                <li>${icon("check")}<span>Website AI chat</span></li>
-                <li>${icon("check")}<span>CRM setup</span></li>
-                <li>${icon("check")}<span>Booking and follow-up automation</span></li>
-              </ul>
-              <a class="btn" href="${CTA.href}">Discuss the Growth Launch Package</a>
-            </article>
-          </div>
+          <p class="disclosure">All prices exclude VAT. Final scope and any third-party costs are confirmed in writing before work begins. Larger sites, ecommerce and unusual integrations get a written quote. This website does not take payments.</p>
         </div>
       </section>
 

@@ -163,7 +163,9 @@ aligned, and update the `alt` text with it.
 The site sells in **GBP only**. There is one price list, on `/pricing`, defined
 in `src/pages/pricing.js`: website packages £99 / £179, individual
 services priced separately, and an optional £499 Growth Launch Package. The
-package deliberately shows no "regular value" or percentage saving.
+package's struck-through "bought separately" figure (£676) and saving are
+computed from the included services' own prices; `npm test` fails if a
+struck-through price is anything else.
 
 `/med-spa-growth-system` has **no price of its own**. It is the £499 Growth
 Launch Package — multi-page website £179, local SEO + Google Business Profile
