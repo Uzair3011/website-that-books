@@ -7,7 +7,7 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Terms</p>
           <h1>The offer, in plain English.</h1>
-          <p class="lede">Last updated 22 September 2026. These are the advertised terms. Your signed proposal or statement of work confirms the exact scope, acceptance checks, delivery schedule and any agreed variations before payment.</p>
+          <p class="lede">Last updated 29 September 2026. These are the advertised terms. Your signed proposal or statement of work confirms the exact scope, acceptance checks, delivery schedule and any agreed variations before payment.</p>
         </div>
       </section>
 
@@ -15,8 +15,8 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <div class="prose">
             <h2>Standard service pricing</h2>
-            <p>Prices shown on <a href="/pricing">the pricing page</a> are in GBP and exclude VAT. Any VAT that applies is shown on your written proposal and invoice. Website packages are Launch £495, Business £895 and Growth £1,495, each as a one-off project fee for the scope described. Individual services are priced separately and may be purchased on their own; no package or bundle is a condition of buying any single service.</p>
-            <p>Monthly services, including ongoing local SEO from £250 a month and website care from £49 a month, are provided month to month and may be cancelled with 30 days' written notice. Services already delivered and usage already consumed remain payable.</p>
+            <p>Prices shown on <a href="/pricing">the pricing page</a> are in GBP and exclude VAT. Any VAT that applies is shown on your written proposal and invoice. Website packages are Simple Landing Page £99, Multi-Page Website £179 and Growth £1,495, each as a one-off project fee for the scope described. The Growth Launch Package is £499 as a one-off project fee for the services listed on the pricing page. Individual services are priced separately and may be purchased on their own; no package or bundle is a condition of buying any single service.</p>
+            <p>Website care, from £49 a month, is provided month to month and may be cancelled with 30 days' written notice. Services already delivered and usage already consumed remain payable.</p>
 
             <h2>Scope, timelines and revisions</h2>
             <p>Stated delivery times run from content approval, not from the date of enquiry or deposit. Each package includes the number of revision rounds listed on the pricing page. Work outside the agreed written scope &mdash; ecommerce, memberships, directories, additional pages, unusual integrations or major redesigns &mdash; is quoted separately and is not started without approval.</p>

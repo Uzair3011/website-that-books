@@ -82,8 +82,8 @@ export default servicePage({
     ],
   },
   price: {
-    heading: "Local SEO from £250 a month, with a one-off setup.",
-    body: "A £395 one-off foundation covers the profile, structure and technical setup. Ongoing local SEO from £250 a month, with no long tie-in. A Google Business Profile setup can also be bought on its own.",
+    heading: "Local SEO and Google Business Profile setup, £99.",
+    body: "A £99 one-off setup, excluding VAT, covers the Google Business Profile, service and area page structure, and technical foundations. There is no monthly contract.",
   },
   faqs: [
     {

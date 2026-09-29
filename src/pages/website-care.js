@@ -68,7 +68,7 @@ export default servicePage({
       {
         label: "Growing",
         title: "Local SEO",
-        text: "Ongoing local SEO is a separate monthly service. It sits alongside care, and each can be bought without the other.",
+        text: "Local SEO and Google Business Profile setup is a separate one-off service. It sits alongside care, and each can be bought without the other.",
       },
       {
         label: "Leaving",
@@ -103,7 +103,7 @@ export default servicePage({
     {
       href: "/web-design-middlesbrough",
       label: "Website design",
-      text: "Clear packages from £495, with a written scope and price up front.",
+      text: "Clear packages from £99, with a written scope and price up front.",
     },
     {
       href: "/pricing",

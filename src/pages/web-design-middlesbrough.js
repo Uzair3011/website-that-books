@@ -2,9 +2,9 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/web-design-middlesbrough",
-  title: "Web Design Middlesbrough | Clear Packages from £495 | Veltra Media",
+  title: "Web Design Middlesbrough | Clear Packages from £99 | Veltra Media",
   description:
-    "Conversion-focused web design for Middlesbrough and Teesside businesses. Clear packages from £495, mobile-first builds, local SEO foundations and a website you own.",
+    "Conversion-focused web design for Middlesbrough and Teesside businesses. Clear packages from £99, mobile-first builds, local SEO foundations and a website you own.",
   breadcrumbName: "Web design Middlesbrough",
   serviceName: "Web design",
   eyebrow: "Website design · Middlesbrough & Teesside",
@@ -81,8 +81,8 @@ export default servicePage({
     ],
   },
   price: {
-    heading: "Website packages from £495.",
-    body: "Launch £495 for a focused one-page site, Business £895 for up to five pages, Growth £1,495 for up to ten. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
+    heading: "Website packages from £99.",
+    body: "Simple landing page £99 for a focused one-page site, multi-page website £179 for up to five pages, Growth £1,495 for up to ten. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
   },
   faqs: [
     {

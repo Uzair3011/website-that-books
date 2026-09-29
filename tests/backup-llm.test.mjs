@@ -192,6 +192,6 @@ test("the backup's knowledge is a small, relevant slice of the site", async () =
     "at least four times smaller",
   );
   assert.match(slim, /Google Business Profile/);
-  assert.match(slim, /£195/);
+  assert.match(slim, /£99/);
   assert.match(slim, /ALL PAGES ON THE SITE[\s\S]*\(\/pricing\)/);
 });

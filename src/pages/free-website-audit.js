@@ -109,7 +109,7 @@ ${related(
     {
       href: "/web-design-middlesbrough",
       label: "Web design Middlesbrough",
-      text: "Websites from £495 with a written scope before work starts.",
+      text: "Websites from £99 with a written scope before work starts.",
     },
     {
       href: "/local-seo-middlesbrough",

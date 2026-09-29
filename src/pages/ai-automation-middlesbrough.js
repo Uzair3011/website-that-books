@@ -82,8 +82,8 @@ export default servicePage({
     ],
   },
   price: {
-    heading: "Website chat from £295. AI receptionist from £495.",
-    body: "Website chat £295 setup. AI receptionist £495 setup, plus the usage cost of the underlying provider, which we show you at cost. Optional monthly tuning and support available.",
+    heading: "AI receptionist and website chat, £199.",
+    body: "£199 setup for the AI receptionist and website chat together, plus the usage cost of the underlying provider, which we show you at cost. Optional monthly tuning and support available.",
   },
   faqs: [
     {

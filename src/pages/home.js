@@ -14,7 +14,7 @@ import {
 const FAQS = [
   {
     q: "How long will the website take?",
-    a: "<p>A Launch site typically takes around seven working days after the content is approved. Business and Growth sites usually take ten to twenty working days, depending on the scope and how quickly feedback is supplied.</p>",
+    a: "<p>A simple landing page typically takes around seven working days after the content is approved. Multi-page and Growth sites usually take ten to twenty working days, depending on the scope and how quickly feedback is supplied.</p>",
   },
   {
     q: "Do I have to pay for a monthly plan?",
@@ -30,7 +30,7 @@ const FAQS = [
   },
   {
     q: "Will the website rank on Google?",
-    a: "<p>No honest company can guarantee a ranking. We build the technical and on-page foundations correctly, connect the relevant Google tools and can provide ongoing local SEO if you want to improve visibility over time.</p>",
+    a: "<p>No honest company can guarantee a ranking. We build the technical and on-page foundations correctly, connect the relevant Google tools and can set up local SEO and your Google Business Profile if you want to improve visibility.</p>",
   },
   {
     q: "Can we add AI or automation later?",

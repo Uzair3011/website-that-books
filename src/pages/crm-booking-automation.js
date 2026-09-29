@@ -82,8 +82,8 @@ export default servicePage({
     ],
   },
   price: {
-    heading: "CRM and booking automation from £395.",
-    body: "£395 one-off setup covering enquiry capture, calendar booking, confirmations and reminders. Follow-up sequences and review requests can be added. Third-party platform fees, where any apply, are always shown at cost before you commit.",
+    heading: "CRM and booking follow-up automation, £199.",
+    body: "£199 one-off setup covering enquiry capture, calendar booking, confirmations, reminders and follow-up. Review requests can be added. Third-party platform fees, where any apply, are always shown at cost before you commit.",
   },
   faqs: [
     {

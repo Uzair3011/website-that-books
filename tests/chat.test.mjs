@@ -297,7 +297,7 @@ test("history is merged into alternating turns that end with the visitor", () =>
 test("the assistant's knowledge is the live site text, without form markup or legal pages", () => {
   const knowledge = siteKnowledge();
   assert.match(knowledge, /\(\/pricing\)/);
-  assert.match(knowledge, /£495/);
+  assert.match(knowledge, /£179/);
   assert.doesNotMatch(knowledge, /<[a-z]/i);
   assert.doesNotMatch(knowledge, /\(\/privacy\)/);
   assert.doesNotMatch(knowledge, /Leave this blank/);

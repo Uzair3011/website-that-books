@@ -39,8 +39,8 @@ const FAQS = [
 
 export const packages = [
   {
-    name: "Launch",
-    price: "£495",
+    name: "Simple Landing Page",
+    price: "£99",
     unit: "one-off",
     summary:
       "A sharp one-page website for a new business or a simple offer that needs to look established quickly.",
@@ -54,11 +54,11 @@ export const packages = [
       "One revision round",
       "Typically live in seven working days after content approval",
     ],
-    cta: "Choose Launch",
+    cta: "Choose Landing Page",
   },
   {
-    name: "Business",
-    price: "£895",
+    name: "Multi-Page Website",
+    price: "£179",
     unit: "one-off",
     flag: "Most popular",
     featured: true,
@@ -75,7 +75,7 @@ export const packages = [
       "Two revision rounds",
       "Typically live in ten to fifteen working days after content approval",
     ],
-    cta: "Choose Business",
+    cta: "Choose Multi-Page",
   },
   {
     name: "Growth",
@@ -85,7 +85,7 @@ export const packages = [
       "For an established business that needs more service depth, stronger local coverage and a better enquiry system.",
     features: [
       "Up to ten pages",
-      "Everything in Business",
+      "Everything in Multi-Page Website",
       "Service and location page structure",
       "Advanced enquiry or quote form",
       "Booking or CRM integration",
@@ -100,51 +100,33 @@ export const packages = [
 
 const individual = [
   [
-    "Website design",
-    "One-page Launch site, five-page Business site or ten-page Growth site. Custom builds quoted in writing.",
-    "from £495",
-    "/web-design-middlesbrough",
-  ],
-  [
-    "Google Business Profile setup",
-    "Categories, services, service areas, hours, photographs and posts, set up accurately and handed over.",
-    "£195 one-off",
-    "/google-business-profile",
-  ],
-  [
-    "Local SEO foundation",
-    "Profile optimisation, service and area page structure, local schema, technical and indexation setup.",
-    "£395 one-off",
-    "/local-seo-middlesbrough",
-  ],
-  [
-    "Ongoing local SEO",
-    "Continued content, profile management, review flow and Search Console reporting. Month to month.",
-    "from £250 / month",
-    "/local-seo-middlesbrough",
-  ],
-  [
-    "Landing page + CRO",
+    "Simple landing page",
     "A single focused page for one offer, including copy, design, build and conversion tracking.",
-    "£295",
+    "£99 one-off",
     "/landing-page-design",
   ],
   [
-    "Website chat",
-    "A chat widget on your site answering approved questions and capturing enquiry details.",
-    "£295 setup",
+    "Multi-page website",
+    "Up to five core pages, built to explain your services and generate enquiries. Larger sites on the Growth package or a written quote.",
+    "£179 one-off",
+    "/web-design-middlesbrough",
+  ],
+  [
+    "Local SEO + Google Business Profile",
+    "Profile setup and optimisation, service and area page structure, local schema, technical and indexation setup.",
+    "£99 one-off",
+    "/local-seo-middlesbrough",
+  ],
+  [
+    "AI receptionist + website chat",
+    "Approved answer set, handover rules, enquiry capture and after-hours coverage, on the phone and on your site. Provider usage billed at cost.",
+    "£199 setup",
     "/ai-automation-middlesbrough",
   ],
   [
-    "AI receptionist",
-    "Approved answer set, handover rules, enquiry capture and after-hours coverage. Provider usage billed at cost.",
-    "£495 setup",
-    "/ai-automation-middlesbrough",
-  ],
-  [
-    "CRM, booking + follow-up automation",
+    "CRM + booking follow-up automation",
     "Enquiry capture, live calendar booking, confirmations, reminders and consent-based follow-up.",
-    "£395 setup",
+    "£199 setup",
     "/crm-booking-automation",
   ],
   [
@@ -212,7 +194,7 @@ ${cards}
             <h2>Buy one service. Not a bundle you did not ask for.</h2>
           </div>
           <table class="price-table reveal">
-            <caption>Prices exclude VAT. Monthly services are month to month with no long tie-in.</caption>
+            <caption>Prices exclude VAT. Website care is month to month with no long tie-in.</caption>
             <thead>
               <tr><th scope="col">Service</th><th scope="col">What it covers</th><th scope="col">Price</th></tr>
             </thead>
@@ -225,23 +207,24 @@ ${cards}
         <div class="container">
           <div class="two-col">
             <div class="section-head" style="margin-bottom: 0">
-              <p class="eyebrow">Optional bundle</p>
-              <h2>The connected setup, when you want the whole journey fixed at once.</h2>
-              <p class="lede">Some businesses would rather do it in one piece of work than four. If that is you, this is the combination we would normally recommend — at less than the sum of its parts.</p>
+              <p class="eyebrow">Optional package</p>
+              <h2>One setup. Everything connected. Ready to grow.</h2>
+              <p class="lede">Get everything you need to launch a stronger online presence and start capturing more leads, delivered as one project instead of four.</p>
             </div>
             <article class="price-card featured">
-              <p class="price-flag">Saves £385</p>
-              <p class="price-name">Connected setup</p>
-              <p class="price-amount"><strong>£2,195</strong><span>one-off</span></p>
-              <p>Everything below, scoped and delivered as one project instead of four separate ones.</p>
+              <p class="price-name">Growth Launch Package</p>
+              <p class="price-amount"><strong>£499</strong><span>one-off</span></p>
+              <p>Everything below, scoped and delivered together.</p>
               <ul class="tick-list">
-                <li>${icon("check")}<span>Growth website, up to ten pages &mdash; £1,495</span></li>
-                <li>${icon("check")}<span>Local SEO foundation &mdash; £395</span></li>
-                <li>${icon("check")}<span>CRM, booking and follow-up automation &mdash; £395</span></li>
-                <li>${icon("check")}<span>Website chat &mdash; £295</span></li>
-                <li>${icon("check")}<span>Bought separately: £2,580</span></li>
+                <li>${icon("check")}<span>Multi-page professional website</span></li>
+                <li>${icon("check")}<span>Local SEO setup</span></li>
+                <li>${icon("check")}<span>Google Business Profile optimisation</span></li>
+                <li>${icon("check")}<span>AI receptionist</span></li>
+                <li>${icon("check")}<span>Website AI chat</span></li>
+                <li>${icon("check")}<span>CRM setup</span></li>
+                <li>${icon("check")}<span>Booking and follow-up automation</span></li>
               </ul>
-              <a class="btn" href="${CTA.href}">Discuss the connected setup</a>
+              <a class="btn" href="${CTA.href}">Discuss the Growth Launch Package</a>
             </article>
           </div>
         </div>
@@ -291,9 +274,9 @@ ${finalCta({
 
 export default {
   path: "/pricing",
-  title: "Pricing | Websites from £495, Services Sold Separately | Veltra Media",
+  title: "Pricing | Websites from £99, Services Sold Separately | Veltra Media",
   description:
-    "Clear prices for web design, local SEO, landing pages, AI reception and booking automation in Middlesbrough and Teesside. Websites from £495. Every service can be bought on its own.",
+    "Clear prices for web design, local SEO, landing pages, AI reception and booking automation in Middlesbrough and Teesside. Websites from £99. Every service can be bought on its own.",
   jsonLd: [
     organizationJsonLd(),
     faqJsonLd(FAQS),

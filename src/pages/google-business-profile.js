@@ -2,9 +2,9 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/google-business-profile",
-  title: "Google Business Profile Setup Middlesbrough | £195 | Veltra Media",
+  title: "Google Business Profile Setup Middlesbrough | £99 | Veltra Media",
   description:
-    "Google Business Profile setup and optimisation for Middlesbrough and Teesside businesses: accurate categories, services, areas, hours, photos and a review flow, from £195.",
+    "Google Business Profile setup and optimisation for Middlesbrough and Teesside businesses: accurate categories, services, areas, hours, photos and a review flow, with local SEO setup, for £99.",
   breadcrumbName: "Google Business Profile",
   serviceName: "Google Business Profile setup",
   eyebrow: "Google Business Profile · Middlesbrough & Teesside",
@@ -56,17 +56,17 @@ export default servicePage({
   },
   fitHeading: "Works on its own",
   fit: {
-    heading: "Buy the profile on its own, or as part of local SEO.",
+    heading: "Profile and local SEO, set up together.",
     body: "A properly set up profile is a complete piece of work. It also pairs naturally with these services when you want to go further.",
     items: [
       {
-        label: "Often next",
-        title: "Local SEO foundation",
-        text: "Service and area pages, local schema and technical setup that support the profile from your own website.",
+        label: "Included",
+        title: "Local SEO setup",
+        text: "Service and area pages, local schema and technical setup that support the profile from your own website, in the same £99.",
       },
       {
         label: "With a website",
-        title: "Business or Growth package",
+        title: "Multi-Page or Growth website",
         text: "Both website packages include Google Business Profile alignment, so the site and the profile say the same thing.",
       },
       {
@@ -76,14 +76,14 @@ export default servicePage({
       },
       {
         label: "Ongoing",
-        title: "Ongoing local SEO",
-        text: "Continued profile management and reporting, month to month, if you want it.",
+        title: "Website care",
+        text: "Hosting, updates, backups and support from £49 a month, if you want it.",
       },
     ],
   },
   price: {
-    heading: "Profile setup is £195.",
-    body: "Google Business Profile setup is £195 one-off, excluding VAT. The local SEO foundation is £395 one-off, and ongoing local SEO is from £250 a month, month to month. Everything is confirmed in writing before work begins.",
+    heading: "Profile and local SEO setup is £99.",
+    body: "Google Business Profile and local SEO setup is £99 one-off, excluding VAT. Everything is confirmed in writing before work begins.",
   },
   faqs: [
     {

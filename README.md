@@ -161,8 +161,9 @@ aligned, and update the `alt` text with it.
 ## Pricing maintenance
 
 The site sells in **GBP only**. There is one price list, on `/pricing`, defined
-in `src/pages/pricing.js`: website packages £495 / £895 / £1,495, individual
-services priced separately, and an optional £2,195 connected setup.
+in `src/pages/pricing.js`: website packages £99 / £179 / £1,495, individual
+services priced separately, and an optional £499 Growth Launch Package. The
+package deliberately shows no "regular value" or percentage saving.
 
 `/med-spa-growth-system` has **no bundle price of its own**. It is four of those
 standard services at those same prices — Business website £895, AI receptionist

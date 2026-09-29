@@ -82,8 +82,8 @@ export default servicePage({
     ],
   },
   price: {
-    heading: "Landing pages from £295.",
-    body: "£295 for a single focused page including copy, design, build and conversion tracking. Additional pages in the same campaign are less. Ongoing CRO review is quoted against the traffic you actually have.",
+    heading: "Landing pages from £99.",
+    body: "£99 for a single focused page including copy, design, build and conversion tracking. Need more than one page? The multi-page website is £179. Ongoing CRO review is quoted against the traffic you actually have.",
   },
   faqs: [
     {

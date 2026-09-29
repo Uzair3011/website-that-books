@@ -4,12 +4,12 @@ export default servicePage({
   path: "/web-design-teesside",
   title: "Web Design Teesside | Websites for Tees Valley Businesses | Veltra Media",
   description:
-    "Web design for businesses across Teesside and the Tees Valley: Middlesbrough, Stockton-on-Tees, Redcar, Billingham and Hartlepool. Clear packages from £495 and a website you own.",
+    "Web design for businesses across Teesside and the Tees Valley: Middlesbrough, Stockton-on-Tees, Redcar, Billingham and Hartlepool. Clear packages from £99 and a website you own.",
   breadcrumbName: "Web design Teesside",
   serviceName: "Web design",
   eyebrow: "Website design · Teesside & the Tees Valley",
   h1: "Web design for businesses across Teesside and the Tees Valley.",
-  lede: "Conversion-focused websites for service businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, with clear packages from £495.",
+  lede: "Conversion-focused websites for service businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, with clear packages from £99.",
   image: {
     src: "/assets/work/teesside-map.svg",
     width: 1000,
@@ -82,8 +82,8 @@ export default servicePage({
     ],
   },
   price: {
-    heading: "Website packages from £495.",
-    body: "Launch £495 for a focused one-page site, Business £895 for up to five pages, Growth £1,495 for up to ten. Prices exclude VAT. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
+    heading: "Website packages from £99.",
+    body: "Simple landing page £99 for a focused one-page site, multi-page website £179 for up to five pages, Growth £1,495 for up to ten. Prices exclude VAT. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
   },
   faqs: [
     {
@@ -100,7 +100,7 @@ export default servicePage({
     },
     {
       q: "Will the website rank on Google?",
-      a: "<p>No honest company can guarantee a ranking. We build the technical and on-page foundations correctly, connect the relevant Google tools and can provide ongoing local SEO if you want to improve visibility over time.</p>",
+      a: "<p>No honest company can guarantee a ranking. We build the technical and on-page foundations correctly, connect the relevant Google tools and can set up local SEO and your Google Business Profile if you want to improve visibility.</p>",
     },
   ],
   relatedItems: [
@@ -117,7 +117,7 @@ export default servicePage({
     {
       href: "/google-business-profile",
       label: "Google Business Profile",
-      text: "A complete, accurate profile from £195.",
+      text: "Profile and local SEO setup for £99.",
     },
   ],
 });
