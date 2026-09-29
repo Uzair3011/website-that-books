@@ -2122,6 +2122,18 @@ svg.icon {
 .footer-legal a:hover {
   color: var(--accent-lime);
 }
+.footer-link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted-dark);
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.2s var(--ease);
+}
+.footer-link-button:hover {
+  color: var(--accent-lime);
+}
 
 /* ───────────────────────── Mobile action bar ───────────────────────── */
 .mobile-bar {
@@ -4113,5 +4125,171 @@ svg.icon {
   }
   .voice-panel {
     height: auto;
+  }
+}
+
+/* ───────────────────────── Cookie consent (assets/consent.js) ─────────────────────────
+   Sits above the assist dock (50), the mobile call bar (45) and the chat panel (60).
+   The Call and Chat launchers step aside while it is open so nothing overlaps. */
+:root:has(.cookie) .assist-dock {
+  display: none;
+}
+.cookie {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  padding: 12px;
+  pointer-events: none;
+}
+.cookie-inner {
+  pointer-events: auto;
+  max-width: 60rem;
+  max-height: calc(100dvh - 24px);
+  margin: 0 auto;
+  padding: 22px 24px;
+  overflow-y: auto;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent-lime);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 70px rgba(7, 19, 19, 0.3);
+}
+.cookie-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cookie .eyebrow {
+  margin: 0 0 4px;
+}
+.cookie h2 {
+  margin: 0;
+  font-size: 1.375rem;
+  outline: none;
+}
+.cookie p {
+  margin: 12px 0 0;
+  max-width: 46rem;
+  color: var(--body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.cookie a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cookie-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.cookie-text-button,
+.cookie-close {
+  padding: 8px 6px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.cookie-close {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.cookie-options {
+  margin-top: 16px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.cookie-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+}
+.cookie-option + .cookie-option {
+  border-top: 1px solid var(--line);
+}
+.cookie .cookie-option-label {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 700;
+}
+.cookie .cookie-option-text {
+  margin: 2px 0 0;
+  font-size: 0.8125rem;
+}
+.cookie-always {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-lime);
+  color: #071313;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.cookie-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 48px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--canvas);
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+.cookie-switch span {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--body);
+  transform: translateY(-50%);
+  transition: transform 0.16s ease;
+}
+.cookie-switch[aria-checked="true"] {
+  background: var(--accent-lime);
+  border-color: var(--accent-lime);
+}
+.cookie-switch[aria-checked="true"] span {
+  background: #071313;
+  transform: translate(20px, -50%);
+}
+.cookie button:focus-visible,
+.cookie a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .cookie-inner {
+    padding: 18px 16px;
+  }
+  .cookie-actions .btn {
+    flex: 1 1 100%;
   }
 }

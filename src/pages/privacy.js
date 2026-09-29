@@ -6,7 +6,7 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Privacy</p>
           <h1>Your information, handled with care.</h1>
-          <p class="lede">Last updated 26 September 2026. This page explains the information used by the Veltra Media marketing website, its audit and enquiry forms, and its strategy-call booking.</p>
+          <p class="lede">Last updated 29 September 2026. This page explains the information used by the Veltra Media marketing website, its audit and enquiry forms, and its strategy-call booking.</p>
         </div>
       </section>
 
@@ -27,8 +27,8 @@ const body = `      <section class="hero">
             <p>The chat assistant on this website is an AI that answers from the content of our website. What you type is sent to Google's Gemini API to generate replies; under Google's terms for its free service tier, Google may use those messages to improve its products, and they may be reviewed by people. When Google's service is busy, messages are instead sent to Groq, Inc. in the United States to generate the reply. Please do not share sensitive personal information in the chat. If you give your contact details in the chat and agree to be contacted, they are saved to our lead database, with the conversation, in the same way as a form enquiry.</p>
 
             <h2>Browser storage and analytics</h2>
-            <p>This site stores only your selected light or dark appearance in your browser. Form entries are not saved to browser storage. See the <a href="/cookie-policy">cookie policy</a> for detail.</p>
-            <p>We use Vercel Web Analytics to understand aggregate traffic, such as which pages are visited. It does not use cookies and does not identify individual visitors. Where Google Search Console is connected, it is used to understand search performance. Neither is used to build advertising profiles. No advertising pixels or third-party advertising trackers are installed. Your host may retain operational access logs.</p>
+            <p>This site stores your privacy choice and your selected light or dark appearance in your browser. Form entries are not saved to browser storage. See the <a href="/cookie-policy">cookie policy</a> for detail.</p>
+            <p>If you allow analytics in the privacy banner, we use Vercel Web Analytics to understand aggregate traffic, such as which pages are visited. It does not use cookies and does not identify individual visitors, and it is not loaded unless you allow it. You can change your choice at any time with the Cookie preferences link at the bottom of every page. Where Google Search Console is connected, it is used to understand search performance. Neither is used to build advertising profiles. No advertising pixels or third-party advertising trackers are installed. Your host may retain operational access logs.</p>
 
             <h2>Access, corrections and deletion</h2>
             <p>You can request access to, correction of, or deletion of information by using our <a href="/contact">contact page</a> or replying to an existing conversation. We retain enquiry information only as needed to handle your request, maintain the business relationship, or satisfy applicable obligations. Actual retention in connected providers depends on their configured policies.</p>

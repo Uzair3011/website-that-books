@@ -72,7 +72,7 @@ export function renderPage(
     <script src="/assets/theme.js"></script>
     <script src="/assets/config.js" defer></script>
     <script src="/assets/app.js" type="module"></script>
-    <script src="/_vercel/insights/script.js" defer></script>
+    <script src="/assets/consent.js" defer></script>
     ${voice ? '<script src="/assets/voice.js" defer></script>' : ""}
     ${chat ? '<script src="/assets/chat.js" defer></script>' : ""}
     ${ld}

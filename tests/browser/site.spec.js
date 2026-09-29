@@ -53,6 +53,55 @@ async function fillForm(page) {
   await page.getByLabel("I agree to be contacted").check();
 }
 
+// Every test starts with a saved choice so the privacy banner stays out of the
+// way; the banner test below clears it.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem("consent-test")) return;
+    localStorage.setItem(
+      "veltra-cookie-consent",
+      JSON.stringify({
+        version: 1,
+        analytics: false,
+        updatedAt: new Date().toISOString(),
+      }),
+    );
+  });
+});
+
+test("the privacy banner asks first, loads analytics only on consent, and can be reopened", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem("consent-test")) return;
+    sessionStorage.setItem("consent-test", "1");
+    localStorage.removeItem("veltra-cookie-consent");
+  });
+  const insights = page.locator('script[src="/_vercel/insights/script.js"]');
+  await page.goto("/pricing");
+  const banner = page.getByRole("dialog", { name: "Your privacy choices" });
+  await expect(banner).toBeVisible();
+  await expect(page.locator(".assist-dock")).toBeHidden();
+  await expect(insights).toHaveCount(0);
+  const axe = await new AxeBuilder({ page }).include(".cookie").analyze();
+  expect(axe.violations).toEqual([]);
+
+  await banner.getByRole("button", { name: "Decline optional" }).click();
+  await expect(banner).toBeHidden();
+  await page.reload();
+  await expect(banner).toBeHidden();
+  await expect(insights).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Cookie preferences" }).click();
+  await expect(banner).toBeVisible();
+  const toggle = banner.getByRole("switch", { name: "Analytics" });
+  await expect(toggle).toHaveAttribute("aria-checked", "false");
+  await toggle.click();
+  await banner.getByRole("button", { name: "Save preferences" }).click();
+  await expect(banner).toBeHidden();
+  await expect(insights).toHaveCount(1);
+});
+
 test("all pages render, have no overflow or runtime errors, and local links resolve", async ({
   page,
   request,

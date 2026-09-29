@@ -196,7 +196,8 @@ export function footer() {
       <nav class="footer-legal" aria-label="Legal">
         <a href="/privacy">Privacy policy</a>
         <a href="/cookie-policy">Cookie policy</a>
-        <a href="/terms">Terms</a>
+        <a href="/terms">Terms of service</a>
+        <button type="button" class="footer-link-button" data-cookie-preferences hidden>Cookie preferences</button>
       </nav>
     </div>
   </div>
