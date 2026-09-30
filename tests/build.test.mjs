@@ -190,3 +190,13 @@ test("every SVG asset is well-formed XML with no HTML-only entities", async () =
     assert.match(svg.trimEnd(), /<\/svg>$/, `${file} is truncated`);
   }
 });
+
+test("the privacy policy names every provider that receives visitor data, and the ICO", () => {
+  // If a new provider or data flow is added, the privacy page must say so.
+  const privacy = pages.find((page) => page.path === "/privacy");
+  const html = renderPage(privacy, { origin: ORIGIN });
+  for (const name of ["Supabase", "Gemini", "Groq", "ElevenLabs", "Vercel", "Google Calendar"])
+    assert.ok(html.includes(name), `/privacy does not mention ${name}`);
+  for (const section of ["controller", "lawful basis", "Transfers outside the UK", "Your rights", "ico.org.uk"])
+    assert.ok(html.includes(section), `/privacy is missing "${section}"`);
+});

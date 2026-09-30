@@ -38,6 +38,8 @@ a compliance certification or a substitute for assistive-technology testing.
 
 ## Currency consolidation — 22 September 2026
 
+Superseded 29 September 2026 by the new price list; see `docs/positioning.md`.
+
 The med-spa page previously priced in USD ($2,490 launch / $3,490 standard /
 $399 per month) on an otherwise GBP site. It is now composed from the standard
 GBP service list — £895 + £495 + £295 + £395 = £2,080, plus optional care at
@@ -84,5 +86,7 @@ font is self-hosted.
   requests cannot be sent. Connect a destination and submit a real test request.
 - Client case studies on `/work` are labelled design examples. Replace them with
   real screenshots and evidenced results as permission allows.
-- Confirm the med-spa page's composed price (£2,080) and the £49 care plan are
-  commercially supported before taking a deposit against them.
+- Confirm the med-spa system at £499 (the Growth Launch Package) and the £49
+  care plan are commercially supported before taking a deposit against them.
+  Its terms still include team training, a campaign planning session, a 30-day
+  check-in and a setup-fee refund guarantee.

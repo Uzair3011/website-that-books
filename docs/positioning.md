@@ -32,22 +32,28 @@ The site describes intake and administrative AI, with approved information, hand
 
 ## Commercial offer implemented in the site
 
-Superseded 22 September 2026. The site now sells in GBP only, and the med-spa
-system is not a separately priced bundle. It is four standard services at their
-standard `/pricing` prices:
+Updated 29 September 2026. The site sells in GBP only. The med-spa system is
+the Growth Launch Package from `/pricing`, at the same £499 any business pays.
+It includes these standard services, each also sold on its own:
 
-| Service                               |    GBP |
-| ------------------------------------- | -----: |
-| Business website, up to five pages    |    895 |
-| AI receptionist                       |    495 |
-| Website chat                          |    295 |
-| CRM, booking and follow-up automation |    395 |
-| **One-off total**                     | **2,080** |
+| Service                                     |    GBP |
+| ------------------------------------------- | -----: |
+| Multi-page website, up to five pages        |    179 |
+| Local SEO and Google Business Profile setup |     99 |
+| AI receptionist and website chat            |    199 |
+| CRM, booking and follow-up automation       |    199 |
+| **Bought separately**                       | **676** |
+| **Growth Launch Package**                   | **499** |
 
-Optional website care is £49 a month. AI provider usage is passed through at
-cost. All prices exclude VAT. There is no bundle discount and no expiring launch
-price; the figures live in `assets/business.js` and a test fails if the page,
-the calculator and `/terms` disagree.
+The package shows the £676 struck through and "Save 26%"; both are computed
+from the service prices. Optional website care is £49 a month. AI provider usage
+is passed through at cost. All prices exclude VAT. There is no expiring launch
+price. The figures live in `assets/business.js`, and a test fails if the page,
+the calculator and `/terms` disagree, or if a struck-through price is anything
+other than the real bought-separately total.
+
+Earlier, from 22 September 2026, the med-spa system was four services composed
+at £2,080 (£895 + £495 + £295 + £395) with no bundle discount.
 
 Retired in the same change: the USD bundle ($2,490 launch through 31 October
 2026 / $3,490 standard / $399 per month), the client/admin dashboard line — which

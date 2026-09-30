@@ -18,7 +18,7 @@ The current website is in English and all public prices are GBP, excluding VAT. 
 
 The exact provider is a setup decision; the owner only needs to identify the desired inbox/CRM first. The recipient must accept a test request before the site is treated as ready for live lead capture. Until then, the form clearly reports unavailability instead of showing a fake receipt.
 
-Superseded: the med-spa system is now priced in GBP from the standard service list (£2,080 one-off, optional care from £49/month). Before taking payment, ensure delivery costs, the included usage, and the written launch guarantee are commercially supported. The website takes no payments.
+Superseded: the med-spa system is now the £499 Growth Launch Package from the standard GBP price list (optional care from £49/month). Before taking payment, ensure delivery costs, the included usage, and the written launch guarantee are commercially supported. The website takes no payments.
 
 ## Redesign update — 22 September 2026
 
