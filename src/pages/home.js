@@ -1,7 +1,5 @@
 import { inquiryForm } from "../form.js";
 import { marquee } from "../marquee.js";
-import { PROJECTS } from "../projects.js";
-import { REVIEWS } from "../reviews.js";
 import {
   CTA,
   SERVICES as SERVICE_PAGES,
@@ -44,19 +42,16 @@ const OUTCOMES = [
   {
     icon: "shield",
     title: "Look credible",
-    image: "outcome-credible",
     text: "A polished, modern website that reflects the quality of the business behind it.",
   },
   {
     icon: "pin",
     title: "Get found locally",
-    image: "outcome-local",
     text: "A search-friendly structure that helps Google understand what you offer and where you offer it.",
   },
   {
     icon: "phone",
     title: "Make it easy to enquire",
-    image: "outcome-enquire",
     text: "Clear calls to action, useful forms and booking paths that remove unnecessary friction.",
   },
 ];
@@ -65,7 +60,6 @@ const SERVICES = [
   {
     icon: "layout",
     title: "Website design",
-    image: "service-web-design",
     text: "Fast, mobile-first websites built around your offer, your customers and the action you want them to take.",
     href: "/web-design-middlesbrough",
     cta: "Explore website design",
@@ -73,7 +67,6 @@ const SERVICES = [
   {
     icon: "search",
     title: "Local SEO and Google Business",
-    image: "service-local-seo",
     text: "Improve the signals that help nearby customers find and trust you in Google Search and Maps.",
     href: "/local-seo-middlesbrough",
     cta: "Explore local SEO",
@@ -81,7 +74,6 @@ const SERVICES = [
   {
     icon: "target",
     title: "Landing pages",
-    image: "service-landing-pages",
     text: "Focused pages for one service, location or campaign, written and designed to turn attention into action.",
     href: "/landing-page-design",
     cta: "Explore landing pages",
@@ -89,7 +81,6 @@ const SERVICES = [
   {
     icon: "chat",
     title: "AI receptionist and website chat",
-    image: "service-ai-reception",
     text: "Answer common questions, capture enquiry details and respond after hours without making the customer learn new technology.",
     href: "/ai-automation-middlesbrough",
     cta: "Explore AI reception",
@@ -97,7 +88,6 @@ const SERVICES = [
   {
     icon: "flow",
     title: "Booking and follow-up automation",
-    image: "service-booking",
     text: "Connect forms, calendars and reminders so fewer good enquiries disappear between first contact and booked work.",
     href: "/crm-booking-automation",
     cta: "Explore automation",
@@ -105,7 +95,6 @@ const SERVICES = [
   {
     icon: "tool",
     title: "Website care",
-    image: "service-website-care",
     text: "Hosting, updates, backups and practical support for businesses that would rather not manage the technical side.",
     href: "/website-care",
     cta: "Explore website care",
@@ -135,7 +124,6 @@ const EXPLORE = [
     href: "/work",
     icon: "layout",
     label: "Our work",
-    image: "explore-work",
     text: "What we build, clearly labelled, including a live booking system you can try for yourself.",
     cta: "See the work",
   },
@@ -143,7 +131,6 @@ const EXPLORE = [
     href: "/how-it-works",
     icon: "flow",
     label: "How it works",
-    image: "explore-process",
     text: "Four steps from the first conversation to a live website, with a written scope before anything starts.",
     cta: "See the process",
   },
@@ -151,7 +138,6 @@ const EXPLORE = [
     href: "/about",
     icon: "shield",
     label: "About Veltra",
-    image: "explore-about",
     text: "A local studio that sells one service at a time, writes the scope down and never invents results.",
     cta: "Meet Veltra",
   },
@@ -159,92 +145,23 @@ const EXPLORE = [
 
 const tick = (text) => `<li>${icon("check")}<span>${text}</span></li>`;
 
-// Card photos are decorative: the heading beside each one says what it is, so
-// the alt text is empty. See docs/image-credits.md for where each came from.
-const cardMedia = (name) =>
-  `<figure class="card-media"><img src="/assets/img/${name}.webp" width="800" height="500" loading="lazy" decoding="async" alt="" /></figure>`;
-
 const outcomes = OUTCOMES.map(
-  (item) => `<article class="card has-media">
-  ${cardMedia(item.image)}
-  <div class="card-body">
-    <span class="card-icon" aria-hidden="true">${icon(item.icon)}</span>
-    <h3>${item.title}</h3>
-    <p>${item.text}</p>
-  </div>
+  (item) => `<article class="card">
+  <span class="card-icon" aria-hidden="true">${icon(item.icon)}</span>
+  <h3>${item.title}</h3>
+  <p>${item.text}</p>
 </article>`,
 ).join("\n");
 
 const TONES = ["tone-teal", "tone-lime"];
 const services = SERVICES.map(
-  (service, index) => `<article class="service-card has-media ${TONES[index] || ""}">
-  ${cardMedia(service.image)}
-  <div class="card-body">
-    <span class="service-badge" aria-hidden="true">${icon(service.icon)}</span>
-    <h3>${service.title}</h3>
-    <p>${service.text}</p>
-    <a class="text-link" href="${service.href}">${service.cta}${icon("arrow-up")}</a>
-  </div>
+  (service, index) => `<article class="service-card ${TONES[index] || ""}">
+  <span class="service-badge" aria-hidden="true">${icon(service.icon)}</span>
+  <h3>${service.title}</h3>
+  <p>${service.text}</p>
+  <a class="text-link" href="${service.href}">${service.cta}${icon("arrow-up")}</a>
 </article>`,
 ).join("\n");
-
-const projects = PROJECTS.map((project) => {
-  const external = /^https?:/.test(project.url);
-  return `<article class="project-card">
-  <a href="${project.url}"${external ? ' target="_blank" rel="noopener"' : ""}>
-    <figure class="project-media">
-      <img src="${project.image}" width="1280" height="900" loading="lazy" decoding="async" alt="${project.concept ? "Concept design" : "Website"} for ${project.name}" />
-      ${project.concept ? '<span class="project-flag">Concept</span>' : ""}
-    </figure>
-    <span class="project-body">
-      <span class="project-kind">${project.category}</span>
-      <b>${project.name}</b>
-      <span class="project-summary">${project.summary}</span>
-      <span class="text-link">${external ? "Visit the site" : "See the project"}${icon("arrow-up")}</span>
-    </span>
-  </a>
-</article>`;
-}).join("\n");
-
-const initials = (name) =>
-  name
-    .split(/\s+/)
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
-
-// Hidden until src/reviews.js holds at least one real review.
-export const reviewsSection = (reviews) =>
-  reviews.length
-    ? `
-      <section class="section" id="reviews">
-        <div class="container">
-          <div class="head-split">
-            <div>
-              <p class="eyebrow">Reviews</p>
-              <h2>What our clients say</h2>
-            </div>
-            <p>Real reviews from real clients, in their own words.</p>
-          </div>
-          <div class="review-grid reveal">
-${reviews
-  .map(
-    (review) => `            <figure class="review-card">
-              <p class="review-stars" role="img" aria-label="Rated ${review.rating} out of 5">${[1, 2, 3, 4, 5].map((n) => `<svg viewBox="0 0 24 24" aria-hidden="true"${n > review.rating ? ' class="off"' : ""}><path d="m12 2.8 2.8 5.8 6.3.9-4.6 4.4 1.1 6.3-5.6-3-5.6 3 1.1-6.3-4.6-4.4 6.3-.9Z"/></svg>`).join("")}</p>
-              <blockquote><p>${review.text}</p></blockquote>
-              <figcaption>
-                <span class="review-avatar" aria-hidden="true">${initials(review.name)}</span>
-                <span><b>${review.name}</b><span>${review.business}${review.service ? ` &middot; ${review.service}` : ""}</span></span>
-              </figcaption>
-            </figure>`,
-  )
-  .join("\n")}
-          </div>
-        </div>
-      </section>
-`
-    : "";
 
 const body = `      <section class="hero hero-feature">
         <div class="container">
@@ -317,24 +234,6 @@ ${marquee(
   { label: "Veltra services", duration: "48s" },
 )}
 
-      <section class="section band-light" id="projects">
-        <div class="container">
-          <div class="head-split">
-            <div>
-              <p class="eyebrow">Projects</p>
-              <h2>Websites built to bring in enquiries</h2>
-            </div>
-            <p>A look at the kind of sites we build for local businesses: clear, fast on mobile and designed around one next step for the customer.</p>
-          </div>
-          <div class="project-grid reveal">
-${projects}
-          </div>
-          <div class="section-action">
-            <a class="btn secondary" href="/work">See all our work${icon("arrow-up")}</a>
-          </div>
-        </div>
-      </section>
-
       <section class="section" id="why-veltra">
         <div class="container">
           <div class="head-split">
@@ -370,7 +269,6 @@ ${projects}
         </div>
       </section>
 
-${reviewsSection(REVIEWS)}
       <section class="section band-light" id="explore">
         <div class="container">
           <div class="head-split">
@@ -381,7 +279,7 @@ ${reviewsSection(REVIEWS)}
           </div>
           <ul class="related explore reveal">
 ${EXPLORE.map(
-  (item) => `            <li><a href="${item.href}">${cardMedia(item.image)}<span class="card-body"><span class="card-icon" aria-hidden="true">${icon(item.icon)}</span><b>${item.label}</b><p>${item.text}</p><span class="text-link">${item.cta}${icon("arrow-up")}</span></span></a></li>`,
+  (item) => `            <li><a href="${item.href}"><span class="card-icon" aria-hidden="true">${icon(item.icon)}</span><b>${item.label}</b><p>${item.text}</p><span class="text-link">${item.cta}${icon("arrow-up")}</span></a></li>`,
 ).join("\n")}
           </ul>
         </div>

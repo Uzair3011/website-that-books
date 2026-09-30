@@ -200,36 +200,3 @@ test("the privacy policy names every provider that receives visitor data, and th
   for (const section of ["controller", "lawful basis", "Transfers outside the UK", "Your rights", "ico.org.uk"])
     assert.ok(html.includes(section), `/privacy is missing "${section}"`);
 });
-
-test("homepage images exist, and concept projects are labelled as concepts", async () => {
-  const { existsSync } = await import("node:fs");
-  const { PROJECTS } = await import("../src/projects.js");
-  const home = pages.find((page) => page.path === "/");
-  const html = renderPage(home, { origin: ORIGIN });
-  for (const [, src] of html.matchAll(/<img[^>]+src="(\/assets\/[^"]+)"/g))
-    assert.ok(existsSync(`.${src}`), `${src} is missing`);
-  assert.equal((html.match(/class="card-media"/g) || []).length, 12);
-  for (const project of PROJECTS) {
-    assert.ok(html.includes(project.name), `${project.name} is not on the homepage`);
-    assert.equal(typeof project.concept, "boolean", `${project.name} must say whether it is a concept`);
-  }
-  const concepts = PROJECTS.filter((project) => project.concept).length;
-  assert.equal((html.match(/class="project-flag">Concept</g) || []).length, concepts);
-});
-
-test("reviews stay hidden until there are real ones, and each says where it came from", async () => {
-  const { REVIEWS } = await import("../src/reviews.js");
-  const { reviewsSection } = await import("../src/pages/home.js");
-  assert.equal(reviewsSection([]), "");
-  // Every review must be checkable: invented reviews are illegal in the UK.
-  for (const review of REVIEWS) {
-    for (const field of ["name", "business", "text", "source"])
-      assert.ok(review[field]?.trim(), `a review is missing its ${field}`);
-    assert.ok(Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5);
-    assert.notEqual(review.source, "preview", "a preview review was left in src/reviews.js");
-  }
-  const sample = { name: "Ann Lee", business: "Lee Florist, Redcar", rating: 4, text: "Quick and clear.", source: "Email" };
-  const html = reviewsSection([sample]);
-  assert.match(html, /Rated 4 out of 5/);
-  assert.match(html, /Ann Lee/);
-});
