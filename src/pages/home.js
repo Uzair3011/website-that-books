@@ -1,6 +1,5 @@
 import { inquiryForm } from "../form.js";
 import { marquee } from "../marquee.js";
-import { PROJECTS } from "../projects.js";
 import { REVIEWS } from "../reviews.js";
 import { VISUALS } from "../visuals.js";
 import {
@@ -187,24 +186,6 @@ const services = SERVICES.map(
 </article>`,
 ).join("\n");
 
-const projects = PROJECTS.map((project) => {
-  const external = /^https?:/.test(project.url);
-  return `<article class="project-card">
-  <a href="${project.url}"${external ? ' target="_blank" rel="noopener"' : ""}>
-    <figure class="project-media">
-      <img src="${project.image}" width="1280" height="900" loading="lazy" decoding="async" alt="${project.concept ? "Concept design" : "Website"} for ${project.name}" />
-      ${project.concept ? '<span class="project-flag">Concept</span>' : ""}
-    </figure>
-    <span class="project-body">
-      <span class="project-kind">${project.category}</span>
-      <b>${project.name}</b>
-      <span class="project-summary">${project.summary}</span>
-      <span class="text-link">${external ? "Visit the site" : "See the project"}${icon("arrow-up")}</span>
-    </span>
-  </a>
-</article>`;
-}).join("\n");
-
 const initials = (name) =>
   name
     .split(/\s+/)
@@ -315,24 +296,6 @@ ${marquee(
   SERVICE_PAGES.map((service) => service.name),
   { label: "Veltra services", duration: "48s" },
 )}
-
-      <section class="section band-light" id="projects">
-        <div class="container">
-          <div class="head-split">
-            <div>
-              <p class="eyebrow">Projects</p>
-              <h2>Websites built to bring in enquiries</h2>
-            </div>
-            <p>A look at the kind of sites we build for local businesses: clear, fast on mobile and designed around one next step for the customer.</p>
-          </div>
-          <div class="project-grid reveal">
-${projects}
-          </div>
-          <div class="section-action">
-            <a class="btn secondary" href="/work">See all our work${icon("arrow-up")}</a>
-          </div>
-        </div>
-      </section>
 
       <section class="section" id="why-veltra">
         <div class="container">

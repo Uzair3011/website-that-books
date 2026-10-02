@@ -158,12 +158,12 @@ and they are not client projects. Replace them with real screenshots as client
 permission allows, keeping the 1280×900 canvas so the portfolio grid stays
 aligned, and update the `alt` text with it.
 
-## Homepage projects, reviews and photos
+## Projects, reviews and card visuals
 
-- **Projects** live in `src/projects.js`. The four there now are concept designs
-  for fictional businesses, labelled "Concept" on each card. Add real projects
-  with a 1280×900 screenshot in `assets/work/`, `concept: false` and the live
-  site's `url`.
+- **Projects** live in `src/projects.js` and are shown on `/work`. The live
+  med-spa build is featured; the other three are concept designs for fictional
+  businesses, labelled "Concept". Add real projects with a 1280×900 screenshot
+  in `assets/work/`, `concept: false` and the live site's `url`.
 - **Reviews** live in `src/reviews.js`. The section stays hidden while the list
   is empty. Only add real reviews, word for word, with a `source` saying where
   each can be checked; `npm test` fails without one.

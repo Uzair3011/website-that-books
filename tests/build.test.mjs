@@ -201,23 +201,28 @@ test("the privacy policy names every provider that receives visitor data, and th
     assert.ok(html.includes(section), `/privacy is missing "${section}"`);
 });
 
-test("homepage images exist, and concept projects are labelled as concepts", async () => {
-  const { existsSync } = await import("node:fs");
-  const { PROJECTS } = await import("../src/projects.js");
+test("homepage card visuals are all present, with no clashing SVG ids", () => {
   const home = pages.find((page) => page.path === "/");
   const html = renderPage(home, { origin: ORIGIN });
-  for (const [, src] of html.matchAll(/<img[^>]+src="(\/assets\/[^"]+)"/g))
-    assert.ok(existsSync(`.${src}`), `${src} is missing`);
-  // Every card visual is present, and none has a duplicate gradient id.
   assert.equal((html.match(/class="card-visual"/g) || []).length, 12);
   const ids = [...html.matchAll(/<(?:radialGradient|linearGradient|clipPath) id="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(new Set(ids).size, ids.length, "duplicate SVG ids on the homepage");
+});
+
+test("/work lists every project, labels concepts, and its images exist", async () => {
+  const { existsSync } = await import("node:fs");
+  const { PROJECTS } = await import("../src/projects.js");
+  const work = pages.find((page) => page.path === "/work");
+  const html = renderPage(work, { origin: ORIGIN });
+  for (const [, src] of html.matchAll(/<img[^>]+src="(\/assets\/[^"]+)"/g))
+    assert.ok(existsSync(`.${src}`), `${src} is missing`);
   for (const project of PROJECTS) {
-    assert.ok(html.includes(project.name), `${project.name} is not on the homepage`);
+    assert.ok(html.includes(project.name), `${project.name} is not on /work`);
     assert.equal(typeof project.concept, "boolean", `${project.name} must say whether it is a concept`);
   }
   const concepts = PROJECTS.filter((project) => project.concept).length;
   assert.equal((html.match(/class="project-flag">Concept</g) || []).length, concepts);
+  assert.equal(PROJECTS.filter((project) => project.featured).length, 1, "exactly one featured project");
 });
 
 test("reviews stay hidden until there are real ones, and each says where it came from", async () => {

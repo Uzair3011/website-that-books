@@ -873,106 +873,7 @@ svg.icon {
   border-bottom-color: #071313;
 }
 
-/* ───────────────────────── Work / portfolio ───────────────────────── */
-.work-grid {
-  display: grid;
-  gap: 28px;
-}
-/* One column on tablets and phones; three across on desktop, so no card is ever
-   left alone in a half-empty row. A featured item spans the row. */
-@media (min-width: 1000px) {
-  .work-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
-  .work-item.wide {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    align-items: center;
-    gap: 40px;
-  }
-}
-.work-copy {
-  display: grid;
-  gap: 14px;
-  align-content: start;
-}
-.work-item {
-  display: grid;
-  gap: 20px;
-  align-content: start;
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-.work-figure {
-  margin: 0;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-.work-figure img {
-  width: 100%;
-  height: auto;
-}
-.work-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
-  list-style: none;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--body);
-}
-.work-tags li + li::before {
-  content: "•";
-  margin-right: 14px;
-  color: var(--body);
-}
-.work-item h3 {
-  font-size: 1.375rem;
-}
-.work-item .text-link {
-  align-self: end;
-  justify-self: start;
-}
-.work-body {
-  display: grid;
-  gap: 14px;
-  max-width: 58ch;
-}
-.work-facts {
-  display: grid;
-  gap: 12px;
-  list-style: none;
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-}
-.work-facts li {
-  display: grid;
-  gap: 2px 20px;
-  font-size: 0.9375rem;
-}
-@media (min-width: 560px) {
-  .work-facts li {
-    grid-template-columns: 8.5rem minmax(0, 1fr);
-  }
-}
-.work-facts b {
-  font-weight: 600;
-  color: var(--body);
-  font-size: 0.75rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  padding-top: 4px;
-}
-.work-facts span {
-  color: var(--ink);
-}
+/* ───────────────────────── Work / projects ───────────────────────── */
 .disclosure {
   font-size: 0.875rem;
   color: var(--body);
@@ -2504,31 +2405,6 @@ svg.icon {
   transform: translateY(-1px);
 }
 
-/* ── Work cards: the image is the interaction ── */
-.work-figure {
-  transition:
-    transform 0.4s var(--ease),
-    box-shadow 0.4s var(--ease),
-    border-color 0.3s var(--ease);
-}
-.work-figure img {
-  transition: transform 0.6s var(--ease);
-}
-.work-item:hover .work-figure {
-  transform: translateY(-5px);
-  border-color: var(--ink);
-  box-shadow: var(--lift);
-}
-.work-item:hover .work-figure img {
-  transform: scale(1.022);
-}
-.work-tags li {
-  transition: color 0.25s var(--ease);
-}
-.work-item:hover .work-tags li {
-  color: var(--ink);
-}
-
 /* ── Service cards: lift, and the badge tilts ── */
 .service-card {
   transition:
@@ -2749,15 +2625,12 @@ svg.icon {
 /* Panels sit above whatever band they are in. */
 :root.dark-mode .price-card,
 :root.dark-mode .form-shell,
-:root.dark-mode .work-item,
-:root.dark-mode .work-figure,
 :root.dark-mode .compare-col:not(.us),
 :root.dark-mode .roi-result {
   background: var(--surface);
 }
 :root.dark-mode .band-light .price-card,
 :root.dark-mode .band-light .form-shell,
-:root.dark-mode .band-light .work-item,
 :root.dark-mode .band-light .compare-col:not(.us),
 :root.dark-mode .band-light .roi-result {
   background: var(--raised);
@@ -3209,30 +3082,6 @@ svg.icon {
   color: var(--ink);
 }
 
-/* Work: three case cards read as one row. Each labelled block (problem/build/
-   result) gets its own hairline so the stack doesn't blur into one wall of text. */
-.work-facts {
-  border-top: 1px solid var(--line);
-  padding-top: 20px;
-  gap: 18px;
-}
-.work-facts li {
-  gap: 6px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--line);
-}
-.work-facts li:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
-}
-@media (min-width: 560px) {
-  .work-facts li {
-    grid-template-columns: 1fr;
-  }
-}
-.work-facts b {
-  padding-top: 0;
-}
 .disclosure {
   margin-top: 28px;
 }
@@ -3326,26 +3175,6 @@ svg.icon {
 }
 .plan-split .field textarea {
   min-height: 88px;
-}
-
-/* Work tags read as small pills, not a dotted sentence. */
-.work-tags {
-  gap: 6px;
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
-  text-transform: none;
-}
-.work-tags li {
-  padding: 3px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--ink);
-  font-weight: 600;
-}
-.work-tags li + li::before {
-  content: none;
-  margin: 0;
 }
 
 /* Intro panel beside the form: the form comes first, this panel follows it
@@ -4344,7 +4173,7 @@ svg.icon {
 }
 .has-media:hover .card-visual,
 .related.explore a:hover .card-visual,
-.project-card a:hover .project-media img {
+.project-card:hover .project-media img {
   transform: scale(1.04);
 }
 .card-body {
@@ -4393,7 +4222,7 @@ svg.icon {
   padding-top: 6px;
 }
 
-/* ───────────────────────── Projects (homepage) ───────────────────────── */
+/* ───────────────────────── Project cards (/work) ───────────────────────── */
 .project-grid {
   display: grid;
   gap: 24px;
@@ -4403,25 +4232,52 @@ svg.icon {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-.project-card a {
+@media (min-width: 1100px) {
+  .project-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.work-list {
+  display: grid;
+  gap: 24px;
+}
+.project-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
-  color: inherit;
-  text-decoration: none;
   transition:
     transform 0.3s var(--ease),
     box-shadow 0.3s var(--ease),
     border-color 0.25s var(--ease);
 }
-.project-card a:hover {
+.project-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--lift);
   border-color: var(--ink);
+}
+/* The live build: picture and words side by side on wide screens. */
+@media (min-width: 900px) {
+  .project-card.featured {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+  .project-card.featured .project-media {
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+  .project-card.featured .project-body {
+    justify-content: center;
+    padding: 36px 40px;
+  }
+  .project-card.featured h3 {
+    font-size: 1.75rem;
+  }
+  .project-card.featured .text-link {
+    margin-top: 14px;
+  }
 }
 .project-media {
   position: relative;
@@ -4458,7 +4314,7 @@ svg.icon {
   flex: 1;
   flex-direction: column;
   gap: 8px;
-  padding: 24px 26px 26px;
+  padding: 22px 24px 24px;
 }
 .project-kind {
   font-size: 0.75rem;
@@ -4467,11 +4323,30 @@ svg.icon {
   text-transform: uppercase;
   color: var(--body);
 }
-.project-body b {
-  font-size: 1.375rem;
-  font-weight: 600;
+.project-body h3 {
+  font-size: 1.25rem;
   letter-spacing: -0.03em;
   color: var(--ink);
+}
+.project-flag.live {
+  background: var(--accent-lime);
+  color: #071313;
+}
+.project-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.project-status span {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #1d8a5a;
+  box-shadow: 0 0 0 4px rgba(29, 138, 90, 0.18);
 }
 .project-summary {
   color: var(--body);

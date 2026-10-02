@@ -1,35 +1,38 @@
-// Projects shown on the homepage. Until real client work is added, these are
-// concept designs (the businesses are fictional), and every one with
-// `concept: true` is labelled "Concept" on the card so nobody mistakes it for
-// a client. To add a real project: put a 1280×900 screenshot in assets/work/,
-// add an entry with `concept: false` and the live site's `url`, and remove a
-// concept entry.
+// Projects on the /work page. The first one marked `featured` gets the wide card
+// at the top. Entries with `concept: true` are designs for fictional businesses
+// and are labelled "Concept" so nobody mistakes them for clients; entries with
+// `concept: false` are real builds.
+//
+// To add a real client project: put a 1280×900 screenshot in assets/work/ and
+// add an entry with `concept: false` and the live site's `url` (it opens in a
+// new tab). Remove a concept entry when a real one replaces it.
 export const PROJECTS = [
+  {
+    name: "Med-spa growth system",
+    category: "Website + booking + AI reception",
+    summary:
+      "Our own build, and all of our services working as one: a clinic website on live Google Calendar availability, with confirmation and reminder emails and an AI receptionist that hands over to a person when a question needs judgement.",
+    status: "Live: you can try the booking flow on this site",
+    image: "/assets/work/example-clinic.svg",
+    url: "/med-spa-growth-system",
+    linkLabel: "See the med-spa system",
+    concept: false,
+    featured: true,
+  },
   {
     name: "Teesside Boiler Care",
     category: "Website design + local SEO",
     summary:
       "A phone-first site for a heating engineer: the number stays in reach, the areas covered are stated plainly and quotes take one form.",
     image: "/assets/work/example-trades.svg",
-    url: "/work",
-    concept: true,
-  },
-  {
-    name: "Lumière Aesthetics",
-    category: "Website + online booking",
-    summary:
-      "A clinic site where visitors see live availability and book a consultation without a phone call.",
-    image: "/assets/work/example-clinic.svg",
-    url: "/med-spa-growth-system",
     concept: true,
   },
   {
     name: "Northside Roofline",
     category: "Landing page + CRO",
     summary:
-      "One offer, one audience, one action: a free-survey landing page with the form above the fold.",
+      "One offer, one audience, one action: a free-survey landing page with no navigation and the form above the fold.",
     image: "/assets/work/example-landing.svg",
-    url: "/work",
     concept: true,
   },
   {
@@ -38,7 +41,6 @@ export const PROJECTS = [
     summary:
       "A joinery firm's profile and service pages saying the same thing, so Google and customers see one clear business.",
     image: "/assets/work/example-local-search.svg",
-    url: "/work",
     concept: true,
   },
 ];
