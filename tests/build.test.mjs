@@ -208,7 +208,10 @@ test("homepage images exist, and concept projects are labelled as concepts", asy
   const html = renderPage(home, { origin: ORIGIN });
   for (const [, src] of html.matchAll(/<img[^>]+src="(\/assets\/[^"]+)"/g))
     assert.ok(existsSync(`.${src}`), `${src} is missing`);
-  assert.equal((html.match(/class="card-media"/g) || []).length, 12);
+  // Every card visual is present, and none has a duplicate gradient id.
+  assert.equal((html.match(/class="card-visual"/g) || []).length, 12);
+  const ids = [...html.matchAll(/<(?:radialGradient|linearGradient|clipPath) id="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(new Set(ids).size, ids.length, "duplicate SVG ids on the homepage");
   for (const project of PROJECTS) {
     assert.ok(html.includes(project.name), `${project.name} is not on the homepage`);
     assert.equal(typeof project.concept, "boolean", `${project.name} must say whether it is a concept`);

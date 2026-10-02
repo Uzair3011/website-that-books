@@ -167,8 +167,8 @@ aligned, and update the `alt` text with it.
 - **Reviews** live in `src/reviews.js`. The section stays hidden while the list
   is empty. Only add real reviews, word for word, with a `source` saying where
   each can be checked; `npm test` fails without one.
-- **Card photos** are 800×500 WebP files in `assets/img/`, all CC0. Their
-  sources are listed in `docs/image-credits.md`.
+- **Card visuals** are inline SVG illustrations in `src/visuals.js`, one per
+  homepage card, drawn on an 800×400 canvas in the brand colours.
 
 ## Pricing maintenance
 

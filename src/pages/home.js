@@ -2,6 +2,7 @@ import { inquiryForm } from "../form.js";
 import { marquee } from "../marquee.js";
 import { PROJECTS } from "../projects.js";
 import { REVIEWS } from "../reviews.js";
+import { VISUALS } from "../visuals.js";
 import {
   CTA,
   SERVICES as SERVICE_PAGES,
@@ -159,10 +160,8 @@ const EXPLORE = [
 
 const tick = (text) => `<li>${icon("check")}<span>${text}</span></li>`;
 
-// Card photos are decorative: the heading beside each one says what it is, so
-// the alt text is empty. See docs/image-credits.md for where each came from.
-const cardMedia = (name) =>
-  `<figure class="card-media"><img src="/assets/img/${name}.webp" width="800" height="500" loading="lazy" decoding="async" alt="" /></figure>`;
+// Each card opens with an on-brand illustration from src/visuals.js.
+const cardMedia = (name) => `<figure class="card-media">${VISUALS[name]}</figure>`;
 
 const outcomes = OUTCOMES.map(
   (item) => `<article class="card has-media">
