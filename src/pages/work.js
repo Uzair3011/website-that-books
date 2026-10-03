@@ -13,7 +13,7 @@ const flag = (project) =>
   `<span class="project-flag${project.concept ? "" : " live"}">${project.concept ? "Concept" : "Veltra build"}</span>`;
 
 const media = (project) => `<figure class="project-media">
-      <img src="${project.image}" width="1280" height="900" loading="lazy" decoding="async" alt="${project.concept ? "Concept design" : "Website"} for ${project.name}" />
+      <img src="${project.image}" width="1280" height="900" loading="lazy" decoding="async" alt="${project.imageAlt}" />
       ${flag(project)}
     </figure>`;
 

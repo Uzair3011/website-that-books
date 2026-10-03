@@ -219,6 +219,7 @@ test("/work lists every project, labels concepts, and its images exist", async (
   for (const project of PROJECTS) {
     assert.ok(html.includes(project.name), `${project.name} is not on /work`);
     assert.equal(typeof project.concept, "boolean", `${project.name} must say whether it is a concept`);
+    assert.ok(project.imageAlt?.trim(), `${project.name} needs a description of its image`);
   }
   const concepts = PROJECTS.filter((project) => project.concept).length;
   assert.equal((html.match(/class="project-flag">Concept</g) || []).length, concepts);
