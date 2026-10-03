@@ -201,10 +201,16 @@ test("the privacy policy names every provider that receives visitor data, and th
     assert.ok(html.includes(section), `/privacy is missing "${section}"`);
 });
 
-test("homepage card visuals are all present, with no clashing SVG ids", () => {
+test("homepage card visuals are all present, with no clashing SVG ids", async () => {
+  const { existsSync } = await import("node:fs");
   const home = pages.find((page) => page.path === "/");
   const html = renderPage(home, { origin: ORIGIN });
-  assert.equal((html.match(/class="card-visual"/g) || []).length, 12);
+  // Ten illustrations, plus two cards showing real screenshots of our pages.
+  assert.equal((html.match(/class="card-visual"/g) || []).length, 10);
+  for (const name of ["service-web-design", "service-landing-pages"]) {
+    assert.ok(html.includes(`src="/assets/img/${name}.webp"`), `${name} screenshot is not on the homepage`);
+    assert.ok(existsSync(`assets/img/${name}.webp`), `${name}.webp is missing`);
+  }
   const ids = [...html.matchAll(/<(?:radialGradient|linearGradient|clipPath) id="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(new Set(ids).size, ids.length, "duplicate SVG ids on the homepage");
 });

@@ -159,8 +159,18 @@ const EXPLORE = [
 
 const tick = (text) => `<li>${icon("check")}<span>${text}</span></li>`;
 
-// Each card opens with an on-brand illustration from src/visuals.js.
-const cardMedia = (name) => `<figure class="card-media">${VISUALS[name]}</figure>`;
+// Each card opens with an on-brand illustration from src/visuals.js, except
+// the cards that show a real screenshot of a page we built (assets/img/).
+const SCREENSHOTS = {
+  "service-web-design": "The Veltra med-spa growth system website: a clinic homepage with a booking panel",
+  "service-landing-pages": "The Veltra free website plan landing page, with one offer and one call to action",
+};
+const cardMedia = (name) =>
+  `<figure class="card-media">${
+    SCREENSHOTS[name]
+      ? `<img src="/assets/img/${name}.webp" width="1200" height="600" loading="lazy" decoding="async" alt="${SCREENSHOTS[name]}" />`
+      : VISUALS[name]
+  }</figure>`;
 
 const outcomes = OUTCOMES.map(
   (item) => `<article class="card has-media">
