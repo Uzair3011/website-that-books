@@ -4611,13 +4611,22 @@ svg.icon {
 .svc-stage-slot {
   display: none;
 }
+/* Sticky below the floating header (the same 110px as html's
+   scroll-padding-top), so the stage follows the viewport down to the last
+   services instead of being left behind under the header. On short screens
+   it shrinks so that it and its label always fit below the header. */
 @media (min-width: 1000px) {
   .svc-stage-slot {
+    position: sticky;
+    top: 110px;
+    align-self: start;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 6px;
+  }
+  .svc-stage-slot .svc-stage {
+    width: min(100%, (100vh - 200px) * 1.2);
   }
 }
 .svc-stage {

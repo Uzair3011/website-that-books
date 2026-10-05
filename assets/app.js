@@ -212,18 +212,69 @@ if (showcase) {
     }
   };
 
+  // On wide screens a click or Enter also scrolls the page, once the service
+  // has finished opening, by the least amount that shows both that service
+  // and the whole stage. Hover never scrolls, and is ignored while the page
+  // moves under a still pointer.
+  let quietUntil = 0;
+  let frameTimer;
+  const frame = () => {
+    if (!wide.matches || active < 0) return;
+    const top =
+      parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    const box = showcase.getBoundingClientRect();
+    const item = items[active].getBoundingClientRect();
+    const stageHeight = slot.offsetHeight;
+    // Ranges for the showcase's top edge that keep each part on screen. The
+    // stage is sticky, so it shows whenever the showcase spans it.
+    const itemLo = top - (item.top - box.top);
+    const itemHi = innerHeight - 16 - (item.bottom - box.top);
+    const stageLo = top + stageHeight - box.height;
+    const stageHi = innerHeight - 16 - stageHeight;
+    const lo = Math.max(itemLo, stageLo);
+    const hi = Math.min(itemHi, stageHi);
+    const target =
+      lo <= hi
+        ? Math.min(Math.max(box.top, lo), hi)
+        : Math.min(Math.max(box.top, itemLo), itemHi);
+    const shift = box.top - target;
+    if (Math.abs(shift) < 2) return;
+    quietUntil = performance.now() + 900;
+    clearTimeout(hoverTimer);
+    window.scrollBy({
+      top: shift,
+      behavior: reducedMotion.matches ? "instant" : "smooth",
+    });
+  };
+  const frameSoon = () => {
+    if (!wide.matches) return;
+    quietUntil = performance.now() + 1500;
+    clearTimeout(hoverTimer);
+    clearTimeout(frameTimer);
+    frameTimer = setTimeout(frame, reducedMotion.matches ? 0 : 520);
+  };
+
   items.forEach((item, index) => {
-    triggers[index].addEventListener("click", () => open(index, !wide.matches));
+    triggers[index].addEventListener("click", () => {
+      open(index, !wide.matches);
+      frameSoon();
+    });
     // A short pause before opening, so sweeping across the list does not
     // flick through every service on the way.
     item.addEventListener("pointerenter", (event) => {
       if (event.pointerType !== "mouse" || !wide.matches) return;
+      if (performance.now() < quietUntil) return;
       clearTimeout(hoverTimer);
       hoverTimer = setTimeout(() => open(index), 120);
     });
     item.addEventListener("pointerleave", () => clearTimeout(hoverTimer));
   });
-  dots.forEach((dot, index) => dot.addEventListener("click", () => open(index)));
+  dots.forEach((dot, index) =>
+    dot.addEventListener("click", () => {
+      open(index);
+      frameSoon();
+    }),
+  );
   showcase.addEventListener("keydown", (event) => {
     const current = triggers.indexOf(document.activeElement);
     const target = {
