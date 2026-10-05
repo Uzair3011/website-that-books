@@ -152,6 +152,97 @@ if ("IntersectionObserver" in window && !reducedMotion.matches) {
   $$(".reveal").forEach((element) => observer.observe(element));
 }
 
+// Homepage services: one service open at a time. On wide screens hovering or
+// clicking a service opens it and the stage beside the list follows; on
+// smaller screens a tap opens or closes it and the stage moves inside it.
+const showcase = $("[data-services]");
+if (showcase) {
+  const items = [...showcase.querySelectorAll(".svc-item")];
+  const triggers = items.map((item) => item.querySelector(".svc-trigger"));
+  const stage = showcase.querySelector(".svc-stage");
+  const slot = showcase.querySelector(".svc-stage-slot");
+  const slides = [...stage.querySelectorAll(".svc-slide")];
+  const dots = [...stage.querySelectorAll("[data-svc-go]")];
+  const now = showcase.querySelector("[data-svc-now]");
+  const wide = matchMedia("(min-width: 1000px)");
+  let active = items.findIndex((item) => item.classList.contains("is-active"));
+  let shown = Math.max(active, 0);
+  let hoverTimer;
+
+  // A closed list on a small screen leaves the stage where it was, so the
+  // closing panel keeps its content while it animates shut.
+  const place = () => {
+    const home = wide.matches
+      ? slot
+      : active >= 0 && items[active].querySelector(".svc-panel-inner");
+    if (home && stage.parentElement !== home) {
+      home.append(stage);
+      void stage.offsetWidth; // so the slide below animates in after the move
+    }
+  };
+
+  const open = (index, toggle = false) => {
+    if (index === active && !toggle) return;
+    const next = index === active ? -1 : index;
+    const previous = items[active];
+    const before = triggers[index].getBoundingClientRect().top;
+    // On small screens a panel closing above the one opening snaps shut, and
+    // the page is scrolled back by the same amount, so the tapped row stays put.
+    const snap = previous && next > active && !wide.matches;
+    if (snap) previous.classList.add("is-instant");
+    items.forEach((item, i) => {
+      item.classList.toggle("is-active", i === next);
+      triggers[i].setAttribute("aria-expanded", String(i === next));
+    });
+    active = next;
+    place();
+    if (next >= 0) {
+      shown = next;
+      slides.forEach((slide, i) => slide.classList.toggle("is-active", i === next));
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === next));
+      showcase.dataset.tone = items[next].dataset.tone;
+      now.textContent = items[next].querySelector(".svc-name").textContent;
+    }
+    if (snap) {
+      const shift = triggers[index].getBoundingClientRect().top - before;
+      if (shift) window.scrollBy({ top: shift, behavior: "instant" });
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => previous.classList.remove("is-instant")),
+      );
+    }
+  };
+
+  items.forEach((item, index) => {
+    triggers[index].addEventListener("click", () => open(index, !wide.matches));
+    // A short pause before opening, so sweeping across the list does not
+    // flick through every service on the way.
+    item.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse" || !wide.matches) return;
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(() => open(index), 120);
+    });
+    item.addEventListener("pointerleave", () => clearTimeout(hoverTimer));
+  });
+  dots.forEach((dot, index) => dot.addEventListener("click", () => open(index)));
+  showcase.addEventListener("keydown", (event) => {
+    const current = triggers.indexOf(document.activeElement);
+    const target = {
+      ArrowDown: current + 1,
+      ArrowUp: current - 1,
+      Home: 0,
+      End: triggers.length - 1,
+    }[event.key];
+    if (current < 0 || target === undefined) return;
+    event.preventDefault();
+    triggers[(target + triggers.length) % triggers.length].focus();
+  });
+  wide.addEventListener("change", () => {
+    if (wide.matches && active < 0) open(shown);
+    place();
+  });
+  place();
+}
+
 const form = $("#inquiry-form");
 if (form) {
   const message = $("#form-message");

@@ -514,7 +514,9 @@ test("content, honest standard pricing, and navigation survive without JavaScrip
   const at = (path) => new URL(path, baseURL).href;
   await page.goto(at("/"));
   await expect(page.locator("h1")).toBeVisible();
-  await expect(page.locator(".service-card")).toHaveCount(6);
+  await expect(page.locator(".svc-item")).toHaveCount(6);
+  // Without JavaScript every service stays open, so no description is lost.
+  await expect(page.locator(".svc-copy p").last()).toBeVisible();
   await expect(page.locator(".hero-media img")).toBeVisible();
   await page.goto(at("/pricing"));
   await expect(page.locator(".price-card")).toHaveCount(7);
