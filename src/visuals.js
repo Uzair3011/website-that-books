@@ -312,3 +312,16 @@ export const VISUALS = {
   "explore-process": process,
   "explore-about": about,
 };
+
+// A card's picture: the on-brand illustration above, except for the cards
+// that show a real screenshot of a page we built (assets/img/).
+const SCREENSHOTS = {
+  "service-web-design": "The Veltra med-spa growth system website: a clinic homepage with a booking panel",
+  "service-landing-pages": "The Veltra free website plan landing page, with one offer and one call to action",
+};
+export const cardMedia = (name) =>
+  `<figure class="card-media">${
+    SCREENSHOTS[name]
+      ? `<img src="/assets/img/${name}.webp" width="1200" height="600" loading="lazy" decoding="async" alt="${SCREENSHOTS[name]}" />`
+      : VISUALS[name]
+  }</figure>`;

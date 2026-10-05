@@ -7,12 +7,13 @@ import {
   icon,
   organizationJsonLd,
 } from "../site.js";
+import { servicesShowcase } from "../services-showcase.js";
 
 // Each service in more depth than the homepage cards: what it covers, who it
 // suits, and where its own page is. Included items mirror those service pages.
+// They open inside the same showcase as the homepage, matched by href.
 const SERVICES = [
   {
-    icon: "layout",
     name: "Website design",
     href: "/web-design-middlesbrough",
     cta: "Explore website design",
@@ -27,7 +28,6 @@ const SERVICES = [
     fit: "New businesses, and sites that look dated or rarely produce an enquiry.",
   },
   {
-    icon: "search",
     name: "Local SEO + Google Business Profile",
     href: "/local-seo-middlesbrough",
     cta: "Explore local SEO",
@@ -43,7 +43,6 @@ const SERVICES = [
     extra: { href: "/google-business-profile", label: "Google Business Profile setup on its own" },
   },
   {
-    icon: "target",
     name: "Landing pages + CRO",
     href: "/landing-page-design",
     cta: "Explore landing pages",
@@ -57,7 +56,6 @@ const SERVICES = [
     fit: "Paid campaigns and single high-value services.",
   },
   {
-    icon: "chat",
     name: "AI receptionist + website chat",
     href: "/ai-automation-middlesbrough",
     cta: "Explore AI reception",
@@ -72,7 +70,6 @@ const SERVICES = [
     fit: "Businesses that miss calls or answer the same questions every day.",
   },
   {
-    icon: "flow",
     name: "CRM, booking + follow-up automation",
     href: "/crm-booking-automation",
     cta: "Explore automation",
@@ -87,7 +84,6 @@ const SERVICES = [
     fit: "Businesses that lose enquiries between first contact and booked work.",
   },
   {
-    icon: "tool",
     name: "Website care",
     href: "/website-care",
     cta: "Explore website care",
@@ -116,22 +112,6 @@ const FAQS = [
   },
 ];
 
-const detail = (service) => `<article class="service-row">
-  <div class="service-row-head">
-    <span class="service-badge" aria-hidden="true">${icon(service.icon)}</span>
-    <h3>${service.name}</h3>
-  </div>
-  <div class="service-row-body">
-    <p>${service.text}</p>
-    <ul class="tick-list">${service.included.map((item) => `<li>${icon("check")}<span>${item}</span></li>`).join("")}</ul>
-    <p class="service-row-fit"><b>Best for</b>${service.fit}</p>
-    <div class="link-row">
-      <a class="text-link" href="${service.href}">${service.cta}${icon("arrow-up")}</a>
-      ${service.extra ? `<a class="text-link" href="${service.extra.href}">${service.extra.label}${icon("arrow-up")}</a>` : ""}
-    </div>
-  </div>
-</article>`;
-
 const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 46rem">
@@ -146,11 +126,9 @@ const body = `      <section class="hero">
         </div>
       </section>
 
-      <section class="section tight flush-top">
+      <section class="section tight flush-top svc">
         <div class="container">
-          <div class="service-rows reveal">
-${SERVICES.map(detail).join("\n")}
-          </div>
+${servicesShowcase(Object.fromEntries(SERVICES.map((service) => [service.href, service])))}
         </div>
       </section>
 

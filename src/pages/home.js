@@ -1,8 +1,8 @@
 import { inquiryForm } from "../form.js";
 import { marquee } from "../marquee.js";
-import { healthCard } from "../health-card.js";
 import { REVIEWS } from "../reviews.js";
-import { VISUALS } from "../visuals.js";
+import { servicesShowcase } from "../services-showcase.js";
+import { cardMedia } from "../visuals.js";
 import {
   CTA,
   SERVICES as SERVICE_PAGES,
@@ -62,70 +62,6 @@ const OUTCOMES = [
   },
 ];
 
-const SERVICES = [
-  {
-    title: "Website design",
-    image: "service-web-design",
-    text: "Fast, mobile-first websites built around your offer, your customers and the action you want them to take.",
-    href: "/web-design-middlesbrough",
-    cta: "Explore website design",
-    tone: "lime",
-    note: "Mobile-first and built to convert",
-    aside: "Built around the action you want people to take",
-  },
-  {
-    title: "Local SEO and Google Business",
-    image: "service-local-seo",
-    text: "Improve the signals that help nearby customers find and trust you in Google Search and Maps.",
-    href: "/local-seo-middlesbrough",
-    cta: "Explore local SEO",
-    tone: "mint",
-    note: "Show up in Search and Maps",
-    aside: "Easier for nearby customers to find and trust",
-  },
-  {
-    title: "Landing pages",
-    image: "service-landing-pages",
-    text: "Focused pages for one service, location or campaign, written and designed to turn attention into action.",
-    href: "/landing-page-design",
-    cta: "Explore landing pages",
-    tone: "blue",
-    note: "One page. One offer. One action.",
-    aside: "For a single service, location or campaign",
-  },
-  {
-    title: "AI receptionist and website chat",
-    image: "service-ai-reception",
-    text: "Answer common questions, capture enquiry details and respond after hours without making the customer learn new technology.",
-    href: "/ai-automation-middlesbrough",
-    cta: "Explore AI reception",
-    tone: "coral",
-    note: "Replies, even after hours",
-    aside: "Captures the enquiry details for you",
-  },
-  {
-    title: "Booking and follow-up automation",
-    image: "service-booking",
-    text: "Connect forms, calendars and reminders so fewer good enquiries disappear between first contact and booked work.",
-    href: "/crm-booking-automation",
-    cta: "Explore automation",
-    tone: "violet",
-    note: "Forms, calendars and reminders, connected",
-    aside: "Fewer good enquiries slip away",
-  },
-  {
-    title: "Website care",
-    // Shown as the live health panel rather than a picture.
-    health: true,
-    text: "Hosting, updates, backups and practical support for businesses that would rather not manage the technical side.",
-    href: "/website-care",
-    cta: "Explore website care",
-    tone: "amber",
-    note: "Hosting, updates and backups, handled",
-    aside: "Practical support when you need it",
-  },
-];
-
 const STANDARDS = [
   "A clear recommendation instead of a menu of things you do not need",
   "A written scope and price before work begins",
@@ -173,19 +109,6 @@ const EXPLORE = [
 
 const tick = (text) => `<li>${icon("check")}<span>${text}</span></li>`;
 
-// Each card opens with an on-brand illustration from src/visuals.js, except
-// the cards that show a real screenshot of a page we built (assets/img/).
-const SCREENSHOTS = {
-  "service-web-design": "The Veltra med-spa growth system website: a clinic homepage with a booking panel",
-  "service-landing-pages": "The Veltra free website plan landing page, with one offer and one call to action",
-};
-const cardMedia = (name) =>
-  `<figure class="card-media">${
-    SCREENSHOTS[name]
-      ? `<img src="/assets/img/${name}.webp" width="1200" height="600" loading="lazy" decoding="async" alt="${SCREENSHOTS[name]}" />`
-      : VISUALS[name]
-  }</figure>`;
-
 const outcomes = OUTCOMES.map(
   (item) => `<article class="card has-media">
   ${cardMedia(item.image)}
@@ -195,48 +118,6 @@ const outcomes = OUTCOMES.map(
     <p>${item.text}</p>
   </div>
 </article>`,
-).join("\n");
-
-// The services showcase: a numbered list on the left, one service open at a
-// time, and a stage on the right that shows the open service's visual. Each
-// service carries its own accent (see .svc tones in styles.css). The stage is
-// decorative: everything it says is already in the list beside it. Without
-// JavaScript every service stays open and the stage shows the first one.
-const pad = (n) => String(n).padStart(2, "0");
-const curve = (d) =>
-  `<svg class="svc-arrow" viewBox="0 0 80 60" aria-hidden="true" focusable="false"><path pathLength="1" d="${d}"/></svg>`;
-const burst = `<svg class="svc-burst" viewBox="0 0 60 60" aria-hidden="true" focusable="false"><path d="M8 34 22 40M18 12l12 16M44 6l-2 18"/></svg>`;
-
-const serviceItems = SERVICES.map(
-  (service, index) => `            <li class="svc-item${index === 0 ? " is-active" : ""}" data-tone="${service.tone}">
-              <h3>
-                <button class="svc-trigger" type="button" id="svc-tab-${index + 1}" aria-expanded="${index === 0}" aria-controls="svc-panel-${index + 1}">
-                  <span class="svc-num">${pad(index + 1)}</span>
-                  <span class="svc-dot" aria-hidden="true"></span>
-                  <span class="svc-name">${service.title.replace(/\S+-\S+/g, (word) => `<span class="svc-nb">${word}</span>`)}</span>
-                  <span class="svc-sign" aria-hidden="true">${icon("arrow")}</span>
-                </button>
-              </h3>
-              <div class="svc-panel" id="svc-panel-${index + 1}" role="region" aria-labelledby="svc-tab-${index + 1}">
-                <div class="svc-panel-inner">
-                  <div class="svc-copy">
-                    <p>${service.text}</p>
-                    <a class="text-link" href="${service.href}">${service.cta}${icon("arrow-up")}</a>
-                  </div>
-                </div>
-              </div>
-            </li>`,
-).join("\n");
-
-const serviceSlides = SERVICES.map(
-  (service, index) => `              <div class="svc-slide${index === 0 ? " is-active" : ""}" data-tone="${service.tone}">
-                <span class="svc-blob"></span>
-                <span class="svc-shape"></span>
-                ${burst}
-                ${service.health ? `<div class="svc-card">${healthCard()}</div>` : `<div class="svc-device">${cardMedia(service.image)}</div>`}
-                <p class="svc-note">${service.note}${curve("M70 6C52 4 34 14 26 40M26 40l-3-12M26 40l10-7")}</p>
-                <p class="svc-aside">${service.aside}${curve("M64 50C70 30 58 12 30 8M30 8l9-6M30 8l8 7")}</p>
-              </div>`,
 ).join("\n");
 
 const initials = (name) =>
@@ -334,21 +215,7 @@ ${outcomes}
             <h2>Start with what will make the biggest difference</h2>
             <p>You do not need every service on day one. Each Veltra service works on its own and can connect with the others as your business grows.</p>
           </div>
-          <div class="svc-layout reveal" data-services data-tone="${SERVICES[0].tone}">
-            <div class="svc-list-col">
-              <p class="svc-hint" aria-hidden="true">${icon("arrow-up")}<span class="on-hover">Hover to explore</span><span class="on-tap">Tap a service to explore</span></p>
-              <ol class="svc-list">
-${serviceItems}
-              </ol>
-            </div>
-            <div class="svc-stage-slot">
-              <div class="svc-stage" aria-hidden="true">
-${serviceSlides}
-                <span class="svc-rail">${SERVICES.map((service, index) => `<span data-svc-go="${index}" data-tone="${service.tone}"${index === 0 ? ' class="is-active"' : ""}></span>`).join("")}</span>
-              </div>
-              <p class="svc-now" aria-hidden="true"><span>Currently viewing</span><i></i><b data-svc-now>${SERVICES[0].title}</b></p>
-            </div>
-          </div>
+${servicesShowcase()}
           <div class="section-action">
             <a class="btn secondary" href="/services">See all services and how they fit together${icon("arrow-up")}</a>
           </div>

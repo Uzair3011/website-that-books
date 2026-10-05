@@ -165,6 +165,16 @@ if (showcase) {
   const dots = [...stage.querySelectorAll("[data-svc-go]")];
   const now = showcase.querySelector("[data-svc-now]");
   const wide = matchMedia("(min-width: 1000px)");
+  // On wide screens every open panel is made as tall as the tallest, so as one
+  // row opens and another closes the row under the pointer stays under the
+  // pointer, however much each service has to say.
+  const equalise = () => {
+    showcase.style.setProperty("--svc-copy-min", "0px");
+    const tallest = Math.max(
+      ...items.map((item) => item.querySelector(".svc-copy").offsetHeight),
+    );
+    showcase.style.setProperty("--svc-copy-min", `${tallest}px`);
+  };
   let active = items.findIndex((item) => item.classList.contains("is-active"));
   let shown = Math.max(active, 0);
   let hoverTimer;
@@ -286,6 +296,13 @@ if (showcase) {
     if (current < 0 || target === undefined) return;
     event.preventDefault();
     triggers[(target + triggers.length) % triggers.length].focus();
+  });
+  equalise();
+  document.fonts?.ready.then(equalise);
+  let resizeTimer;
+  addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(equalise, 150);
   });
   wide.addEventListener("change", () => {
     if (wide.matches && active < 0) open(shown);

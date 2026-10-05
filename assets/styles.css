@@ -788,25 +788,6 @@ svg.icon {
   font-size: 1rem;
 }
 
-/* ───────────────────────── Services ─────────────────────────
-   The black icon badge used on the services page rows. The homepage list
-   is styled under "Services showcase" at the end of this file.   */
-.service-badge {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 14px;
-  border-radius: 14px;
-  background: #071313;
-  border: 1px solid var(--border-dark);
-  color: var(--accent-lime);
-}
-.service-badge .icon {
-  width: 22px;
-  height: 22px;
-}
-
 /* ───────────────────────── Work / projects ───────────────────────── */
 .disclosure {
   font-size: 0.875rem;
@@ -3426,54 +3407,8 @@ svg.icon {
 }
 
 /* ───────────────────────── Services page ─────────────────────────
-   One full-width row per service: name on the left, detail on the right,
-   stacking on narrow screens. */
-.service-rows {
-  display: grid;
-  gap: 20px;
-}
-.service-row {
-  display: grid;
-  gap: 22px 56px;
-  padding: clamp(24px, 3.4vw, 40px);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-}
-@media (min-width: 880px) {
-  .service-row {
-    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
-  }
-}
-.service-row-head {
-  display: grid;
-  gap: 18px;
-  align-content: start;
-  justify-items: start;
-}
-.service-row-head .service-badge {
-  margin: 0;
-}
-.service-row-head h3 {
-  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  max-width: 16ch;
-}
-.service-row-body {
-  display: grid;
-  gap: 20px;
-  align-content: start;
-}
-.service-row-body > p:first-child {
-  max-width: 62ch;
-}
-@media (min-width: 600px) {
-  .service-row .tick-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 28px;
-  }
-}
+   The "Best for" line under a service on /services, shown inside the open
+   panel of the services showcase (styled at the end of this file). */
 .service-row-fit {
   display: grid;
   gap: 4px 20px;
@@ -4603,9 +4538,28 @@ svg.icon {
    another closes the row under the pointer stays under the pointer. */
 @media (min-width: 1000px) {
   .svc-copy {
-    min-height: 9.25rem;
+    min-height: max(9.25rem, var(--svc-copy-min, 0px));
     align-content: start;
   }
+}
+/* What /services adds to an open panel: the tick list, "Best for", and a
+   second link. */
+.svc-copy .tick-list {
+  gap: 8px;
+  margin-top: 4px;
+}
+@media (min-width: 560px) and (max-width: 999px) {
+  .svc-copy .tick-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+.svc-copy .service-row-fit {
+  width: 100%;
+  padding-top: 14px;
+}
+.svc-copy .link-row {
+  gap: 10px 28px;
 }
 
 /* ── The stage ── */
