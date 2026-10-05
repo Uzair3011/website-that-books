@@ -1,3 +1,4 @@
+import { healthCard } from "../health-card.js";
 import { servicePage } from "../service-page.js";
 
 export default servicePage({
@@ -25,6 +26,7 @@ export default servicePage({
     ],
   },
   includedHeading: "What care covers",
+  includedAside: `<figure class="health-figure">${healthCard()}<figcaption>An example of the checks behind a care plan. The figures are illustrative.</figcaption></figure>`,
   included: {
     heading: "Five things, looked after so you do not have to.",
     items: [

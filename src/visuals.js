@@ -242,24 +242,6 @@ const booking = svg(
   ${text(522, 306, 14, C.ink, "See you tomorrow at 14:30")}`,
 );
 
-const care = svg(
-  "care",
-  `${dark("ca")}
-  <g filter="drop-shadow(0 22px 34px rgba(0,0,0,.4))">${rect(60, 40, 680, 380, 24, C.ink2, `stroke="${C.line}" stroke-width="1.5"`)}</g>
-  ${bold(92, 92, 22, C.paper, "Website health", 'letter-spacing="-.6"')}
-  ${pill(560, 66, 150, 36, C.lime, "All systems go", C.ink, 14)}
-  ${[["Online", "Checked every minute"], ["Backed up", "Tonight at 02:00"], ["Up to date", "Updates installed"]]
-    .map(([a, b], i) => {
-      const y = 140 + i * 74;
-      return rect(92, y, 330, 60, 16, C.ink) + tick(124, y + 30) + bold(150, y + 27, 17, C.paper, a) + text(150, y + 47, 13, C.muted, b);
-    })
-    .join("")}
-  <circle cx="580" cy="250" r="86" fill="none" stroke="${C.line}" stroke-width="20"/>
-  <circle cx="580" cy="250" r="86" fill="none" stroke="${C.lime}" stroke-width="20" stroke-linecap="round" stroke-dasharray="530 600" transform="rotate(-90 580 250)"/>
-  ${bold(580, 262, 46, C.paper, "98", 'text-anchor="middle" letter-spacing="-2"')}
-  ${text(580, 290, 14, C.muted, "Speed score", 'text-anchor="middle"')}`,
-);
-
 // ───────────────────────── Explore ─────────────────────────
 const miniSite = (x, y, w, h, hero, accent, rot) => `
   <g transform="rotate(${rot} ${x + w / 2} ${y + h / 2})" filter="drop-shadow(0 18px 28px rgba(7,19,19,.2))">
@@ -326,7 +308,6 @@ export const VISUALS = {
   "service-landing-pages": landing,
   "service-ai-reception": aiReception,
   "service-booking": booking,
-  "service-website-care": care,
   "explore-work": work,
   "explore-process": process,
   "explore-about": about,

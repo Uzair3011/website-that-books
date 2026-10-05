@@ -1,5 +1,6 @@
 import { inquiryForm } from "../form.js";
 import { marquee } from "../marquee.js";
+import { healthCard } from "../health-card.js";
 import { REVIEWS } from "../reviews.js";
 import { VISUALS } from "../visuals.js";
 import {
@@ -114,7 +115,8 @@ const SERVICES = [
   },
   {
     title: "Website care",
-    image: "service-website-care",
+    // Shown as the live health panel rather than a picture.
+    health: true,
     text: "Hosting, updates, backups and practical support for businesses that would rather not manage the technical side.",
     href: "/website-care",
     cta: "Explore website care",
@@ -231,7 +233,7 @@ const serviceSlides = SERVICES.map(
                 <span class="svc-blob"></span>
                 <span class="svc-shape"></span>
                 ${burst}
-                <div class="svc-device">${cardMedia(service.image)}</div>
+                ${service.health ? `<div class="svc-card">${healthCard()}</div>` : `<div class="svc-device">${cardMedia(service.image)}</div>`}
                 <p class="svc-note">${service.note}${curve("M70 6C52 4 34 14 26 40M26 40l-3-12M26 40l10-7")}</p>
                 <p class="svc-aside">${service.aside}${curve("M64 50C70 30 58 12 30 8M30 8l9-6M30 8l8 7")}</p>
               </div>`,

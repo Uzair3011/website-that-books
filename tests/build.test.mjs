@@ -205,8 +205,10 @@ test("homepage card visuals are all present, with no clashing SVG ids", async ()
   const { existsSync } = await import("node:fs");
   const home = pages.find((page) => page.path === "/");
   const html = renderPage(home, { origin: ORIGIN });
-  // Ten illustrations, plus two cards showing real screenshots of our pages.
-  assert.equal((html.match(/class="card-visual"/g) || []).length, 10);
+  // Nine illustrations, two cards showing real screenshots of our pages, and
+  // the live website health panel in place of a website care picture.
+  assert.equal((html.match(/class="card-visual"/g) || []).length, 9);
+  assert.equal((html.match(/class="health"/g) || []).length, 1);
   for (const name of ["service-web-design", "service-landing-pages"]) {
     assert.ok(html.includes(`src="/assets/img/${name}.webp"`), `${name} screenshot is not on the homepage`);
     assert.ok(existsSync(`assets/img/${name}.webp`), `${name}.webp is missing`);

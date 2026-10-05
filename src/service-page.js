@@ -23,6 +23,8 @@ export function servicePage({
   intro,
   included,
   includedHeading = "What is included",
+  // Optional HTML shown beside the included list (/website-care's health panel).
+  includedAside,
   fit,
   fitHeading,
   price,
@@ -30,6 +32,13 @@ export function servicePage({
   relatedItems,
   breadcrumbName,
 }) {
+  const steps = `<ol class="steps reveal">
+            ${included.items
+              .map(
+                (item) => `<li><h3>${item.title}</h3><p>${item.text}</p></li>`,
+              )
+              .join("")}
+          </ol>`;
   const body = `      <section class="hero">
         <div class="container">
           <div class="hero-grid">
@@ -66,13 +75,14 @@ export function servicePage({
             <p class="eyebrow">${includedHeading}</p>
             <h2>${included.heading}</h2>
           </div>
-          <ol class="steps reveal">
-            ${included.items
-              .map(
-                (item) => `<li><h3>${item.title}</h3><p>${item.text}</p></li>`,
-              )
-              .join("")}
-          </ol>
+${
+  includedAside
+    ? `          <div class="included-split">
+            ${steps}
+            <div class="included-aside reveal">${includedAside}</div>
+          </div>`
+    : `          ${steps}`
+}
         </div>
       </section>
 
