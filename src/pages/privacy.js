@@ -36,7 +36,7 @@ const body = `      <section class="hero">
             <p>If you give your details and agree to a call back, the assistant saves your name, phone number, email address if you give one, business name, the service you need and a short summary to our lead database, in the same way as a form enquiry. The main phone number on this site is separate and always reaches a person, not the AI.</p>
 
             <h2>Browser storage and analytics</h2>
-            <p>This site stores your privacy choice and your selected light or dark appearance in your browser. Form entries are not saved to browser storage. See the <a href="/cookie-policy">cookie policy</a> for detail.</p>
+            <p>This site stores your privacy choice in your browser. Form entries are not saved to browser storage. See the <a href="/cookie-policy">cookie policy</a> for detail.</p>
             <p>If you allow analytics in the privacy banner, we use Vercel Web Analytics to understand aggregate traffic, such as which pages are visited. It does not use cookies and does not identify individual visitors, and it is not loaded unless you allow it. You can change your choice at any time with the Cookie preferences link at the bottom of every page. Where Google Search Console is connected, it is used to understand search performance. Neither is used to build advertising profiles. No advertising pixels or third-party advertising trackers are installed. Your host may retain operational access logs.</p>
 
             <h2>Our legal reasons for using your information</h2>

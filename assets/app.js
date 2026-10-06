@@ -40,29 +40,6 @@ document.addEventListener("click", (event) => {
     closeMenu();
 });
 matchMedia("(min-width: 1121px)").addEventListener("change", closeMenu);
-const themeButton = $("#theme-toggle");
-function updateThemeButton() {
-  const dark = document.documentElement.classList.contains("dark-mode");
-  themeButton?.setAttribute("aria-pressed", String(dark));
-  themeButton?.setAttribute(
-    "aria-label",
-    `Switch to ${dark ? "light" : "dark"} mode`,
-  );
-  $('meta[name="theme-color"]')?.setAttribute(
-    "content",
-    dark ? "#071313" : "#f4f5ef",
-  );
-}
-updateThemeButton();
-themeButton?.addEventListener("click", () => {
-  const dark = document.documentElement.classList.toggle("dark-mode");
-  try {
-    localStorage.setItem("veltra-theme", dark ? "dark" : "light");
-  } catch {
-    /* Optional preference. */
-  }
-  updateThemeButton();
-});
 // A package button carries the choice into the plan form's goal field.
 $$("[data-package]").forEach((link) =>
   link.addEventListener("click", () => {

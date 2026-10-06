@@ -232,7 +232,7 @@ test("retired med-spa URLs and legacy paths redirect to their replacements", asy
   }
 });
 
-test("FAQ, theme persistence, and mobile navigation work", async ({
+test("FAQ and mobile navigation work", async ({
   page,
   isMobile,
 }) => {
@@ -240,10 +240,6 @@ test("FAQ, theme persistence, and mobile navigation work", async ({
   const faq = page.locator("details").first();
   await faq.locator("summary").click();
   await expect(faq).toHaveAttribute("open", "");
-  await page.getByRole("button", { name: "Switch to dark mode" }).click();
-  await page.reload();
-  await expect(page.locator("html")).toHaveClass(/dark-mode/);
-  await page.getByRole("button", { name: "Switch to light mode" }).click();
   if (isMobile) {
     await page.getByRole("button", { name: "Open navigation" }).click();
     await expect(page.locator("#nav-links")).toBeVisible();
@@ -437,7 +433,7 @@ test("configured calendar, call, email, and WhatsApp links are correct", async (
   await expect(page.locator("[data-booking-option]")).toBeVisible();
 });
 
-test("WCAG AA checks pass on main routes in both themes", async ({ page }) => {
+test("WCAG AA checks pass on main routes", async ({ page }) => {
   test.setTimeout(240000);
   for (const route of [
     "/",
@@ -453,28 +449,39 @@ test("WCAG AA checks pass on main routes in both themes", async ({ page }) => {
   ]) {
     await page.goto(route);
     await settle(page);
-    for (const dark of [false, true]) {
-      await page.evaluate(
-        (dark) => document.documentElement.classList.toggle("dark-mode", dark),
-        dark,
-      );
-      // The header and cards ease between themes; audit the settled colours.
-      await settle(page);
-      const result = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-        .analyze();
-      expect(
-        result.violations.map((v) => ({
-          id: v.id,
-          nodes: v.nodes.map((n) => ({
-            target: n.target,
-            summary: n.failureSummary,
-          })),
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(
+      result.violations.map((v) => ({
+        id: v.id,
+        nodes: v.nodes.map((n) => ({
+          target: n.target,
+          summary: n.failureSummary,
         })),
-        `${route}, dark=${dark}`,
-      ).toEqual([]);
-    }
+      })),
+      route,
+    ).toEqual([]);
   }
+});
+
+test("the site is light only: no theme switch, even if dark was saved or preferred", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ colorScheme: "dark" });
+  const page = await context.newPage();
+  await page.addInitScript(() =>
+    localStorage.setItem("veltra-theme", "dark"),
+  );
+  await page.goto("/");
+  await expect(page.locator("#theme-toggle")).toHaveCount(0);
+  await expect(page.locator("html")).not.toHaveClass(/dark-mode/);
+  // The leftover preference is cleaned up, and the JS hook class still applies.
+  await expect(page.locator("html")).toHaveClass(/\bjs\b/);
+  expect(await page.evaluate(() => localStorage.getItem("veltra-theme"))).toBe(
+    null,
+  );
+  await context.close();
 });
 
 test("small phone, tablet, and reduced motion remain readable", async ({
@@ -646,29 +653,23 @@ test("the AI call button explains a missing microphone or an unavailable service
   await expect(panel).toBeHidden();
 });
 
-test("the call and chat buttons and panels meet WCAG AA in both themes", async ({
+test("the call and chat buttons and panels meet WCAG AA", async ({
   page,
 }) => {
   test.setTimeout(120000);
   const audit = async (selector, label) => {
-    for (const dark of [false, true]) {
-      await page.evaluate(
-        (dark) => document.documentElement.classList.toggle("dark-mode", dark),
-        dark,
-      );
-      await settle(page);
-      const result = await new AxeBuilder({ page })
-        .include(selector)
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-        .analyze();
-      expect(
-        result.violations.map((v) => ({
-          id: v.id,
-          nodes: v.nodes.map((n) => n.target),
-        })),
-        `${label}, dark=${dark}`,
-      ).toEqual([]);
-    }
+    await settle(page);
+    const result = await new AxeBuilder({ page })
+      .include(selector)
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(
+      result.violations.map((v) => ({
+        id: v.id,
+        nodes: v.nodes.map((n) => n.target),
+      })),
+      label,
+    ).toEqual([]);
   };
   await page.goto("/");
   await audit(".assist-dock", "dock");

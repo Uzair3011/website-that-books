@@ -27,7 +27,7 @@ export function renderAdminPage(config = adminConfig()) {
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/assets/admin.css" />
-    <script src="/assets/theme.js"></script>
+    <script src="/assets/init.js"></script>
     <script src="/assets/vendor/supabase.js" defer></script>
     <script src="/assets/admin.js" defer></script>
   </head>
@@ -53,7 +53,6 @@ export function renderAdminPage(config = adminConfig()) {
           <span class="live" id="live" data-state="connecting" role="status"><i aria-hidden="true"></i><span id="live-label">Connecting…</span></span>
           <div class="topbar-actions">
             <button class="a-btn ghost" type="button" id="alerts-toggle" aria-pressed="false" title="Desktop alerts for new leads">Alerts off</button>
-            <button class="a-btn ghost icon" type="button" id="theme-toggle" aria-label="Switch light or dark theme">◐</button>
             <button class="a-btn ghost" type="button" id="sign-out">Sign out</button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-/* Private lead dashboard. Same tokens, font and light/dark switch as the public site
+/* Private lead dashboard. Same tokens and font as the public site
    (assets/styles.css), kept separate so marketing styles never leak into the tool. */
 @font-face {
   font-family: Manrope;
@@ -24,18 +24,6 @@
   --radius: 12px;
   --radius-lg: 18px;
   --shadow: 0 1px 2px rgba(7, 19, 19, 0.05), 0 8px 24px rgba(7, 19, 19, 0.06);
-}
-:root.dark-mode {
-  --canvas: #071313;
-  --surface: #0d1f1d;
-  --raised: #112624;
-  --ink: #ffffff;
-  --body: #a7b6b3;
-  --line: #263a38;
-  --line-soft: #1a2e2c;
-  --danger: #ffb4ab;
-  --focus: #c9ff4a;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 *,
 *::before,
@@ -516,10 +504,6 @@ textarea:focus-visible {
 }
 .status-select[data-status="lost"] {
   color: var(--body);
-}
-:root.dark-mode .status-select[data-status="won"] {
-  background: #173d2a;
-  color: #b8f0cd;
 }
 .status-select.large {
   min-height: 42px;

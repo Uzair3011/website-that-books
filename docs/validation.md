@@ -25,15 +25,15 @@ Browser tests run on desktop Chromium (1440×1000), mobile Chromium (Pixel 7) an
 mobile Safari (iPhone 13). They cover all fifteen routes plus 404, internal link
 resolution, legacy and med-spa redirects returning 308 to the right target,
 unique canonical/title/description per page, valid JSON-LD, no horizontal
-overflow at 320/375/768/1024/1920, theme persistence, the mobile menu, FAQ
+overflow at 320/375/768/1024/1920, the mobile menu, FAQ
 disclosure, the med-spa calculator, form validation and entry preservation,
 confirmed delivery, the unconfigured-intake path, live booking including a
 taken-slot retry and idempotent booking key, configured contact links, and the
 no-JavaScript fallback.
 
 Automated axe WCAG 2.0/2.1 A and AA checks pass on `/`, `/pricing`, `/work`,
-`/free-website-audit`, `/contact` and `/med-spa-growth-system`, in both light
-and dark themes, on all three browser projects. These are automated checks, not
+`/free-website-audit`, `/contact` and `/med-spa-growth-system`, on all three
+browser projects. These are automated checks, not
 a compliance certification or a substitute for assistive-technology testing.
 
 ## Currency consolidation — 22 September 2026
@@ -73,7 +73,7 @@ or if the retired offer reappears in copy.
 ## Manual review
 
 Desktop and mobile hero, services, portfolio, pricing and audit sections
-reviewed in both themes at 1440px and 390px. Sticky mobile action bar (call +
+reviewed at 1440px and 390px. Sticky mobile action bar (call +
 audit) verified for touch-target size. All imagery is locally hosted SVG; the
 font is self-hosted.
 

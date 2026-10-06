@@ -69,7 +69,7 @@ export function renderPage(
       crossorigin
     />
     <link rel="stylesheet" href="/assets/styles.css" />
-    <script src="/assets/theme.js"></script>
+    <script src="/assets/init.js"></script>
     <script src="/assets/config.js" defer></script>
     <script src="/assets/app.js" type="module"></script>
     <script src="/assets/consent.js" defer></script>

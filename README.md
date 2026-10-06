@@ -92,9 +92,9 @@ is plain static HTML.
 - `src/site.js`: business facts, navigation, the five services, shared sections and JSON-LD builders.
 - `src/service-page.js`: the shared layout behind the five service pages.
 - `src/form.js`: the enquiry/audit form markup, whose element ids are a contract with `assets/app.js` and `api/`.
-- `assets/styles.css`: the design system — tokens, typography scale, layout primitives, light/dark themes, reduced motion.
+- `assets/styles.css`: the design system — tokens, typography scale, layout primitives, reduced motion.
 - `assets/work/*.svg`: the website mockups used as imagery. Items labelled "design example" are not client projects.
-- `assets/app.js`: navigation, theme, contact-link wiring, the med-spa calculator, and enquiry/booking states.
+- `assets/app.js`: navigation, contact-link wiring, the med-spa calculator, and enquiry/booking states.
 - `assets/business.js`: the med-spa bundle's fixed offer expiry, pricing and ROI math.
 - `assets/validation.js`: shared field validation and normalization, used by the browser and the API.
 - `lib/`: request guards, availability rules, Google Calendar client, SMTP client and templates, public config generation.
@@ -139,11 +139,10 @@ used for the header CTA and form submit, as on the concept.
 
 **Contrast rule:** neither accent is ever used as *text* on the cream canvas
 (1.07:1 and 1.33:1). There they appear only as fills carrying ink, or on dark
-surfaces. `npm run test:browser` runs axe WCAG AA in both themes to enforce it.
+surfaces. `npm run test:browser` runs axe WCAG AA to enforce it.
 
 Two values are derived, not sampled, and are marked as such in the stylesheet:
-`--accent-lime-strong` (the button hover shade) and the dark-mode `sunken` and
-`raised` surface steps.
+`--accent-lime-strong` (the button hover shade).
 
 The logo is a near-black rounded square with a lime "V" (`.logo-mark`), also
 rendered as `assets/favicon.svg`, `favicon.ico`, `apple-touch-icon.png` and the
@@ -204,7 +203,7 @@ npm run test:browser
 npm run build
 ```
 
-Browser tests cover desktop Chromium, mobile Chromium and mobile Safari: every route, internal links, 404 and legacy redirects, unique canonical/title/description per page, valid structured data, responsive widths from 320px to 1920px, theme persistence, menu, FAQs, ROI changes, form validation, success/error preservation, configured contact links, the no-JavaScript fallback, and WCAG AA automated checks in both themes. `npm test` additionally asserts the production build's canonicals, sitemap, robots file and one-H1-per-page rule, and fails if any structured data claims a rating, review count or street address. Form success tests use an intercepted provider response; the endpoint tests independently exercise accepted and rejected deliveries. An actual live destination still needs to be connected and verified before production use.
+Browser tests cover desktop Chromium, mobile Chromium and mobile Safari: every route, internal links, 404 and legacy redirects, unique canonical/title/description per page, valid structured data, responsive widths from 320px to 1920px, menu, FAQs, ROI changes, form validation, success/error preservation, configured contact links, the no-JavaScript fallback, and WCAG AA automated checks. `npm test` additionally asserts the production build's canonicals, sitemap, robots file and one-H1-per-page rule, and fails if any structured data claims a rating, review count or street address. Form success tests use an intercepted provider response; the endpoint tests independently exercise accepted and rejected deliveries. An actual live destination still needs to be connected and verified before production use.
 
 ## Lead database and dashboard
 

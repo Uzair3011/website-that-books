@@ -84,7 +84,7 @@
         <div class="cookie-option">
           <div>
             <p class="cookie-option-label">Essential</p>
-            <p class="cookie-option-text">Remembers your privacy choice and your light or dark appearance.</p>
+            <p class="cookie-option-text">Remembers your privacy choice.</p>
           </div>
           <span class="cookie-always">Always active</span>
         </div>

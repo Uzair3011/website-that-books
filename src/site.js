@@ -47,7 +47,6 @@ const ICONS = {
   chat: '<path d="M20 11a8 8 0 0 1-8 8H4l-2 3V11a9 9 0 1 1 18 0Z"/><path d="M6 10h9m-9 4h5"/>',
   search: '<circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/>',
   pin: '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>',
-  moon: '<path d="M20 14A9 9 0 0 1 10 3 9 9 0 1 0 20 14Z"/>',
   menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
   play: '<circle cx="12" cy="12" r="9"/><path d="m10 8.5 6 3.5-6 3.5Z"/>',
   doc: '<path d="M6 3h8l4 4v14H6Z"/><path d="M14 3v4h4M9 13h6m-6 4h4"/>',
@@ -147,7 +146,6 @@ export function header(path) {
         <span class="phone-pill-icon">${icon("phone")}</span>
       </a>
       <a class="btn small dark header-cta" href="${planHref}">${CTA.primary}${icon("arrow-up")}</a>
-      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">${icon("moon")}</button>
       <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links">${icon("menu")}</button>
     </div>
   </div>

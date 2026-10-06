@@ -51,20 +51,6 @@
   --header-h: 75px;
 }
 
-/* Dark mode is a full canvas inversion. Both accents carry over unchanged;
-   text on them stays near-black in both themes. */
-:root.dark-mode {
-  --canvas: var(--bg-dark);
-  --surface: var(--surface-card-dark);
-  --ink: var(--text-on-dark);
-  --body: var(--text-muted-dark);
-  --line: var(--border-dark);
-  --btn-bg: var(--accent-lime);
-  --btn-text: #071313;
-  --focus: var(--accent-lime);
-  --header-bg: rgba(7, 19, 19, 0.86);
-}
-
 *,
 *::before,
 *::after {
@@ -324,7 +310,7 @@ p {
   text-underline-offset: 3px;
 }
 
-/* Deep bands invert the canvas locally without a theme switch. */
+/* Deep bands invert the canvas locally. */
 .band-dark {
   background: var(--bg-dark);
   color: var(--text-on-dark);
@@ -487,7 +473,7 @@ svg.icon {
   white-space: nowrap;
 }
 /* The concept's mark: a near-black rounded square with a lime "V". The
-   border only shows on dark surfaces (footer, dark mode), as on the concept. */
+   border only shows on dark surfaces (the footer), as on the concept. */
 .logo-mark {
   display: inline-grid;
   place-items: center;
@@ -519,13 +505,8 @@ svg.icon {
 .nav-links a[aria-current="page"] {
   /* Discovery Design colours nav hover/active with their accent directly —
      safe there because their header always sits on a dark canvas (12.3:1).
-     Ours can sit on a light canvas too, where the same pair is 1.3:1, so the
-     accent only applies below where a dark surface actually backs it. */
+     Ours sits on a light canvas, where the same pair is 1.3:1, so it stays ink. */
   color: var(--ink);
-}
-:root.dark-mode .nav-links a:hover,
-:root.dark-mode .nav-links a[aria-current="page"] {
-  color: var(--accent-mint);
 }
 .nav-actions {
   display: flex;
@@ -545,10 +526,6 @@ svg.icon {
 .icon-btn:hover {
   border-color: var(--ink);
   color: var(--ink);
-}
-:root.dark-mode .icon-btn:hover {
-  border-color: var(--accent-mint);
-  color: var(--accent-mint);
 }
 .menu-toggle {
   display: none;
@@ -1215,8 +1192,7 @@ svg.icon {
   padding-block: clamp(56px, 7vw, 104px);
 }
 /* A rounded teal panel on the page canvas, with a lime quarter-disc in its
-   bottom-left corner — the concept's closing block. Ink is set locally so it
-   reads identically in both themes. */
+   bottom-left corner — the concept's closing block. Ink is set locally. */
 .cta-inner {
   position: relative;
   isolation: isolate;
@@ -1375,7 +1351,6 @@ svg.icon {
 .phone-input:has([aria-invalid="true"]) {
   border-color: #8c1d18;
 }
-:root.dark-mode .phone-input:has([aria-invalid="true"]),
 .band-dark .phone-input:has([aria-invalid="true"]) {
   border-color: #ffb4ab;
 }
@@ -1427,13 +1402,7 @@ svg.icon {
 .field .phone-input input:focus-visible {
   box-shadow: none;
 }
-:root.dark-mode .phone-input {
-  background: var(--sunken);
-}
-:root.dark-mode .field .phone-input input {
-  background: transparent;
-}
-/* Service picker: the same chevron as the dial code, in the theme's colours,
+/* Service picker: the same chevron as the dial code, in the page's colours,
    instead of each browser's own arrow. */
 .select-wrap {
   position: relative;
@@ -1467,7 +1436,6 @@ svg.icon {
 .field [aria-invalid="true"] {
   border-color: #8c1d18;
 }
-:root.dark-mode .field [aria-invalid="true"],
 .band-dark .field [aria-invalid="true"] {
   border-color: #ffb4ab;
 }
@@ -1479,7 +1447,6 @@ svg.icon {
   font-weight: 500;
   color: #8c1d18;
 }
-:root.dark-mode .field-error,
 .band-dark .field-error {
   color: #ffb4ab;
 }
@@ -2040,7 +2007,6 @@ svg.icon {
   accent-color: var(--text-primary);
   min-height: 34px;
 }
-:root.dark-mode .range-field input[type="range"],
 .band-dark .range-field input[type="range"] {
   accent-color: var(--accent-lime);
 }
@@ -2127,7 +2093,7 @@ svg.icon {
 /* ── Feature hero: the concept's cream hero ──
    Cream canvas with a lime wash bottom-left and a teal wash top-right
    (measured: #f1f6e2 and #e2f3ec over #f4f5ef), and a dark product panel
-   with a lime disc behind it. Themed via tokens, so dark mode inherits it. */
+   with a lime disc behind it. */
 .hero {
   position: relative;
   isolation: isolate;
@@ -2152,19 +2118,6 @@ svg.icon {
     radial-gradient(
       44% 60% at 0% 100%,
       rgba(201, 255, 74, 0.3),
-      rgba(201, 255, 74, 0) 72%
-    );
-}
-:root.dark-mode .hero::before {
-  background:
-    radial-gradient(
-      46% 60% at 96% 4%,
-      rgba(131, 231, 218, 0.16),
-      rgba(131, 231, 218, 0) 72%
-    ),
-    radial-gradient(
-      44% 60% at 0% 100%,
-      rgba(201, 255, 74, 0.1),
       rgba(201, 255, 74, 0) 72%
     );
 }
@@ -2482,70 +2435,6 @@ svg.icon {
   background: var(--bg-dark);
 }
 
-/* ═════════════════════════ Dark mode: three surface levels ═════════════════════════
-   The first pass reused one near-black for the canvas, the cards and the dark
-   bands, so every section collapsed into the same flat wall and the header had
-   nothing to sit against. Dark mode now has a recessed level, a base canvas and
-   a raised level, plus hairlines you can actually see.                          */
-:root.dark-mode {
-  /* "sunken" is one step darker than the concept's dark canvas, for bands
-     that should recede; "raised" is a lighter card tone. Both derived. */
-  --sunken: #040d0d;
-  --canvas: var(--bg-dark);
-  --surface: var(--surface-card-dark);
-  --raised: #17302d;
-  --ink: var(--text-on-dark);
-  --body: var(--text-muted-dark);
-  --line: var(--border-dark);
-  --btn-bg: var(--accent-lime);
-  --btn-text: #071313;
-  --focus: var(--accent-lime);
-  --header-bg: rgba(7, 19, 19, 0.86);
-  --lift: 0 20px 48px -28px rgba(0, 0, 0, 0.9);
-}
-
-/* Alternating bands keep their rhythm: dark bands recede, light bands rise. */
-:root.dark-mode .band-dark {
-  background: var(--sunken);
-  --canvas: var(--sunken);
-  --surface: var(--surface-card-dark);
-  border-block: 1px solid var(--line);
-}
-:root.dark-mode .band-light {
-  background: var(--surface);
-  --canvas: var(--surface);
-  --surface: var(--raised);
-}
-:root.dark-mode .proof-strip {
-  background: var(--surface);
-}
-
-/* Panels sit above whatever band they are in. */
-:root.dark-mode .price-card,
-:root.dark-mode .form-shell,
-:root.dark-mode .compare-col:not(.us),
-:root.dark-mode .roi-result {
-  background: var(--surface);
-}
-:root.dark-mode .band-light .price-card,
-:root.dark-mode .band-light .form-shell,
-:root.dark-mode .band-light .compare-col:not(.us),
-:root.dark-mode .band-light .roi-result {
-  background: var(--raised);
-}
-/* The featured plan is otherwise invisible: its dark fill matched the canvas. */
-:root.dark-mode .price-card.featured {
-  background: var(--sunken);
-  border-color: var(--accent-lime);
-  --canvas: var(--sunken);
-}
-:root.dark-mode .field input,
-:root.dark-mode .field select,
-:root.dark-mode .field textarea,
-:root.dark-mode .slot-option label {
-  background: var(--sunken);
-}
-
 /* ═════════════════════════ Navigation ═════════════════════════ */
 .nav {
   transition:
@@ -2558,19 +2447,12 @@ svg.icon {
   box-shadow: 0 18px 40px -26px rgba(7, 19, 19, 0.55);
 }
 
-:root.dark-mode .icon-btn {
-  border-color: var(--line);
-}
-
 /* Mobile panel: a real surface, not a wash over the page behind it. */
 @media (max-width: 1120px) {
   .nav-links {
     padding-bottom: 26px;
     background: var(--canvas);
     box-shadow: 0 24px 40px -28px rgba(7, 19, 19, 0.6);
-  }
-  :root.dark-mode .nav-links {
-    background: var(--surface);
   }
   .nav-links a {
     color: var(--ink);
@@ -2645,9 +2527,7 @@ svg.icon {
    The reference's dark canvas is never a flat block — a soft teal wash
    bleeds through the hero, the marquee band and the sections beneath it.
    Recreated here as one reusable, low-opacity mint/lime radial gradient on
-   every dark band and, when the visitor has switched to dark mode, as a
-   fixed backdrop behind the whole page so the identity carries throughout
-   rather than resetting at each section boundary.                         */
+   every dark band.                                                        */
 .band-dark {
   position: relative;
   isolation: isolate;
@@ -2689,36 +2569,6 @@ svg.icon {
   );
 }
 
-/* Global dark mode: a fixed ambient wash behind every section, so the whole
-   page reads as one continuous dark canvas rather than a light page with a
-   few dark boxes dropped into it. */
-:root.dark-mode body {
-  position: relative;
-}
-:root.dark-mode body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      60% 46% at 82% -4%,
-      rgba(131, 231, 218, 0.1),
-      rgba(131, 231, 218, 0) 68%
-    ),
-    radial-gradient(
-      50% 38% at 6% 22%,
-      rgba(201, 255, 74, 0.05),
-      rgba(131, 231, 218, 0) 68%
-    );
-}
-/* The per-band glow would otherwise stack visibly on top of the global one. */
-:root.dark-mode .band-dark::before,
-:root.dark-mode .site-footer::before {
-  display: none;
-}
-
 
 /* ═════════════════════════ Concept components ═════════════════════════ */
 .btn.dark {
@@ -2730,32 +2580,19 @@ svg.icon {
   color: #071313;
 }
 /* On a dark surface a black pill disappears, so it becomes the lime action. */
-:root.dark-mode .btn.dark,
 .band-dark .btn.dark {
   --btn-bg: var(--accent-lime);
   --btn-text: #071313;
 }
-:root.dark-mode .btn.dark:hover,
 .band-dark .btn.dark:hover {
   background: var(--accent-lime-strong);
 }
 /* Eyebrows on dark surfaces are teal on the concept. */
-.band-dark .eyebrow,
-:root.dark-mode .eyebrow {
+.band-dark .eyebrow {
   color: var(--accent-mint);
 }
-.band-dark .eyebrow::before,
-:root.dark-mode .eyebrow::before {
+.band-dark .eyebrow::before {
   background: var(--accent-lime);
-}
-/* The teal closing panel is light in both themes, so its label keeps the panel's
-   own ink and dash. The teal above is for dark surfaces; on the panel it was the
-   same colour as the background and the label disappeared. */
-:root.dark-mode .cta-inner .eyebrow {
-  color: var(--body);
-}
-:root.dark-mode .cta-inner .eyebrow::before {
-  background: #071313;
 }
 
 /* ═════════════════════════ Homepage layout system ═════════════════════════
@@ -3044,10 +2881,9 @@ svg.icon {
   font-size: 1rem;
 }
 
-/* Free plan section: a themed intro panel beside the form, styled as one
+/* Free plan section: an intro panel beside the form, styled as one
    card instead of two mismatched blocks. Both halves share the same border,
-   radius and background; the intro panel adds only a soft accent tint, so it
-   reads correctly in light and dark mode without extra per-theme rules. */
+   radius and background; the intro panel adds only a soft accent tint. */
 .plan-band {
   padding-block: clamp(56px, 7vw, 104px);
 }
@@ -3079,8 +2915,7 @@ svg.icon {
    (below on narrow screens, to its right from 960px), same surface as the
    form, a faint accent tint and a corner glow standing in for the old solid
    teal block, and the contact lines behind a hairline at the bottom. Text
-   uses the page's own ink/body tokens (nothing hardcoded), so it never
-   fights the theme. */
+   uses the page's own ink/body tokens (nothing hardcoded). */
 .plan-copy {
   position: relative;
   isolation: isolate;
@@ -4946,7 +4781,7 @@ svg.icon {
 
 /* ───────────────────────── Website health card ─────────────────────────
    The live panel from src/health-card.js. It is a piece of product UI, so it
-   stays dark in both themes. Everything inside is sized in em off a font
+   stays dark. Everything inside is sized in em off a font
    size that follows the card's own width, so it scales from a phone stage to
    a full column. Its resting state is the finished one (ring full, score at
    98, checks in place); the start state is only applied while it waits to

@@ -362,16 +362,6 @@
     }
   }
 
-  // ── Theme ───────────────────────────────────────────────────────────────
-  $("#theme-toggle").addEventListener("click", () => {
-    const dark = document.documentElement.classList.toggle("dark-mode");
-    try {
-      localStorage.setItem("veltra-theme", dark ? "dark" : "light");
-    } catch {
-      /* Theme still applies for this visit. */
-    }
-  });
-
   // ── Filters ─────────────────────────────────────────────────────────────
   const statusFilter = $("#status-filter");
   statusFilter.append(
