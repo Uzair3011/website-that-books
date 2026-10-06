@@ -4908,10 +4908,11 @@ svg.icon {
   .svc-copy {
     padding-left: var(--svc-pad);
   }
-  /* On a phone the open service's visual is 30% smaller than the full width,
-     so it sits under the copy without taking over the screen. */
+  /* On a phone the open service's visual is 56% of the panel width (30%
+     smaller, then 20% smaller again), so it sits under the copy without
+     taking over the screen. */
   .svc-panel .svc-stage {
-    width: 70%;
+    width: 56%;
   }
   .svc-panel .svc-blob {
     top: 14%;
@@ -4925,12 +4926,13 @@ svg.icon {
   .svc-panel .svc-note {
     top: 3%;
     right: 3%;
-    max-width: 11.5em;
-    padding: 6px 10px;
-    font-size: 0.6875rem;
+    max-width: 14em;
+    padding: 5px 9px;
+    font-size: 0.625rem;
+    border-radius: 9px;
   }
   .svc-panel .svc-note .svc-arrow {
-    width: 32px;
+    width: 28px;
   }
   /* The small caption under the picture has no room at this size. */
   .svc-panel .svc-aside {
@@ -4960,7 +4962,7 @@ svg.icon {
   container-type: inline-size;
 }
 .health {
-  font-size: clamp(9px, 3.4cqi, 16px);
+  font-size: clamp(7.5px, 3.4cqi, 16px);
   padding: 1.3em 1.4em 1.5em;
   border: 1px solid var(--border-dark);
   border-radius: 1.25em;
@@ -5183,11 +5185,16 @@ svg.icon {
 }
 @media (max-width: 359px) {
   .svc-panel .svc-note {
-    font-size: 0.625rem;
+    font-size: 0.5625rem;
   }
-  .svc-panel .svc-device,
+  .svc-panel .svc-device {
+    top: 32%;
+  }
   .svc-panel .svc-card {
-    top: 34%;
+    top: 30%;
+  }
+  .svc-panel .health-checks li {
+    padding-block: 0.3em;
   }
 }
 
