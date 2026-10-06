@@ -45,6 +45,23 @@
       "source": "/booking-follow-up-automation",
       "destination": "/crm-booking-automation",
       "permanent": true
+    },
+    { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/about-us", "destination": "/about", "permanent": true },
+    {
+      "source": "/marketing-services/web-design",
+      "destination": "/web-design-middlesbrough",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-services/seo",
+      "destination": "/local-seo-middlesbrough",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-services/:path*",
+      "destination": "/services",
+      "permanent": true
     }
   ],
   "headers": [

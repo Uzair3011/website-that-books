@@ -13,7 +13,12 @@ import { renderConfigScript } from "../lib/public-config.js";
 import { renderAdminPage } from "../src/admin.js";
 import { vendorFiles } from "./vendor.mjs";
 import { renderPage } from "../src/layout.js";
-import { notFoundPage, pageByPath, pages, redirects } from "../src/pages.js";
+import {
+  notFoundPage,
+  pageByPath,
+  pages,
+  resolveRedirect,
+} from "../src/pages.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const port = Number(process.env.PORT || 4174);
@@ -79,8 +84,9 @@ const server = createServer(async (req, res) => {
       req.body = Buffer.concat(chunks).toString();
       return await handler(req, res);
     }
-    if (redirects[pathname]) {
-      res.writeHead(308, { Location: redirects[pathname] + url.search });
+    const redirectTo = resolveRedirect(pathname);
+    if (redirectTo) {
+      res.writeHead(308, { Location: redirectTo + url.search });
       return res.end();
     }
     if (!["GET", "HEAD"].includes(req.method)) {

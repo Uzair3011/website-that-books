@@ -70,6 +70,22 @@ export const redirects = {
   "/landing-pages": "/landing-page-design",
   "/ai-receptionist": "/ai-automation-middlesbrough",
   "/booking-follow-up-automation": "/crm-booking-automation",
+  // Pages from the previous Veltra site that are still indexed in Google.
+  "/contact-us": "/contact",
+  "/about-us": "/about",
+  "/marketing-services": "/services",
+  "/marketing-services/web-design": "/web-design-middlesbrough",
+  "/marketing-services/seo": "/local-seo-middlesbrough",
 };
+
+/** Any other old /marketing-services/* page lands on the services overview. */
+export const redirectPrefixes = { "/marketing-services/": "/services" };
+
+export function resolveRedirect(pathname) {
+  if (redirects[pathname]) return redirects[pathname];
+  for (const [prefix, to] of Object.entries(redirectPrefixes))
+    if (pathname.startsWith(prefix)) return to;
+  return null;
+}
 
 export const pageByPath = new Map(pages.map((page) => [page.path, page]));
