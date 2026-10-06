@@ -4908,6 +4908,11 @@ svg.icon {
   .svc-copy {
     padding-left: var(--svc-pad);
   }
+  /* On a phone the open service's visual is 30% smaller than the full width,
+     so it sits under the copy without taking over the screen. */
+  .svc-panel .svc-stage {
+    width: 70%;
+  }
   .svc-panel .svc-blob {
     top: 14%;
     width: 64%;
@@ -4920,21 +4925,16 @@ svg.icon {
   .svc-panel .svc-note {
     top: 3%;
     right: 3%;
-    max-width: 12em;
-    padding: 8px 12px;
-    font-size: 0.75rem;
+    max-width: 11.5em;
+    padding: 6px 10px;
+    font-size: 0.6875rem;
   }
   .svc-panel .svc-note .svc-arrow {
-    width: 40px;
+    width: 32px;
   }
+  /* The small caption under the picture has no room at this size. */
   .svc-panel .svc-aside {
-    right: 4%;
-    bottom: 4%;
-    max-width: 12em;
-    font-size: 0.625rem;
-  }
-  .svc-panel .svc-aside .svc-arrow {
-    width: 40px;
+    display: none;
   }
   .svc-panel .svc-shape {
     bottom: 12%;
@@ -4960,7 +4960,7 @@ svg.icon {
   container-type: inline-size;
 }
 .health {
-  font-size: clamp(11px, 3.4cqi, 16px);
+  font-size: clamp(9px, 3.4cqi, 16px);
   padding: 1.3em 1.4em 1.5em;
   border: 1px solid var(--border-dark);
   border-radius: 1.25em;
@@ -5115,12 +5115,24 @@ svg.icon {
 }
 /* Compact when the card itself is narrow (a small phone's stage). */
 @container (max-width: 340px) {
+  .health {
+    padding: 1.1em 1.2em 1.3em;
+  }
+  .health-head {
+    margin-bottom: 0.9em;
+  }
   .health-body {
     grid-template-columns: 7em minmax(0, 1fr);
     gap: 1.1em;
   }
   .health-ring {
     width: 7em;
+  }
+  .health-checks {
+    gap: 0.45em;
+  }
+  .health-checks li {
+    padding: 0.45em 0.7em;
   }
   .health-checks small {
     display: none;
@@ -5161,16 +5173,21 @@ svg.icon {
   transform: none;
   transition-delay: 0.06s;
 }
-/* On a phone the card is taller than the laptop it replaces, so it sits a
-   little higher and the label under it drops its arrow. */
+/* On a phone the card sits level with the laptop it replaces. */
 @media (max-width: 599px) {
   .svc-panel .svc-card {
     left: 4%;
     right: 4%;
-    top: 23%;
+    top: 30%;
   }
-  .svc-panel .svc-slide:has(.svc-card) .svc-aside .svc-arrow {
-    display: none;
+}
+@media (max-width: 359px) {
+  .svc-panel .svc-note {
+    font-size: 0.625rem;
+  }
+  .svc-panel .svc-device,
+  .svc-panel .svc-card {
+    top: 34%;
   }
 }
 
