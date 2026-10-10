@@ -1,119 +1,87 @@
-import { servicePage } from "../service-page.js";
+import { serviceSalesPage } from "../service-sales-page.js";
+import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
-export default servicePage({
+export default serviceSalesPage({
   path: "/crm-booking-automation",
   title: "CRM, Booking & Follow-up Automation | Teesside | Veltra Media",
   description:
-    "Connect forms, calendars, reminders and follow-up so fewer good enquiries disappear between first contact and booked work. Consent-based, with a clear opt-out.",
+    "Automated quote follow-up, self-serve booking, job reminders and one lead dashboard, so fewer good enquiries disappear between first contact and booked work.",
   breadcrumbName: "CRM & booking automation",
   serviceName: "CRM, booking and follow-up automation",
-  eyebrow: "CRM, booking + follow-up",
-  h1: "Stop losing the enquiries you already won.",
-  lede: "Capture leads, manage enquiries, and automate booking and follow-up — so the gap between someone getting in touch and someone booking stops being where the work disappears.",
-  image: {
-    src: "/assets/work/audit-deliverable.svg",
-    width: 1000,
-    height: 760,
-    alt: "A funnel showing how many people find a business, visit, engage and finally enquire, with the drop-off between each stage highlighted.",
-  },
-  intro: {
-    heading: "The expensive gap is after the enquiry.",
-    body: [
-      "Most local businesses spend their marketing budget getting people to make contact, then lose a meaningful share of those people in the days that follow — an email nobody replied to, a callback that did not happen, a booking that was never confirmed.",
-      "This is the cheapest thing to fix, because the interest has already been paid for. It is also the least visible, which is why it stays broken.",
-      "We connect the pieces you already have — your forms, your calendar, your inbox or CRM — so an enquiry becomes a confirmed appointment with as few manual steps as possible, and so nothing sits unanswered simply because everyone was busy.",
+  eyebrow: "CRM & booking automation",
+  h1: "Stop Losing Jobs Because You Forgot to Follow Up. Automate Your Lead Chasing and Get Your Evenings Back.",
+  h1Highlight: "Get Your Evenings Back.",
+  lede: "You did the hard work to get the lead. Don’t lose the money because it got lost in a spreadsheet or a sticky note. We automate your entire sales pipeline.",
+  heroVisual: V.crmHero,
+  points: [
+    { label: "Launched in 14 days", text: "Your automated CRM pipeline" },
+    { label: "10+ hours a week", text: "of admin work saved, or we work for free" },
+    { label: "Zero manual admin", text: "Follow-ups and reminders run themselves" },
+  ],
+  cta: { label: "Book Your Pipeline Scaling Strategy Call" },
+  proof: {
+    heading: "From Chaos to Clockwork.",
+    visual: V.pipeline,
+    cases: [
+      {
+        title: "Automated Follow-Up",
+        stats: [
+          { label: "Before Veltra", value: "40%", text: "of quotes sent were never followed up on." },
+          { label: "After Veltra", value: "65%", text: "Automated SMS follow-ups increased quote-acceptance rate by 65%. Zero manual admin required." },
+        ],
+      },
     ],
   },
-  includedHeading: "What gets connected",
-  included: {
-    heading: "Joining up what you already use.",
+  problem: {
+    heading: "If you are running your local business out of your email inbox, an Excel sheet, and text messages on your personal phone, you are capping your income.",
+    body: "You send out a quote on Tuesday. You get busy on Wednesday. By Friday, you forgot to follow up. On Monday, you finally text them, only to hear: “Sorry mate, we already went with someone else.” That is the sound of thousands of pounds slipping through the cracks because your admin is a mess.",
+    visual: V.messyAdmin,
+  },
+  solution: {
+    eyebrow: "The Automated Revenue Engine",
+    heading: "We build a robust, invisible backend that runs your admin for you.",
+    highlight: "runs your admin for you.",
     items: [
       {
-        title: "Enquiry capture into one place",
-        text: "Website forms, chat conversations and phone enquiries landing in a single list with the context attached, instead of three separate inboxes.",
+        icon: "refresh",
+        title: "The Relentless Follow-Up",
+        text: "When you send a quote, our system automatically texts and emails the customer 2, 5, and 7 days later until they say yes.",
       },
       {
-        title: "Live calendar booking",
-        text: "Real availability from your calendar shown on your site, with the appointment created, the video link generated where relevant, and double-bookings prevented.",
+        icon: "layout",
+        title: "One Central Hub",
+        text: "Every call, text, and email from a client is logged in one simple dashboard. You know exactly where every penny is.",
       },
       {
-        title: "Confirmation and reminders",
-        text: "An immediate confirmation the customer can rely on, then a reminder before the appointment — which is the single most effective reduction in no-shows.",
-      },
-      {
-        title: "CRM handover",
-        text: "Enquiries forwarded into your CRM or automation platform over a secure webhook, so your existing pipeline keeps working.",
-      },
-      {
-        title: "Consent-based follow-up",
-        text: "A short, useful follow-up sequence for people who did not book, that stops immediately on a reply or an opt-out. No indefinite drip campaigns.",
-      },
-      {
-        title: "Review requests",
-        text: "A compliant prompt to satisfied customers at the right moment, which feeds directly back into local search visibility.",
+        icon: "bell",
+        title: "Automated Reminders",
+        text: "It automatically texts your clients 24 hours before a job so you never show up to an empty house again.",
       },
     ],
   },
-  fitHeading: "Where it fits",
-  fit: {
-    heading: "The last mile of every other service.",
-    body: "This is the service that makes the others pay. It is also the one that is easiest to justify, because you can count what was recovered.",
+  offer: {
+    heading: "Here is the exact architecture you get with the Automated Revenue Engine:",
+    highlight: "Automated Revenue Engine:",
     items: [
-      {
-        label: "From SEO",
-        title: "More enquiries arrive",
-        text: "Visibility only matters if the enquiries it produces get handled.",
-      },
-      {
-        label: "From the site",
-        title: "Forms actually deliver",
-        text: "A form that silently fails is worse than no form. Delivery is confirmed, not assumed.",
-      },
-      {
-        label: "From chat",
-        title: "Conversations become bookings",
-        text: "The receptionist captures intent; this converts it into a time in the diary.",
-      },
-      {
-        label: "After",
-        title: "Nothing goes quiet",
-        text: "Reminders and follow-up run whether or not anyone remembered.",
-      },
+      { icon: "chart", title: "Centralized Lead Command Dashboard", text: "Every lead, text, call, and quote organized in one single view.", value: "£2,000" },
+      { icon: "refresh", title: "The “Relentless Follow-Up” Sequence", text: "Automated SMS and email follow-ups to close quotes you sent days ago.", value: "£1,200" },
+      { icon: "calendar", title: "Self-Serve Client Booking System", text: "Let clients pick their own times without the back-and-forth messaging.", value: "£800" },
+      { icon: "bell", title: "Automated Pre & Post-Job SMS Reminders", text: "Kills your no-show rate and asks for reviews automatically.", value: "£600" },
     ],
   },
-  price: {
-    heading: "CRM and booking follow-up automation, £199.",
-    body: "£199 one-off setup covering enquiry capture, calendar booking, confirmations, reminders and follow-up. Review requests can be added. Third-party platform fees, where any apply, are always shown at cost before you commit.",
+  bonuses: {
+    items: [
+      { icon: "database", title: "Done-For-You Data Migration", text: "We will take your messy excel sheets and sticky notes and upload them into the new system for you.", value: "£500" },
+      { icon: "users", title: "1-on-1 Team Onboarding Session", text: "We will personally train you and your team on how to use the dashboard so you hit the ground running.", value: "£400" },
+    ],
+    total: "£5,500",
   },
-  faqs: [
-    {
-      q: "Do I need to change my current booking system?",
-      a: "<p>Usually not. We assess what already works — Google Calendar, Calendly, or your existing provider — and connect to it where its permissions allow. We confirm compatibility and any extra cost before you sign, rather than discovering it mid-project.</p>",
-    },
-    {
-      q: "Will follow-up messages annoy my customers?",
-      a: "<p>They should not, because the sequences are short, useful and consent-based, and they stop the moment someone replies or opts out. If a follow-up sequence would not be welcome, we will say so rather than build it.</p>",
-    },
-    {
-      q: "What if the automation fails?",
-      a: "<p>It is built to fail loudly rather than silently. If a booking cannot be confirmed, the customer is told plainly and no time is reserved. If an enquiry cannot be delivered, the sender is told it was not sent rather than shown a false confirmation.</p>",
-    },
-  ],
-  relatedItems: [
-    {
-      href: "/ai-automation-middlesbrough",
-      label: "AI receptionist + website chat",
-      text: "Capture the enquiry before it needs following up.",
-    },
-    {
-      href: "/local-seo-middlesbrough",
-      label: "Local SEO + Google Business Profile",
-      text: "Review requests feed straight back into local visibility.",
-    },
-    {
-      href: "/free-website-audit",
-      label: "Free website & Google audit",
-      text: "We will show you where in the journey people drop out.",
-    },
-  ],
+  guarantee: {
+    heading: "The “Get Your Evenings Back” Guarantee",
+    body: "We will architect and launch your automated CRM pipeline in 14 days. If it doesn’t save you at least 10 hours of admin work a week, we work for free until it does.",
+  },
+  closing: {
+    heading: "Ready to scale your business",
+    highlight: "without drowning in admin?",
+  },
 });

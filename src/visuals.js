@@ -67,6 +67,9 @@ const browser = (x, y, w, h, url, fill = C.paper) =>
   text(x + 106, y + 29, 13, C.muted, url) +
   `<path d="M${x} ${y + 48}H${x + w}" stroke="${C.rule}" stroke-width="1.5"/>`;
 
+// The service pages draw their own illustrations with the same pieces.
+export { C, text, bold, rect, bar, pill, outlinePill, tick, stars, dots, browser };
+
 // ───────────────────────── Outcomes ─────────────────────────
 const credible = svg(
   "credible",

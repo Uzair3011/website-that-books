@@ -1,123 +1,87 @@
-import { servicePage } from "../service-page.js";
+import { serviceSalesPage } from "../service-sales-page.js";
+import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
-export default servicePage({
+export default serviceSalesPage({
   path: "/ai-automation-middlesbrough",
   title: "AI Receptionist & Website Chat | Middlesbrough | Veltra Media",
   description:
-    "An AI receptionist and website chat that answer common questions, capture enquiry details and hand over to your team. Approved answers only, with clear handover rules.",
+    "An AI receptionist and website chat that answer common questions, capture enquiry details and book jobs into your calendar, 24/7, for businesses in Middlesbrough and Teesside.",
   breadcrumbName: "AI receptionist",
   serviceName: "AI receptionist and website chat",
-  eyebrow: "AI receptionist + website chat",
-  h1: "Answer the question that decides the enquiry.",
-  lede: "Respond to enquiries quickly and help visitors take the next step — using answers you have approved, with a clear handover to a person whenever it matters.",
-  image: {
-    src: "/assets/work/example-clinic.svg",
-    width: 1280,
-    height: 900,
-    alt: "A website design with a chat and booking panel, showing how a visitor question turns into a selected appointment time.",
-  },
-  intro: {
-    heading: "Most missed enquiries are not missed calls.",
-    body: [
-      "They are people with one small question — do you cover Redcar, can you come on a Saturday, roughly what does that cost — who will not fill in a form to ask it, and who will not wait until Monday for an answer.",
-      "An AI receptionist handles exactly that: the repetitive, factual questions that make up most of your inbound contact, using information you have approved, at whatever hour someone happens to be looking.",
-      "It is deliberately not a replacement for your team. Anything it has not been given an answer for, anything sensitive, and anything that needs judgement goes to a person — and the visitor is told that clearly rather than being stalled.",
+  eyebrow: "AI receptionist & website chat",
+  h1: "Missed Calls = Missed Money. Hire a 24/7 AI Receptionist for Less Than the Cost of Your Monthly Coffee Bill.",
+  h1Highlight: "24/7 AI Receptionist",
+  lede: "Every time a local lead goes to voicemail, they call your competitor. Our AI answers instantly, answers their questions, and books them onto your calendar while you sleep.",
+  heroVisual: V.aiHero,
+  points: [
+    { label: "Deployed in 14 days", text: "Built, trained and live" },
+    { label: "24/7/365", text: "Every chat and text answered instantly" },
+    { label: "Never miss a lead", text: "Or we work for free" },
+  ],
+  cta: { label: "Book Your AI Automation Demo & Strategy Call" },
+  proof: {
+    heading: "The Employee That Never Sleeps.",
+    visual: V.aiChat,
+    cases: [
+      {
+        title: "Real Lead Captured",
+        intro: "“Hey, do you do emergency callouts in Billingham?” → AI confirms, gives pricing, and books the appointment at 2:15 AM.",
+        stats: [
+          { label: "The Result", value: "£250", text: "That is £250 in revenue that would have been lost to a voicemail box." },
+        ],
+      },
     ],
   },
-  includedHeading: "What we set up",
-  included: {
-    heading: "Configured around your business, not a generic bot.",
+  problem: {
+    heading: "You’re under a sink, on a roof, or having dinner with your family. Your phone rings. You can’t answer it. The customer hears your voicemail, hangs up, and immediately searches for the next business on Google.",
+    body: "You just lost a £1,500 job because you were 3 minutes late to the phone. Hiring a human receptionist costs £25,000+ a year. Letting it go to voicemail is costing you even more.",
+    visual: V.missedCall,
+  },
+  solution: {
+    eyebrow: "Instant Lead Capture",
+    heading: "Our AI is custom-trained on your specific business. It isn’t a dumb bot; it talks like a local.",
+    highlight: "it talks like a local.",
     items: [
       {
-        title: "Approved answer set",
-        text: "Your services, areas, hours, pricing signals and the questions customers actually ask, written and signed off by you before anything goes live.",
+        icon: "chat",
+        title: "Instant Answering",
+        text: "It answers every chat and text instantly, 24/7/365.",
       },
       {
-        title: "Clear handover rules",
-        text: "We define exactly what it must not attempt — anything requiring professional judgement, anything sensitive, anything outside scope — and what happens instead.",
+        icon: "filter",
+        title: "Smart Qualification",
+        text: "It asks the customer what their problem is, where they live, and if they need it fixed today.",
       },
       {
-        title: "Enquiry capture",
-        text: "Name, contact details and what they need, captured in the conversation and delivered to your inbox or CRM rather than sitting in a chat log.",
-      },
-      {
-        title: "Website chat widget",
-        text: "Installed on your site, styled to match it, and fast enough not to hurt your page speed.",
-      },
-      {
-        title: "After-hours coverage",
-        text: "Evenings and weekends handled consistently, with honest expectations set about when a person will reply.",
-      },
-      {
-        title: "Review and tuning",
-        text: "We read the real transcripts after launch and improve the answers. This is the step most providers skip and the one that makes the difference.",
+        icon: "calendar",
+        title: "Direct Booking",
+        text: "It checks your actual calendar and books the job in a free slot automatically. You just wake up and see a new job on your schedule.",
       },
     ],
   },
-  fitHeading: "Honest limits",
-  fit: {
-    heading: "What it does, and what it will not do.",
-    body: "AI is a useful service here. It is not our identity, and we will recommend it only when it solves a problem you actually have.",
+  offer: {
+    heading: "Here is everything included when you hire your 24/7 AI Employee:",
+    highlight: "24/7 AI Employee:",
     items: [
-      {
-        label: "It does",
-        title: "Answer factual questions",
-        text: "Hours, areas covered, services, process, what to expect — instantly and consistently.",
-      },
-      {
-        label: "It does",
-        title: "Capture details",
-        text: "Turns an anonymous visitor into a named enquiry with context attached.",
-      },
-      {
-        label: "It does not",
-        title: "Give professional advice",
-        text: "Clinical, legal, financial and safety questions are routed to your team, always.",
-      },
-      {
-        label: "It does not",
-        title: "Replace your people",
-        text: "It handles the repetitive layer so your team spends time on the conversations worth having.",
-      },
+      { icon: "users", title: "Custom-Trained AI Teesside Receptionist", text: "Trained on your specific business, pricing, and FAQs.", value: "£1,500/yr" },
+      { icon: "chat", title: "Omnichannel Website Chat Integration", text: "Answers questions instantly on your site so visitors never bounce.", value: "£600" },
+      { icon: "calendar", title: "Live Calendar Booking Sync", text: "The AI checks your availability and books jobs directly into your schedule.", value: "£800" },
+      { icon: "filter", title: "Intelligent Lead Qualification Flow", text: "Filters out time-wasters and only books high-value local jobs.", value: "£500" },
     ],
   },
-  price: {
-    heading: "AI receptionist and website chat, £199.",
-    body: "£199 setup for the AI receptionist and website chat together, plus the usage cost of the underlying provider, which we show you at cost. Optional monthly tuning and support available.",
+  bonuses: {
+    items: [
+      { icon: "phone", title: "Missed-Call-to-Text Automation", text: "If someone calls your actual phone and you miss it, the AI instantly texts them to start the booking process.", value: "£400" },
+      { icon: "tool", title: "30 Days of Conversation Fine-Tuning", text: "We monitor the AI’s chats for the first month and tweak its brain to make it a lethal closer.", value: "£300" },
+    ],
+    total: "£4,100",
   },
-  faqs: [
-    {
-      q: "Will customers know they are talking to AI?",
-      a: "<p>Yes. It introduces itself as the business's assistant. Pretending otherwise damages trust the moment someone notices, and people generally do notice.</p>",
-    },
-    {
-      q: "What stops it inventing an answer?",
-      a: "<p>It works from the approved information you supply. Questions outside that scope are handed to your team rather than guessed at. We test this before launch and review real transcripts after, because that is the only way to be confident about it.</p>",
-    },
-    {
-      q: "Can it book appointments directly?",
-      a: "<p>It can, when it is connected to a calendar — that is the CRM and booking automation service. On its own, the receptionist captures the enquiry and the preferred time for your team to confirm.</p>",
-    },
-    {
-      q: "What happens to the conversation data?",
-      a: "<p>We keep the intake flow to business information only and agree data handling, retention and access before connecting anything. Customer, patient and clinical records belong in your own systems, not in a chat widget.</p>",
-    },
-  ],
-  relatedItems: [
-    {
-      href: "/crm-booking-automation",
-      label: "CRM, booking + follow-up",
-      text: "Turn the captured enquiry into a confirmed appointment.",
-    },
-    {
-      href: "/web-design-middlesbrough",
-      label: "Web design Middlesbrough",
-      text: "The site the chat sits on.",
-    },
-    {
-      href: "/med-spa-growth-system",
-      label: "Med-spa growth system",
-      text: "The same tools, configured for aesthetic clinics.",
-    },
-  ],
+  guarantee: {
+    heading: "The “Never Miss a Lead” Guarantee",
+    body: "We will build, train, and deploy your custom AI Receptionist in 14 days. If it doesn’t capture a lead you would have otherwise missed in your first 30 days, we’ll work for free.",
+  },
+  closing: {
+    heading: "Stop losing £1,000 jobs because you were",
+    highlight: "3 minutes late to the phone.",
+  },
 });

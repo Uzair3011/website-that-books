@@ -1,122 +1,108 @@
-import { servicePage } from "../service-page.js";
+import { serviceSalesPage } from "../service-sales-page.js";
+import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
-export default servicePage({
+export default serviceSalesPage({
   path: "/web-design-middlesbrough",
   title: "Web Design Middlesbrough | Clear Packages from £99 | Veltra Media",
   description:
     "Conversion-focused web design for Middlesbrough and Teesside businesses. Clear packages from £99, mobile-first builds, local SEO foundations and a website you own.",
   breadcrumbName: "Web design Middlesbrough",
   serviceName: "Web design",
-  eyebrow: "Website design · Middlesbrough & Teesside",
-  h1: "Web design in Middlesbrough, built to win more enquiries.",
-  lede: "Professional websites designed to turn local visitors into enquiries — with a written scope and a fixed price before any work starts.",
-  image: {
-    src: "/assets/work/example-trades.svg",
-    width: 1280,
-    height: 900,
-    alt: "A local service website design with a dark hero, a prominent phone number, a covered-areas list and a quote request form.",
+  eyebrow: "High-converting website design",
+  h1: "How Teesside Service Businesses Are Getting 3x More Local Leads Without Spending a Single Penny More on Ads.",
+  h1Highlight: "3x More Local Leads",
+  lede: "Most websites are digital paperweights. We build a 24/7 automated sales machine that turns local Teesside browsers into booked jobs. Live in 14 days, or you don’t pay.",
+  heroVisual: {
+    src: "/assets/work/hero-devices.svg",
+    width: 1200,
+    height: 880,
+    alt: "A local electrician's website on a laptop and a phone, with the services and areas covered, a prominent phone number and a tap-to-call button.",
+    eager: true,
   },
-  intro: {
-    heading: "A website is a sales conversation, not a brochure.",
-    body: [
-      "Most local websites fail in the same quiet way. They look acceptable, they load slowly on a phone, and they never actually answer the four questions a local customer arrives with: what exactly do you do, can I trust you, do you cover my area, and what happens next.",
-      "We start with the message and the enquiry path, then design around them. That means deciding what each page is for before deciding what it looks like — which is why our sites tend to be shorter, clearer and easier to act on than the ones they replace.",
-      "You get a fast, mobile-first build with the local search foundations already in place, and you own it outright once the project fees are paid.",
+  points: [
+    { label: "Live in 14 days", text: "or you don’t pay" },
+    { label: "Fixed price", text: "Zero hidden fees" },
+    { label: "You own the site 100%", text: "No hostage situations" },
+  ],
+  cta: {
+    label: "Book Your Free Teesside Growth Strategy Call",
+    note: "We’ll map out exactly what your new site needs to look like to dominate your local area. No high-pressure sales, just straight answers.",
+  },
+  proof: {
+    heading: "Don’t take our word for it. Look at the numbers.",
+    cases: [
+      {
+        title: "Local Electrician",
+        visual: V.siteElectrician,
+        stats: [
+          { label: "The Old Way", value: "2", text: "leads a month from a clunky 10-year-old site." },
+          { label: "The Veltra Way", value: "18", text: "high-value leads last month." },
+          { label: "What we did", text: "Replaced the confusing homepage with a single “Get a Free Quote” offer and added instant booking." },
+        ],
+      },
+      {
+        title: "Local Joinery",
+        visual: V.siteJoinery,
+        stats: [
+          { label: "The Result", value: "312%", text: "increase in inbound calls within 30 days of launch." },
+        ],
+      },
     ],
   },
-  included: {
-    heading: "What a Veltra website build actually involves.",
+  problem: {
+    heading: "You’re losing thousands of pounds a month to competitors who are worse at the job than you are, simply because their website makes them look like the safer choice.",
+    body: "When a local customer goes to your site right now, what do they see? A wall of text? A contact form that looks like a tax return? If they can’t figure out exactly what you do and how to hire you in 3 seconds, they click “back” and call the next guy. You are bleeding leads.",
+    visual: V.oldVsNew,
+  },
+  solution: {
+    eyebrow: "The new way",
+    heading: "We don’t sell “web design.” We sell a system designed to make your phone ring.",
+    highlight: "make your phone ring.",
     items: [
       {
-        title: "Message and page mapping",
-        text: "We agree what the site needs to say, which pages exist, what each one is for, and where the calls to action go — before design starts.",
+        icon: "calendar",
+        title: "Zero-Friction Booking",
+        text: "We strip out the useless “About Us” fluff and put exactly what the customer wants front and center: a big, easy button to book you.",
       },
       {
-        title: "Custom mobile-first design",
-        text: "Designed at phone width first, then desktop. Not a desktop layout squeezed down, which is how most local sites end up unreadable on the device people actually use.",
+        icon: "smartphone",
+        title: "Built for Thumbs, Not Desktops",
+        text: "70% of your traffic is on a phone. We build mobile-first so your customers can call you in one tap.",
       },
       {
-        title: "Conversion-focused copy",
-        text: "We write or rework the copy so it answers real buying questions in plain English, rather than describing your business to itself.",
-      },
-      {
-        title: "Local search foundations",
-        text: "Clean URLs, one clear H1 per page, sensible heading structure, local business and service schema, descriptive image alt text, sitemap and robots.txt.",
-      },
-      {
-        title: "Analytics and enquiry tracking",
-        text: "Google Analytics and Search Console connected, with the enquiry events that let you see which pages actually produce contacts.",
-      },
-      {
-        title: "Launch, handover and ownership",
-        text: "Final checks on real devices, then the site and its original content are yours. Ongoing care is available from £49 a month, never required.",
+        icon: "chat",
+        title: "Objection-Crushing Copy",
+        text: "We answer the 5 questions every customer has (Do you cover my area? Are you legit? How much? When can you start? How do I book?) before they even ask.",
       },
     ],
   },
-  fitHeading: "Works on its own",
-  fit: {
-    heading: "Buy the website on its own — or connect it later.",
-    body: "A website build is a complete piece of work in itself. These are the services people most often add afterwards, once they can see where enquiries are still being lost.",
+  offer: {
+    heading: "When you partner with Veltra Media, you aren’t just getting a website. You are getting the complete Teesside Lead-Gen Website System:",
+    highlight: "Teesside Lead-Gen Website System:",
     items: [
-      {
-        label: "Often next",
-        title: "Local SEO",
-        text: "Once the site is sound, improving how often it shows up locally is usually the highest-return next step.",
-      },
-      {
-        label: "For campaigns",
-        title: "Landing pages",
-        text: "A dedicated page per offer or campaign, without the main site's navigation pulling attention away.",
-      },
-      {
-        label: "For response speed",
-        title: "Website chat",
-        text: "Catches the visitors who have one question left and will not fill in a form to ask it.",
-      },
-      {
-        label: "For follow-up",
-        title: "Booking automation",
-        text: "Turns an enquiry into a confirmed appointment without the back-and-forth.",
-      },
+      { icon: "smartphone", title: "Mobile-First Conversion Architecture", text: "Engineered for one-tap booking on smartphones.", value: "£1,500" },
+      { icon: "pen", title: "Psychology-Driven Direct Response Copywriting", text: "Words that sell your services for you.", value: "£800" },
+      { icon: "doc", title: "Frictionless Enquiry & Lead Capture System", text: "Multi-step forms that double conversion rates.", value: "£500" },
+      { icon: "bolt", title: "High-Speed, SEO-Ready Infrastructure", text: "No bloated WordPress themes; lightning-fast load times.", value: "£400" },
     ],
   },
-  price: {
-    heading: "Website packages from £99.",
-    body: "Simple landing page £99 for a focused one-page site, or a multi-page website £179 for up to five pages. Larger sites get a written quote. Ecommerce, memberships and unusual integrations are quoted separately in writing.",
+  bonuses: {
+    heading: "Plus, when you book your build this week, you get these bonuses entirely for free:",
+    highlight: "entirely for free:",
+    items: [
+      { icon: "pin", title: "Google Business Profile Optimization Setup", text: "We set up your map pack foundation so you rank faster.", value: "£350" },
+      { icon: "tool", title: "30 Days of VIP “Tweaks & Fixes” Support", text: "If you want a picture changed or text updated in the first month, we do it free.", value: "£250" },
+    ],
+    total: "£3,800",
+    investment: "<strong>A fraction of that.</strong>",
+    investmentNote: "Fixed price. Zero hidden fees.",
   },
-  faqs: [
-    {
-      q: "Can you improve my existing website instead of rebuilding it?",
-      a: "<p>Often, yes. We will review the current site and tell you honestly whether a focused redesign, a few new pages, or a full rebuild gives you the better return. Sometimes the answer is that the website is fine and the problem is elsewhere — usually Google Business Profile or follow-up speed.</p>",
-    },
-    {
-      q: "Who writes the content?",
-      a: "<p>We do the structure and the conversion copy. You supply the facts only you have: services, prices, areas covered, photographs, and anything a customer regularly asks. Timelines start from content approval, so this is usually the step that decides how fast a project moves.</p>",
-    },
-    {
-      q: "Do you work with businesses outside Middlesbrough?",
-      a: "<p>Yes. Most of our work is across Teesside — Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley — and we work remotely with businesses elsewhere in the UK. Meetings can be in person locally or online.</p>",
-    },
-    {
-      q: "What happens if I want changes after launch?",
-      a: "<p>Each package includes a set number of revision rounds during the build. After launch you can either manage the site yourself — we will show you how — or take a care plan from £49 a month that covers hosting, updates, backups and support.</p>",
-    },
-  ],
-  relatedItems: [
-    {
-      href: "/local-seo-middlesbrough",
-      label: "Local SEO + Google Business Profile",
-      text: "Be one of the businesses that shows up when someone nearby searches.",
-    },
-    {
-      href: "/landing-page-design",
-      label: "Landing pages + CRO",
-      text: "A focused page for one offer, one audience and one action.",
-    },
-    {
-      href: "/free-website-audit",
-      label: "Free website & Google audit",
-      text: "A video review and a one-page summary of what to fix first.",
-    },
-  ],
+  guarantee: {
+    heading: "The 14-Day “Booked Solid” Guarantee",
+    body: "We build your lead-generating website in 14 days. If it doesn’t actively increase your inbound enquiry rate, we will work for free until it does. You own the site 100%. No hostage situations.",
+  },
+  closing: {
+    heading: "Stop losing jobs to worse competitors.",
+    highlight: "Let’s build your machine.",
+  },
 });

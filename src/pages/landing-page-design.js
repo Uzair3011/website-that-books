@@ -1,119 +1,94 @@
-import { servicePage } from "../service-page.js";
+import { serviceSalesPage } from "../service-sales-page.js";
+import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
-export default servicePage({
+export default serviceSalesPage({
   path: "/landing-page-design",
   title: "Landing Page Design & CRO | Teesside | Veltra Media",
   description:
     "Focused landing pages for one service, location or campaign — written and designed around a single conversion goal, with tracking so you can see what the page actually did.",
   breadcrumbName: "Landing page design",
   serviceName: "Landing page design and conversion rate optimisation",
-  eyebrow: "Landing pages + CRO",
-  h1: "One offer. One audience. One action.",
-  lede: "Pages designed around a specific offer, audience and conversion goal — so paid traffic and campaigns land somewhere built to convert, not on a general homepage.",
-  image: {
+  eyebrow: "High-converting landing pages (paid ads)",
+  h1: "Getting Clicks but No Calls? Here is the 1-Page System We Use to Turn Expensive Ad Traffic into Booked Jobs.",
+  h1Highlight: "1-Page System",
+  lede: "Stop setting your ad budget on fire by sending paid traffic to a confusing homepage.",
+  heroVisual: {
     src: "/assets/work/example-landing.svg",
     width: 1280,
     height: 900,
-    alt: "A single-offer landing page with one headline, three proof points, a short form above the fold and no site navigation.",
+    alt: "A single-offer landing page for a free gutter survey: no navigation, a short form above the fold and what happens next.",
+    eager: true,
   },
-  intro: {
-    heading: "A homepage is a menu. A landing page is an answer.",
-    body: [
-      "Sending advertising traffic to your homepage is the most common and most expensive mistake local businesses make. Someone clicks an ad about one specific thing, arrives at a page about everything, and leaves.",
-      "A landing page removes the choice. It addresses one audience, makes one offer, answers the objections that specific audience has, and asks for one action — with nothing else competing for attention.",
-      "Because the goal is singular, the page is also measurable. You can see what a campaign actually produced rather than guessing from overall site traffic.",
+  points: [
+    { label: "Deployed in 14 days", text: "Mapped to your specific ad offer" },
+    { label: "Zero distractions", text: "No menus. No external links." },
+    { label: "The “Profitable Click” Guarantee", text: "Beat your homepage, or we work for free" },
+  ],
+  cta: { label: "Book Your Landing Page ROI Call" },
+  proof: {
+    heading: "We Buy Clients For Pennies On The Pound.",
+    visual: V.landingSplit,
+    cases: [
+      {
+        title: "Google Ads Client",
+        stats: [
+          { label: "The Problem", text: "They were spending £500/mo on Google Ads sending traffic to their homepage. Cost per lead: £85." },
+          { label: "The Veltra Fix", text: "We built a dedicated, single-offer landing page." },
+          { label: "The Result", value: "4x", text: "Cost per lead dropped to £12. They got 4x the leads for the exact same ad spend." },
+        ],
+      },
     ],
   },
-  includedHeading: "How we build one",
-  included: {
-    heading: "Built around the decision, not the design.",
+  problem: {
+    heading: "If you are paying Mark Zuckerberg or Google £10 every time someone clicks your ad, you cannot afford to confuse them.",
+    body: "When you send an ad click to your main website, they see your “About Us,” your “Mission Statement,” and a list of 12 different services. They get overwhelmed, they don’t see the specific thing they clicked on, and they bounce. You just paid £10 for a stranger to look at your logo for 2 seconds.",
+    visual: V.adBounce,
+  },
+  solution: {
+    eyebrow: "The Single-Offer Squeeze",
+    heading: "We build ruthless, high-speed landing pages with one job: Get the contact info.",
+    highlight: "Get the contact info.",
     items: [
       {
-        title: "Offer and audience definition",
-        text: "Who this page is for, what they are being offered, and what they are worried about. Everything else follows from getting this right.",
+        icon: "target",
+        title: "Zero Distractions",
+        text: "No menus. No external links. The only thing the user can do is claim your offer or leave.",
       },
       {
-        title: "Message and objection mapping",
-        text: "The three or four real reasons someone hesitates, answered in order, before the page asks for anything.",
+        icon: "flow",
+        title: "Message Match",
+        text: "The headline of the page exactly matches the ad they just clicked, creating instant trust.",
       },
       {
-        title: "Focused page design",
-        text: "No site navigation, no competing links, the form or call button visible before anyone scrolls, and a layout that reads cleanly on a phone.",
-      },
-      {
-        title: "Conversion copywriting",
-        text: "Specific, plain, and about the reader. Written to be scanned, because it will be.",
-      },
-      {
-        title: "Tracking and conversion events",
-        text: "Form starts, form submissions, phone clicks and call-to-action clicks, so you can attribute results rather than assume them.",
-      },
-      {
-        title: "Iteration based on real behaviour",
-        text: "After the page has real traffic we can review what people actually did and refine it. Honest testing needs volume — we will tell you if you do not have enough yet.",
+        icon: "doc",
+        title: "Frictionless Forms",
+        text: "We use psychology-driven form fields that make it feel effortless for the customer to give you their phone number.",
       },
     ],
   },
-  fitHeading: "Where it fits",
-  fit: {
-    heading: "Most useful when something is already sending traffic.",
-    body: "A landing page converts attention you already have. If nothing is sending traffic yet, local SEO or a website build is usually the better first spend.",
+  offer: {
+    heading: "Stop burning ad spend. Here is what is included in the Single-Offer Squeeze System:",
+    highlight: "Single-Offer Squeeze System:",
     items: [
-      {
-        label: "Paid ads",
-        title: "Campaign traffic",
-        text: "Every pound of ad spend lands on a page built for that exact ad.",
-      },
-      {
-        label: "One service",
-        title: "A single offer",
-        text: "Useful when one service is far more profitable than the rest of your range.",
-      },
-      {
-        label: "One area",
-        title: "A specific location",
-        text: "Where you genuinely work in a place and have something real to say about it.",
-      },
-      {
-        label: "Seasonal",
-        title: "A time-limited push",
-        text: "Stood up quickly, measured honestly, and retired when it stops earning.",
-      },
+      { icon: "layout", title: "Distraction-Free Landing Page Architecture", text: "Built specifically to convert paid traffic into phone calls.", value: "£1,000" },
+      { icon: "flow", title: "Ad-to-Page “Message Match” Copywriting", text: "Seamless transition from the ad they clicked to the offer they read.", value: "£600" },
+      { icon: "doc", title: "Psychology-Driven Lead Capture Forms", text: "Multi-step flows that eliminate abandonment.", value: "£500" },
+      { icon: "star", title: "High-Fidelity Trust & Proof Integration", text: "Strategic placement of your best reviews to kill skepticism.", value: "£400" },
     ],
   },
-  price: {
-    heading: "Landing pages from £99.",
-    body: "£99 for a single focused page including copy, design, build and conversion tracking. Need more than one page? The multi-page website is £179. Ongoing CRO review is quoted against the traffic you actually have.",
+  bonuses: {
+    items: [
+      { icon: "chart", title: "Existing Ad Campaign Audit", text: "We will look at your current Google/Meta ads and tell you exactly where you are wasting money.", value: "£350" },
+      { icon: "bell", title: "Automated Instant SMS Lead Alerts", text: "The second someone fills out the landing page, your phone gets a text so you can call them in 60 seconds.", value: "£250" },
+    ],
+    total: "£3,100",
   },
-  faqs: [
-    {
-      q: "Do I need a landing page if I already have a website?",
-      a: "<p>Only if something is driving traffic to a specific offer — paid ads, a campaign, a partnership, or a service you want to push. Without traffic to point at it, a landing page has nothing to convert.</p>",
-    },
-    {
-      q: "Can you run the ads as well?",
-      a: "<p>We build and measure the page. Media buying and ad spend are separate and we will say so plainly rather than bundling them in. We are happy to work alongside whoever runs your campaigns.</p>",
-    },
-    {
-      q: "Will you A/B test the page?",
-      a: "<p>Only where there is enough traffic for a result to mean anything. Most local businesses do not have that volume, and testing on small numbers produces confident-looking noise. In that case we improve the page on evidence and judgement instead, and say which is which.</p>",
-    },
-  ],
-  relatedItems: [
-    {
-      href: "/web-design-middlesbrough",
-      label: "Web design Middlesbrough",
-      text: "The full site the campaign sits alongside.",
-    },
-    {
-      href: "/ai-automation-middlesbrough",
-      label: "AI receptionist + website chat",
-      text: "Catch the visitors who will not fill in a form.",
-    },
-    {
-      href: "/free-website-audit",
-      label: "Free website & Google audit",
-      text: "Find out whether a landing page is even your bottleneck.",
-    },
-  ],
+  guarantee: {
+    heading: "The “Profitable Click” Guarantee",
+    body: "We deploy your high-converting landing page in 14 days, completely mapped to your specific ad offer. If it doesn’t beat the conversion rate of your current homepage, we work for free.",
+  },
+  closing: {
+    heading: "Ready to halve your cost-per-lead and",
+    highlight: "double your booked jobs?",
+  },
 });
