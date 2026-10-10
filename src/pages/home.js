@@ -161,17 +161,17 @@ ${reviews
     : "";
 
 // The free plan, worded for what the visitor gets rather than what it is called.
-const PLAN_CTA = "Get your custom website blueprint (free)";
+const PLAN_CTA = "Get Your Custom Website Blueprint (Free)";
 const PLAN_NOTE =
-  "Takes about a minute. No obligation. Find out why your current site is not turning visitors into enquiries, and the three changes to make first.";
+  "Takes 60 seconds. No obligation. Discover exactly why your current site isn't converting and the 3 steps to fix it.";
 
 const body = `      <section class="hero hero-feature">
         <div class="container">
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="eyebrow">Web design in Middlesbrough and Teesside</p>
-              <h1>Stop losing local customers to outdated web design.</h1>
-              <p class="lede">We build fast, mobile-first websites for businesses in Middlesbrough and across Teesside, designed to turn visitors into enquiries. Start with the website, then add local SEO, AI chat and booking automation when you are ready. Clear prices, written scope, no surprises.</p>
+              <h1>Stop Losing Local Customers to Outdated Web Design.</h1>
+              <p class="lede">We build lead-generating websites for businesses in Teesside. Get a fast, mobile-ready site with built-in AI chat and booking automation to turn your visitors into paying customers—while your competitors sleep.</p>
               <div class="button-row">
                 <a class="btn" href="#plan">${PLAN_CTA}${icon("arrow-up")}</a>
                 <a class="btn secondary" href="/services">${CTA.secondary}</a>
