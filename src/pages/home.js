@@ -300,7 +300,7 @@ ${EXPLORE.map(
             </div>
             <div class="local-side">
               <figure class="local-map reveal">
-                <img src="/assets/work/teesside-map.svg" width="1000" height="720" loading="lazy" alt="A simplified map of the Tees Valley showing Middlesbrough, Stockton-on-Tees, Billingham, Redcar and Hartlepool." />
+                <img src="/assets/work/tees-transporter-bridge.webp" width="1600" height="1047" loading="lazy" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
               </figure>
               <div class="local-group">
                 <p class="local-label">Popular pages</p>

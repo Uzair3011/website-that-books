@@ -13,3 +13,7 @@ They were cropped to 1280×900 and saved as WebP.
 
 When a real client project replaces a concept, use a screenshot of the client's
 site (or a photo the client supplies) and record its source here.
+
+`assets/work/tees-transporter-bridge.webp` is a photo of the Tees Transporter
+Bridge, Middlesbrough, supplied by the site owner and resized to 1600×1047. The
+photographer and licence were not recorded when it was added; add them here.
