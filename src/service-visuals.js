@@ -28,47 +28,45 @@ const phone = (x, y, w, h, screen = C.paper) =>
 // ───────────────────────── Website design ─────────────────────────
 const siteElectrician = art(
   800,
-  500,
+  400,
   "Mock-up of an electrician's website: a dark homepage with one headline, a Get a Free Quote button and a photo panel.",
   `<defs><linearGradient id="se-img" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${C.mint}"/><stop offset="1" stop-color="${C.ink2}"/></linearGradient></defs>
-  ${rect(0, 0, 800, 500, 0, C.ink)}
-  ${bold(40, 52, 18, C.paper, 'Teesside <tspan fill="' + C.lime + '">Electrical</tspan>')}
-  ${["Services", "Areas", "Reviews"].map((t, i) => text(400 + i * 86, 52, 14, C.muted, t)).join("")}
-  ${pill(660, 30, 110, 34, C.lime, "Get a quote", C.ink, 13)}
-  ${bold(40, 128, 12, C.lime, "NICEIC APPROVED · 24/7 CALLOUTS", 'letter-spacing="2"')}
-  ${bold(40, 178, 36, C.paper, "Reliable electricians", 'letter-spacing="-1.4"')}
-  ${bold(40, 222, 36, C.paper, "for homes &amp; businesses", 'letter-spacing="-1.4"')}
-  ${bold(40, 266, 36, C.paper, "across Teesside.", 'letter-spacing="-1.4"')}
-  ${bar(40, 296, 300, C.line)}${bar(40, 316, 230, C.line)}
-  ${pill(40, 350, 170, 46, C.lime, "Get a Free Quote", C.ink, 14)}
-  ${outlinePill(222, 350, 130, 46, C.paper, "Our services", C.paper, 14)}
-  ${rect(480, 100, 280, 300, 18, "url(#se-img)")}
-  <path d="M630 170 590 260h34l-12 70 52-96h-36l18-64Z" fill="${C.lime}"/>
-  <path d="M0 432H800" stroke="${C.line}" stroke-width="1.5"/>
-  ${["Same-day callouts", "Fixed quotes", "Fully insured"].map((t, i) => tick(54 + i * 250, 466, C.lime) + text(78 + i * 250, 472, 15, C.muted, t)).join("")}`,
+  ${rect(0, 0, 800, 400, 0, C.ink)}
+  ${bold(36, 46, 17, C.paper, 'Teesside <tspan fill="' + C.lime + '">Electrical</tspan>')}
+  ${["Services", "Areas", "Reviews"].map((t, i) => text(400 + i * 86, 46, 14, C.muted, t)).join("")}
+  ${pill(660, 24, 110, 32, C.lime, "Get a quote", C.ink, 13)}
+  ${bold(36, 108, 12, C.lime, "NICEIC APPROVED · 24/7 CALLOUTS", 'letter-spacing="2"')}
+  ${bold(36, 150, 32, C.paper, "Reliable electricians", 'letter-spacing="-1.2"')}
+  ${bold(36, 190, 32, C.paper, "for homes &amp; businesses", 'letter-spacing="-1.2"')}
+  ${bold(36, 230, 32, C.paper, "across Teesside.", 'letter-spacing="-1.2"')}
+  ${bar(36, 252, 280, C.line)}${bar(36, 270, 210, C.line)}
+  ${pill(36, 300, 165, 44, C.lime, "Get a Free Quote", C.ink, 14)}
+  ${outlinePill(213, 300, 125, 44, C.paper, "Our services", C.paper, 14)}
+  ${rect(480, 84, 284, 266, 18, "url(#se-img)")}
+  <path d="M620 137 580 227h34l-12 70 52-96h-36l18-64Z" fill="${C.lime}"/>`,
 );
 
 const siteJoinery = art(
   800,
-  500,
-  "Mock-up of a joinery firm's website: a light homepage with one headline, a Get a quote button and a timber photo panel.",
+  400,
+  "Mock-up of a joinery firm's website: a light homepage with one headline, a Get a Free Quote button and a timber photo panel.",
   `<defs><linearGradient id="sj-img" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8b48a"/><stop offset="1" stop-color="#7c5235"/></linearGradient></defs>
-  ${rect(0, 0, 800, 500, 0, C.paper)}
-  ${bold(40, 52, 18, C.ink, "OAK &amp; GRAIN", 'letter-spacing="2"')}
-  ${text(40, 72, 11, C.body, "JOINERY", 'letter-spacing="4"')}
-  ${["Kitchens", "Staircases", "Our work"].map((t, i) => text(390 + i * 90, 52, 14, C.body, t)).join("")}
-  ${pill(660, 30, 110, 34, C.ink, "Get a quote", C.paper, 13)}
-  <path d="M0 96H800" stroke="${C.rule}" stroke-width="1.5"/>
-  ${bold(40, 172, 36, C.ink, "Bespoke joinery", 'letter-spacing="-1.4"')}
-  ${bold(40, 216, 36, C.ink, "for modern living", 'letter-spacing="-1.4"')}
-  ${bold(40, 260, 36, C.ink, "in Teesside.", 'letter-spacing="-1.4"')}
-  ${bar(40, 290, 290)}${bar(40, 310, 210)}
-  ${pill(40, 344, 160, 46, C.lime, "Get a Free Quote", C.ink, 14)}
-  ${outlinePill(212, 344, 120, 46, C.ink, "Our work", C.ink, 14)}
-  ${rect(450, 120, 310, 300, 18, "url(#sj-img)")}
-  ${[0, 1, 2, 3, 4].map((i) => `<path d="M450 ${170 + i * 56}H760" stroke="#5e3d27" stroke-width="2" opacity=".35"/>`).join("")}
-  ${shadow(rect(480, 380, 200, 76, 16, C.paper))}
-  ${stars(500, 398, 16)}${text(500, 440, 13, C.body, "Fitted in Stockton")}`,
+  ${rect(0, 0, 800, 400, 0, C.paper)}
+  ${bold(36, 44, 17, C.ink, "OAK &amp; GRAIN", 'letter-spacing="2"')}
+  ${text(36, 63, 10, C.body, "JOINERY", 'letter-spacing="4"')}
+  ${["Kitchens", "Staircases", "Our work"].map((t, i) => text(390 + i * 90, 46, 14, C.body, t)).join("")}
+  ${pill(660, 24, 110, 32, C.ink, "Get a quote", C.paper, 13)}
+  <path d="M0 84H800" stroke="${C.rule}" stroke-width="1.5"/>
+  ${bold(36, 146, 32, C.ink, "Bespoke joinery", 'letter-spacing="-1.2"')}
+  ${bold(36, 186, 32, C.ink, "for modern living", 'letter-spacing="-1.2"')}
+  ${bold(36, 226, 32, C.ink, "in Teesside.", 'letter-spacing="-1.2"')}
+  ${bar(36, 250, 270)}${bar(36, 268, 200)}
+  ${pill(36, 300, 160, 44, C.lime, "Get a Free Quote", C.ink, 14)}
+  ${outlinePill(208, 300, 116, 44, C.ink, "Our work", C.ink, 14)}
+  ${rect(450, 104, 314, 254, 18, "url(#sj-img)")}
+  ${[0, 1, 2, 3].map((i) => `<path d="M450 ${150 + i * 50}H764" stroke="#5e3d27" stroke-width="2" opacity=".35"/>`).join("")}
+  ${shadow(rect(476, 316, 190, 66, 14, C.paper))}
+  ${stars(494, 330, 14)}${text(494, 370, 12, C.body, "Fitted in Stockton")}`,
 );
 
 const oldVsNew = art(
