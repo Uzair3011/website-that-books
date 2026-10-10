@@ -38,9 +38,10 @@ const FAQS = [
   },
 ];
 
-// Every service is a card; the Growth Launch Package closes the grid. Its
-// "bought separately" figure is the sum of the included services' own prices,
-// so the saving shown is always one a customer would really make.
+// The Growth Launch Package leads, itemised against the services it includes;
+// every service then follows as its own card. The "bought separately" figure
+// is the sum of those services' own prices, so the saving shown is always one
+// a customer would really make.
 const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
 
 export const services = [
@@ -130,15 +131,6 @@ const bundle = {
   name: SYSTEM.package,
   price: SYSTEM.price,
   separately: SYSTEM.components.reduce((total, c) => total + c.price, 0),
-  features: [
-    "Multi-page professional website",
-    "Local SEO setup",
-    "Google Business Profile optimisation",
-    "AI receptionist",
-    "Website AI chat",
-    "CRM setup",
-    "Booking and follow-up automation",
-  ],
 };
 bundle.saving = bundle.separately - bundle.price;
 bundle.percent = Math.round((bundle.saving / bundle.separately) * 100);
@@ -167,27 +159,54 @@ const bundleCard = `<article class="price-card featured bundle" id="bundle">
       <h3 class="price-name">${bundle.name}</h3>
       <p class="price-flag">Best value &middot; Save ${bundle.percent}%</p>
     </div>
+    <p>One setup. Everything connected. Ready to grow.</p>
     <p class="price-amount">
       <s class="price-was"><span class="visually-hidden">Bought separately: </span>${gbp(bundle.separately)}</s>
       <strong>${gbp(bundle.price)}</strong><span>one-off</span>
     </p>
     <p class="price-saving">You save ${gbp(bundle.saving)} compared with buying these services separately.</p>
-    <p>One setup. Everything connected. Ready to grow.</p>
-    <a class="btn small" href="${CTA.href}">Get the ${bundle.name}</a>
+    <a class="btn" href="${CTA.href}">Get the ${bundle.name}${icon("arrow-up")}</a>
   </div>
-  ${ticks(bundle.features)}
+  <div class="bundle-receipt">
+    <p class="bundle-label">What is included</p>
+    <ul>${SYSTEM.components.map((c) => `<li>${icon("check")}<span>${c.name}</span><b>${gbp(c.price)}</b></li>`).join("")}</ul>
+    <p class="bundle-sum"><span>Bought separately</span><b>${gbp(bundle.separately)}</b></p>
+    <p class="bundle-sum is-package"><span>${bundle.name}</span><b>${gbp(bundle.price)}</b></p>
+  </div>
 </article>`;
+
+// The hero's summary panel, read from the same figures as the cards below.
+const fromPrice = Math.min(...services.filter((s) => s.unit === "one-off").map((s) => s.price));
+const care = services.find((s) => s.href === "/website-care");
+const glance = [
+  { label: "Websites and one-off services", note: "Landing page, website or local SEO", from: true, price: gbp(fromPrice), unit: "one-off" },
+  { label: bundle.name, note: `Everything connected · Save ${bundle.percent}%`, price: gbp(bundle.price), unit: "one-off", lead: true },
+  { label: care.name, note: "Optional, month to month", from: true, price: gbp(care.price), unit: "/ month" },
+];
 
 const body = `      <section class="hero">
         <div class="container">
-          <div class="hero-copy" style="max-width: 46rem">
+          <div class="hero-grid">
+          <div class="hero-copy">
             <p class="eyebrow">Pricing</p>
             <h1>Know what it costs before the work starts.</h1>
             <p class="lede">Every service below can be bought on its own. Start with the one that will make the biggest difference, and add the others only when they earn their place.</p>
+            <p class="hero-support"><span>Price agreed in writing first</span><span>No hidden mark-ups</span><span>No long tie-ins</span></p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/contact">Talk to us</a>
             </div>
+          </div>
+          <aside class="price-glance reveal" aria-label="Prices at a glance">
+            <p class="bundle-label">Prices at a glance</p>
+            <ul>${glance
+              .map(
+                (row) =>
+                  `<li${row.lead ? ' class="is-lead"' : ""}><span>${row.label}<small>${row.note}</small></span><b>${row.from ? "<small>from</small>" : ""}${row.price}<small>${row.unit}</small></b></li>`,
+              )
+              .join("")}</ul>
+            <a class="text-link" href="#packages">See every price${icon("arrow-up")}</a>
+          </aside>
           </div>
         </div>
       </section>
@@ -199,9 +218,14 @@ const body = `      <section class="hero">
             <h2>Buy one service, or get everything together and save.</h2>
             <p>Every service can be bought on its own. If you want the whole setup, the ${bundle.name} brings it together for ${gbp(bundle.price)}.</p>
           </div>
-          <div class="price-grid services reveal">
-${serviceCards}
+          <div class="services">
+            <div class="reveal">
 ${bundleCard}
+            </div>
+            <p class="price-divider"><span>Or buy any service on its own</span></p>
+            <div class="price-grid services-grid reveal">
+${serviceCards}
+            </div>
           </div>
           <p class="disclosure">All prices exclude VAT. Final scope and any third-party costs are confirmed in writing before work begins. Larger sites, ecommerce and unusual integrations get a written quote. This website does not take payments.</p>
         </div>
