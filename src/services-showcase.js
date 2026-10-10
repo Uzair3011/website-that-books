@@ -19,7 +19,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Website design",
     image: "service-web-design",
-    text: "Fast, mobile-first websites built around your offer, your customers and the action you want them to take.",
+    text: "<strong>Stop losing visitors to a site that does not convince.</strong> A fast, mobile-first website built around your offer, so people know what you do and what to do next.",
     href: "/web-design-middlesbrough",
     cta: "Explore website design",
     tone: "lime",
@@ -29,7 +29,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Local SEO and Google Business",
     image: "service-local-seo",
-    text: "Improve the signals that help nearby customers find and trust you in Google Search and Maps.",
+    text: "<strong>Stop being invisible when locals search.</strong> We improve the signals that help nearby customers find and trust you in Google Search and Maps.",
     href: "/local-seo-middlesbrough",
     cta: "Explore local SEO",
     tone: "mint",
@@ -39,7 +39,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Landing pages",
     image: "service-landing-pages",
-    text: "Focused pages for one service, location or campaign, written and designed to turn attention into action.",
+    text: "<strong>Make every click on your ad or campaign count.</strong> One focused page for one service, location or campaign, written and designed to turn attention into an enquiry.",
     href: "/landing-page-design",
     cta: "Explore landing pages",
     tone: "blue",
@@ -49,7 +49,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "AI receptionist and website chat",
     image: "service-ai-reception",
-    text: "Answer common questions, capture enquiry details and respond after hours without making the customer learn new technology.",
+    text: "<strong>Never miss a lead at 11 PM.</strong> Our AI receptionist answers common questions and captures the enquiry details around the clock, so a customer who finds you after hours leaves their details with you, not a competitor.",
     href: "/ai-automation-middlesbrough",
     cta: "Explore AI reception",
     tone: "coral",
@@ -59,7 +59,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Booking and follow-up automation",
     image: "service-booking",
-    text: "Connect forms, calendars and reminders so fewer good enquiries disappear between first contact and booked work.",
+    text: "<strong>Stop chasing leads.</strong> Forms, calendars and reminders connected in one place, with consent-based follow-up, so fewer good enquiries fall through the cracks.",
     href: "/crm-booking-automation",
     cta: "Explore automation",
     tone: "violet",
@@ -70,7 +70,7 @@ export const SHOWCASE_SERVICES = [
     title: "Website care",
     // Shown as the live health panel rather than a picture.
     health: true,
-    text: "Hosting, updates, backups and practical support for businesses that would rather not manage the technical side.",
+    text: "<strong>Stop worrying about your website.</strong> Hosting, updates, backups and practical support, handled for you, so you can get on with running the business.",
     href: "/website-care",
     cta: "Explore website care",
     tone: "amber",

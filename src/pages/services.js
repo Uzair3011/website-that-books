@@ -17,7 +17,7 @@ const SERVICES = [
     name: "Website design",
     href: "/web-design-middlesbrough",
     cta: "Explore website design",
-    text: "Fast, mobile-first websites built around your offer, your customers and the action you want them to take. Copy, design and local search are planned together, so the site looks right and gets enquiries.",
+    text: "<strong>Stop losing visitors to a site that does not convince.</strong> A fast, mobile-first website built around your offer, your customers and the action you want them to take. Copy, design and local search are planned together, so the site looks right and gets enquiries.",
     included: [
       "Message and page mapping",
       "Custom mobile-first design",
@@ -31,7 +31,7 @@ const SERVICES = [
     name: "Local SEO + Google Business Profile",
     href: "/local-seo-middlesbrough",
     cta: "Explore local SEO",
-    text: "Improve the signals that help nearby customers find and trust you in Google Search and Maps, starting with an accurate, complete business profile and service pages that match what people search for.",
+    text: "<strong>Stop being invisible when locals search.</strong> We improve the signals that help nearby customers find and trust you in Google Search and Maps, starting with an accurate, complete business profile and service pages that match what people search for.",
     included: [
       "Google Business Profile setup and optimisation",
       "Consistent business details everywhere",
@@ -46,7 +46,7 @@ const SERVICES = [
     name: "Landing pages + CRO",
     href: "/landing-page-design",
     cta: "Explore landing pages",
-    text: "Focused pages for one service, location or campaign. One offer, one audience and one action, with the real objections answered in order and the form where people decide.",
+    text: "<strong>Make every click on your ad or campaign count.</strong> A focused page for one service, location or campaign. One offer, one audience and one action, with the real objections answered in order and the form where people decide.",
     included: [
       "Offer and audience definition",
       "Message and objection mapping",
@@ -59,7 +59,7 @@ const SERVICES = [
     name: "AI receptionist + website chat",
     href: "/ai-automation-middlesbrough",
     cta: "Explore AI reception",
-    text: "Answer common questions, capture enquiry details and respond after hours, working only from answers you have approved and handing over to a person whenever a question needs judgement.",
+    text: "<strong>Never miss a lead at 11 PM.</strong> Our AI receptionist answers common questions and captures the enquiry details around the clock, so a customer who finds you after hours leaves their details with you, not a competitor. It works only from answers you have approved and hands over to a person whenever a question needs judgement.",
     included: [
       "Approved answer set",
       "Clear handover rules",
@@ -73,7 +73,7 @@ const SERVICES = [
     name: "CRM, booking + follow-up automation",
     href: "/crm-booking-automation",
     cta: "Explore automation",
-    text: "Connect forms, calendars and reminders so fewer good enquiries disappear between first contact and booked work, and every enquiry lands in one place.",
+    text: "<strong>Stop chasing leads.</strong> Forms, calendars and reminders connected in one place, with consent-based follow-up, so fewer good enquiries fall through the cracks between first contact and booked work.",
     included: [
       "Enquiry capture into one place",
       "Live calendar booking",
@@ -87,7 +87,7 @@ const SERVICES = [
     name: "Website care",
     href: "/website-care",
     cta: "Explore website care",
-    text: "Hosting, updates, backups, monitoring and practical support, month to month, for owners who would rather not manage the technical side. Always optional.",
+    text: "<strong>Stop worrying about your website.</strong> Hosting, updates, backups, monitoring and practical support, month to month, so you can get on with running the business. Always optional.",
     included: ["Hosting", "Updates", "Backups", "Monitoring", "Practical support"],
     fit: "Owners who want a competent person keeping an eye on the site.",
   },

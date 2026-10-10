@@ -160,17 +160,23 @@ ${reviews
 `
     : "";
 
+// The free plan, worded for what the visitor gets rather than what it is called.
+const PLAN_CTA = "Get your custom website blueprint (free)";
+const PLAN_NOTE =
+  "Takes about a minute. No obligation. Find out why your current site is not turning visitors into enquiries, and the three changes to make first.";
+
 const body = `      <section class="hero hero-feature">
         <div class="container">
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="eyebrow">Web design in Middlesbrough and Teesside</p>
-              <h1>Premium websites. Clear prices. Built to win more enquiries.</h1>
-              <p class="lede">Veltra creates conversion-focused websites for businesses in Middlesbrough and across Teesside. Start with the website you need today, then add local SEO, landing pages, booking and AI automation when they make sense for your business.</p>
+              <h1>Stop losing local customers to outdated web design.</h1>
+              <p class="lede">We build fast, mobile-first websites for businesses in Middlesbrough and across Teesside, designed to turn visitors into enquiries. Start with the website, then add local SEO, AI chat and booking automation when you are ready. Clear prices, written scope, no surprises.</p>
               <div class="button-row">
-                <a class="btn" href="#plan">${CTA.primary}${icon("arrow-up")}</a>
+                <a class="btn" href="#plan">${PLAN_CTA}${icon("arrow-up")}</a>
                 <a class="btn secondary" href="/services">${CTA.secondary}</a>
               </div>
+              <p class="hero-note">${PLAN_NOTE}</p>
             </div>
             <div class="hero-media">
               <img
@@ -317,9 +323,9 @@ ${faqSection(FAQS, { heading: "Straight answers before you start", eyebrow: "Fre
         <div class="container">
           <div class="plan-split">
 ${inquiryForm({
-  heading: "Get my free website plan",
-  intro: "It takes about a minute. We reply with the package that fits and any gaps worth fixing first.",
-  submitLabel: CTA.primary,
+  heading: PLAN_CTA,
+  intro: PLAN_NOTE,
+  submitLabel: PLAN_CTA,
   booking: false,
 })}
             <div class="plan-copy">
