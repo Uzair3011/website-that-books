@@ -245,6 +245,7 @@ ${marquee(
           <div class="compare reveal">
             <div class="compare-col">
               <p class="kicker">A bargain build</p>
+              <h3>Looks cheap, causes problems later</h3>
               <ul>
                 <li>${icon("x")}Looks generic</li>
                 <li>${icon("x")}Says very little</li>
@@ -258,6 +259,7 @@ ${marquee(
             </div>
             <div class="compare-col">
               <p class="kicker">A traditional agency project</p>
+              <h3>Slow, expensive and overcomplicated</h3>
               <ul>
                 <li>${icon("x")}Slow</li>
                 <li>${icon("x")}Expensive</li>
