@@ -43,7 +43,7 @@ export function createVoiceHandler({
       return res.status(503).json({
         ok: false,
         message:
-          "Voice calls are unavailable right now. Please use the chat or call us.",
+          "Voice calls are unavailable right now. Please use the chat or message us on WhatsApp.",
       });
     if (rateLimit) {
       const { limited, retryAfter } = limiter(req, now());
@@ -55,7 +55,7 @@ export function createVoiceHandler({
       return res.status(502).json({
         ok: false,
         message:
-          "We couldn’t start the call. Please try again, use the chat, or call us.",
+          "We couldn’t start the call. Please try again, use the chat, or message us on WhatsApp.",
       });
     }
   };

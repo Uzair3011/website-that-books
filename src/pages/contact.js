@@ -23,15 +23,14 @@ const body = `      <section class="hero">
           <div class="contact-split">
             <div class="contact-intro">
               <p class="eyebrow">Reach a person</p>
-              <h2>Call, email or send a message.</h2>
+              <h2>WhatsApp, email or send a message.</h2>
               <div class="prose">
                 <p><strong>Not sure where to start?</strong> The <a href="${CTA.href}">free website plan</a> is usually the most useful first step. You get a practical starting point and a short video review, and you are under no obligation afterwards.</p>
                 <p>We work with businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, and remotely elsewhere in the UK.</p>
               </div>
               <ul class="contact-methods">
-                <li><a href="tel:${SITE.phone}">${icon("phone")}<span>${SITE.phoneLabel}<small>Call or text &mdash; Monday to Friday</small></span></a></li>
+                <li><a data-contact="whatsapp" href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}<span>${SITE.phoneLabel}<small>WhatsApp &mdash; Monday to Friday</small></span></a></li>
                 <li><a href="mailto:${SITE.email}">${icon("mail")}<span>${SITE.email}<small>We reply to every genuine enquiry</small></span></a></li>
-                <li><a data-contact="whatsapp" hidden>${icon("chat")}<span>WhatsApp<small>Message us directly</small></span></a></li>
                 <li><a data-contact="booking" data-booking-option hidden>${icon("search")}<span>Book a time<small>Pick a slot in our calendar</small></span></a></li>
               </ul>
             </div>
@@ -54,7 +53,7 @@ export default {
   path: "/contact",
   title: "Contact Veltra Media | Middlesbrough & Teesside",
   description:
-    "Contact Veltra Media in Middlesbrough. Call, email or send a message about web design, local SEO, landing pages, AI reception or booking automation across Teesside.",
+    "Contact Veltra Media in Middlesbrough. WhatsApp, email or send a message about web design, local SEO, landing pages, AI reception or booking automation across Teesside.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

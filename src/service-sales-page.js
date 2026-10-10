@@ -227,7 +227,7 @@ export function serviceSalesPage({
             ${ctaButton(" block")}
             ${cta.note ? `<p class="sp-note">${cta.note}</p>` : ""}
             <div class="cta-contacts">
-              <a href="tel:${SITE.phone}">${icon("phone")}${SITE.phoneLabel}</a>
+              <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp ${SITE.phoneLabel}</a>
               <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
             </div>
           </div>

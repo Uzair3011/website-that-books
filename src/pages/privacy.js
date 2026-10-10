@@ -15,7 +15,7 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <div class="prose">
             <h2>Who is responsible for your information</h2>
-            <p>Veltra Media is responsible for the personal information described on this page, which makes us its &ldquo;controller&rdquo; under UK data protection law. You can reach us about anything on this page at <a href="mailto:${SITE.email}">${SITE.email}</a> or on <a href="tel:${SITE.phone}">${SITE.phoneLabel}</a>.</p>
+            <p>Veltra Media is responsible for the personal information described on this page, which makes us its &ldquo;controller&rdquo; under UK data protection law. You can reach us about anything on this page at <a href="mailto:${SITE.email}">${SITE.email}</a> or on WhatsApp at <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${SITE.phoneLabel}</a>.</p>
 
             <h2>What you share with us</h2>
             <p>The form asks for your name, email, phone number, and consent to a response. Your business name and the service you need are optional. Please do not include customer records, patient information, medical records or sensitive personal details.</p>
@@ -25,7 +25,7 @@ const body = `      <section class="hero">
 
             <h2>Service providers and booking</h2>
             <p>Website hosting providers may process normal security and access logs. When you book a call, the time you choose and the details you enter are added to our Google Calendar, and a calendar invitation is sent to you (with a video link, where enabled). Google's privacy terms apply to that invitation. Confirmation and notification emails are sent over our own configured mail provider.</p>
-            <p>Enquiries and bookings are stored in our private lead database, hosted by Supabase in the United States, so we can follow them up. Only Veltra Media staff can sign in to view them. Successfully submitted enquiries and bookings are also forwarded to our configured business intake provider for follow-up, where one is configured. Call, email and WhatsApp links open the relevant external service, whose own privacy terms apply. The website does not embed a booking tracker or load these services automatically.</p>
+            <p>Enquiries and bookings are stored in our private lead database, hosted by Supabase in the United States, so we can follow them up. Only Veltra Media staff can sign in to view them. Successfully submitted enquiries and bookings are also forwarded to our configured business intake provider for follow-up, where one is configured. Email and WhatsApp links open the relevant external service, whose own privacy terms apply. The website does not embed a booking tracker or load these services automatically.</p>
 
             <h2>Website chat assistant</h2>
             <p>The chat assistant on this website is an AI that answers from the content of our website. What you type is sent to Google's Gemini API to generate replies; under Google's terms for its free service tier, Google may use those messages to improve its products, and they may be reviewed by people. When Google's service is busy, messages are instead sent to Groq, Inc. in the United States to generate the reply. Please do not share sensitive personal information in the chat. If you give your contact details in the chat and agree to be contacted, they are saved to our lead database, with the conversation, in the same way as a form enquiry.</p>
@@ -64,7 +64,7 @@ const body = `      <section class="hero">
             <p>This marketing website is not a customer or patient portal. Data handling for any system we build for your business is agreed separately, including vendor suitability, access, and any necessary contracts before customer or patient information is connected.</p>
 
             <h2>Contact</h2>
-            <p>Questions about this policy can be sent to <a href="mailto:${SITE.email}">${SITE.email}</a> or raised on <a href="tel:${SITE.phone}">${SITE.phoneLabel}</a>.</p>
+            <p>Questions about this policy can be sent to <a href="mailto:${SITE.email}">${SITE.email}</a> or sent on WhatsApp to <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${SITE.phoneLabel}</a>.</p>
           </div>
         </div>
       </section>`;

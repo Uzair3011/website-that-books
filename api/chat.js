@@ -20,7 +20,7 @@ const MAX_MESSAGES = 24;
 const MAX_MESSAGE_CHARS = 1000;
 const limiter = createRateLimiter({ limit: 30, windowMs: 10 * 60 * 1000 });
 
-export const FALLBACK = `Sorry, I can’t reply right now. You can call us on ${SITE.phoneLabel}, email ${SITE.email}, or book a call at /contact.`;
+export const FALLBACK = `Sorry, I can’t reply right now. You can WhatsApp us on ${SITE.phoneLabel}, email ${SITE.email}, or book a call at /contact.`;
 
 export const SAVED =
   "Thanks, I’ve passed your details to the team and they’ll be in touch soon.";
@@ -32,7 +32,7 @@ How to answer
 - Use only the WEBSITE CONTENT below. If the answer is not there, say you are not sure and offer to have the team follow up. Never invent prices, timescales, guarantees, results, client names or availability.
 - Be warm, direct and brief: usually one to three short sentences in UK English. Plain text only: no markdown, headings, bold or asterisks. Use a short list only when it clearly helps.
 - When useful, point to the right page by its path, for example /pricing or /web-design-middlesbrough.
-- To book a call: /contact. Phone: ${SITE.phoneLabel}. Email: ${SITE.email}.
+- To book a call: /contact. WhatsApp (messages only, no calls): ${SITE.phoneLabel}. Email: ${SITE.email}.
 
 Capturing leads
 - When a visitor wants a quote, a call back, advice for their business or help getting started, offer to have the team get in touch. Collect their full name, phone number and email address (all three are required), plus their business name and the service they need (both optional). Ask for one or two details at a time, and if they skip the email, ask for it before saving.

@@ -32,13 +32,13 @@ const body = `      <section class="hero">
             <p>Like any website, this one is served by a hosting provider, which may keep ordinary security and access logs, such as IP addresses and the pages requested. These are operational records, not tracking profiles.</p>
 
             <h2>Links to other services</h2>
-            <p>Call, email and WhatsApp links open your phone, mail app or the relevant external service. Those services have their own privacy terms and may use their own cookies once you leave this site.</p>
+            <p>Email and WhatsApp links open your mail app or WhatsApp. Those services have their own privacy terms and may use their own cookies once you leave this site.</p>
 
             <h2>Analytics</h2>
             <p>If you allow analytics, this site loads Vercel Web Analytics to count page visits and see which pages are viewed. It does not set cookies or store anything in your browser, and it does not identify you or follow you across other websites. Visits are counted in aggregate only. If you decline, or have not chosen yet, it is not loaded at all. If we ever add another tool, we will say so here first and ask before it runs.</p>
 
             <h2>More about your information</h2>
-            <p>How we handle information you send through our forms is explained in the <a href="/privacy">privacy policy</a>. Questions about this page can be sent to <a href="mailto:${SITE.email}">${SITE.email}</a> or raised on <a href="tel:${SITE.phone}">${SITE.phoneLabel}</a>.</p>
+            <p>How we handle information you send through our forms is explained in the <a href="/privacy">privacy policy</a>. Questions about this page can be sent to <a href="mailto:${SITE.email}">${SITE.email}</a> or sent on WhatsApp to <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${SITE.phoneLabel}</a>.</p>
           </div>
         </div>
       </section>`;

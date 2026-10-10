@@ -557,14 +557,15 @@ test("the lead dashboard is private, unindexed, and fails safe without a databas
   expect(errors).toEqual([]);
 });
 
-test("the main number rings the team directly, separate from the AI call and chat buttons", async ({
+test("the main number opens WhatsApp, never a phone call, separate from the AI call and chat buttons", async ({
   page,
 }) => {
   await page.goto("/");
-  const numbers = await page.$$eval('a[href^="tel:"]', (links) => [
+  await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  const numbers = await page.$$eval('a[href*="wa.me"]', (links) => [
     ...new Set(links.map((link) => link.getAttribute("href"))),
   ]);
-  expect(numbers).toEqual(["tel:+447466539736"]);
+  expect(numbers).toEqual(["https://wa.me/447466539736"]);
   await expect(page.locator(".voice-launcher")).toBeVisible();
   await expect(page.locator(".chat-launcher")).toBeVisible();
   const voiceBox = await page.locator(".voice-launcher").boundingBox();
@@ -599,7 +600,7 @@ test("chat answers in the panel, links only safe targets, and remembers the conv
   const reply = page.locator(".chat-msg.assistant").last();
   await expect(reply).toContainText("Websites start at £495");
   await expect(reply.locator('a[href="/pricing"]')).toHaveCount(1);
-  await expect(reply.locator('a[href="tel:+447466539736"]')).toHaveCount(1);
+  await expect(reply.locator('a[href="https://wa.me/447466539736"]')).toHaveCount(1);
   await expect(reply.locator("img")).toHaveCount(0);
   expect(sent.messages).toEqual([{ role: "user", text: "How much does a website cost?" }]);
   expect(sent.page).toBe("/pricing");
@@ -623,7 +624,7 @@ test("the AI call button explains a missing microphone or an unavailable service
   await page.route("**/api/voice", (route) =>
     route.fulfill({
       status: 503,
-      json: { ok: false, message: "Voice calls are unavailable right now. Please use the chat or call us." },
+      json: { ok: false, message: "Voice calls are unavailable right now. Please use the chat or message us on WhatsApp." },
     }),
   );
   // A scripted microphone. WebKit only honours an override on the prototype.
@@ -641,7 +642,7 @@ test("the AI call button explains a missing microphone or an unavailable service
   await page.locator(".voice-launcher").click();
   const panel = page.locator("#voice-panel");
   await expect(panel).toBeVisible();
-  await expect(panel.locator(".voice-human a")).toHaveAttribute("href", "tel:+447466539736");
+  await expect(panel.locator(".voice-human a")).toHaveAttribute("href", "https://wa.me/447466539736");
   await panel.locator(".voice-action").click();
   await expect(panel.locator(".voice-status")).toContainText("Microphone access is needed");
   await page.evaluate(() => {

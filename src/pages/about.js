@@ -84,7 +84,7 @@ const body = `      <section class="hero">
                 <p>Straightforward ways to reach a person.</p>
               </div>
               <ul class="contact-methods">
-                <li><a href="tel:${SITE.phone}">${icon("phone")}<span>${SITE.phoneLabel}<small>Call or text</small></span></a></li>
+                <li><a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}<span>${SITE.phoneLabel}<small>Message us on WhatsApp</small></span></a></li>
                 <li><a href="mailto:${SITE.email}">${icon("mail")}<span>${SITE.email}<small>We reply to every enquiry</small></span></a></li>
                 <li><a href="${CTA.href}">${icon("search")}<span>Free website &amp; Google audit<small>Video review and a one-page summary</small></span></a></li>
               </ul>

@@ -335,7 +335,7 @@ ${inquiryForm({
               <h2>Know what your website needs before you spend money on it</h2>
               <p class="lede">Tell us about your business and what you want the website to achieve. We will reply with a practical starting point, the package that fits and any gaps worth fixing first.</p>
               <div class="cta-contacts">
-                <a href="tel:${SITE.phone}">${icon("phone")}Call Veltra on ${SITE.phoneLabel}</a>
+                <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp Veltra on ${SITE.phoneLabel}</a>
                 <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
               </div>
             </div>

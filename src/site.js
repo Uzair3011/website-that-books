@@ -7,6 +7,8 @@ export const SITE = {
   email: "hello@veltramedia.com",
   phone: "+447466539736",
   phoneLabel: "+44 7466 539736",
+  // The number takes WhatsApp messages, not calls, so every contact link opens WhatsApp.
+  whatsapp: "https://wa.me/447466539736",
   tagline: "Turn more local searches into real enquiries.",
   // Areas Veltra actually works in. No address is published: there is no
   // verified, staffed location a client can visit.
@@ -56,6 +58,8 @@ const ICONS = {
   shield: '<path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/>',
   tool: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-3 3-2.4-.6-.6-2.4Z"/>',
   x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  whatsapp:
+    '<path d="M3.5 20.5 4.8 16A8.5 8.5 0 1 1 8 19.2Z"/><path d="M9.2 8.4c-.2 3.4 3 6.6 6.4 6.4l.9-1.5-2-1.1-.9.8a4.6 4.6 0 0 1-2.2-2.2l.8-.9-1.1-2Z"/>',
   // Service pages: offer stacks, bonuses and the solution steps.
   "arrow-down": '<path d="M12 5v13m-6-6 6 6 6-6"/>',
   bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7Z"/>',
@@ -156,9 +160,9 @@ export function header(path) {
     <a class="wordmark" href="/" aria-label="${SITE.name} home"><span class="logo-mark" aria-hidden="true">V</span>Veltra Media</a>
     <nav class="nav-links" id="nav-links" aria-label="Main">${navLinks(path)}</nav>
     <div class="nav-actions">
-      <a class="phone-pill" href="tel:${SITE.phone}">
+      <a class="phone-pill" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp ${SITE.name} on ${SITE.phoneLabel}">
         <span>${SITE.phoneLabel}</span>
-        <span class="phone-pill-icon">${icon("phone")}</span>
+        <span class="phone-pill-icon">${icon("whatsapp")}</span>
       </a>
       <a class="btn small dark header-cta" href="${planHref}">${CTA.primary}${icon("arrow-up")}</a>
       <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links">${icon("menu")}</button>
@@ -197,7 +201,7 @@ export function footer() {
         <h2>Get in touch</h2>
         <div class="footer-links">
           <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
-          <a href="tel:${SITE.phone}">${icon("phone")}${SITE.phoneLabel}</a>
+          <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp ${SITE.phoneLabel}</a>
         </div>
       </div>
     </div>
@@ -219,7 +223,7 @@ export function footer() {
 
 export function mobileBar() {
   return `<div class="mobile-bar">
-  <a class="btn small secondary" href="tel:${SITE.phone}" aria-label="Call ${SITE.name} on ${SITE.phoneLabel}">${icon("phone")}Call Veltra</a>
+  <a class="btn small secondary" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp ${SITE.name} on ${SITE.phoneLabel}">${icon("whatsapp")}WhatsApp</a>
   <a class="btn small" href="${CTA.href}">${CTA.primaryShort}</a>
 </div>`;
 }
@@ -243,7 +247,7 @@ export function finalCta({
         ${secondary ? `<a class="btn secondary" href="${secondary.href}">${secondary.label}</a>` : ""}
       </div>
       <div class="cta-contacts">
-        <a href="tel:${SITE.phone}">${icon("phone")}${SITE.phoneLabel}</a>
+        <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp ${SITE.phoneLabel}</a>
         <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
       </div>
     </div>

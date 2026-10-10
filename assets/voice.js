@@ -1,11 +1,10 @@
 // "Talk to AI" button: an in-browser voice call with the ElevenLabs agent (see api/voice.js).
 // The 1 MB voice SDK and its audio worklets are self-hosted and only loaded when a call starts,
 // so the Content-Security-Policy stays script-src 'self' and normal page loads stay light.
-// The site's main phone number is separate and always rings the team directly.
+// The site's main number takes WhatsApp messages only; people reach the team there.
 (() => {
   const VENDOR = "/assets/vendor/elevenlabs";
-  const phone = window.VELTRA_CONFIG?.phone || "+447466539736";
-  const phoneLabel = phone.replace(/^\+44(\d{4})(\d{6})$/, "+44 $1 $2");
+  const whatsapp = `https://wa.me/${window.VELTRA_CONFIG?.whatsapp || "447466539736"}`;
   let conversation = null;
   let state = "idle";
 
@@ -87,8 +86,8 @@
     el(
       "p",
       { class: "voice-human" },
-      "Prefer a person? Call ",
-      el("a", { href: `tel:${phone}`, text: phoneLabel }),
+      "Prefer a person? Message us on ",
+      el("a", { href: whatsapp, target: "_blank", rel: "noopener", text: "WhatsApp" }),
     ),
     el(
       "p",

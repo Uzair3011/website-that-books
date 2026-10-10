@@ -11,10 +11,10 @@
     "How does the AI receptionist work?",
   ];
   const OFFLINE =
-    "Sorry, I couldn’t connect. Please check your connection, or call us on +44 7466 539736.";
+    "Sorry, I couldn’t connect. Please check your connection, or WhatsApp us on +44 7466 539736.";
   // The server answered too slowly: not the visitor's connection, so don't blame it.
   const SLOW =
-    "Sorry, I can’t reply right now. You can call us on +44 7466 539736, email hello@veltramedia.com, or book a call at /contact.";
+    "Sorry, I can’t reply right now. You can WhatsApp us on +44 7466 539736, email hello@veltramedia.com, or book a call at /contact.";
 
   function read() {
     try {
@@ -74,7 +74,7 @@
         ? value
         : value.includes("@")
           ? `mailto:${value}`
-          : `tel:${value.replace(/[^\d+]/g, "")}`;
+          : `https://wa.me/${value.replace(/\D/g, "").replace(/^0/, "44")}`;
       fragment.append(el("a", { href, text: value }));
       last = match.index + value.length;
     }

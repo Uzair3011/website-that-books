@@ -105,7 +105,7 @@ export function inquiryForm({
       <li>${icon("check")}No generic sales sequence</li>
       <li>${icon("check")}A useful reply from a real person</li>
     </ul>
-    <p class="fine-print">Business details only, please — no customer, patient or clinical information. Prefer to talk first? Call <a href="tel:${SITE.phone}">${SITE.phoneLabel}</a>.</p>
+    <p class="fine-print">Business details only, please — no customer, patient or clinical information. Prefer to talk first? Message us on <a href="${SITE.whatsapp}" target="_blank" rel="noopener">WhatsApp</a>.</p>
     <noscript><p class="form-message error">Please enable JavaScript to send this request.</p></noscript>
     </div>
   </form>
