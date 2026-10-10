@@ -441,62 +441,6 @@ const messyAdmin = art(
   ${text(528, 642, 17, C.ink, "went with someone else.")}`,
 );
 
-// ───────────────────────── The guarantee ─────────────────────────
-// The Tees Transporter Bridge in side elevation: two lattice towers, a long
-// truss deeper over the towers, and the gondola hanging mid-span.
-const bridgeSilhouette = (stroke) => {
-  const chord = (x) => {
-    // Bottom chord: deepest over the towers (x 300 and 980), shallow between.
-    const d = Math.min(Math.abs(x - 300), Math.abs(x - 980));
-    return 200 + 60 * Math.max(0, 1 - d / 340);
-  };
-  let lattice = "";
-  for (let x = 80; x < 1200; x += 40) {
-    lattice += `<path d="M${x} 160V${chord(x)}M${x} 160L${x + 40} ${chord(x + 40)}" />`;
-  }
-  const bottom = Array.from({ length: 29 }, (_, i) => 80 + i * 40).map((x) => `${x} ${chord(x)}`).join(" L");
-  const tower = (cx) => {
-    let bracing = "";
-    const levels = [chord(cx), 340, 420, 500, 580];
-    for (let i = 0; i < levels.length - 1; i++) {
-      const [y1, y2] = [levels[i], levels[i + 1]];
-      const w1 = 18 + ((y1 - 260) / 340) * 72;
-      const w2 = 18 + ((y2 - 260) / 340) * 72;
-      bracing += `<path d="M${cx - w1} ${y1}L${cx + w2} ${y2}M${cx + w1} ${y1}L${cx - w2} ${y2}M${cx - w2} ${y2}H${cx + w2}"/>`;
-    }
-    return `<path d="M${cx - 18} 260L${cx - 90} 600M${cx + 18} 260L${cx + 90} 600" stroke-width="6"/>${bracing}`;
-  };
-  return `<g fill="none" stroke="${stroke}" stroke-width="2.5" stroke-linejoin="round">
-    <path d="M80 160H1200" stroke-width="6"/>
-    <path d="M${bottom}" stroke-width="5"/>
-    <path d="M80 160V200M1200 160V200" stroke-width="5"/>
-    ${lattice}
-    ${tower(300)}${tower(980)}
-    <path d="M610 200V520M670 200V520" stroke-width="2"/>
-    <path d="M590 520H690V556H590Z" fill="${stroke}"/>
-  </g>`;
-};
-
-export const bridgeArt = art(
-  1200,
-  700,
-  "Illustration of the Tees Transporter Bridge in Middlesbrough at dusk.",
-  `<defs>
-    <linearGradient id="br-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfdcd6"/><stop offset="1" stop-color="#eef0e8"/></linearGradient>
-    <radialGradient id="br-sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="${C.lime}" stop-opacity="0.9"/><stop offset="1" stop-color="${C.lime}" stop-opacity="0"/></radialGradient>
-  </defs>
-  ${rect(0, 0, 1200, 700, 0, "url(#br-sky)")}
-  <circle cx="820" cy="420" r="260" fill="url(#br-sun)"/>
-  <circle cx="820" cy="430" r="54" fill="#f6ffd9"/>
-  <path d="M0 596H1200V700H0Z" fill="#a9c2bb"/>
-  <path d="M0 586H260L230 610H0ZM1200 586H1020L1050 610H1200Z" fill="${C.ink2}"/>
-  ${[620, 646, 672].map((y, i) => `<path d="M${120 + i * 60} ${y}H${520 + i * 40}M${700 - i * 30} ${y}H${1080 - i * 50}" stroke="#eef0e8" stroke-width="3" stroke-linecap="round" opacity=".7"/>`).join("")}
-  ${bridgeSilhouette(C.ink)}`,
-);
-
-/** The same bridge as a faint line drawing behind the closing call to action. */
-export const bridgeLines = `<svg class="sp-close-bridge" viewBox="0 0 1200 700" aria-hidden="true" focusable="false">${bridgeSilhouette(C.line)}</svg>`;
-
 export const SERVICE_VISUALS = {
   siteElectrician,
   siteJoinery,

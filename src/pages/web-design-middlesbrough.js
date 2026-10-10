@@ -94,7 +94,7 @@ export default serviceSalesPage({
       { icon: "tool", title: "30 Days of VIP “Tweaks & Fixes” Support", text: "If you want a picture changed or text updated in the first month, we do it free.", value: "£250" },
     ],
     total: "£3,800",
-    investment: "<strong>A fraction of that.</strong>",
+    investment: "A fraction of that.",
     investmentNote: "Fixed price. Zero hidden fees.",
   },
   guarantee: {

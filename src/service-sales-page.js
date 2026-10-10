@@ -3,7 +3,12 @@
 // stack, the bonuses and total value, the guarantee, then the call to action.
 // Each page passes its own copy; nothing here is page-specific.
 import { CTA, SITE, breadcrumbJsonLd, icon, serviceJsonLd } from "./site.js";
-import { bridgeArt, bridgeLines } from "./service-visuals.js";
+import { services as PRICE_LIST } from "./pages/pricing.js";
+
+// The same photo as the homepage map section (credited in docs/image-credits.md).
+const BRIDGE = "/assets/work/tees-transporter-bridge.webp";
+const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
+const pounds = (value) => Number(value.replace(/[^\d]/g, ""));
 
 /** Wraps the first occurrence of `phrase` in `text` with a highlight span. */
 const highlight = (text, phrase) =>
@@ -55,7 +60,23 @@ export function serviceSalesPage({
   bonuses,
   guarantee,
   closing,
+  // Shown with the price wherever it appears, e.g. a running cost billed at cost.
+  priceNote = "",
 }) {
+  // The price comes from the /pricing list, so the two can never disagree.
+  const price = PRICE_LIST.find((service) => service.href === path);
+  if (!price) throw new Error(`${path} has no entry in the /pricing list`);
+  // The stated total must be the real sum of the values listed on the page.
+  const valueTotal = [...offer.items, ...bonuses.items].reduce(
+    (sum, item) => sum + pounds(item.value),
+    0,
+  );
+  if (valueTotal !== pounds(bonuses.total))
+    throw new Error(`${path}: values add up to ${gbp(valueTotal)}, not ${bonuses.total}`);
+  const amount = gbp(price.price);
+  const terms = `${price.unit}, excl. VAT${priceNote ? `. ${priceNote}` : ""}`;
+  const pricePct = Math.max(2, (price.price / valueTotal) * 100).toFixed(1);
+
   const ctaButton = (extra = "") =>
     `<a class="btn${extra}" href="${CTA.href}">${cta.label}${icon("arrow-up")}</a>`;
 
@@ -70,6 +91,7 @@ export function serviceSalesPage({
                 ${ctaButton()}
                 <a class="sp-scroll" href="#offer">${icon("arrow-down")}See the full offer</a>
               </div>
+              <p class="sp-price-tag"><span class="sp-price-label">Price</span><b>${amount}</b><span>${terms}</span></p>
             </div>
             <figure class="sp-hero-media">${media(heroVisual)}</figure>
           </div>
@@ -161,13 +183,19 @@ export function serviceSalesPage({
                 .join("")}
             </ul>
             <div class="sp-total reveal">
-              <p>Total Real-World Value:</p>
-              <strong>${bonuses.total}</strong>
-              ${
-                bonuses.investment
-                  ? `<p class="sp-invest"><span>Your Investment:</span> ${bonuses.investment}</p><p class="sp-invest-note">${bonuses.investmentNote}</p>`
-                  : ""
-              }
+              <div class="sp-compare">
+                <p>Total Real-World Value:</p>
+                <strong>${bonuses.total}</strong>
+                <span class="sp-bar" aria-hidden="true"><i></i></span>
+              </div>
+              <div class="sp-compare now">
+                <p>Your Investment:</p>
+                <strong>${amount} <small>${price.unit}</small></strong>
+                <span class="sp-bar" aria-hidden="true"><i style="--w: ${pricePct}%"></i></span>
+              </div>
+              ${bonuses.investment ? `<p class="sp-invest">${bonuses.investment}</p>` : ""}
+              <p class="sp-invest-note">${bonuses.investmentNote || "Fixed price."} Prices exclude VAT.${priceNote ? ` ${priceNote}` : ""}</p>
+              <a class="sp-price-link" href="/pricing">See the full price list${icon("arrow-up")}</a>
             </div>
           </div>
           <div class="sp-bonus-cta">${ctaButton()}</div>
@@ -175,7 +203,7 @@ export function serviceSalesPage({
       </section>
 
       <section class="sp-guarantee" aria-labelledby="guarantee-title">
-        <figure class="sp-guarantee-art">${bridgeArt}</figure>
+        <figure class="sp-guarantee-art"><img src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." /></figure>
         <div class="sp-guarantee-copy">
           <span class="sp-badge">${icon("shield")}</span>
           <p class="eyebrow">The guarantee</p>
@@ -185,13 +213,14 @@ export function serviceSalesPage({
       </section>
 
       <section class="band-dark sp-close">
-        ${bridgeLines}
+        <img class="sp-close-photo" src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="" />
         <div class="container sp-close-grid">
           <div>
             <p class="eyebrow">Next step</p>
             <h2>${closing.heading}${closing.highlight ? ` <span class="sp-accent">${closing.highlight}</span>` : ""}</h2>
           </div>
           <div class="sp-close-side">
+            <p class="sp-close-price"><span>Your Investment:</span><b>${amount}</b><span>${terms}</span><span class="sp-close-value">Total Real-World Value: ${bonuses.total}</span></p>
             <ul class="sp-checks">
               ${points.map((point) => `<li>${icon("check")}${point.label}</li>`).join("")}
             </ul>

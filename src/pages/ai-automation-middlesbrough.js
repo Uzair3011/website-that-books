@@ -13,6 +13,7 @@ export default serviceSalesPage({
   h1Highlight: "24/7 AI Receptionist",
   lede: "Every time a local lead goes to voicemail, they call your competitor. Our AI answers instantly, answers their questions, and books them onto your calendar while you sleep.",
   heroVisual: V.aiHero,
+  priceNote: "AI provider usage is billed at cost.",
   points: [
     { label: "Deployed in 14 days", text: "Built, trained and live" },
     { label: "24/7/365", text: "Every chat and text answered instantly" },
