@@ -238,7 +238,7 @@ ${marquee(
           <div class="head-split">
             <div>
               <p class="eyebrow">Why Veltra</p>
-              <h2>More considered than a bargain build. Less bloated than a traditional agency project.</h2>
+              <h2>A smarter way to get a website and digital presence for your local business.</h2>
             </div>
             <p>A low price is not useful if the site looks generic, says very little and needs rebuilding six months later. A large agency process is not useful if a straightforward local business site becomes slow, expensive and hard to understand. Veltra keeps the work that matters and removes the unnecessary overhead.</p>
           </div>
