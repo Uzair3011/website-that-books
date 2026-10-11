@@ -332,7 +332,10 @@ Supabase are all configured at build time. A live key does nothing without
 `STRIPE_LIVE_PAYMENTS=enabled`. The **£1 test payment** (`/checkout?service=test-payment`) is only
 listed and sold with a test key, and the database refuses it in live mode.
 
-**Setup (test mode):**
+**New to Stripe or webhooks?** Follow [docs/stripe-setup.md](docs/stripe-setup.md), a
+step-by-step guide from creating the account to a £1 test payment, and on to going live.
+
+**Setup (test mode), short version:**
 
 1. Stripe dashboard (test mode) → Developers → API keys: copy the secret key into `STRIPE_SECRET_KEY`.
 2. Developers → Webhooks → Add endpoint: `https://<site>/api/stripe-webhook`, with the six events
