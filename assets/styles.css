@@ -5767,6 +5767,8 @@ svg.icon {
 }
 .sp-bonus-cta {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: center;
   margin-top: clamp(32px, 4vw, 48px);
 }
@@ -5914,4 +5916,319 @@ svg.icon {
 }
 .sp-close .cta-contacts a:hover {
   border-bottom-color: var(--accent-lime);
+}
+
+/* ───────────────────────── Checkout ─────────────────────────
+   /checkout, /checkout/success and /checkout/cancelled. Built from the same
+   parts as /pricing and the enquiry form: the dark order summary is a
+   .price-card.featured, the details form a .form-shell. */
+.checkout {
+  padding-block: clamp(28px, 4vw, 48px) clamp(56px, 7vw, 96px);
+}
+.checkout-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(20px, 3vw, 32px);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--body);
+}
+.checkout-back:hover {
+  color: var(--ink);
+}
+.checkout-back .icon {
+  width: 16px;
+  height: 16px;
+  transform: scaleX(-1);
+}
+.checkout-head {
+  display: grid;
+  gap: 14px;
+  max-width: 46rem;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+.checkout-head h1 {
+  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+}
+.checkout-grid {
+  display: grid;
+  gap: clamp(16px, 2.4vw, 28px);
+  align-items: start;
+}
+@media (min-width: 960px) {
+  .checkout-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .checkout-summary {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+}
+.checkout-summary {
+  gap: 20px;
+}
+.checkout-summary-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.checkout-summary .bundle-label {
+  margin: 0;
+}
+.checkout-test-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-mint);
+  color: #071313 !important;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.checkout-summary-body {
+  display: grid;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.checkout-service-name {
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.checkout-summary-body > p {
+  font-size: 0.9375rem;
+}
+.checkout-summary .tick-list {
+  margin-top: 6px;
+}
+.checkout-summary .tick-list:empty {
+  display: none;
+}
+.checkout-summary .tick-list .icon {
+  color: var(--accent-lime);
+}
+.checkout-lines {
+  margin: 0;
+  display: grid;
+}
+.checkout-lines > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+}
+.checkout-lines dt {
+  color: var(--body);
+}
+.checkout-lines dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.checkout-lines .is-total {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.checkout-lines .is-total dt {
+  font-weight: 600;
+  color: var(--ink);
+}
+.checkout-lines .is-total dd {
+  font-size: clamp(2rem, 3.2vw, 2.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.checkout-summary .checkout-lines .is-total dd {
+  color: var(--accent-lime);
+}
+.checkout-test-note {
+  max-width: none !important;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: rgba(131, 231, 218, 0.12);
+  font-size: 0.875rem !important;
+  line-height: 1.5;
+}
+.checkout-test-note[hidden] {
+  display: none;
+}
+.checkout-test-note .icon {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--accent-mint);
+}
+.checkout-test-note b {
+  color: var(--ink);
+  white-space: nowrap;
+}
+.checkout-form-shell {
+  container-type: inline-size;
+}
+.checkout-form-shell .form-submit .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Payment status and cancelled pages */
+.checkout-result .container.narrow {
+  width: min(100% - (var(--gutter) * 2), 720px);
+}
+.result-card {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--lift);
+  text-align: center;
+}
+.result-card h1 {
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+  max-width: 18ch;
+}
+.result-card h1:focus {
+  outline: none;
+}
+.result-card h2 {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+.result-card .lede {
+  max-width: 50ch;
+}
+.result-card .button-row {
+  justify-content: center;
+  margin-top: 8px;
+}
+.result-card .fine-print {
+  width: 100%;
+}
+.result-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.result-icon .icon {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.4;
+}
+.result-icon[data-tone="success"] {
+  background: var(--accent-lime);
+  border-color: var(--accent-lime);
+}
+.result-icon[data-tone="waiting"] {
+  background: var(--accent-mint);
+  border-color: var(--accent-mint);
+}
+.result-icon[data-tone="error"] {
+  background: #fdecea;
+  border-color: #f3c4bf;
+  color: #8c1d18;
+}
+.result-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--line);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: checkout-spin 0.9s linear infinite;
+}
+@keyframes checkout-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.result-order {
+  width: 100%;
+  margin-top: 8px;
+  padding: 4px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--canvas);
+  text-align: left;
+}
+.result-order > div:last-child {
+  border-bottom: 0;
+}
+.status-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--line);
+  color: #071313;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.status-pill[data-state="paid"] {
+  background: var(--accent-lime);
+}
+.status-pill[data-state="processing"],
+.status-pill[data-state="pending"] {
+  background: var(--accent-mint);
+}
+.status-pill[data-state="failed"] {
+  background: #fdecea;
+  color: #8c1d18;
+}
+.result-next {
+  width: 100%;
+  display: grid;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.result-next h2 {
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+}
+.result-next ol {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  counter-reset: next;
+}
+.result-next li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  font-size: 0.9375rem;
+  color: var(--body);
+  counter-increment: next;
+}
+.result-next li::before {
+  content: counter(next);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  color: var(--accent-lime);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.result-next b {
+  color: var(--ink);
 }

@@ -93,3 +93,26 @@ export function validateInquiry(raw) {
   data.consent = raw.consent === true || raw.consent === "on";
   return { data, errors, valid: Object.keys(errors).length === 0 };
 }
+
+// The checkout form. Only the service's slug is taken from the browser: its name and price are
+// looked up on the server, so nothing here can change what a customer is charged.
+export function validateCheckout(raw) {
+  const data = {};
+  const errors = {};
+  const limits = { service: 60, name: 100, email: 254, business: 150 };
+  for (const [field, max] of Object.entries(limits)) {
+    data[field] = typeof raw[field] === "string" ? raw[field].trim() : "";
+    if (data[field].length > max)
+      errors[field] = `Please use ${max} characters or fewer.`;
+  }
+  if (!/^[a-z0-9-]{2,60}$/.test(data.service))
+    errors.service = "Please choose a service.";
+  if (!data.name) errors.name = "Please enter your name.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
+    errors.email = "Please enter a valid email address.";
+  data.email = data.email.toLowerCase();
+  if (raw.terms !== true && raw.terms !== "on")
+    errors.terms = "Please agree to the terms to continue.";
+  data.terms = raw.terms === true || raw.terms === "on";
+  return { data, errors, valid: Object.keys(errors).length === 0 };
+}

@@ -1,20 +1,28 @@
+import { CURRENCY, catalogItem } from "./catalog.js";
+
 // The med-spa growth system is the Growth Launch Package from /pricing, at the
 // same package price. The components are the standard services it includes,
-// each at its own published price. Do not introduce a number here that does
-// not already appear on /pricing.
+// each at its own published price, all read from assets/catalog.js so no
+// number here can differ from /pricing.
+const growth = catalogItem("growth-launch-package");
+const labels = {
+  "multi-page-website": "Multi-page website, up to five pages",
+  "local-seo-google-business-profile": "Local SEO and Google Business Profile setup",
+  "ai-receptionist-website-chat": "AI receptionist and website chat",
+  "crm-booking-automation": "CRM, booking and follow-up automation",
+};
 export const SYSTEM = Object.freeze({
-  currency: "GBP",
-  package: "Growth Launch Package",
-  price: 499,
-  components: Object.freeze([
-    Object.freeze({ name: "Multi-page website, up to five pages", price: 179 }),
-    Object.freeze({ name: "Local SEO and Google Business Profile setup", price: 99 }),
-    Object.freeze({ name: "AI receptionist and website chat", price: 199 }),
-    Object.freeze({ name: "CRM, booking and follow-up automation", price: 199 }),
-  ]),
+  currency: CURRENCY,
+  package: growth.name,
+  price: growth.price,
+  components: Object.freeze(
+    growth.includes.map((slug) =>
+      Object.freeze({ name: labels[slug], price: catalogItem(slug).price }),
+    ),
+  ),
   // Optional website care. The only recurring cost Veltra charges for this
   // system; AI provider usage is passed through at cost.
-  care: 49,
+  care: catalogItem("website-care").price,
 });
 
 export const SETUP_TOTAL = SYSTEM.price;

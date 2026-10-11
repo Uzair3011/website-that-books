@@ -13,6 +13,8 @@ export function renderPage(
     jsonLd = [],
     noindex = false,
     bodyClass = "",
+    // Extra same-origin module scripts for this page only, e.g. the checkout.
+    scripts = [],
   },
   // The chat and AI-call buttons only ship when their services are configured to answer.
   {
@@ -75,6 +77,7 @@ export function renderPage(
     <script src="/assets/consent.js" defer></script>
     ${voice ? '<script src="/assets/voice.js" defer></script>' : ""}
     ${chat ? '<script src="/assets/chat.js" defer></script>' : ""}
+    ${scripts.map((src) => `<script src="${src}" type="module"></script>`).join("\n    ")}
     ${ld}
   </head>
   <body${bodyClass ? ` class="${bodyClass}"` : ""}>

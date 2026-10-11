@@ -105,6 +105,8 @@
     channel: null,
     started: false,
     returnFocus: null,
+    payments: new Map(),
+    paymentMode: "live",
   };
   const baseTitle = document.title;
 
@@ -182,6 +184,123 @@
     banner("");
     state.leads = new Map(data.map((lead) => [lead.id, lead]));
     render();
+    loadPayments();
+  }
+
+  // ── Payments ────────────────────────────────────────────────────────────
+  // Read-only here: only the server (checkout API and verified Stripe webhooks) writes payments.
+  const PAYMENT_STATUSES = {
+    pending: "Pending",
+    processing: "Processing",
+    paid: "Paid",
+    failed: "Failed",
+    expired: "Expired",
+    refunded: "Refunded",
+    partially_refunded: "Part refunded",
+  };
+  const money = (minor, currency = "gbp") =>
+    new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: currency.toUpperCase(),
+    }).format(minor / 100);
+
+  async function loadPayments() {
+    const { data, error } = await db
+      .from("payments")
+      .select(
+        "id, created_at, paid_at, service_name, amount, amount_total, amount_refunded, currency, status, livemode, customer_name, customer_email, business_name, stripe_payment_intent_id, stripe_checkout_session_id, details",
+      )
+      .order("created_at", { ascending: false })
+      .limit(LIMIT);
+    if (error) {
+      $("#payments-empty").textContent = "Couldn’t load payments.";
+      return;
+    }
+    state.payments = new Map(data.map((payment) => [payment.id, payment]));
+    // With no live payments yet, open on the test ones so a test checkout is visible.
+    if (!data.some((p) => p.livemode) && data.length) state.paymentMode = "test";
+    renderPayments();
+  }
+
+  function stripeLink(payment) {
+    const base = `https://dashboard.stripe.com${payment.livemode ? "" : "/test"}`;
+    if (payment.stripe_payment_intent_id)
+      return `${base}/payments/${payment.stripe_payment_intent_id}`;
+    if (payment.stripe_checkout_session_id)
+      return `${base}/checkout/sessions/${payment.stripe_checkout_session_id}`;
+    return null;
+  }
+
+  function renderPayments() {
+    const all = [...state.payments.values()];
+    const counts = {
+      live: all.filter((p) => p.livemode).length,
+      test: all.filter((p) => !p.livemode).length,
+    };
+    $("#payment-mode").replaceChildren(
+      ...[
+        ["live", "Live"],
+        ["test", "Test"],
+      ].map(([value, label]) =>
+        el(
+          "button",
+          {
+            type: "button",
+            class: "segment",
+            "aria-pressed": String(state.paymentMode === value),
+            onclick: () => {
+              state.paymentMode = value;
+              renderPayments();
+            },
+          },
+          label,
+          el("span", { class: "count", text: String(counts[value]) }),
+        ),
+      ),
+    );
+    const rows = all.filter((p) => p.livemode === (state.paymentMode === "live"));
+    $("#payment-rows").replaceChildren(
+      ...rows.map((payment) => {
+        const link = stripeLink(payment);
+        const refunded = payment.amount_refunded
+          ? ` (${money(payment.amount_refunded, payment.currency)} refunded)`
+          : "";
+        return el(
+          "tr",
+          {},
+          el("td", { class: "c-time", title: dateTime.format(new Date(payment.created_at)), text: ago(payment.created_at) }),
+          el("td", { text: payment.customer_name || "–" }),
+          el(
+            "td",
+            { class: "c-email" },
+            payment.customer_email
+              ? el("a", { href: `mailto:${payment.customer_email}`, text: payment.customer_email })
+              : "–",
+          ),
+          el("td", { class: "c-service", text: payment.service_name }),
+          el("td", {
+            class: "c-amount",
+            text: money(payment.amount_total ?? payment.amount, payment.currency) + refunded,
+          }),
+          el(
+            "td",
+            {},
+            el("span", {
+              class: `badge payment-${payment.status}`,
+              text: PAYMENT_STATUSES[payment.status] || payment.status,
+              title: payment.details?.amountMismatch ? "Charged amount differs from the price list: check in Stripe" : null,
+            }),
+          ),
+          el(
+            "td",
+            {},
+            link ? el("a", { href: link, target: "_blank", rel: "noopener", text: "Open" }) : "–",
+          ),
+        );
+      }),
+    );
+    $("#payments-empty").hidden = rows.length > 0;
+    $("#payments-empty").textContent = `No ${state.paymentMode} payments yet.`;
   }
 
   function subscribe() {
@@ -202,6 +321,15 @@
             if (state.openId === change.new.id) renderDrawer();
           }
           render();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "payments" },
+        (change) => {
+          if (change.eventType === "DELETE") state.payments.delete(change.old.id);
+          else state.payments.set(change.new.id, change.new);
+          renderPayments();
         },
       )
       // The socket joins (SUBSCRIBED) a moment before the database listener is attached, and
@@ -235,6 +363,7 @@
     if (state.channel) db.removeChannel(state.channel);
     state.channel = null;
     state.leads = new Map();
+    state.payments = new Map();
     closeDrawer();
   }
 

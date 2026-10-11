@@ -1,6 +1,9 @@
 // Every public route in one place. The dev server, the production build and
 // the sitemap all read from this list, so a new page cannot be half-wired.
 import about from "./pages/about.js";
+import checkout from "./pages/checkout.js";
+import checkoutCancelled from "./pages/checkout-cancelled.js";
+import checkoutSuccess from "./pages/checkout-success.js";
 import aiAutomation from "./pages/ai-automation-middlesbrough.js";
 import contact from "./pages/contact.js";
 import cookiePolicy from "./pages/cookie-policy.js";
@@ -49,6 +52,9 @@ export const pages = [
 
 export const notFoundPage = notFound;
 
+/** Built and served like any page, but noindex and never in the sitemap. */
+export const utilityPages = [checkout, checkoutSuccess, checkoutCancelled];
+
 /** Routes that must 308/301 to a current page. */
 export const redirects = {
   "/index.html": "/",
@@ -88,4 +94,6 @@ export function resolveRedirect(pathname) {
   return null;
 }
 
-export const pageByPath = new Map(pages.map((page) => [page.path, page]));
+export const pageByPath = new Map(
+  [...pages, ...utilityPages].map((page) => [page.path, page]),
+);

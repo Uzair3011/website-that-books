@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { SETUP_TOTAL, SYSTEM } from "../assets/business.js";
-import { pages, redirects } from "../src/pages.js";
+import { pages, redirects, utilityPages } from "../src/pages.js";
 import { renderPage } from "../src/layout.js";
 
 const ORIGIN = "https://www.veltramedia.com";
@@ -47,6 +47,13 @@ test("the production build emits every route with a correct canonical, and a mat
   for (const from of Object.keys(redirects))
     assert.ok(!sitemap.includes(`<loc>${ORIGIN}${from}</loc>`), from);
   assert.ok(!sitemap.includes("/404"));
+  // Checkout pages are built and noindex, but never advertised.
+  for (const page of utilityPages) {
+    const html = await readFile(resolve("dist", `${page.path.slice(1)}.html`), "utf8");
+    assert.match(html, /<meta name="robots" content="noindex" \/>/, page.path);
+    assert.equal(html.match(/<h1[\s>]/g)?.length, 1, `${page.path} must have exactly one h1`);
+    assert.ok(!sitemap.includes(`<loc>${ORIGIN}${page.path}</loc>`), page.path);
+  }
 
   const robots = await readFile(resolve("dist", "robots.txt"), "utf8");
   assert.match(robots, /Disallow: \/api\//);
@@ -65,17 +72,17 @@ test("the build refuses a non-HTTPS or path-bearing SITE_URL", () => {
 
 test("every internal link resolves to a real route or a declared redirect", () => {
   const known = new Set([
-    ...pages.map((page) => page.path),
+    ...[...pages, ...utilityPages].map((page) => page.path),
     ...Object.keys(redirects),
   ]);
   const problems = [];
-  for (const page of pages) {
+  for (const page of [...pages, ...utilityPages]) {
     const html = renderPage(page, { origin: ORIGIN });
     const ids = new Set(
       [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]),
     );
     for (const [, href] of html.matchAll(/href="(\/[^"]*)"/g)) {
-      const [path, fragment] = href.split("#");
+      const [path, fragment] = href.split("?")[0].split("#");
       if (
         path &&
         !known.has(path) &&

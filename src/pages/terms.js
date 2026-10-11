@@ -1,4 +1,11 @@
+import { checkoutEnabled } from "../../lib/payments.js";
 import { CTA, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
+
+// Online checkout is switched on per build; the payment clause says what this build really does.
+const payments = checkoutEnabled()
+  ? `<p>Fixed-price services can be paid for online. Payment is taken in full, in GBP, by Stripe on its secure checkout page; Veltra Media never receives or stores your card details. Placing an online order means you accept these terms. After payment we confirm the scope and start date with you in writing, and stated delivery times run from content approval. Where a refund is due under these terms or the law, it is returned through Stripe to the card you paid with.</p>
+            <p>Submitting the enquiry or audit form does not constitute a purchase, and does not reserve an appointment unless the booking step explicitly confirms a time.</p>`
+  : `<p>This website does not take payments. Submitting the enquiry or audit form does not constitute a purchase, and does not reserve an appointment unless the booking step explicitly confirms a time.</p>`;
 
 // One currency, one price list. The med-spa system is priced from the same GBP
 // services as everything else, so its clauses reference those prices rather
@@ -44,7 +51,7 @@ const body = `      <section class="hero">
             <p>The guarantee covers our delivery against the original checklist. It does not cover new requirements, client-made changes, missing access or approvals, a provider outage beyond our control, or lead volume, bookings, revenue or clinical outcomes. Approved third-party charges and consumed usage are excluded from the setup-fee refund. The written scope distinguishes these costs before payment.</p>
 
             <h2>Enquiries and payment</h2>
-            <p>This website does not take payments. Submitting the enquiry or audit form does not constitute a purchase, and does not reserve an appointment unless the booking step explicitly confirms a time.</p>
+            ${payments}
 
             <p><a class="btn" href="${CTA.href}">${CTA.primary}</a></p>
           </div>

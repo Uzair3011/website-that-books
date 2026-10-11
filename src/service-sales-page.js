@@ -3,7 +3,8 @@
 // stack, the bonuses and total value, the guarantee, then the call to action.
 // Each page passes its own copy; nothing here is page-specific.
 import { CTA, SITE, breadcrumbJsonLd, icon, serviceJsonLd } from "./site.js";
-import { services as PRICE_LIST } from "./pages/pricing.js";
+import { catalogItemByHref } from "../assets/catalog.js";
+import { checkoutEnabled } from "../lib/payments.js";
 
 // The same photo as the homepage map section (credited in docs/image-credits.md).
 const BRIDGE = "/assets/work/tees-transporter-bridge.webp";
@@ -63,9 +64,9 @@ export function serviceSalesPage({
   // Shown with the price wherever it appears, e.g. a running cost billed at cost.
   priceNote = "",
 }) {
-  // The price comes from the /pricing list, so the two can never disagree.
-  const price = PRICE_LIST.find((service) => service.href === path);
-  if (!price) throw new Error(`${path} has no entry in the /pricing list`);
+  // The price comes from the catalogue behind /pricing, so the two can never disagree.
+  const price = catalogItemByHref(path);
+  if (!price) throw new Error(`${path} has no entry in assets/catalog.js`);
   // The stated total must be the real sum of the values listed on the page.
   const valueTotal = [...offer.items, ...bonuses.items].reduce(
     (sum, item) => sum + pounds(item.value),
@@ -79,6 +80,11 @@ export function serviceSalesPage({
 
   const ctaButton = (extra = "") =>
     `<a class="btn${extra}" href="${CTA.href}">${cta.label}${icon("arrow-up")}</a>`;
+  // Only rendered when online checkout is switched on for this build.
+  const buyButton = (extra = "") =>
+    price.purchasable && checkoutEnabled()
+      ? `<a class="btn secondary${extra}" href="/checkout?service=${price.slug}">Buy now for ${amount}${icon("arrow-up")}</a>`
+      : "";
 
   const body = `      <section class="sp-hero">
         <div class="container">
@@ -198,7 +204,7 @@ export function serviceSalesPage({
               <a class="sp-price-link" href="/pricing">See the full price list${icon("arrow-up")}</a>
             </div>
           </div>
-          <div class="sp-bonus-cta">${ctaButton()}</div>
+          <div class="sp-bonus-cta">${ctaButton()}${buyButton()}</div>
         </div>
       </section>
 
@@ -225,6 +231,7 @@ export function serviceSalesPage({
               ${points.map((point) => `<li>${icon("check")}${point.label}</li>`).join("")}
             </ul>
             ${ctaButton(" block")}
+            ${buyButton(" block")}
             ${cta.note ? `<p class="sp-note">${cta.note}</p>` : ""}
             <div class="cta-contacts">
               <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp ${SITE.phoneLabel}</a>

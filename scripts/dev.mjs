@@ -5,6 +5,9 @@ import { resolve, extname } from "node:path";
 import availability from "../api/availability.js";
 import book from "../api/book.js";
 import chat from "../api/chat.js";
+import checkout from "../api/checkout.js";
+import checkoutStatus from "../api/checkout-status.js";
+import { handleStripeWebhook } from "../api/stripe-webhook.js";
 import voice from "../api/voice.js";
 import inquiry from "../api/inquiry.js";
 import leads from "../api/leads.js";
@@ -54,6 +57,18 @@ const server = createServer(async (req, res) => {
     const pathname = decodeURIComponent(url.pathname).replace(/\/$/, "") || "/";
     if (pathname === "/api/status") return status(req, res);
     if (pathname === "/api/availability") return await availability(req, res);
+    if (pathname === "/api/checkout-status") return await checkoutStatus(req, res);
+    // Stripe signs the exact bytes it sends, so the webhook gets the raw body, as on Vercel.
+    if (pathname === "/api/stripe-webhook") {
+      if (req.method !== "POST") return res.status(405).json({ ok: false });
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const { status, body } = await handleStripeWebhook(
+        Buffer.concat(chunks),
+        req.headers["stripe-signature"],
+      );
+      return res.status(status).json(body);
+    }
     if (pathname === "/assets/config.js") {
       res.setHeader("Content-Type", mime[".js"]);
       res.setHeader("Cache-Control", "no-store");
@@ -65,6 +80,7 @@ const server = createServer(async (req, res) => {
       "/api/leads": leads,
       "/api/chat": chat,
       "/api/voice": voice,
+      "/api/checkout": checkout,
     }[pathname];
     if (handler) {
       // AI-agent leads carry call transcripts, so they get more room than the forms.

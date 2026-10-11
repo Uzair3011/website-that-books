@@ -38,6 +38,9 @@ All configuration lives in environment variables: `.env` locally (copy `.env.exa
 | `ADMIN_EMAIL`                                                            | Server, optional | Where the internal "new booking" email is sent (defaults to `SMTP_FROM_EMAIL`) |
 | `LEAD_WEBHOOK_URL`, `LEAD_WEBHOOK_TOKEN`                                 | **Secret**       | CRM/automation webhook for inquiries and bookings                        |
 | `SITE_URL`                                                               | Build + server   | Canonical URLs, social image URLs, sitemap, and the same-origin check on form POSTs |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`                             | **Secret**, build + server | Online payments; buy buttons only render when both (and Supabase) are set |
+| `STRIPE_LIVE_PAYMENTS`                                                   | Build + server   | Must be `enabled` before a live (`sk_live_`) key does anything            |
+| `STRIPE_TAX_RATE_ID`                                                     | Server, optional | Exclusive tax rate (e.g. VAT) added to every checkout                     |
 
 Mark secrets as **Sensitive** in Vercel. Never prefix a secret with `PUBLIC_`.
 
@@ -95,7 +98,9 @@ is plain static HTML.
 - `assets/styles.css`: the design system — tokens, typography scale, layout primitives, reduced motion.
 - `assets/work/*.svg`: the website mockups used as imagery. Items labelled "design example" are not client projects.
 - `assets/app.js`: navigation, contact-link wiring, the med-spa calculator, and enquiry/booking states.
-- `assets/business.js`: the med-spa bundle's fixed offer expiry, pricing and ROI math.
+- `assets/catalog.js`: the one price list (services, the package and the £1 test payment).
+- `assets/business.js`: the med-spa package figures (from the catalogue) and ROI math.
+- `assets/checkout.js`: the checkout, payment-status and cancelled pages.
 - `assets/validation.js`: shared field validation and normalization, used by the browser and the API.
 - `lib/`: request guards, availability rules, Google Calendar client, SMTP client and templates, public config generation.
 - `api/`: Vercel availability, booking, inquiry and readiness handlers.
@@ -108,7 +113,8 @@ is plain static HTML.
 `/` `/services` `/how-it-works` `/web-design-middlesbrough` `/local-seo-middlesbrough`
 `/landing-page-design` `/ai-automation-middlesbrough` `/crm-booking-automation` `/work` `/about`
 `/free-website-audit` `/contact` `/resources` `/pricing` `/med-spa-growth-system`
-`/privacy` `/terms`, plus a `noindex` 404.
+`/privacy` `/terms`, plus a `noindex` 404 and the `noindex` checkout routes
+(`/checkout`, `/checkout/success`, `/checkout/cancelled`).
 
 Adding a page means adding a module under `src/pages/` and listing it in
 `src/pages.js`. The sitemap, the internal-link test and the SEO tests pick it up
@@ -171,8 +177,13 @@ aligned, and update the `alt` text with it.
 
 ## Pricing maintenance
 
-The site sells in **GBP only**. There is one price list, on `/pricing`, defined
-in `src/pages/pricing.js`: website packages £99 / £179, individual
+The site sells in **GBP only**. There is one price list, `assets/catalog.js`:
+every service's slug, name, description, price, unit and features. `/pricing`,
+the service pages, the med-spa package (`assets/business.js`), the checkout page
+and the payment API all read it. After changing a price there, run
+`npm run db:setup` (it copies the catalogue into Supabase's `services` table,
+which checkout charges from) and deploy; checkout refuses to charge while the
+two disagree. The list shown on `/pricing` is: website packages £99 / £179, individual
 services priced separately, and an optional £499 Growth Launch Package. The
 package's struck-through "bought separately" figure (£676) and saving are
 computed from the included services' own prices; `npm test` fails if a
@@ -286,6 +297,53 @@ Each button is only rendered when its service is configured (`GEMINI_API_KEY`;
 `ELEVENLABS_API_KEY` + `ELEVENLABS_AGENT_ID`). Set up or update the voice agent with
 `npm run voice:agent` (needs `ELEVENLABS_API_KEY` and `LEAD_INGEST_TOKEN`), then put the
 printed id in `ELEVENLABS_AGENT_ID`.
+
+## Online payments (Stripe + Supabase)
+
+Customers pay for fixed-price services on **Stripe Checkout** (Stripe's hosted page, so card
+details never touch this site and the CSP stays `script-src 'self'`). Stripe is the source of
+truth for money; Supabase keeps the site's record of what was bought. Like the rest of the
+backend, it is plain `fetch` with no Stripe SDK.
+
+| Piece | What it does |
+| --- | --- |
+| `/checkout?service=<slug>` | Order summary and customer details. The service picker lists what this build sells |
+| `POST /api/checkout` | Takes only the slug and buyer details. Reads the price from `services` in Supabase, refuses if it differs from the catalogue, creates the Checkout Session (idempotency key, 60-minute expiry) and records a `pending` payment |
+| `POST /api/stripe-webhook` | The **only** code that changes a payment's status. Verifies the `Stripe-Signature` over the raw body (5-minute tolerance), records each event id once in `stripe_events`, and moves statuses forward only (`lib/payments.js` `TRANSITIONS`), so duplicate, concurrent or late events are harmless. A failure returns 500 so Stripe retries |
+| `GET /api/checkout-status` | Read-only status for `/checkout/success`, keyed by the unguessable session id, with the email masked |
+| `/checkout/success`, `/checkout/cancelled` | Result pages: paid, processing, pending, failed, expired, refunded, not found. All three checkout routes are `noindex` and not in the sitemap |
+| `/admin` → Payments | Payment history (live and test), live-updating, with links into the Stripe dashboard |
+
+Handled events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`,
+`checkout.session.async_payment_failed`, `checkout.session.expired`,
+`payment_intent.payment_failed` and `charge.refunded`.
+
+**Database** (created by `npm run db:setup`): `services` (the price list, in pence), `payments`
+(one row per checkout: customer name, email, phone, business, service, amount, currency, status,
+Checkout Session id, Payment Intent id, Stripe customer id, refund amount and timestamps) and
+`stripe_events`. RLS: the public key reads nothing; the `lead_admin` account reads `services` and
+`payments`; a customer account linked by `payments.user_id` (none exist yet) would read only its
+own rows; no browser role can insert or update anything. Triggers refuse to record the £1 test
+item as a live payment, and stop a payment's service, amount, currency, mode and session from
+changing once recorded.
+
+**Safety switches.** No buy button renders unless `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and
+Supabase are all configured at build time. A live key does nothing without
+`STRIPE_LIVE_PAYMENTS=enabled`. The **£1 test payment** (`/checkout?service=test-payment`) is only
+listed and sold with a test key, and the database refuses it in live mode.
+
+**Setup (test mode):**
+
+1. Stripe dashboard (test mode) → Developers → API keys: copy the secret key into `STRIPE_SECRET_KEY`.
+2. Developers → Webhooks → Add endpoint: `https://<site>/api/stripe-webhook`, with the six events
+   above. Copy its signing secret into `STRIPE_WEBHOOK_SECRET`. Locally, `stripe listen
+   --forward-to localhost:4174/api/stripe-webhook` prints a secret to use instead.
+3. Set both in Vercel (Preview first), redeploy, and buy the £1 test payment with card
+   `4242 4242 4242 4242`. Decline: `4000 0000 0000 0002`. 3-D Secure: `4000 0025 0000 3155`.
+4. Settings → Branding: logo, `#071313` and `#C9FF4A`, so Stripe's page matches the site.
+   Settings → Emails: turn on successful-payment and refund receipts.
+
+Going live means live keys, a live-mode webhook endpoint, and `STRIPE_LIVE_PAYMENTS=enabled`.
 
 ## Analytics and Search Console
 

@@ -2,7 +2,7 @@ import { cp, mkdir, writeFile, rm } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { renderAdminPage } from "../src/admin.js";
 import { renderPage } from "../src/layout.js";
-import { notFoundPage, pages } from "../src/pages.js";
+import { notFoundPage, pages, utilityPages } from "../src/pages.js";
 import { publicConfig, renderConfigScript } from "../lib/public-config.js";
 import { bookingSettings } from "../lib/schedule.js";
 import { vendorFiles } from "./vendor.mjs";
@@ -31,7 +31,7 @@ async function emit(file, html) {
 
 // Clean URLs: "/" is index.html, every other route is <route>.html, which
 // Vercel's cleanUrls serves at the extensionless path.
-for (const page of pages) {
+for (const page of [...pages, ...utilityPages]) {
   const file = page.path === "/" ? "index.html" : `${page.path.slice(1)}.html`;
   await emit(file, renderPage(page, { origin }));
 }

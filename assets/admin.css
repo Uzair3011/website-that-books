@@ -760,3 +760,50 @@ textarea:focus-visible {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ── Payments ───────────────────────────────────────── */
+.payments-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.panel-head h2 {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+.panel-head .muted {
+  font-size: 13px;
+}
+.payments tbody tr {
+  cursor: default;
+}
+.c-amount {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.payment-paid {
+  background: var(--lime);
+}
+.payment-pending,
+.payment-processing {
+  background: var(--mint);
+}
+.payment-failed {
+  background: #fde8e6;
+  color: var(--danger);
+}
+.payment-expired {
+  background: var(--line-soft);
+}
+.payment-refunded,
+.payment-partially_refunded {
+  background: var(--amber);
+}

@@ -1,4 +1,8 @@
+import { checkoutEnabled } from "../../lib/payments.js";
 import { SITE, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
+
+// Online payments are described only in builds that take them.
+const payOnline = checkoutEnabled();
 
 // Written from what the site actually does: forms, booking, the chat assistant,
 // the in-browser AI voice call and consent-gated analytics. If a provider or a
@@ -27,7 +31,14 @@ const body = `      <section class="hero">
             <p>Website hosting providers may process normal security and access logs. When you book a call, the time you choose and the details you enter are added to our Google Calendar, and a calendar invitation is sent to you (with a video link, where enabled). Google's privacy terms apply to that invitation. Confirmation and notification emails are sent over our own configured mail provider.</p>
             <p>Enquiries and bookings are stored in our private lead database, hosted by Supabase in the United States, so we can follow them up. Only Veltra Media staff can sign in to view them. Successfully submitted enquiries and bookings are also forwarded to our configured business intake provider for follow-up, where one is configured. Email and WhatsApp links open the relevant external service, whose own privacy terms apply. The website does not embed a booking tracker or load these services automatically.</p>
 
-            <h2>Website chat assistant</h2>
+${
+  payOnline
+    ? `            <h2>Online payments</h2>
+            <p>When you buy a service online, you give us your name, email address and, optionally, your business name, and you pay on a checkout page run by Stripe. Stripe collects your card or bank details directly; we never receive or store them. Stripe tells us the outcome, the amount, and the name, email address and phone number you gave at checkout, and we keep that record of your purchase in our Supabase database so we can deliver the service, answer questions and meet our accounting obligations. Stripe processes your payment as an independent controller under its own privacy policy, and may process data in the United States.</p>
+
+`
+    : ""
+}            <h2>Website chat assistant</h2>
             <p>The chat assistant on this website is an AI that answers from the content of our website. What you type is sent to Google's Gemini API to generate replies; under Google's terms for its free service tier, Google may use those messages to improve its products, and they may be reviewed by people. When Google's service is busy, messages are instead sent to Groq, Inc. in the United States to generate the reply. Please do not share sensitive personal information in the chat. If you give your contact details in the chat and agree to be contacted, they are saved to our lead database, with the conversation, in the same way as a form enquiry.</p>
 
             <h2>AI voice assistant</h2>
@@ -51,7 +62,7 @@ const body = `      <section class="hero">
             <p>We do not make decisions about you by automated means alone that have legal or similarly significant effects. The chat and voice assistants answer questions and pass details to our team; people make every decision.</p>
 
             <h2>Transfers outside the UK</h2>
-            <p>Some of our providers are based in, or process data in, the United States: Supabase (our lead database), Google (calendar and the Gemini chat model), Groq (the backup chat model), ElevenLabs (the voice assistant) and Vercel (website hosting and analytics). Where information leaves the UK, the transfer relies on the UK&ndash;US data bridge for providers certified under it, or on the standard contractual clauses and UK International Data Transfer Addendum in that provider's data processing terms.</p>
+            <p>Some of our providers are based in, or process data in, the United States: Supabase (our lead database${payOnline ? " and purchase records" : ""}),${payOnline ? " Stripe (online payments)," : ""} Google (calendar and the Gemini chat model), Groq (the backup chat model), ElevenLabs (the voice assistant) and Vercel (website hosting and analytics). Where information leaves the UK, the transfer relies on the UK&ndash;US data bridge for providers certified under it, or on the standard contractual clauses and UK International Data Transfer Addendum in that provider's data processing terms.</p>
 
             <h2>How long we keep it</h2>
             <p>We keep enquiry, chat and call details for as long as we need them to handle your request and any follow-up, and we delete leads we are no longer in touch with. Client records are kept for as long as the law requires, which for tax records is usually six years. Information held by the providers above follows their configured retention settings.</p>

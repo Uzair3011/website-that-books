@@ -1,4 +1,6 @@
 import { SYSTEM } from "../../assets/business.js";
+import { CATALOG, catalogItem } from "../../assets/catalog.js";
+import { checkoutEnabled } from "../../lib/payments.js";
 import { inquiryForm } from "../form.js";
 import {
   CTA,
@@ -10,6 +12,10 @@ import {
   icon,
   organizationJsonLd,
 } from "../site.js";
+
+// "Buy now" buttons and payment wording only appear when online checkout is switched on.
+const payOnline = checkoutEnabled();
+const checkoutHref = (slug) => `/checkout?service=${slug}`;
 
 const FAQS = [
   {
@@ -32,10 +38,15 @@ const FAQS = [
     q: "Are there third-party costs on top?",
     a: "<p>Sometimes — domain registration, and the usage cost of the AI provider behind an AI receptionist, for example. We show those at cost and confirm them in writing before work begins. We do not mark them up quietly.</p>",
   },
-  {
-    q: "How do payments work?",
-    a: "<p>Project work is split between a deposit to book the work in and a balance on completion, set out in your proposal. Monthly services are month-to-month with no long tie-in. This website does not take payments.</p>",
-  },
+  payOnline
+    ? {
+        q: "How do payments work?",
+        a: "<p>You can pay for any fixed-price service online by card. Payment is handled by Stripe on its secure checkout page, so your card details never reach us, and you get an email receipt. We then confirm the scope and start date with you in writing. If you would rather pay by invoice, or need a custom quote, just get in touch. Monthly services are month-to-month with no long tie-in.</p>",
+      }
+    : {
+        q: "How do payments work?",
+        a: "<p>Project work is split between a deposit to book the work in and a balance on completion, set out in your proposal. Monthly services are month-to-month with no long tie-in. This website does not take payments.</p>",
+      },
 ];
 
 // The Growth Launch Package leads, itemised against the services it includes;
@@ -44,88 +55,9 @@ const FAQS = [
 // a customer would really make.
 const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
 
-export const services = [
-  {
-    name: "Simple Landing Page",
-    href: "/landing-page-design",
-    price: 99,
-    unit: "one-off",
-    summary: "A sharp one-page site for a new business or a single offer.",
-    features: [
-      "One page, up to six sections",
-      "Mobile-first custom design",
-      "Contact form and click-to-call",
-      "Basic SEO and analytics setup",
-    ],
-  },
-  {
-    name: "Multi-Page Website",
-    href: "/web-design-middlesbrough",
-    price: 179,
-    unit: "one-off",
-    flag: "Most popular",
-    summary: "A complete small-business site that explains your services and wins enquiries.",
-    features: [
-      "Up to five core pages",
-      "Conversion-focused structure and copy",
-      "Local keyword and page mapping",
-      "Analytics and enquiry tracking",
-    ],
-  },
-  {
-    name: "Local SEO + Google Business Profile",
-    href: "/local-seo-middlesbrough",
-    price: 99,
-    unit: "one-off",
-    summary: "Get found when people nearby search for what you do.",
-    features: [
-      "Google Business Profile setup and optimisation",
-      "Service and area page structure",
-      "Local schema and technical setup",
-      "Consistent business details everywhere",
-    ],
-  },
-  {
-    name: "AI Receptionist + Website Chat",
-    href: "/ai-automation-middlesbrough",
-    price: 199,
-    unit: "setup",
-    summary: "Answer enquiries on the phone and on your site, even at 9pm on a Sunday.",
-    features: [
-      "Approved answers on calls and chat",
-      "Captures enquiry details after hours",
-      "Clear handover to your team",
-      "AI provider usage billed at cost",
-    ],
-  },
-  {
-    name: "CRM + Booking Follow-Up Automation",
-    href: "/crm-booking-automation",
-    price: 199,
-    unit: "setup",
-    summary: "Turn enquiries into booked appointments without chasing.",
-    features: [
-      "Every enquiry captured in one place",
-      "Live calendar booking",
-      "Confirmations and reminders",
-      "Consent-based email follow-up",
-    ],
-  },
-  {
-    name: "Website Care",
-    href: "/website-care",
-    price: 49,
-    unit: "/ month",
-    from: true,
-    summary: "Optional. We look after the site so you do not have to.",
-    features: [
-      "Hosting and updates",
-      "Backups and monitoring",
-      "Practical support when you need it",
-      "Month to month, no long tie-in",
-    ],
-  },
-];
+// Every individual service, in catalogue order. Names, prices, descriptions and features all
+// come from assets/catalog.js; the package and the £1 test item are not cards of their own.
+export const services = CATALOG.filter((item) => !item.package && !item.testOnly);
 
 const bundle = {
   name: SYSTEM.package,
@@ -138,6 +70,11 @@ bundle.percent = Math.round((bundle.saving / bundle.separately) * 100);
 const ticks = (features) =>
   `<ul class="tick-list">${features.map((f) => `<li>${icon("check")}<span>${f}</span></li>`).join("")}</ul>`;
 
+const cardButton = (service) =>
+  payOnline && service.purchasable
+    ? `<a class="btn small" href="${checkoutHref(service.slug)}">Buy now</a>`
+    : `<a class="btn small secondary" href="${CTA.href}">Choose this</a>`;
+
 const serviceCards = services
   .map(
     (service) => `<article class="price-card">
@@ -146,9 +83,9 @@ const serviceCards = services
     ${service.flag ? `<p class="price-flag">${service.flag}</p>` : ""}
   </div>
   <p class="price-amount">${service.from ? "<span>from</span>" : ""}<strong>${gbp(service.price)}</strong><span>${service.unit}</span></p>
-  <p>${service.summary}</p>
+  <p>${service.description}</p>
   ${ticks(service.features)}
-  <a class="btn small secondary" href="${CTA.href}">Choose this</a>
+  ${cardButton(service)}
 </article>`,
   )
   .join("\n");
@@ -165,7 +102,11 @@ const bundleCard = `<article class="price-card featured bundle" id="bundle">
       <strong>${gbp(bundle.price)}</strong><span>one-off</span>
     </p>
     <p class="price-saving">You save ${gbp(bundle.saving)} compared with buying these services separately.</p>
-    <a class="btn" href="${CTA.href}">Get the ${bundle.name}${icon("arrow-up")}</a>
+    ${
+      payOnline
+        ? `<div class="button-row"><a class="btn" href="${checkoutHref("growth-launch-package")}">Buy the package${icon("arrow-up")}</a><a class="btn secondary" href="${CTA.href}">Get a free plan first</a></div>`
+        : `<a class="btn" href="${CTA.href}">Get the ${bundle.name}${icon("arrow-up")}</a>`
+    }
   </div>
   <div class="bundle-receipt">
     <p class="bundle-label">What is included</p>
@@ -177,7 +118,7 @@ const bundleCard = `<article class="price-card featured bundle" id="bundle">
 
 // The hero's summary panel, read from the same figures as the cards below.
 const fromPrice = Math.min(...services.filter((s) => s.unit === "one-off").map((s) => s.price));
-const care = services.find((s) => s.href === "/website-care");
+const care = catalogItem("website-care");
 const glance = [
   { label: "Websites and one-off services", note: "Landing page, website or local SEO", from: true, price: gbp(fromPrice), unit: "one-off" },
   { label: bundle.name, note: `Everything connected · Save ${bundle.percent}%`, price: gbp(bundle.price), unit: "one-off", lead: true },
@@ -227,7 +168,11 @@ ${bundleCard}
 ${serviceCards}
             </div>
           </div>
-          <p class="disclosure">All prices exclude VAT. Final scope and any third-party costs are confirmed in writing before work begins. Larger sites, ecommerce and unusual integrations get a written quote. This website does not take payments.</p>
+          <p class="disclosure">All prices exclude VAT. Final scope and any third-party costs are confirmed in writing before work begins. Larger sites, ecommerce and unusual integrations get a written quote. ${
+            payOnline
+              ? "Online payments are processed securely by Stripe; we never see or store your card details."
+              : "This website does not take payments."
+          }</p>
         </div>
       </section>
 

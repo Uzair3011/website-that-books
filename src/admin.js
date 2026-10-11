@@ -90,6 +90,25 @@ export function renderAdminPage(config = adminConfig()) {
           <p class="empty" id="empty">Loading leads…</p>
         </div>
         <p class="footnote" id="footnote"></p>
+
+        <section class="payments-panel" aria-labelledby="payments-title">
+          <div class="panel-head">
+            <div>
+              <h2 id="payments-title">Payments</h2>
+              <p class="muted">Recorded from Stripe webhooks. Stripe is the source of truth; refunds are made in the Stripe dashboard.</p>
+            </div>
+            <div class="segmented" id="payment-mode" role="group" aria-label="Stripe mode"></div>
+          </div>
+          <div class="table-card">
+            <table class="leads payments">
+              <thead>
+                <tr><th scope="col">Created</th><th scope="col">Customer</th><th scope="col">Email</th><th scope="col">Service</th><th scope="col">Amount</th><th scope="col">Status</th><th scope="col">Stripe</th></tr>
+              </thead>
+              <tbody id="payment-rows"></tbody>
+            </table>
+            <p class="empty" id="payments-empty">Loading payments…</p>
+          </div>
+        </section>
       </main>
     </div>
 
