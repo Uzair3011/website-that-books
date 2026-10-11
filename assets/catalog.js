@@ -127,24 +127,6 @@ export const CATALOG = Object.freeze([
       "crm-booking-automation",
     ]),
   }),
-  // A real £1 payment for checking the live flow (Stripe, webhook, Supabase) on the production site.
-  // Hidden: not on /pricing or in the checkout list; it only appears at /checkout?service=test.
-  item({
-    slug: "test",
-    name: "£1 payment check",
-    href: "/checkout?service=test",
-    price: 1,
-    unit: "check",
-    purchasable: true,
-    hidden: true,
-    description:
-      "A real £1 card payment that checks the live payment flow end to end. Not a service.",
-    features: Object.freeze([
-      "A real £1 charge (live mode)",
-      "Checks Stripe, the webhook and Supabase",
-      "Refund it from the Stripe dashboard afterwards",
-    ]),
-  }),
   // Checks the whole payment flow for £1. The API only sells it with a Stripe test key and the
   // database refuses to record it as a live payment, so it can never charge a real card.
   item({
@@ -176,8 +158,8 @@ export const catalogItemByHref = (href) =>
   CATALOG.find((entry) => entry.href === href) || null;
 
 /**
- * What the checkout lists in a given Stripe mode: the test item only exists in test mode, and
- * hidden items (the £1 payment check) are sold only to someone who has their direct link.
+ * What the checkout lists in a given Stripe mode: the test item only exists in test mode, and a
+ * hidden item (none today) is sold only to someone who has its direct link.
  */
 export const purchasableItems = ({ testMode = false } = {}) =>
   CATALOG.filter(

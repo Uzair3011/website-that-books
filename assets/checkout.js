@@ -14,7 +14,7 @@ const gbp = (pence, currency = "gbp") =>
     minimumFractionDigits: pence % 100 ? 2 : 0,
   }).format(pence / 100);
 const unitLabel = (item) =>
-  ({ "one-off": "one-off", setup: "one-off setup", test: "in test mode", check: "one-off" })[item.unit] || item.unit;
+  ({ "one-off": "one-off", setup: "one-off setup", test: "in test mode" })[item.unit] || item.unit;
 const config = window.VELTRA_CONFIG || {};
 const whatsapp = /^\d{7,15}$/.test(config.whatsapp || "")
   ? `https://wa.me/${config.whatsapp}`
@@ -176,7 +176,7 @@ if (result) {
     paid: {
       tone: "success", icon: "paid", eyebrow: "Payment received",
       title: "Thank you. Your order is confirmed.",
-      text: (d) => `We’ve received your payment for ${d.service.name}.${d.email ? " Stripe is emailing your receipt." : ""}`,
+      text: (d) => `We’ve received your payment for ${d.service.name}.${d.email ? " A confirmation is on its way to your inbox." : ""}`,
       next: true, pill: "Paid",
     },
     processing: {

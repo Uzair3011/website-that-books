@@ -13,10 +13,39 @@ import {
   transitionPayment,
 } from "../lib/payments.js";
 import { paymentSettings, verifyStripeEvent } from "../lib/stripe.js";
+import {
+  paymentAdminEmail,
+  paymentConfirmationEmail,
+  paymentReference,
+} from "../lib/email-templates.js";
+import { adminAddress, emailConfigured, sendEmail } from "../lib/email.js";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const id = (value) => (typeof value === "string" ? value : value?.id) || null;
 const iso = (seconds) => new Date(seconds * 1000).toISOString();
+
+// The customer's confirmation and the team's "new order" email, both from the business mailbox
+// (SMTP_FROM_EMAIL), as the booking emails are. Best effort: a mail failure never fails the webhook.
+export async function notifyPaid(payment) {
+  if (!emailConfigured()) return;
+  const test = payment.livemode ? "" : "[TEST] ";
+  const results = await Promise.allSettled([
+    payment.customer_email &&
+      sendEmail({
+        to: payment.customer_email,
+        subject: `${test}Payment confirmed: ${payment.service_name} | Veltra Media`,
+        html: paymentConfirmationEmail(payment),
+      }),
+    sendEmail({
+      to: adminAddress(),
+      subject: `${test}New order: ${payment.service_name} (ref ${paymentReference(payment)})`,
+      html: paymentAdminEmail(payment),
+      replyTo: payment.customer_email || undefined,
+    }),
+  ]);
+  if (results.some((result) => result.status === "rejected"))
+    console.error(`Payment ${paymentReference(payment)}: an order email could not be sent.`);
+}
 
 export function createStripeWebhook({
   settings = paymentSettings,
@@ -25,6 +54,7 @@ export function createStripeWebhook({
   find = findPayment,
   transition = transitionPayment,
   annotate = annotatePayment,
+  notify = notifyPaid,
   now = Date.now,
 } = {}) {
   // A payment row may only be changed by an event from the same Stripe mode.
@@ -54,7 +84,7 @@ export function createStripeWebhook({
         const mismatch =
           session.amount_subtotal !== payment.amount ||
           session.currency !== payment.currency;
-        await transition(payment.id, "paid", {
+        const paid = await transition(payment.id, "paid", {
           ...fromSession,
           amount_total: session.amount_total,
           paid_at: iso(event.created),
@@ -68,6 +98,8 @@ export function createStripeWebhook({
             },
           }),
         });
+        // Only the delivery that actually marked it paid emails, so retries never send twice.
+        if (paid) await notify(paid).catch(() => {});
         break;
       }
       case "checkout.session.async_payment_failed":

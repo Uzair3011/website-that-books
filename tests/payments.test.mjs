@@ -619,28 +619,49 @@ test("the checkout lists the £1 test payment only with a test key", () => {
   assert.ok(unapproved.includes("Online payment isn’t available yet."));
 });
 
-test("the hidden £1 payment check is a real £1 sale in live mode, listed nowhere", async () => {
-  const item = catalogItem("test");
-  assert.equal(amountMinor(item), 100);
-  assert.equal(item.hidden, true);
-  assert.equal(item.testOnly, false);
-  assert.ok(!purchasableItems().some((i) => i.slug === "test"));
-  assert.ok(!purchasableItems({ testMode: true }).some((i) => i.slug === "test"));
-  assert.ok(!pricingCards.some((card) => card.slug === "test"));
-
-  const live = checkoutHarness({
-    settings: () =>
-      paymentSettings({ STRIPE_SECRET_KEY: "rk_live_x", STRIPE_WEBHOOK_SECRET: SECRET, STRIPE_LIVE_PAYMENTS: "enabled" }),
-  });
-  const res = response();
-  await live.handler(order("test", { amount: 99999 }), res);
-  assert.equal(res.statusCode, 200);
-  assert.equal(live.calls.stripe[0].params.line_items[0].price_data.unit_amount, 100);
-  assert.equal(live.calls.stripe[0].params.line_items[0].price_data.product_data.name, "£1 payment check");
+test("the live £1 payment check has been retired", () => {
+  assert.equal(catalogItem("test"), null);
 });
 
-test("the live checkout page and /pricing never show the payment check", () => {
-  const env = { ...ENABLED, STRIPE_SECRET_KEY: "rk_live_x", STRIPE_LIVE_PAYMENTS: "enabled" };
-  assert.ok(!renderWith(env, "/checkout").includes('value="test"'));
-  assert.ok(!renderWith(env, "/pricing").includes("service=test"));
+test("order emails go out once, only when a payment first becomes paid", async () => {
+  const sent = [];
+  const notify = async (row) => sent.push(row);
+  const paid = webhookHarness({ notify });
+  await paid.send(sessionEvent("checkout.session.completed"));
+  assert.equal(sent.length, 1);
+  assert.equal(sent[0].status, "paid");
+
+  // A redelivery, an already-paid payment, a delayed method and a decline send nothing.
+  await webhookHarness({ notify, claimResult: "done" }).send(sessionEvent("checkout.session.completed"));
+  await webhookHarness({ notify, payment: { ...basePayment(), status: "paid" } }).send(sessionEvent("checkout.session.completed"));
+  await webhookHarness({ notify }).send(sessionEvent("checkout.session.completed", { payment_status: "unpaid" }));
+  await webhookHarness({ notify }).send({
+    id: "evt_pf2",
+    type: "payment_intent.payment_failed",
+    data: { object: { id: "pi_1", metadata: { payment_id: PAYMENT_ID }, last_payment_error: {} } },
+  });
+  assert.equal(sent.length, 1);
+
+  // A mail failure never fails the webhook (Stripe would otherwise retry and re-apply it).
+  const failing = webhookHarness({ notify: async () => { throw new Error("smtp down"); } });
+  assert.equal((await failing.send(sessionEvent("checkout.session.completed"))).status, 200);
+});
+
+test("order emails show the order and escape what the customer typed", async () => {
+  const { paymentConfirmationEmail, paymentAdminEmail } = await import("../lib/email-templates.js");
+  const payment = {
+    ...basePayment(),
+    status: "paid",
+    service_name: "Simple Landing Page",
+    customer_name: "<script>alert(1)</script>",
+    business_name: "Ann & Co",
+    amount_total: 9900,
+  };
+  const customer = paymentConfirmationEmail(payment);
+  assert.ok(customer.includes("£99.00") && customer.includes("11111111") && customer.includes("Simple Landing Page"));
+  assert.ok(!customer.includes("<script>") && customer.includes("&lt;script&gt;"));
+  assert.ok(customer.includes("test payment"), "test-mode payments say so");
+  const admin = paymentAdminEmail({ ...payment, livemode: true });
+  assert.ok(admin.includes("Ann &amp; Co") && admin.includes("https://dashboard.stripe.com/payments/pi_123"));
+  assert.ok(!admin.includes("TEST payment"));
 });

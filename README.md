@@ -332,10 +332,7 @@ changing once recorded.
 **Safety switches.** No buy button renders unless `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and
 Supabase are all configured at build time. A live key does nothing without
 `STRIPE_LIVE_PAYMENTS=enabled`. The **£1 test payment** (`/checkout?service=test-payment`) is only
-listed and sold with a test key, and the database refuses it in live mode. Separately, a hidden
-**£1 payment check** (`/checkout?service=test`) is a real £1 sale for checking the live flow on
-production: it is on no page and in no dropdown, and only appears from its direct link. Refund
-it from the Stripe dashboard afterwards; remove it from `assets/catalog.js` if it's no longer wanted.
+listed and sold with a test key, and the database refuses it in live mode.
 
 **New to Stripe or webhooks?** Follow [docs/stripe-setup.md](docs/stripe-setup.md), a
 step-by-step guide from creating the account to a £1 test payment, and on to going live.
