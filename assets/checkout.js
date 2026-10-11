@@ -14,7 +14,7 @@ const gbp = (pence, currency = "gbp") =>
     minimumFractionDigits: pence % 100 ? 2 : 0,
   }).format(pence / 100);
 const unitLabel = (item) =>
-  ({ "one-off": "one-off", setup: "one-off setup", test: "in test mode" })[item.unit] || item.unit;
+  ({ "one-off": "one-off", setup: "one-off setup", test: "in test mode", check: "one-off" })[item.unit] || item.unit;
 const config = window.VELTRA_CONFIG || {};
 const whatsapp = /^\d{7,15}$/.test(config.whatsapp || "")
   ? `https://wa.me/${config.whatsapp}`
@@ -27,7 +27,11 @@ if (form) {
   const submit = $("#checkout-submit");
   const submitLabel = $("#checkout-submit-label");
   const message = $("#checkout-message");
-  // Only what this build sells: the options the server rendered.
+  // A hidden item (the £1 payment check) is offered only to someone who opened its direct link.
+  const hidden = catalogItem(params.get("service"));
+  if (hidden?.hidden && hidden.purchasable)
+    select.append(new Option(`${hidden.name} · ${gbp(amountMinor(hidden))}`, hidden.slug));
+  // Only what this build sells: the options the server rendered, plus a linked hidden item.
   const allowed = new Set([...select.options].map((option) => option.value).filter(Boolean));
   const fields = {
     service: select,
@@ -243,7 +247,8 @@ if (result) {
     $("#result-eyebrow").textContent = state.eyebrow;
     $("#result-title").textContent = state.title;
     $("#result-text").textContent = state.text(data);
-    $("#result-next").hidden = !state.next;
+    const internal = catalogItem(data?.service.slug);
+    $("#result-next").hidden = !state.next || Boolean(internal?.hidden || internal?.testOnly);
     const order = $("#result-order");
     order.hidden = !data;
     if (data) {

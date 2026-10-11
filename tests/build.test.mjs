@@ -257,3 +257,21 @@ test("reviews stay hidden until there are real ones, and each says where it came
   assert.match(html, /Rated 4 out of 5/);
   assert.match(html, /Ann Lee/);
 });
+
+test("every deploy gets fresh asset URLs, including imported modules", async () => {
+  // Browsers may reuse /assets/* for a day, so stale CSS or JS must never pair with new HTML.
+  const { ASSET_VERSION } = await import("../src/asset-version.js");
+  execFileSync(process.execPath, ["scripts/build.mjs"], {
+    env: { ...process.env, SITE_URL: `${ORIGIN}/` },
+    stdio: "pipe",
+  });
+  const index = await readFile(resolve("dist", "index.html"), "utf8");
+  assert.ok(index.includes(`/assets/styles.css?v=${ASSET_VERSION}`));
+  assert.ok(index.includes(`/assets/app.js?v=${ASSET_VERSION}`));
+  assert.ok(!/(src|href)="\/assets\/[\w-]+\.(js|css)"/.test(index), "an unversioned asset URL remains");
+  for (const name of ["app.js", "business.js", "checkout.js"]) {
+    const source = await readFile(resolve("dist", "assets", name), "utf8");
+    for (const [, specifier] of source.matchAll(/\bfrom\s*"(\.\/[^"]+)"/g))
+      assert.match(specifier, new RegExp(`\\?v=${ASSET_VERSION}$`), `${name} imports ${specifier}`);
+  }
+});

@@ -56,8 +56,10 @@ const FAQS = [
 const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
 
 // Every individual service, in catalogue order. Names, prices, descriptions and features all
-// come from assets/catalog.js; the package and the £1 test item are not cards of their own.
-export const services = CATALOG.filter((item) => !item.package && !item.testOnly);
+// come from assets/catalog.js; the package and the £1 test and check items are not cards.
+export const services = CATALOG.filter(
+  (item) => !item.package && !item.testOnly && !item.hidden,
+);
 
 const bundle = {
   name: SYSTEM.package,

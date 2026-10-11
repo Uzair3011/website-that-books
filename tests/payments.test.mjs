@@ -607,7 +607,7 @@ test("the checkout lists the £1 test payment only with a test key", () => {
   const testPage = renderWith(ENABLED, "/checkout");
   assert.ok(testPage.includes('value="test-payment"'));
   assert.ok(testPage.includes('<meta name="robots" content="noindex" />'));
-  assert.ok(testPage.includes('src="/assets/checkout.js"'));
+  assert.match(testPage, /src="\/assets\/checkout\.js\?v=[0-9a-f]{10}"/);
   const livePage = renderWith(
     { ...ENABLED, STRIPE_SECRET_KEY: "sk_live_x", STRIPE_LIVE_PAYMENTS: "enabled" },
     "/checkout",
@@ -617,4 +617,30 @@ test("the checkout lists the £1 test payment only with a test key", () => {
   // A live key without approval sells nothing at all.
   const unapproved = renderWith({ ...ENABLED, STRIPE_SECRET_KEY: "sk_live_x" }, "/checkout");
   assert.ok(unapproved.includes("Online payment isn’t available yet."));
+});
+
+test("the hidden £1 payment check is a real £1 sale in live mode, listed nowhere", async () => {
+  const item = catalogItem("test");
+  assert.equal(amountMinor(item), 100);
+  assert.equal(item.hidden, true);
+  assert.equal(item.testOnly, false);
+  assert.ok(!purchasableItems().some((i) => i.slug === "test"));
+  assert.ok(!purchasableItems({ testMode: true }).some((i) => i.slug === "test"));
+  assert.ok(!pricingCards.some((card) => card.slug === "test"));
+
+  const live = checkoutHarness({
+    settings: () =>
+      paymentSettings({ STRIPE_SECRET_KEY: "rk_live_x", STRIPE_WEBHOOK_SECRET: SECRET, STRIPE_LIVE_PAYMENTS: "enabled" }),
+  });
+  const res = response();
+  await live.handler(order("test", { amount: 99999 }), res);
+  assert.equal(res.statusCode, 200);
+  assert.equal(live.calls.stripe[0].params.line_items[0].price_data.unit_amount, 100);
+  assert.equal(live.calls.stripe[0].params.line_items[0].price_data.product_data.name, "£1 payment check");
+});
+
+test("the live checkout page and /pricing never show the payment check", () => {
+  const env = { ...ENABLED, STRIPE_SECRET_KEY: "rk_live_x", STRIPE_LIVE_PAYMENTS: "enabled" };
+  assert.ok(!renderWith(env, "/checkout").includes('value="test"'));
+  assert.ok(!renderWith(env, "/pricing").includes("service=test"));
 });

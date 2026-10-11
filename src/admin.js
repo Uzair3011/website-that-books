@@ -1,6 +1,7 @@
 // The private lead dashboard at /admin. Rendered like every other page, but with its own
 // chrome and no lead data: the browser signs in and reads leads directly from Supabase, where
 // row-level security only answers the admin account. The URL and anon key are public by design.
+import { asset } from "./asset-version.js";
 import { esc } from "./site.js";
 
 export function adminConfig(env = process.env) {
@@ -26,10 +27,10 @@ export function renderAdminPage(config = adminConfig()) {
     <meta name="theme-color" content="#f4f5ef" />
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="/assets/admin.css" />
-    <script src="/assets/init.js"></script>
+    <link rel="stylesheet" href="${asset("/assets/admin.css")}" />
+    <script src="${asset("/assets/init.js")}"></script>
     <script src="/assets/vendor/supabase.js" defer></script>
-    <script src="/assets/admin.js" defer></script>
+    <script src="${asset("/assets/admin.js")}" defer></script>
   </head>
   <body class="admin" data-supabase-url="${esc(config.url)}" data-supabase-key="${esc(config.key)}">
     <main class="login" id="login" hidden>

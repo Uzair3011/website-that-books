@@ -1,5 +1,6 @@
 // Renders a complete static HTML document. Both the dev server and the
 // production build call this, so every route ships identical chrome.
+import { asset } from "./asset-version.js";
 import { SITE, esc, footer, header, mobileBar } from "./site.js";
 
 const SOCIAL_CARD = "/assets/social-card.png";
@@ -70,14 +71,14 @@ export function renderPage(
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="/assets/styles.css" />
-    <script src="/assets/init.js"></script>
-    <script src="/assets/config.js" defer></script>
-    <script src="/assets/app.js" type="module"></script>
-    <script src="/assets/consent.js" defer></script>
-    ${voice ? '<script src="/assets/voice.js" defer></script>' : ""}
-    ${chat ? '<script src="/assets/chat.js" defer></script>' : ""}
-    ${scripts.map((src) => `<script src="${src}" type="module"></script>`).join("\n    ")}
+    <link rel="stylesheet" href="${asset("/assets/styles.css")}" />
+    <script src="${asset("/assets/init.js")}"></script>
+    <script src="${asset("/assets/config.js")}" defer></script>
+    <script src="${asset("/assets/app.js")}" type="module"></script>
+    <script src="${asset("/assets/consent.js")}" defer></script>
+    ${voice ? `<script src="${asset("/assets/voice.js")}" defer></script>` : ""}
+    ${chat ? `<script src="${asset("/assets/chat.js")}" defer></script>` : ""}
+    ${scripts.map((src) => `<script src="${asset(src)}" type="module"></script>`).join("\n    ")}
     ${ld}
   </head>
   <body${bodyClass ? ` class="${bodyClass}"` : ""}>

@@ -1,6 +1,7 @@
-import { cp, mkdir, writeFile, rm } from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, writeFile, rm } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { renderAdminPage } from "../src/admin.js";
+import { versionImports } from "../src/asset-version.js";
 import { renderPage } from "../src/layout.js";
 import { notFoundPage, pages, utilityPages } from "../src/pages.js";
 import { publicConfig, renderConfigScript } from "../lib/public-config.js";
@@ -40,6 +41,12 @@ await emit("404.html", renderPage(notFoundPage, { origin }));
 await emit("admin.html", renderAdminPage());
 
 await cp("assets", resolve(output, "assets"), { recursive: true });
+// Pages load assets as ?v=<version>; imported modules need the same stamp to escape stale caches.
+for (const name of await readdir(resolve(output, "assets"))) {
+  if (!name.endsWith(".js")) continue;
+  const file = resolve(output, "assets", name);
+  await writeFile(file, versionImports(await readFile(file, "utf8")));
+}
 // Fail the deploy on malformed public contact or booking settings instead of
 // shipping a broken page.
 await writeFile(resolve(output, "assets/config.js"), renderConfigScript());

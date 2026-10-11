@@ -95,6 +95,8 @@ is plain static HTML.
 - `src/site.js`: business facts, navigation, the five services, shared sections and JSON-LD builders.
 - `src/service-page.js`: the shared layout behind the five service pages.
 - `src/form.js`: the enquiry/audit form markup, whose element ids are a contract with `assets/app.js` and `api/`.
+- `src/asset-version.js`: stamps `?v=<content hash>` on asset URLs and module imports, so a
+  deploy never runs new HTML against a browser's cached old CSS or JavaScript.
 - `assets/styles.css`: the design system — tokens, typography scale, layout primitives, reduced motion.
 - `assets/work/*.svg`: the website mockups used as imagery. Items labelled "design example" are not client projects.
 - `assets/app.js`: navigation, contact-link wiring, the med-spa calculator, and enquiry/booking states.
@@ -330,7 +332,10 @@ changing once recorded.
 **Safety switches.** No buy button renders unless `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and
 Supabase are all configured at build time. A live key does nothing without
 `STRIPE_LIVE_PAYMENTS=enabled`. The **£1 test payment** (`/checkout?service=test-payment`) is only
-listed and sold with a test key, and the database refuses it in live mode.
+listed and sold with a test key, and the database refuses it in live mode. Separately, a hidden
+**£1 payment check** (`/checkout?service=test`) is a real £1 sale for checking the live flow on
+production: it is on no page and in no dropdown, and only appears from its direct link. Refund
+it from the Stripe dashboard afterwards; remove it from `assets/catalog.js` if it's no longer wanted.
 
 **New to Stripe or webhooks?** Follow [docs/stripe-setup.md](docs/stripe-setup.md), a
 step-by-step guide from creating the account to a £1 test payment, and on to going live.
