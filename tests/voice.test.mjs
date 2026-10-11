@@ -121,3 +121,11 @@ test("signed URLs come from ElevenLabs with the server key, and anything else is
     globalThis.fetch = original;
   }
 });
+
+test("VOICE_ENABLED=false hides the AI call without removing the key", async () => {
+  const { voiceConfigured } = await import("../api/voice.js");
+  const keys = { ELEVENLABS_API_KEY: "k", ELEVENLABS_AGENT_ID: "a" };
+  assert.equal(voiceConfigured(keys), true);
+  assert.equal(voiceConfigured({ ...keys, VOICE_ENABLED: "true" }), true);
+  assert.equal(voiceConfigured({ ...keys, VOICE_ENABLED: "false" }), false);
+});

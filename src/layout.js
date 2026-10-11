@@ -1,5 +1,6 @@
 // Renders a complete static HTML document. Both the dev server and the
 // production build call this, so every route ships identical chrome.
+import { voiceConfigured } from "../api/voice.js";
 import { asset } from "./asset-version.js";
 import { SITE, esc, footer, header, mobileBar } from "./site.js";
 
@@ -21,9 +22,7 @@ export function renderPage(
   {
     origin = SITE.origin,
     chat = Boolean(process.env.GEMINI_API_KEY),
-    voice = Boolean(
-      process.env.ELEVENLABS_API_KEY && process.env.ELEVENLABS_AGENT_ID,
-    ),
+    voice = voiceConfigured(),
   } = {},
 ) {
   const canonical = origin + path;

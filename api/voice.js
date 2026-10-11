@@ -10,8 +10,14 @@ import {
 
 const limiter = createRateLimiter({ limit: 4, windowMs: 10 * 60 * 1000 });
 
+// VOICE_ENABLED=false switches the "Talk to AI" button and this endpoint off without removing the
+// ElevenLabs key (e.g. while the account is out of credits). Redeploy after changing it.
 export function voiceConfigured(env = process.env) {
-  return Boolean(env.ELEVENLABS_API_KEY && env.ELEVENLABS_AGENT_ID);
+  return Boolean(
+    env.ELEVENLABS_API_KEY &&
+      env.ELEVENLABS_AGENT_ID &&
+      env.VOICE_ENABLED !== "false",
+  );
 }
 
 export async function signedUrl(env = process.env) {
