@@ -6,6 +6,7 @@ import { renderPage } from "../src/layout.js";
 import { notFoundPage, pages, utilityPages } from "../src/pages.js";
 import { publicConfig, renderConfigScript } from "../lib/public-config.js";
 import { bookingSettings } from "../lib/schedule.js";
+import { llmsTxt, robotsTxt, sitemapXml } from "./seo-files.mjs";
 import { vendorFiles } from "./vendor.mjs";
 
 const output = resolve("dist");
@@ -65,19 +66,17 @@ if (missing.length)
   console.warn(`Public contact options not configured: ${missing.join(", ")}.`);
 
 await cp("favicon.ico", resolve(output, "favicon.ico"));
-await writeFile(
-  resolve(output, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${origin}/sitemap.xml\n`,
-);
-await writeFile(
-  resolve(output, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages
-    .map(
-      (page) =>
-        `<url><loc>${origin}${page.path}</loc><priority>${page.path === "/" ? "1.0" : "0.8"}</priority></url>`,
-    )
-    .join("")}</urlset>`,
-);
+await writeFile(resolve(output, "robots.txt"), robotsTxt(origin));
+await writeFile(resolve(output, "sitemap.xml"), sitemapXml(origin));
+await writeFile(resolve(output, "llms.txt"), llmsTxt(origin));
+// IndexNow proves ownership by fetching /<key>.txt, so the key file ships only
+// when a key is configured (see scripts/indexnow.mjs and docs/seo/README.md).
+const indexNowKey = process.env.INDEXNOW_KEY;
+if (indexNowKey) {
+  if (!/^[a-zA-Z0-9-]{8,128}$/.test(indexNowKey))
+    throw new Error("INDEXNOW_KEY must be 8-128 letters, digits or hyphens.");
+  await writeFile(resolve(output, `${indexNowKey}.txt`), indexNowKey);
+}
 console.log(
   `Built ${pages.length} pages into dist/. Canonical URLs and sitemap generated for ${origin}.`,
 );

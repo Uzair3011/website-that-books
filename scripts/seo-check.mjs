@@ -3,17 +3,23 @@
 //
 // Pages are rendered straight from src/layout.js, exactly as scripts/build.mjs
 // does, so this needs no node_modules and no build output.
-import { readFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { renderAdminPage } from "../src/admin.js";
 import { renderPage } from "../src/layout.js";
 import {
   notFoundPage,
   pages,
+  platformRedirect,
   redirectPrefixes,
   redirects,
   resolveRedirect,
   utilityPages,
 } from "../src/pages.js";
+import { SERVICES } from "../src/site.js";
+import { llmsTxt, robotsTxt, sitemapXml } from "./seo-files.mjs";
+
+const root = fileURLToPath(new URL("../", import.meta.url));
 
 export const ORIGIN = "https://www.veltramedia.com";
 
@@ -24,6 +30,7 @@ export const LIMITS = {
   descMin: 120,
   descMax: 158,
   contextualLinks: 3,
+  imageBytes: 150 * 1024,
 };
 
 // Keys that must never appear anywhere in structured data (hard rule 1).
@@ -51,8 +58,13 @@ export function loadSite(overrides = {}) {
     resolveRedirect,
     vercel: JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8")),
     buildSource: readFileSync(new URL("./build.mjs", import.meta.url), "utf8"),
+    adminHtml: renderAdminPage(),
     ...overrides,
   };
+  // Generated from the (possibly overridden) page list, exactly as the build does.
+  site.sitemap = overrides.sitemap ?? sitemapXml(site.origin, site.pages);
+  site.robots = overrides.robots ?? robotsTxt(site.origin);
+  site.llms = overrides.llms ?? llmsTxt(site.origin, site.pages);
   const render = (page) =>
     renderPage(page, { origin: site.origin, chat: false, voice: false });
   site.html = new Map(
@@ -122,6 +134,27 @@ function walk(node, visit) {
     }
 }
 
+const attr = (tag, name) => new RegExp(`\\s${name}="([^"]*)"`).exec(tag)?.[1];
+
+/** One <img>: its src and anything wrong with its alt, size or loading hints. */
+function imageFacts(tag) {
+  const problems = [];
+  const alt = attr(tag, "alt");
+  if (alt === undefined) problems.push("no alt attribute");
+  // An empty alt is right only for a decorative image, and must say so.
+  else if (!alt.trim() && attr(tag, "aria-hidden") !== "true")
+    problems.push('empty alt without aria-hidden="true"');
+  for (const name of ["width", "height"])
+    if (!/^\d+$/.test(attr(tag, name) ?? "")) problems.push(`no numeric ${name}`);
+  const priority = attr(tag, "fetchpriority") === "high";
+  const loading = attr(tag, "loading");
+  if (priority && loading === "lazy") problems.push('fetchpriority="high" on a lazy image');
+  if (!priority && loading !== "lazy")
+    problems.push('below-the-fold image needs loading="lazy" (or fetchpriority="high" if it is the LCP image)');
+  if (!priority && attr(tag, "decoding") !== "async") problems.push('lazy image needs decoding="async"');
+  return { src: attr(tag, "src") ?? "(no src)", priority, problems };
+}
+
 /** Everything the checks (and the audit) need to know about one rendered page. */
 export function analyse(page, html) {
   const title = /<title>([\s\S]*?)<\/title>/.exec(html);
@@ -162,13 +195,7 @@ export function analyse(page, html) {
     words: textOf(main).split(/\s+/).filter(Boolean).length,
     linksAll: new Set(internalLinks(html)),
     linksMain: new Set(internalLinks(main)),
-    imagesMissing: images
-      .map((tag) => ({
-        src: /\ssrc="([^"]*)"/.exec(tag)?.[1] ?? "(no src)",
-        missing: ["alt", "width", "height"].filter((attr) => !new RegExp(`\\s${attr}=`).test(tag)),
-      }))
-      .filter((image) => image.missing.length),
-    imageCount: images.length,
+    images: images.map(imageFacts),
     hasTodo: html.includes("TODO(owner)"),
   };
 }
@@ -198,64 +225,75 @@ export function linkGraph(site, analyses) {
 
 // ───────────────────────── Redirects ─────────────────────────
 
+/** vercel.json redirect rules, minus the apex-to-www host rule, in file order. */
 function vercelRedirects(vercel) {
   const exact = new Map();
   const prefixes = new Map();
+  const rules = [];
   for (const rule of vercel.redirects ?? []) {
-    if (rule.has) continue; // the apex-to-www host rule
-    if (rule.source.endsWith("/:path*"))
-      prefixes.set(rule.source.slice(0, -"/:path*".length) + "/", rule.destination);
+    if (rule.has) continue;
+    const prefix = rule.source.endsWith("/:path*")
+      ? rule.source.slice(0, -"/:path*".length) + "/"
+      : null;
+    rules.push({ ...rule, prefix });
+    if (prefix) prefixes.set(prefix, rule.destination);
     else exact.set(rule.source, rule.destination);
   }
-  return { exact, prefixes };
+  return { exact, prefixes, rules };
 }
 
-function redirectProblems(site) {
+/**
+ * The two tables must hold the same rules, every rule must be able to fire on
+ * Vercel, and every destination must be a live page, so there are no chains.
+ */
+export function redirectProblems(site) {
   const problems = [];
-  const code = site.redirects;
+  const add = (source, detail) => problems.push([source, detail]);
   const v = vercelRedirects(site.vercel);
   const registered = new Set([...site.pages, ...site.utilityPages].map((p) => p.path));
 
-  // vercel.json has cleanUrls on, so Vercel itself 308s /x.html to /x. A `.html`
-  // line in src/pages.js therefore only needs a vercel.json twin when the clean
-  // URL is not a real page or redirect (e.g. /index.html).
-  const impliedByCleanUrls = (source) => {
-    if (!source.endsWith(".html") || !site.vercel.cleanUrls) return false;
-    const stem = source.slice(0, -".html".length);
-    return registered.has(stem) || stem in code;
+  // platformRedirect() in src/pages.js models exactly these two settings.
+  if (site.vercel.cleanUrls !== true) add("vercel.json", "cleanUrls must be true");
+  if (site.vercel.trailingSlash !== false) add("vercel.json", "trailingSlash must be false");
+
+  // The same rules in both places.
+  const compare = (mine, theirs, label, name) => {
+    for (const [source, destination] of Object.entries(mine)) {
+      const actual = theirs.get(source);
+      if (actual === undefined) add(label(source), `in ${name} (→ ${destination}) but not in vercel.json`);
+      else if (actual !== destination) add(label(source), `${name} → ${destination}, vercel.json → ${actual}`);
+    }
+    for (const [source, destination] of theirs)
+      if (!(source in mine)) add(label(source), `in vercel.json (→ ${destination}) but not in ${name}`);
   };
+  compare(site.redirects, v.exact, (source) => source, "src/pages.js redirects");
+  compare(site.redirectPrefixes, v.prefixes, (prefix) => `${prefix}*`, "redirectPrefixes");
 
-  for (const [source, destination] of Object.entries(code)) {
-    if (impliedByCleanUrls(source)) continue;
-    // `/marketing-services/:path*` also matches `/marketing-services` itself.
-    const viaPrefix = [...v.prefixes].find(([prefix]) => source === prefix.slice(0, -1));
-    const actual = v.exact.get(source) ?? viaPrefix?.[1];
-    if (actual === undefined)
-      problems.push([source, `in src/pages.js (→ ${destination}) but not in vercel.json`]);
-    else if (actual !== destination)
-      problems.push([source, `src/pages.js → ${destination}, vercel.json → ${actual}`]);
-  }
-  for (const [source, destination] of v.exact)
-    if (!(source in code)) problems.push([source, `in vercel.json (→ ${destination}) but not in src/pages.js`]);
-  for (const [prefix, destination] of v.prefixes) {
-    const mine = site.redirectPrefixes[prefix];
-    if (mine === undefined) problems.push([`${prefix}*`, `in vercel.json (→ ${destination}) but not in redirectPrefixes`]);
-    else if (mine !== destination) problems.push([`${prefix}*`, `src/pages.js → ${mine}, vercel.json → ${destination}`]);
-  }
-  for (const [prefix, destination] of Object.entries(site.redirectPrefixes))
-    if (!v.prefixes.has(prefix)) problems.push([`${prefix}*`, `in redirectPrefixes (→ ${destination}) but not in vercel.json`]);
+  v.rules.forEach((rule, index) => {
+    if (rule.permanent !== true) add(rule.source, "vercel.json redirect is not permanent");
+    if (!rule.prefix && /[:(*]/.test(rule.source))
+      add(rule.source, "pattern sources other than /prefix/:path* are not modelled in src/pages.js");
+    // Vercel applies the first matching rule, so a prefix rule hides later rules under it.
+    const shadow = v.rules
+      .slice(0, index)
+      .find((earlier) => earlier.prefix && (rule.source + "/").startsWith(earlier.prefix));
+    if (shadow) add(rule.source, `listed after ${shadow.source} in vercel.json, so it never fires`);
+  });
 
-  // Every destination must be a live page, not another redirect (no chains).
-  const targets = [
-    ...Object.entries(code),
-    ...Object.entries(site.redirectPrefixes),
+  const rules = [
+    ...Object.entries(site.redirects),
+    ...Object.entries(site.redirectPrefixes).map(([prefix, to]) => [`${prefix}*`, to]),
     ...v.exact,
-    ...v.prefixes,
   ];
-  for (const [source, destination] of targets)
-    if (!registered.has(destination))
-      problems.push([source, `destination ${destination} is not a registered page`]);
-
+  for (const [source, destination] of rules) {
+    // cleanUrls and trailingSlash redirect these before vercel.json is read.
+    const first = source.endsWith("*") ? null : platformRedirect(source);
+    if (first) add(source, `Vercel redirects this to ${first} first, so the rule never fires; use the clean path`);
+    if (registered.has(source)) add(source, "redirect source is a live page");
+    const next = site.resolveRedirect(destination);
+    if (next !== null) add(source, `destination ${destination} redirects again to ${next} (redirect chain)`);
+    else if (!registered.has(destination)) add(source, `destination ${destination} is not a registered page`);
+  }
   return problems;
 }
 
@@ -314,22 +352,61 @@ export function runChecks(site = loadSite(), { dist = null } = {}) {
     if (a.hasTodo) fail("todo in html", a.path, 'rendered HTML contains "TODO(owner)"');
   }
 
-  // Sitemap. Mirrors scripts/build.mjs, which writes one <url> per entry in `pages`.
-  if (!/pages\s*\.map\(\s*\(page\)\s*=>[\s\S]{0,200}<loc>\$\{origin\}\$\{page\.path\}<\/loc>/.test(site.buildSource))
-    fail("sitemap", "scripts/build.mjs", "sitemap is no longer built from `pages`; update scripts/seo-check.mjs to match");
-  const sitemapPaths = new Set(site.pages.map((page) => page.path));
-  if (dist) for (const path of dist.sitemapPaths) sitemapPaths.add(path);
-  for (const page of site.pages)
-    if (!sitemapPaths.has(page.path)) fail("sitemap missing", page.path, "page is not in the sitemap");
-  for (const path of sitemapPaths) {
-    if (analyses.get(path)?.noindex) fail("sitemap noindex", path, "noindex page is in the sitemap");
-    if (!registered.has(path)) fail("sitemap unknown", path, "sitemap URL is not a registered page");
-    if (site.pages.some((page) => page.path === path) === false && registered.has(path))
-      fail("sitemap utility", path, "utility page is in the sitemap");
-  }
-  if (dist)
+  // Sitemap, robots.txt and llms.txt: build.mjs must write the shared output.
+  for (const [file, fn] of [["robots.txt", "robotsTxt"], ["sitemap.xml", "sitemapXml"], ["llms.txt", "llmsTxt"]])
+    if (!site.buildSource.includes(`writeFile(resolve(output, "${file}"), ${fn}(origin))`))
+      fail("build output", "scripts/build.mjs", `${file} is not written from ${fn}() in scripts/seo-files.mjs`);
+
+  const indexablePaths = new Set(site.pages.map((page) => page.path));
+  const sitemaps = [["sitemap.xml", site.sitemap]];
+  if (dist) sitemaps.push(["dist/sitemap.xml", dist.sitemap]);
+  for (const [label, xml] of sitemaps) {
+    const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, entry]) => ({
+      path: new URL(/<loc>([^<]*)<\/loc>/.exec(entry)?.[1] ?? "/", site.origin).pathname,
+      lastmod: /<lastmod>([^<]*)<\/lastmod>/.exec(entry)?.[1],
+      priority: entry.includes("<priority>"),
+    }));
+    const listed = new Set(urls.map((url) => url.path));
+    for (const url of urls) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(url.lastmod ?? ""))
+        fail("sitemap lastmod", url.path, `${label}: <lastmod> is ${url.lastmod ? `"${url.lastmod}"` : "missing"} (want YYYY-MM-DD)`);
+      if (url.priority) fail("sitemap priority", url.path, `${label}: remove <priority>; search engines ignore it`);
+      if (analyses.get(url.path)?.noindex) fail("sitemap noindex", url.path, `${label}: noindex page is in the sitemap`);
+      if (!registered.has(url.path)) fail("sitemap unknown", url.path, `${label}: URL is not a registered page`);
+      else if (!indexablePaths.has(url.path)) fail("sitemap utility", url.path, `${label}: utility page is in the sitemap`);
+    }
     for (const page of site.pages)
-      if (!dist.sitemapPaths.has(page.path)) fail("sitemap missing", page.path, "page is not in dist/sitemap.xml");
+      if (!listed.has(page.path)) fail("sitemap missing", page.path, `page is not in ${label}`);
+  }
+
+  // /admin must stay crawlable, or crawlers never see its noindex.
+  for (const [, rule] of site.robots.matchAll(/^Disallow:[ \t]*(\S+)/gim))
+    if ("/admin".startsWith(rule)) fail("robots", "/admin", `robots.txt "Disallow: ${rule}" hides the noindex on /admin`);
+  if (!site.robots.includes(`Sitemap: ${site.origin}/sitemap.xml`)) fail("robots", "robots.txt", "no Sitemap line");
+  const adminHeaders = site.vercel.headers?.find((rule) => rule.source === "/admin")?.headers ?? [];
+  if (!adminHeaders.some((h) => h.key === "X-Robots-Tag" && /noindex/.test(h.value)))
+    fail("admin noindex", "/admin", "vercel.json sends no X-Robots-Tag: noindex for /admin");
+  if (!/<meta name="robots" content="[^"]*noindex/.test(site.adminHtml))
+    fail("admin noindex", "/admin", "the admin page has no robots noindex meta tag");
+
+  // 404: Vercel serves dist/404.html with a real 404 status unless a catch-all
+  // rewrite answers first. It must be noindex and lead to every service page.
+  const notFound = analyses.get(site.notFoundPage.path);
+  if (!notFound.noindex) fail("404", site.notFoundPage.path, "404 page is not noindex");
+  for (const service of SERVICES)
+    if (!notFound.linksAll.has(service.href)) fail("404", site.notFoundPage.path, `no link to ${service.href}`);
+  if (site.vercel.routes) fail("404", "vercel.json", "legacy `routes` bypass cleanUrls and the 404 page");
+  for (const rule of site.vercel.rewrites ?? [])
+    if (/^\/(\(|:)/.test(rule.source))
+      fail("404", "vercel.json", `catch-all rewrite ${rule.source} would answer unknown URLs with 200`);
+
+  // llms.txt may only point at live, indexable pages.
+  for (const [, url] of site.llms.matchAll(/(https?:\/\/[^\s)]+)/g)) {
+    const path = new URL(url).pathname;
+    if (!url.startsWith(site.origin) || !indexablePaths.has(path))
+      fail("llms.txt", path, `${url} is not an indexable page on ${site.origin}`);
+  }
+  if (site.llms.includes("TODO")) fail("llms.txt", "llms.txt", "contains TODO text");
 
   // Links.
   for (const a of analyses.values())
@@ -352,12 +429,28 @@ export function runChecks(site = loadSite(), { dist = null } = {}) {
       warn("breadcrumb", page.path, "no BreadcrumbList JSON-LD");
   }
 
-  for (const a of analyses.values())
-    for (const image of a.imagesMissing)
-      warn("image attributes", a.path, `${image.src} missing ${image.missing.join(", ")}`);
+  // Images: complete attributes, at most one high-priority (LCP) image, and
+  // the homepage hero loads first. Heavy files are reported, not failed.
+  const weighed = new Set();
+  for (const a of analyses.values()) {
+    for (const image of a.images) {
+      for (const problem of image.problems) fail("image", a.path, `${image.src}: ${problem}`);
+      const file = image.src.startsWith("/assets/") ? root + image.src.slice(1).split("?")[0] : null;
+      if (file && !weighed.has(file) && existsSync(file)) {
+        weighed.add(file);
+        const bytes = statSync(file).size;
+        if (bytes > LIMITS.imageBytes)
+          warn("image weight", image.src, `${Math.round(bytes / 1024)} KB (aim under ${LIMITS.imageBytes / 1024} KB)`);
+      }
+    }
+    const high = a.images.filter((image) => image.priority).length;
+    if (high > 1) fail("image", a.path, `${high} images have fetchpriority="high" (want at most 1)`);
+  }
+  if (!analyses.get("/")?.images[0]?.priority)
+    fail("image", "/", 'the homepage hero (first image) must load eagerly with fetchpriority="high"');
 
   // Redirect tables.
-  for (const [source, detail] of redirectProblems(site)) fail("redirect mismatch", source, detail);
+  for (const [source, detail] of redirectProblems(site)) fail("redirect", source, detail);
 
   return { failures, warnings, analyses, graph: { inAll, inMain } };
 }
@@ -379,8 +472,7 @@ function main() {
   const verbose = process.argv.includes("--verbose");
   let dist = null;
   if (process.argv.includes("--dist")) {
-    const xml = readFileSync(new URL("../dist/sitemap.xml", import.meta.url), "utf8");
-    dist = { sitemapPaths: new Set([...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname)) };
+    dist = { sitemap: readFileSync(new URL("../dist/sitemap.xml", import.meta.url), "utf8") };
   }
   const { failures, warnings, analyses } = runChecks(loadSite(), { dist });
   if (verbose && warnings.length) {

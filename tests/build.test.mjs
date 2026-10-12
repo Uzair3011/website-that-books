@@ -55,9 +55,26 @@ test("the production build emits every route with a correct canonical, and a mat
     assert.ok(!sitemap.includes(`<loc>${ORIGIN}${page.path}</loc>`), page.path);
   }
 
+  // Every URL carries a real date and nothing search engines ignore.
+  const entries = [...sitemap.matchAll(/<url>(.*?)<\/url>/g)].map((match) => match[1]);
+  assert.equal(entries.length, pages.length);
+  for (const entry of entries)
+    assert.match(entry, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/, entry);
+  assert.ok(!sitemap.includes("<priority>"));
+
   const robots = await readFile(resolve("dist", "robots.txt"), "utf8");
   assert.match(robots, /Disallow: \/api\//);
   assert.match(robots, new RegExp(`Sitemap: ${ORIGIN}/sitemap.xml`));
+  // /admin stays crawlable so its noindex is seen.
+  assert.ok(!/Disallow: \/admin/.test(robots));
+
+  const llms = await readFile(resolve("dist", "llms.txt"), "utf8");
+  assert.match(llms, /^# Veltra Media\n/);
+  for (const [, url] of llms.matchAll(/\((https:\/\/[^)]+)\)/g))
+    assert.ok(pages.some((page) => `${ORIGIN}${page.path}` === url), `llms.txt links to ${url}`);
+
+  const home = await readFile(resolve("dist", "index.html"), "utf8");
+  assert.match(home, /<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" \/>/);
 });
 
 test("the build refuses a non-HTTPS or path-bearing SITE_URL", () => {

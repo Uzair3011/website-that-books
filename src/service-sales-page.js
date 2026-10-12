@@ -23,7 +23,7 @@ const headingClass = (text) => (text.length > 90 ? ' class="sp-long"' : "");
 const media = (visual) =>
   typeof visual === "string"
     ? visual
-    : `<img src="${visual.src}" width="${visual.width}" height="${visual.height}" alt="${visual.alt}" decoding="async"${visual.eager ? ' fetchpriority="high"' : ' loading="lazy"'} />`;
+    : `<img src="${visual.src}" width="${visual.width}" height="${visual.height}" alt="${visual.alt}" decoding="async"${visual.eager ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"'} />`;
 
 const stat = (item) =>
   `<div class="sp-stat${item.value ? "" : " wide"}"><dt>${item.label}</dt><dd>${
@@ -219,7 +219,7 @@ export function serviceSalesPage({
       </section>
 
       <section class="band-dark sp-close">
-        <img class="sp-close-photo" src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="" />
+        <img class="sp-close-photo" src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <div class="container sp-close-grid">
           <div>
             <p class="eyebrow">Next step</p>

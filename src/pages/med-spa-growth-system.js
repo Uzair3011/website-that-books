@@ -81,7 +81,7 @@ const body = `      <section class="hero">
               <p class="hero-note">The Growth Launch Package, £499 one-off, and you can buy any part of it on its own. <a href="/pricing" style="color: inherit; text-decoration: underline">See the full price list.</a></p>
             </div>
             <figure class="hero-media reveal">
-              <img src="/assets/work/example-clinic.svg" width="1280" height="900" alt="A clinic website design with a treatment list and a live booking panel showing selectable dates and times." />
+              <img src="/assets/work/example-clinic.svg" width="1280" height="900" loading="eager" fetchpriority="high" alt="A clinic website design with a treatment list and a live booking panel showing selectable dates and times." />
             </figure>
           </div>
         </div>

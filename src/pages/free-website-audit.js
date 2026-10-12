@@ -43,7 +43,7 @@ const body = `      <section class="hero">
               <a class="btn" href="#audit-form">Get my free website plan${icon("arrow-up")}</a>
             </div>
             <figure class="hero-media reveal">
-              <img src="/assets/work/audit-deliverable.svg" width="1000" height="760" alt="What the audit delivers: a short screen-recorded video review beside a one-page written summary listing three prioritised improvements." />
+              <img src="/assets/work/audit-deliverable.svg" width="1000" height="760" loading="eager" fetchpriority="high" alt="What the audit delivers: a short screen-recorded video review beside a one-page written summary listing three prioritised improvements." />
             </figure>
           </div>
         </div>

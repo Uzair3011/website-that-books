@@ -52,7 +52,7 @@ export function servicePage({
               </div>
             </div>
             <figure class="hero-media reveal">
-              <img src="${image.src}" width="${image.width}" height="${image.height}" alt="${image.alt}" />
+              <img src="${image.src}" width="${image.width}" height="${image.height}" loading="eager" fetchpriority="high" alt="${image.alt}" />
             </figure>
           </div>
         </div>

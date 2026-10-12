@@ -183,6 +183,8 @@ const body = `      <section class="hero hero-feature">
                 src="/assets/work/hero-poster.png"
                 width="1200"
                 height="880"
+                loading="eager"
+                fetchpriority="high"
                 alt="A local electrical contractor's website built by Veltra, shown on a laptop and a phone."
               />
               <span class="hero-tag t1">Clear calls to action</span>
@@ -302,7 +304,7 @@ ${EXPLORE.map(
             </div>
             <div class="local-side">
               <figure class="local-map reveal">
-                <img src="/assets/work/tees-transporter-bridge.webp" width="1600" height="1047" loading="lazy" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
+                <img src="/assets/work/tees-transporter-bridge.webp" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
               </figure>
               <div class="local-group">
                 <p class="local-label">Popular pages</p>
