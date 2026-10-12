@@ -2,6 +2,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/(.*)",
@@ -9,9 +10,8 @@
       "destination": "https://www.veltramedia.com/$1",
       "permanent": true
     },
-    { "source": "/index.html", "destination": "/", "permanent": true },
     {
-      "source": "/website-that-books-fixed.html",
+      "source": "/website-that-books-fixed",
       "destination": "/",
       "permanent": true
     },
@@ -38,7 +38,12 @@
     },
     {
       "source": "/ai-receptionist",
-      "destination": "/ai-automation-middlesbrough",
+      "destination": "/ai-receptionist-middlesbrough",
+      "permanent": true
+    },
+    {
+      "source": "/ai-automation-middlesbrough",
+      "destination": "/ai-receptionist-middlesbrough",
       "permanent": true
     },
     {
@@ -48,6 +53,11 @@
     },
     { "source": "/contact-us", "destination": "/contact", "permanent": true },
     { "source": "/about-us", "destination": "/about", "permanent": true },
+    {
+      "source": "/marketing-services",
+      "destination": "/services",
+      "permanent": true
+    },
     {
       "source": "/marketing-services/web-design",
       "destination": "/web-design-middlesbrough",

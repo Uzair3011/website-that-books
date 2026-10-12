@@ -91,8 +91,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 46rem">
             <p class="eyebrow">How it works</p>
-            <h1>From first conversation to live website.</h1>
-            <p class="lede">Four clear steps, with a written scope and a fixed price before any work begins, a private preview while it is built, and a website you own at the end.</p>
+            <h1>Our website design process, from first call to launch</h1>
+            <p class="lede"><strong>From first conversation to live website.</strong> Four clear steps, with a written scope and a fixed price before any work begins, a private preview while it is built, and a website you own at the end.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/services">Explore our services</a>
@@ -189,9 +189,9 @@ ${finalCta()}`;
 
 export default {
   path: "/how-it-works",
-  title: "How It Works | Our Website Design Process | Veltra Media",
+  title: "Our Website Design Process | Veltra Media",
   description:
-    "How Veltra Media builds a website: a written scope and fixed price first, a private preview during the build, a launch with analytics connected, and a site you own. Typical timelines included.",
+    "Our website design process: a written scope and fixed price first, a private preview during the build, launch with analytics connected, and typical timelines.",
   jsonLd: [
     organizationJsonLd(),
     faqJsonLd(FAQS),

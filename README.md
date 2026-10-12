@@ -113,7 +113,7 @@ is plain static HTML.
 ### Routes
 
 `/` `/services` `/how-it-works` `/web-design-middlesbrough` `/local-seo-middlesbrough`
-`/landing-page-design` `/ai-automation-middlesbrough` `/crm-booking-automation` `/work` `/about`
+`/landing-page-design` `/ai-receptionist-middlesbrough` `/crm-booking-automation` `/work` `/about`
 `/free-website-audit` `/contact` `/resources` `/pricing` `/med-spa-growth-system`
 `/privacy` `/terms`, plus a `noindex` 404 and the `noindex` checkout routes
 (`/checkout`, `/checkout/success`, `/checkout/cancelled`).

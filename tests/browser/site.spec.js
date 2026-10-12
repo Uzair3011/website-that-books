@@ -8,7 +8,7 @@ const ROUTES = [
   "/web-design-middlesbrough",
   "/local-seo-middlesbrough",
   "/landing-page-design",
-  "/ai-automation-middlesbrough",
+  "/ai-receptionist-middlesbrough",
   "/crm-booking-automation",
   "/work",
   "/about",
@@ -24,6 +24,8 @@ const ROUTES = [
   "/google-business-profile",
   "/website-care",
 ];
+
+const UNBRANDED_TITLES = new Set(["/google-business-profile"]);
 
 /** Waits for entrance animations to finish so audits see the settled page. */
 async function settle(page) {
@@ -128,7 +130,9 @@ test("all pages render, have no overflow or runtime errors, and local links reso
     )
       dollarPages.push(path);
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page).toHaveTitle(/Veltra Media/);
+    // docs/seo/keyword-map.md drops the brand from a title only where the
+    // keyword alone fills it; every other title must name Veltra Media.
+    if (!UNBRANDED_TITLES.has(path)) await expect(page).toHaveTitle(/Veltra Media/);
     // A malformed SVG renders as alt text with naturalWidth 0, which looks
     // like a broken page but throws no error. A lazy image that has not been
     // requested yet reports complete === false, so it is not a failure.
@@ -223,12 +227,20 @@ test("retired med-spa URLs and legacy paths redirect to their replacements", asy
     "/med-spa-website-design": "/med-spa-growth-system",
     "/med-spa-online-booking": "/med-spa-growth-system",
     "/landing-pages": "/landing-page-design",
+    "/ai-automation-middlesbrough": "/ai-receptionist-middlesbrough",
+    "/ai-receptionist": "/ai-receptionist-middlesbrough",
     "/website-that-books-fixed.html": "/",
   };
+  // Follow hop by hop, as Vercel answers: cleanUrls first turns `/x.html` into
+  // `/x`, then the vercel.json rule moves `/x` on. Every hop must be a 308.
   for (const [from, to] of Object.entries(moved)) {
-    const response = await request.get(from, { maxRedirects: 0 });
-    expect(response.status(), from).toBe(308);
-    expect(response.headers().location, from).toBe(to);
+    let at = from;
+    for (let hop = 0; hop < 3 && at !== to; hop++) {
+      const response = await request.get(at, { maxRedirects: 0 });
+      expect(response.status(), at).toBe(308);
+      at = response.headers().location;
+    }
+    expect(at, from).toBe(to);
   }
 });
 

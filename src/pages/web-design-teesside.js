@@ -2,13 +2,13 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/web-design-teesside",
-  title: "Web Design Teesside | Websites for Tees Valley Businesses | Veltra Media",
+  title: "Web Design Teesside & Tees Valley | Veltra Media",
   description:
-    "Web design for businesses across Teesside and the Tees Valley: Middlesbrough, Stockton-on-Tees, Redcar, Billingham and Hartlepool. Clear packages from £99 and a website you own.",
+    "Web design for businesses across Teesside and the Tees Valley, including Stockton-on-Tees, Redcar, Billingham and Hartlepool. Websites from £99, yours to own.",
   breadcrumbName: "Web design Teesside",
   serviceName: "Web design",
   eyebrow: "Website design · Teesside & the Tees Valley",
-  h1: "Web design for businesses across Teesside and the Tees Valley.",
+  h1: "Web design for businesses across Teesside and the Tees Valley",
   lede: "Conversion-focused websites for service businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, with clear packages from £99.",
   image: {
     src: "/assets/work/teesside-map.svg",
@@ -22,6 +22,16 @@ export default servicePage({
       "Plenty of Teesside businesses do not serve one town. An electrician, a clinic or a cleaning company might work across Middlesbrough, Stockton, Redcar and Hartlepool, and customers in each place search for them differently.",
       "A good website makes that obvious. It says plainly where you work, gives each important service and area its own page where that helps, and makes sure Google can tell what you offer and where you offer it.",
       "We are based in the area and work across it. Meetings can be in person around Teesside or online, whichever suits you, and we also work with businesses elsewhere in the UK.",
+    ],
+  },
+  local: {
+    eyebrow: "Local search across Teesside",
+    heading: "How customers across Teesside search, town by town.",
+    body: [
+      "Teesside is several towns, and people search with their own. A customer in Hartlepool types “plumber Hartlepool”, not “plumber Teesside”. Billingham sits within the Borough of Stockton-on-Tees, so people there may use either name, and Redcar searches can bring up businesses from across Redcar and Cleveland. Hartlepool is part of the Tees Valley, but many there would not call it Teesside.",
+      "A website that serves several towns names the ones you genuinely cover on the page, not only in the footer. It gives a town its own page only when there is something real to say, because pages that just swap the town name count as doorway pages under Google’s spam policies. And it matches your Google Business Profile service areas, name and phone number.",
+      'We are based in Middlesbrough and meet clients around Teesside or online. If Middlesbrough is your main market, start with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. To be found more widely, add <a href="/local-seo-middlesbrough">local SEO across Teesside</a> and <a href="/google-business-profile">Google Business Profile optimisation</a>.',
+      'Every package is on the <a href="/pricing">published price list</a>, or get a <a href="/free-website-audit">free website audit</a> first.',
     ],
   },
   includedHeading: "How we handle a wider area",
@@ -87,20 +97,28 @@ export default servicePage({
   },
   faqs: [
     {
-      q: "Which areas do you cover?",
-      a: "<p>Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley. We also work remotely with businesses elsewhere in the UK.</p>",
+      q: "Do you cover Stockton, Hartlepool, Redcar and Billingham?",
+      a: "<p>Yes. We work with businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, and meet in person around Teesside or online. We do not publish a public address, because there is no premises for customers to visit. We also work remotely with businesses elsewhere in the UK.</p>",
+    },
+    {
+      q: "How much does a website cost?",
+      a: '<p>A Simple Landing Page is £99 for a focused one-page site, and a Multi-Page Website is £179 for up to five pages, both one-off and excluding VAT. Larger sites with several town or service pages get a written quote. Care is optional, from £49 a month. Every price is on the <a href="/pricing">pricing page</a>.</p>',
+    },
+    {
+      q: "How long will it take?",
+      a: "<p>Around seven working days for a one-page site, ten to fifteen working days for up to five pages, and fifteen to twenty working days for up to ten pages with location pages. Timelines run from content approval and are confirmed in your written proposal.</p>",
     },
     {
       q: "Do I need a separate page for each town?",
       a: "<p>Not always. A smaller business can often say where it works on one or two pages. If several towns or services matter to you, dedicated pages help, and local SEO setup includes that structure. We will recommend what fits rather than adding pages for the sake of it.</p>",
     },
     {
-      q: "Can we meet in person?",
-      a: "<p>Yes, around Teesside, or online if that is easier. We do not publish a public address, because there is no premises for customers to visit.</p>",
+      q: "Who owns the website?",
+      a: "<p>You do, once the agreed project fees are paid. That includes the original content created for it, subject only to any third-party software licences explained in your proposal. A care plan is never a condition of keeping your own website.</p>",
     },
     {
-      q: "Will the website rank on Google?",
-      a: "<p>No honest company can guarantee a ranking. We build the technical and on-page foundations correctly, connect the relevant Google tools and can set up local SEO and your Google Business Profile if you want to improve visibility.</p>",
+      q: "Will the website rank on Google, and how is progress measured?",
+      a: '<p>No honest company can guarantee a ranking. We build the technical and on-page foundations correctly and connect Google Search Console and analytics at launch. Search Console shows which searches, including town names, your pages appear for and how often people click; analytics shows which pages bring in enquiries. <a href="/local-seo-middlesbrough">Local SEO</a> and your Google Business Profile can be added to improve visibility.</p>',
     },
   ],
   relatedItems: [
@@ -118,6 +136,11 @@ export default servicePage({
       href: "/google-business-profile",
       label: "Google Business Profile",
       text: "Profile and local SEO setup for £99.",
+    },
+    {
+      href: "/website-care",
+      label: "Website maintenance",
+      text: "Hosting, updates, backups and support from £49 a month, if you want it.",
     },
   ],
 });

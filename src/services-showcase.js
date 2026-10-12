@@ -49,8 +49,8 @@ export const SHOWCASE_SERVICES = [
   {
     title: "AI receptionist and website chat",
     image: "service-ai-reception",
-    text: "<strong>Never Miss a Lead at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, you get the job, not the guy who opens at 9 AM.",
-    href: "/ai-automation-middlesbrough",
+    text: "<strong>Answer Enquiries at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, they get an answer straight away instead of waiting until morning.",
+    href: "/ai-receptionist-middlesbrough",
     cta: "Explore AI reception",
     tone: "coral",
     note: "Replies, even after hours",

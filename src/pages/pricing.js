@@ -132,8 +132,8 @@ const body = `      <section class="hero">
           <div class="hero-grid">
           <div class="hero-copy">
             <p class="eyebrow">Pricing</p>
-            <h1>Know what it costs before the work starts.</h1>
-            <p class="lede">Every service below can be bought on its own. Start with the one that will make the biggest difference, and add the others only when they earn their place.</p>
+            <h1>Website costs in Middlesbrough, with every price published</h1>
+            <p class="lede"><strong>Know what it costs before the work starts.</strong> Every service below can be bought on its own. Start with the one that will make the biggest difference, and add the others only when they earn their place.</p>
             <p class="hero-support"><span>Price agreed in writing first</span><span>No hidden mark-ups</span><span>No long tie-ins</span></p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
@@ -222,9 +222,9 @@ ${finalCta({
 
 export default {
   path: "/pricing",
-  title: "Pricing | Websites from £99, Services Sold Separately | Veltra Media",
+  title: "Website Cost in Middlesbrough | From £99 | Veltra Media",
   description:
-    "Clear prices for web design, local SEO, landing pages, AI reception and booking automation in Middlesbrough and Teesside. Websites from £99. Every service can be bought on its own.",
+    "Website costs in Middlesbrough: landing page £99, multi-page website £179, local SEO £99, AI receptionist £199 setup, website care from £49 a month. Ex VAT.",
   jsonLd: [
     organizationJsonLd(),
     faqJsonLd(FAQS),

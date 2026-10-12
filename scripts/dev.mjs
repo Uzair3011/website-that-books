@@ -14,14 +14,10 @@ import leads from "../api/leads.js";
 import status from "../api/status.js";
 import { renderConfigScript } from "../lib/public-config.js";
 import { renderAdminPage } from "../src/admin.js";
+import { llmsTxt, sitemapXml } from "./seo-files.mjs";
 import { vendorFiles } from "./vendor.mjs";
 import { renderPage } from "../src/layout.js";
-import {
-  notFoundPage,
-  pageByPath,
-  pages,
-  resolveRedirect,
-} from "../src/pages.js";
+import { notFoundPage, pageByPath, resolveRedirect } from "../src/pages.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const port = Number(process.env.PORT || 4174);
@@ -37,9 +33,8 @@ const mime = {
   ".txt": "text/plain",
   ".xml": "application/xml",
 };
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages
-  .map((page) => `<url><loc>${origin}${page.path}</loc></url>`)
-  .join("")}</urlset>`;
+const sitemap = sitemapXml(origin);
+const llms = llmsTxt(origin);
 
 const server = createServer(async (req, res) => {
   res.status = (code) => {
@@ -54,7 +49,8 @@ const server = createServer(async (req, res) => {
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
-    const pathname = decodeURIComponent(url.pathname).replace(/\/$/, "") || "/";
+    const rawPath = decodeURIComponent(url.pathname);
+    const pathname = rawPath.replace(/\/$/, "") || "/";
     if (pathname === "/api/status") return status(req, res);
     if (pathname === "/api/availability") return await availability(req, res);
     if (pathname === "/api/checkout-status") return await checkoutStatus(req, res);
@@ -100,7 +96,8 @@ const server = createServer(async (req, res) => {
       req.body = Buffer.concat(chunks).toString();
       return await handler(req, res);
     }
-    const redirectTo = resolveRedirect(pathname);
+    // The raw path, so `/x/` and `/x.html` get the same 308 they get on Vercel.
+    const redirectTo = resolveRedirect(rawPath);
     if (redirectTo) {
       res.writeHead(308, { Location: redirectTo + url.search });
       return res.end();
@@ -130,6 +127,10 @@ const server = createServer(async (req, res) => {
     if (pathname === "/sitemap.xml") {
       res.setHeader("Content-Type", mime[".xml"]);
       return res.end(req.method === "HEAD" ? undefined : sitemap);
+    }
+    if (pathname === "/llms.txt") {
+      res.setHeader("Content-Type", `${mime[".txt"]}; charset=utf-8`);
+      return res.end(req.method === "HEAD" ? undefined : llms);
     }
 
     const file =

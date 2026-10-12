@@ -4,7 +4,7 @@ import about from "./pages/about.js";
 import checkout from "./pages/checkout.js";
 import checkoutCancelled from "./pages/checkout-cancelled.js";
 import checkoutSuccess from "./pages/checkout-success.js";
-import aiAutomation from "./pages/ai-automation-middlesbrough.js";
+import aiReceptionist from "./pages/ai-receptionist-middlesbrough.js";
 import contact from "./pages/contact.js";
 import cookiePolicy from "./pages/cookie-policy.js";
 import crmBooking from "./pages/crm-booking-automation.js";
@@ -34,7 +34,7 @@ export const pages = [
   localSeo,
   googleBusinessProfile,
   landingPages,
-  aiAutomation,
+  aiReceptionist,
   crmBooking,
   websiteCare,
   work,
@@ -55,26 +55,27 @@ export const notFoundPage = notFound;
 /** Built and served like any page, but noindex and never in the sitemap. */
 export const utilityPages = [checkout, checkoutSuccess, checkoutCancelled];
 
-/** Routes that must 308/301 to a current page. */
+/**
+ * Routes that must 308 to a current page. vercel.json `redirects` holds
+ * exactly the same rules (scripts/seo-check.mjs fails if they drift), and every
+ * destination is a live page, never another redirect.
+ *
+ * No source ends in `.html`, `/index` or "/": Vercel's cleanUrls and
+ * trailingSlash run before vercel.json redirects, so such a rule could never
+ * fire there. `platformRedirect` models those hops instead.
+ */
 export const redirects = {
-  "/index.html": "/",
-  "/website-that-books-fixed.html": "/",
-  "/contact.html": "/contact",
-  "/privacy.html": "/privacy",
+  "/website-that-books-fixed": "/",
   "/privacy-policy": "/privacy",
-  "/terms.html": "/terms",
-  "/pricing.html": "/pricing",
-  "/about.html": "/about",
   // The three former med-spa landing pages consolidate into one specialist page.
   "/ai-receptionist-for-med-spas": "/med-spa-growth-system",
-  "/ai-receptionist-for-med-spas.html": "/med-spa-growth-system",
   "/med-spa-website-design": "/med-spa-growth-system",
-  "/med-spa-website-design.html": "/med-spa-growth-system",
   "/med-spa-online-booking": "/med-spa-growth-system",
-  "/med-spa-online-booking.html": "/med-spa-growth-system",
   // Routes named in the strategy brief that are served by an existing page.
   "/landing-pages": "/landing-page-design",
-  "/ai-receptionist": "/ai-automation-middlesbrough",
+  "/ai-receptionist": "/ai-receptionist-middlesbrough",
+  // Renamed so the URL matches what the page sells (docs/seo/keyword-map.md section 2).
+  "/ai-automation-middlesbrough": "/ai-receptionist-middlesbrough",
   "/booking-follow-up-automation": "/crm-booking-automation",
   // Pages from the previous Veltra site that are still indexed in Google.
   "/contact-us": "/contact",
@@ -87,7 +88,24 @@ export const redirects = {
 /** Any other old /marketing-services/* page lands on the services overview. */
 export const redirectPrefixes = { "/marketing-services/": "/services" };
 
+/**
+ * The 308s Vercel sends itself, before vercel.json redirects run (in this
+ * order): cleanUrls turns `/x/index(.html)` into `/x` and `/x.html` into `/x`,
+ * then trailingSlash: false turns `/x/` into `/x`.
+ */
+export function platformRedirect(pathname) {
+  const index = /^\/(?:(.+)\/)?index(?:\.html)?\/?$/.exec(pathname);
+  if (index) return `/${index[1] ?? ""}`;
+  const html = /^\/(.*)\.html\/?$/.exec(pathname);
+  if (html) return `/${html[1]}`;
+  if (pathname.length > 1 && pathname.endsWith("/")) return pathname.slice(0, -1);
+  return null;
+}
+
+/** The next hop for `pathname`, exactly as Vercel would answer it, or null. */
 export function resolveRedirect(pathname) {
+  const platform = platformRedirect(pathname);
+  if (platform) return platform;
   if (redirects[pathname]) return redirects[pathname];
   for (const [prefix, to] of Object.entries(redirectPrefixes))
     if (pathname.startsWith(prefix)) return to;

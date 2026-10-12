@@ -13,8 +13,8 @@ const payments = checkoutEnabled()
 const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Terms</p>
-          <h1>The offer, in plain English.</h1>
-          <p class="lede">Last updated 29 September 2026. These are the advertised terms. Your signed proposal or statement of work confirms the exact scope, acceptance checks, delivery schedule and any agreed variations before payment.</p>
+          <h1>Terms and conditions</h1>
+          <p class="lede"><strong>The offer, in plain English.</strong> Last updated 29 September 2026. These are the advertised terms. Your signed proposal or statement of work confirms the exact scope, acceptance checks, delivery schedule and any agreed variations before payment.</p>
         </div>
       </section>
 
@@ -60,9 +60,9 @@ const body = `      <section class="hero">
 
 export default {
   path: "/terms",
-  title: "Terms | Veltra Media",
+  title: "Terms and Conditions | Veltra Media",
   description:
-    "Veltra Media's advertised terms: service pricing in GBP, scope and revisions, ownership, third-party costs, the med-spa growth system scope, and the launch delivery guarantee.",
+    "Veltra Media's terms and conditions: GBP pricing, scope and revisions, ownership, third-party costs, the med-spa growth system and the launch guarantee.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

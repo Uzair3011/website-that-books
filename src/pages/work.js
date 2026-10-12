@@ -45,8 +45,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 44rem">
             <p class="eyebrow">Work</p>
-            <h1>Work that is easy to judge.</h1>
-            <p class="lede">Good work should not need vague claims. Below is what we build and how we build it — clearly labelled, with nothing dressed up as a client result it is not.</p>
+            <h1>Our web design work, including concept designs</h1>
+            <p class="lede"><strong>Work that is easy to judge.</strong> Good work should not need vague claims. Below is what we build and how we build it — clearly labelled, with nothing dressed up as a client result it is not.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/pricing">See prices</a>
@@ -88,9 +88,9 @@ ${finalCta({
 
 export default {
   path: "/work",
-  title: "Our Work | Web Design & Local SEO Examples | Veltra Media",
+  title: "Web Design Portfolio, Teesside | Veltra Media",
   description:
-    "Veltra Media projects: a live med-spa booking system, plus concept designs for a trades website, a single-offer landing page and a local search presence.",
+    "Veltra Media's web design portfolio: a live med-spa booking system, plus clearly labelled concept designs for a trades site, a landing page and local search.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

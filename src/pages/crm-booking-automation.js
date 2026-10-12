@@ -3,19 +3,20 @@ import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
 export default serviceSalesPage({
   path: "/crm-booking-automation",
-  title: "CRM, Booking & Follow-up Automation | Teesside | Veltra Media",
+  title: "Booking & CRM Automation for Small Business | Veltra Media",
   description:
-    "Automated quote follow-up, self-serve booking, job reminders and one lead dashboard, so fewer good enquiries disappear between first contact and booked work.",
+    "Booking and CRM automation for small businesses in Teesside: every enquiry in one place, live calendar booking, reminders and follow-up. £199 setup.",
   breadcrumbName: "CRM & booking automation",
   serviceName: "CRM, booking and follow-up automation",
   eyebrow: "CRM & booking automation",
-  h1: "Stop Losing Jobs Because You Forgot to Follow Up. Automate Your Lead Chasing and Get Your Evenings Back.",
-  h1Highlight: "Get Your Evenings Back.",
+  h1: "Booking and CRM automation for small businesses in Teesside",
+  h1Highlight: "Booking and CRM automation",
+  hook: "Stop losing jobs because you forgot to follow up. Automate your lead chasing and get your evenings back.",
   lede: "You did the hard work to get the lead. Don’t lose the money because it got lost in a spreadsheet or a sticky note. We automate your entire sales pipeline.",
   heroVisual: V.crmHero,
   points: [
-    { label: "Launched in 14 days", text: "Your automated CRM pipeline" },
-    { label: "10+ hours a week", text: "of admin work saved, or we work for free" },
+    { label: "Timeline agreed in writing", text: "Your automated CRM pipeline" },
+    { label: "Every enquiry in one place", text: "Calls, texts and emails logged together" },
     { label: "Zero manual admin", text: "Follow-ups and reminders run themselves" },
   ],
   cta: { label: "Book Your Pipeline Scaling Strategy Call" },
@@ -24,10 +25,10 @@ export default serviceSalesPage({
     visual: V.pipeline,
     cases: [
       {
-        title: "Automated Follow-Up",
+        title: "Example scenario: automated follow-up",
         stats: [
-          { label: "Before Veltra", value: "40%", text: "of quotes sent were never followed up on." },
-          { label: "After Veltra", value: "65%", text: "Automated SMS follow-ups increased quote-acceptance rate by 65%. Zero manual admin required." },
+          { label: "Before", value: "40%", text: "of quotes sent were never followed up on." },
+          { label: "After", value: "65%", text: "Automated SMS follow-ups increased quote-acceptance rate by 65%. Zero manual admin required." },
         ],
       },
     ],
@@ -63,25 +64,46 @@ export default serviceSalesPage({
     heading: "Here is the exact architecture you get with the Automated Revenue Engine:",
     highlight: "Automated Revenue Engine:",
     items: [
-      { icon: "chart", title: "Centralized Lead Command Dashboard", text: "Every lead, text, call, and quote organized in one single view.", value: "£2,000" },
-      { icon: "refresh", title: "The “Relentless Follow-Up” Sequence", text: "Automated SMS and email follow-ups to close quotes you sent days ago.", value: "£1,200" },
-      { icon: "calendar", title: "Self-Serve Client Booking System", text: "Let clients pick their own times without the back-and-forth messaging.", value: "£800" },
-      { icon: "bell", title: "Automated Pre & Post-Job SMS Reminders", text: "Kills your no-show rate and asks for reviews automatically.", value: "£600" },
+      { icon: "chart", title: "Centralised Lead Command Dashboard", text: "Every lead, text, call, and quote organised in one single view." },
+      { icon: "refresh", title: "The “Relentless Follow-Up” Sequence", text: "Automated SMS and email follow-ups to close quotes you sent days ago." },
+      { icon: "calendar", title: "Self-Serve Client Booking System", text: "Let clients pick their own times without the back-and-forth messaging." },
+      { icon: "bell", title: "Automated Pre & Post-Job SMS Reminders", text: "Reminds clients before each job to help cut no-shows, and asks for a review afterwards." },
     ],
   },
   bonuses: {
     items: [
-      { icon: "database", title: "Done-For-You Data Migration", text: "We will take your messy excel sheets and sticky notes and upload them into the new system for you.", value: "£500" },
-      { icon: "users", title: "1-on-1 Team Onboarding Session", text: "We will personally train you and your team on how to use the dashboard so you hit the ground running.", value: "£400" },
+      { icon: "database", title: "Done-For-You Data Migration", text: "We will take your messy excel sheets and sticky notes and upload them into the new system for you." },
+      { icon: "users", title: "1-on-1 Team Onboarding Session", text: "We will personally train you and your team on how to use the dashboard so you hit the ground running." },
     ],
-    total: "£5,500",
   },
-  guarantee: {
-    heading: "The “Get Your Evenings Back” Guarantee",
-    body: "We will architect and launch your automated CRM pipeline in 14 days. If it doesn’t save you at least 10 hours of admin work a week, we work for free until it does.",
+  commitment: {
+    heading: "A fixed scope and a timeline in writing",
+    body: "We architect and launch your automated CRM pipeline on a timeline set in your written proposal, with the follow-ups, reminders and booking rules agreed before we start. Your data stays yours, with a lead-data export available.",
   },
   closing: {
     heading: "Ready to scale your business",
     highlight: "without drowning in admin?",
   },
+  relatedItems: [
+    {
+      href: "/ai-receptionist-middlesbrough",
+      label: "AI receptionist and website chat",
+      text: "Answers and captures enquiries after hours, then hands them to your pipeline. £199 setup.",
+    },
+    {
+      href: "/web-design-middlesbrough",
+      label: "Web design in Middlesbrough",
+      text: "A website whose enquiry forms feed straight into the system, from £99.",
+    },
+    {
+      href: "/google-business-profile",
+      label: "Google Business Profile optimisation",
+      text: "Where the review requests send happy customers, set up for £99.",
+    },
+    {
+      href: "/free-website-audit",
+      label: "Free website audit",
+      text: "Find out where enquiries are being lost before you automate anything.",
+    },
+  ],
 });

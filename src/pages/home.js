@@ -170,8 +170,8 @@ const body = `      <section class="hero hero-feature">
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="eyebrow">Web design in Middlesbrough and Teesside</p>
-              <h1>Stop Losing Local Customers to Outdated Web Design.</h1>
-              <p class="lede">We build lead-generating websites for businesses in Teesside. Get a fast, mobile-ready site with built-in AI chat and booking automation to turn your visitors into paying customers—while your competitors sleep.</p>
+              <h1>Veltra Media: web design, local SEO and AI for Teesside businesses</h1>
+              <p class="lede"><strong>Stop Losing Local Customers to Outdated Web Design.</strong> We build lead-generating websites for businesses in Teesside. Get a fast, mobile-ready site with built-in AI chat and booking automation to turn your visitors into paying customers—while your competitors sleep.</p>
               <div class="button-row">
                 <a class="btn" href="#plan">${PLAN_CTA}${icon("arrow-up")}</a>
                 <a class="btn secondary" href="/services">${CTA.secondary}</a>
@@ -183,6 +183,8 @@ const body = `      <section class="hero hero-feature">
                 src="/assets/work/hero-poster.png"
                 width="1200"
                 height="880"
+                loading="eager"
+                fetchpriority="high"
                 alt="A local electrical contractor's website built by Veltra, shown on a laptop and a phone."
               />
               <span class="hero-tag t1">Clear calls to action</span>
@@ -302,7 +304,7 @@ ${EXPLORE.map(
             </div>
             <div class="local-side">
               <figure class="local-map reveal">
-                <img src="/assets/work/tees-transporter-bridge.webp" width="1600" height="1047" loading="lazy" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
+                <img src="/assets/work/tees-transporter-bridge.webp" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
               </figure>
               <div class="local-group">
                 <p class="local-label">Popular pages</p>
@@ -345,9 +347,9 @@ ${inquiryForm({
 
 export default {
   path: "/",
-  title: "Web Design Middlesbrough & Teesside | Websites That Win Enquiries | Veltra Media",
+  title: "Veltra Media | Web Design, SEO & AI for Teesside Businesses",
   description:
-    "Premium conversion-focused websites for Middlesbrough and Teesside businesses, with local SEO foundations, a written scope before work starts, and booking and AI automation when you need them.",
+    "Veltra Media builds websites, local SEO and AI reception for businesses in Middlesbrough and Teesside. Websites from £99, a written scope and a site you own.",
   jsonLd: [
     organizationJsonLd(),
     serviceJsonLd({

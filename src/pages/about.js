@@ -12,8 +12,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 46rem">
             <p class="eyebrow">About</p>
-            <h1>A local studio for businesses that want more enquiries.</h1>
-            <p class="lede">Veltra Media builds websites, local search foundations, landing pages and enquiry automation for businesses in Middlesbrough, Teesside and the wider Tees Valley.</p>
+            <h1>About Veltra Media, a Middlesbrough studio for local businesses</h1>
+            <p class="lede"><strong>A local studio for businesses that want more enquiries.</strong> Veltra Media builds websites, local search foundations, landing pages and enquiry automation for businesses in Middlesbrough, Teesside and the wider Tees Valley.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/work">See our work</a>
@@ -115,9 +115,9 @@ ${finalCta()}`;
 
 export default {
   path: "/about",
-  title: "About Veltra Media | Web & Enquiry Growth, Middlesbrough",
+  title: "About Veltra Media | Middlesbrough Web & AI Studio",
   description:
-    "Veltra Media is a Middlesbrough web, SEO and enquiry-growth studio for Teesside businesses. A written scope before work starts, services sold separately, and no invented results.",
+    "About Veltra Media, a Middlesbrough studio building websites, local SEO and AI reception for Teesside businesses, with written scopes and separate services.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

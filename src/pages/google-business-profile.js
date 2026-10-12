@@ -2,14 +2,14 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/google-business-profile",
-  title: "Google Business Profile Setup Middlesbrough | £99 | Veltra Media",
+  title: "Google Business Profile Optimisation Middlesbrough",
   description:
-    "Google Business Profile setup and optimisation for Middlesbrough and Teesside businesses: accurate categories, services, areas, hours, photos and a review flow, with local SEO setup, for £99.",
+    "Google Business Profile optimisation for Middlesbrough businesses: categories, services, service areas, hours and photos, with local SEO setup, for £99.",
   breadcrumbName: "Google Business Profile",
   serviceName: "Google Business Profile setup",
   eyebrow: "Google Business Profile · Middlesbrough & Teesside",
-  h1: "A Google Business Profile that helps nearby customers choose you.",
-  lede: "Your profile is often the first thing a local customer sees. We set it up accurately, so it is complete, consistent with your website and easy to trust.",
+  h1: "Google Business Profile optimisation for Middlesbrough businesses",
+  lede: "<strong>A Google Business Profile that helps nearby customers choose you.</strong> Your profile is often the first thing a local customer sees. We set it up accurately, so it is complete, consistent with your website and easy to trust.",
   image: {
     src: "/assets/work/example-local-search.svg",
     width: 1280,
@@ -83,7 +83,7 @@ export default servicePage({
   },
   price: {
     heading: "Profile and local SEO setup is £99.",
-    body: "Google Business Profile and local SEO setup is £99 one-off, excluding VAT. Everything is confirmed in writing before work begins.",
+    body: 'Google Business Profile and local SEO setup is £99 one-off, excluding VAT. Everything is confirmed in writing before work begins. Compare it with every service on our <a href="/pricing">published price list</a>, or start with a <a href="/free-website-audit">free audit of your website and Google profile</a>.',
   },
   faqs: [
     {
@@ -113,6 +113,11 @@ export default servicePage({
       href: "/web-design-middlesbrough",
       label: "Website design",
       text: "A site and a profile that say the same thing.",
+    },
+    {
+      href: "/crm-booking-automation",
+      label: "Booking and CRM automation",
+      text: "Review requests sent to happy customers after each job.",
     },
     {
       href: "/pricing",

@@ -37,13 +37,13 @@ const body = `      <section class="hero">
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="eyebrow">Free website plan</p>
-              <h1>Know what your website needs before you spend money on it.</h1>
-              <p class="lede">We review your website and Google presence the way a local customer would, then reply with a practical starting point, the package that fits and a short video and one-page summary of the three changes worth making first.</p>
+              <h1>A free website audit: know what to fix before you spend</h1>
+              <p class="lede"><strong>Know what your website needs before you spend money on it.</strong> We review your website and Google presence the way a local customer would, then reply with a practical starting point, the package that fits and a short video and one-page summary of the three changes worth making first.</p>
               <p class="hero-support"><span>No charge.</span><span>No obligation.</span><span>No sales sequence.</span></p>
               <a class="btn" href="#audit-form">Get my free website plan${icon("arrow-up")}</a>
             </div>
             <figure class="hero-media reveal">
-              <img src="/assets/work/audit-deliverable.svg" width="1000" height="760" alt="What the audit delivers: a short screen-recorded video review beside a one-page written summary listing three prioritised improvements." />
+              <img src="/assets/work/audit-deliverable.svg" width="1000" height="760" loading="eager" fetchpriority="high" alt="What the audit delivers: a short screen-recorded video review beside a one-page written summary listing three prioritised improvements." />
             </figure>
           </div>
         </div>
@@ -134,9 +134,9 @@ ${finalCta({
 
 export default {
   path: "/free-website-audit",
-  title: "Free Website & Google Audit | Middlesbrough | Veltra Media",
+  title: "Free Website Audit for Local Businesses | Veltra Media",
   description:
-    "A free website and Google audit for Middlesbrough and Teesside businesses: a short video review, a one-page summary, where you are losing enquiries and the three changes to prioritise.",
+    "A free website audit for local businesses in Middlesbrough and Teesside: a short video review, a one-page summary and the three changes worth making first.",
   jsonLd: [
     organizationJsonLd(),
     faqJsonLd(FAQS),
