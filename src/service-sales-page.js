@@ -173,11 +173,11 @@ ${
     ? `
       <section class="section" id="local">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head sp-stacked-head">
             <p class="eyebrow">${local.eyebrow}</p>
             <h2>${local.heading}</h2>
           </div>
-          <div class="prose local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          <div class="prose sp-local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
         </div>
       </section>
 `

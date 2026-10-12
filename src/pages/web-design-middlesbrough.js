@@ -91,7 +91,7 @@ export default serviceSalesPage({
     heading: "Plus, these bonuses are included at no extra cost:",
     highlight: "at no extra cost:",
     items: [
-      { icon: "pin", title: "Google Business Profile Optimization Setup", text: "We set up your Google Business Profile so it is complete, accurate and matches your website." },
+      { icon: "pin", title: "Google Business Profile Optimisation Setup", text: "We set up your Google Business Profile so it is complete, accurate and matches your website." },
       { icon: "tool", title: "30 Days of VIP “Tweaks & Fixes” Support", text: "If you want a picture changed or text updated in the first month, we do it free." },
     ],
     investmentNote: "Fixed price. Zero hidden fees.",

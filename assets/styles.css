@@ -309,9 +309,10 @@ p {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-/* Local search copy under a full-width heading, at a reading measure. */
-.prose.local-copy {
-  max-width: 70ch;
+/* Local search copy under a full-width heading, at a reading measure of
+   about 70 characters a line (60ch of "0" glyphs in this typeface). */
+.prose.sp-local-copy {
+  max-width: 60ch;
   gap: 16px;
 }
 
@@ -5283,17 +5284,25 @@ svg.icon {
   max-width: 30ch;
   line-height: 1.18;
 }
-/* Heading on top at the full content width, list underneath. */
+/* Heading on top at the full content width, content underneath, at every
+   width: no side column and no narrow measure on the heading. Long headings
+   step down a size so they stay within two lines on desktop. */
 .sp-stacked {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(28px, 4vw, 48px);
 }
-.sp-stacked > .sp-head h2 {
-  max-width: 28ch;
+.sp-stacked > .sp-head h2,
+.container > div.section-head.sp-stacked-head,
+.container > div.section-head.sp-stacked-head > h2,
+.sp-bonus-head h2:not(.eyebrow) {
+  max-width: none;
   text-wrap: balance;
 }
-.sp-stacked > .sp-head h2.sp-long {
-  max-width: 46ch;
+@media (min-width: 960px) {
+  .sp-stacked > .sp-head h2.sp-long {
+    font-size: clamp(1.625rem, 0.9rem + 1.05vw, 2rem);
+  }
 }
 
 /* Hero */
@@ -5599,8 +5608,6 @@ svg.icon {
 .sp-bonus-head h2:not(.eyebrow) {
   font-size: clamp(1.625rem, 1.2rem + 1.4vw, 2.25rem);
   line-height: 1.15;
-  max-width: 34ch;
-  text-wrap: balance;
 }
 .sp-bonus-grid {
   --bonus-gap: 16px;
