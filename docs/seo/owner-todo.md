@@ -53,3 +53,40 @@ These describe how people search and talk. They come from the keyword map and ar
 - [ ] **Price range.** The organisation markup has no `priceRange`, because /pricing quotes larger sites, ecommerce and unusual integrations in writing, so there is no published upper price. If you want one, confirm a range you are happy to stand behind.
 - Search volume for every keyword in `keyword-map.md` is unknown. Check it in Search Console or Keyword Planner.
 - If you have real, permitted examples of work in any of these towns, they would make the town pages much stronger. Until then, the pages say they do not name clients.
+
+## Resources articles (added 13 Oct 2026)
+
+The six articles under `/resources/<slug>` were written without first-hand client stories, results or market-wide prices. Every price comes from `assets/catalog.js`, so it always matches `/pricing`.
+
+### VERIFY: Google rules quoted in the articles
+
+These were included because they match Google's published help pages as we understand them, but Google changes its rules and screens without notice. Check each against the current Google Business Profile help pages and tick it, or tell us to reword it.
+
+- [ ] A service area business can add up to 20 service areas (`/resources/google-business-profile-service-area-business`).
+- [ ] Google's guidelines say service areas should not extend further than about two hours' drive from where the business is based (same article).
+- [ ] Businesses must make in-person contact with customers during their stated hours to be eligible; online-only businesses are not (same article).
+- [ ] PO boxes, mail-forwarding addresses and virtual offices not staffed during opening hours are not eligible business addresses (service area article and `/resources/rank-in-google-maps-without-a-shop`).
+- [ ] Verification methods are chosen by Google and can include a video recording, phone or text, email, live video call or postcard; the video tips (one continuous take, show location, tools and proof of management) match Google's current on-screen instructions (service area article).
+- [ ] Google ranks local results on relevance, distance and prominence, and says review count and score factor into local ranking, and complete business information helps (Maps article and `/resources/local-seo-checklist`).
+- [ ] Adding keywords or a town to the business name is against Google's guidelines (checklist, service area and Maps articles).
+- [ ] Google's review policies forbid incentives for reviews and selectively asking only happy customers (checklist and Maps articles).
+- [ ] Google's spam policies describe near-identical town pages as doorway pages (checklist article).
+- [ ] The Business Profile performance figures include calls, website clicks, direction requests and searches (checklist article).
+
+### VERIFY: left out because we were not certain
+
+Nothing below is on the site. Confirm or correct it if you want it added.
+
+- [ ] **UK fake-review rules.** The Digital Markets, Competition and Consumers Act 2024 is believed to ban fake reviews and concealed incentivised reviews from April 2025. Not mentioned in any article; only Google's own policies are cited.
+- [ ] **PECR and missed-call text-back.** Whether an automatic text to someone who has just called you counts as a service message or as direct marketing under PECR. The AI receptionist article does not mention missed-call texts at all for this reason.
+- [ ] **Telling callers they are speaking to an AI.** The article recommends it as good practice and does not claim it is a UK legal requirement.
+
+### Questions for the owner
+
+Answers to these would make the articles stronger. Nothing is invented in their place.
+
+- [ ] **Named author.** Articles are bylined "Veltra Media" and the BlogPosting markup names the organisation. If you want a named author, send the name and a short bio (see the /about item above), and the byline and `author` markup can change together.
+- [ ] **Typical third-party costs** (`/resources/how-much-does-a-website-cost`). What do clients usually pay for a domain, business email and, for the AI receptionist, AI provider usage per month? The article describes these costs but gives no figures.
+- [ ] **Real examples.** Any anonymised, permitted example would help: a quote a client brought you to compare, a Facebook-only business that added a website, a profile you moved from a home address to service areas, a verification video that worked. The articles currently use illustrations only, labelled as such.
+- [ ] **AI receptionist details** (`/resources/what-is-an-ai-receptionist`). Which phone systems and calendars you support, whether calls are recorded or transcribed by default, and how long a typical setup takes once answers are approved.
+- [ ] **Review the dates.** Each article shows "Published 13 October 2026" and "Updated 13 October 2026". Change `updated` in the article file whenever the content changes materially.

@@ -12,7 +12,9 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 // Route → the src/pages/*.js file that defines it, read from each module's
 // own `path` so a renamed file or route cannot fall out of step.
 const sourceByPath = new Map();
-for (const name of readdirSync(new URL("../src/pages/", import.meta.url))) {
+// Recursive, so the articles in src/pages/resources/ are found too.
+for (const entry of readdirSync(new URL("../src/pages/", import.meta.url), { recursive: true })) {
+  const name = entry.replaceAll("\\", "/");
   if (!name.endsWith(".js")) continue;
   const page = (await import(pathToFileURL(`${root}src/pages/${name}`).href)).default;
   if (page?.path) sourceByPath.set(page.path, `src/pages/${name}`);

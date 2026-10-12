@@ -6223,3 +6223,99 @@ svg.icon {
 .result-next b {
   color: var(--ink);
 }
+
+/* ───────────────────────── Articles (/resources/<slug>) ───────────────────────── */
+.article-head {
+  max-width: 60rem;
+}
+.article-head h1 {
+  max-width: none;
+  text-wrap: balance;
+}
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-size: 0.875rem;
+  color: var(--body);
+}
+.article-meta span:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+.article-intro {
+  margin-top: 4px;
+}
+.article-toc {
+  width: 100%;
+  max-width: 60ch;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.article-toc ol {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding-left: 22px;
+  list-style: decimal;
+  color: var(--body);
+}
+.article-toc a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-checklist {
+  margin-block: 4px;
+}
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.table-wrap table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.table-wrap caption {
+  padding: 12px 14px 0;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--body);
+}
+.table-wrap th,
+.table-wrap td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.table-wrap thead th {
+  font-weight: 600;
+  color: var(--ink);
+}
+.table-wrap tbody th {
+  font-weight: 600;
+  color: var(--ink);
+}
+.table-wrap td {
+  color: var(--body);
+}
+.table-wrap tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.prose blockquote {
+  padding: 4px 0 4px 18px;
+  border-left: 3px solid var(--accent-lime);
+  color: var(--ink);
+}
+.guide-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin-top: 18px;
+}

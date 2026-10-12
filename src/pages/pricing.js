@@ -35,7 +35,7 @@ const FAQS = [
   },
   {
     q: "Are there third-party costs on top?",
-    a: "<p>Sometimes — domain registration, and the usage cost of the AI provider behind an AI receptionist, for example. We show those at cost and confirm them in writing before work begins. We do not mark them up quietly.</p>",
+    a: "<p>Sometimes — domain registration, and the usage cost of the AI provider behind an AI receptionist, for example. We show those at cost and confirm them in writing before work begins. We do not mark them up quietly. Our guide to <a href=\"/resources/how-much-does-a-website-cost\">what a website costs a small business in the UK</a> explains running costs in more detail.</p>",
   },
   payOnline
     ? {

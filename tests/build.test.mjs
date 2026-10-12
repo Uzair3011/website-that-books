@@ -14,7 +14,8 @@ test("the production build emits every route with a correct canonical, and a mat
     env: { ...process.env, SITE_URL: `${ORIGIN}/` },
     stdio: "pipe",
   });
-  const files = await readdir(resolve("dist"));
+  // Recursive, because articles are nested routes (dist/resources/<slug>.html).
+  const files = (await readdir(resolve("dist"), { recursive: true })).map((file) => file.replaceAll("\\", "/"));
   assert.ok(files.includes("index.html"));
   assert.ok(files.includes("404.html"));
 

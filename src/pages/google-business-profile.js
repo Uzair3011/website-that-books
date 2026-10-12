@@ -89,11 +89,11 @@ export default servicePage({
   faqs: [
     {
       q: "Can you guarantee my business will rank in Google Maps?",
-      a: "<p>No, and be wary of anyone who says they can. We set the profile up accurately and completely, which is what we control. How it ranks depends on many factors, including competition, reviews and how close a customer is.</p>",
+      a: "<p>No, and be wary of anyone who says they can. We set the profile up accurately and completely, which is what we control. How it ranks depends on many factors, including competition, reviews and how close a customer is. Our guide on <a href=\"/resources/rank-in-google-maps-without-a-shop\">ranking in Google Maps without a shop</a> explains what you can and cannot influence.</p>",
     },
     {
       q: "I do not have a shop. Can I still have a profile?",
-      a: "<p>Often, yes, as a service-area business. Google has eligibility rules about addresses, and we follow them. We will not put an address on your profile that customers cannot genuinely visit.</p>",
+      a: "<p>Often, yes, as a service-area business. Google has eligibility rules about addresses, and we follow them. We will not put an address on your profile that customers cannot genuinely visit. Our guide to <a href=\"/resources/google-business-profile-service-area-business\">Google Business Profile for service area businesses</a> walks through the setup.</p>",
     },
     {
       q: "I already have a profile. Can you improve it?",

@@ -123,6 +123,11 @@ export default serviceSalesPage({
   ],
   relatedItems: [
     {
+      href: "/resources/what-is-an-ai-receptionist",
+      label: "What is an AI receptionist?",
+      text: "A plain guide to how it works, what it should not do, and how it compares with an answering service.",
+    },
+    {
       href: "/crm-booking-automation",
       label: "Booking and CRM automation",
       text: "Every enquiry in one place, live calendar booking and reminders, £199 setup.",

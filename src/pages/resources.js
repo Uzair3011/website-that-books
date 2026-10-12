@@ -5,6 +5,7 @@ import {
   icon,
   related,
 } from "../site.js";
+import { articles } from "./resources/index.js";
 
 // Written out in full on the page. Nothing is gated, nothing asks for an
 // email, and nothing links to a download that does not exist.
@@ -25,21 +26,21 @@ const GUIDES = [
       "Give every page a unique page title that includes the service and, where relevant, the place.",
       "Check the copyright year in your footer. A stale year quietly signals an abandoned business.",
     ],
+    more: [{ href: "/resources/local-seo-checklist", label: "Work through the full local SEO checklist" }],
   },
   {
     kind: "Guide",
     title: "Getting a Google Business Profile right",
     intro:
       "The profile is usually worth more to a local business than the website, and it is free.",
-    points: [
-      "Choose the most specific primary category available, then add secondary categories for the rest. The primary category carries disproportionate weight.",
-      "List your services individually with real descriptions, rather than leaving the category to imply them.",
-      "If you visit customers rather than receiving them, set it up as a service-area business and hide the address. Publishing an address you do not staff risks the listing.",
-      "Keep opening hours accurate, including bank holidays. Wrong hours generate bad reviews from people who turned up.",
-      "Add photographs regularly — of work, premises and team. Profiles with recent photographs tend to get more interaction.",
-      "Ask every satisfied customer for a review, using a direct link, at the moment they are happiest. Never offer an incentive; that breaches Google's policies.",
-      "Reply to every review, including the bad ones, in a measured tone. Future customers read the replies more carefully than the reviews.",
-      "Make sure the business name, phone number and service-area wording match your website exactly.",
+    // Now a full article; a short summary here keeps this page from competing with it.
+    summary:
+      "Choose the most specific category, list every service, keep hours and details identical to your website, and if customers do not visit you, hide the address and set service areas instead.",
+    more: [
+      {
+        href: "/resources/google-business-profile-service-area-business",
+        label: "Read the full guide to Google Business Profile for service area businesses",
+      },
     ],
   },
   {
@@ -61,16 +62,19 @@ const GUIDES = [
     title: "What AI can and cannot sensibly do for a local business",
     intro:
       "A short, unexcited assessment, written by people who sell this and still think most of it is oversold.",
-    points: [
-      "It is genuinely good at answering the same factual question a hundred times: hours, areas, services, what to expect, whether you cover a postcode.",
-      "It is genuinely good at being available at eleven on a Sunday night, when the honest alternative is nothing at all.",
-      "It is genuinely good at capturing a name, a contact detail and a need, so an anonymous visitor becomes a real enquiry.",
-      "It should not give professional advice — clinical, legal, financial or safety — and it should hand those questions to a person immediately.",
-      "It should not pretend to be human. People find out, and the trust cost is higher than the convenience gain.",
-      "It should not be bought because it sounds modern. If you are not missing enquiries because questions go unanswered, it will not help you.",
+    summary:
+      "AI is good at answering the same factual question many times, at being there at eleven on a Sunday night and at turning an anonymous visitor into a real enquiry. It should not give professional advice, pretend to be human, or be bought because it sounds modern.",
+    more: [
+      { href: "/ai-agents-teesside", label: "AI agents for local businesses, explained" },
+      { href: "/resources/what-is-an-ai-receptionist", label: "What an AI receptionist is, and what it can actually do" },
     ],
   },
 ];
+
+const moreLinks = (more = []) =>
+  more.length
+    ? `<p class="guide-more">${more.map((link) => `<a class="text-link" href="${link.href}">${link.label}${icon("arrow-up")}</a>`).join("")}</p>`
+    : "";
 
 const list = GUIDES.map(
   (guide, index) => `<article class="section tight" id="guide-${index + 1}">
@@ -81,9 +85,14 @@ const list = GUIDES.map(
         <h2>${guide.title}</h2>
         <p class="lede">${guide.intro}</p>
       </div>
-      <ul class="tick-list">
-        ${guide.points.map((point) => `<li>${icon("check")}<span>${point}</span></li>`).join("")}
-      </ul>
+      <div>
+        ${
+          guide.points
+            ? `<ul class="tick-list">${guide.points.map((point) => `<li>${icon("check")}<span>${point}</span></li>`).join("")}</ul>`
+            : `<p>${guide.summary}</p>`
+        }
+        ${moreLinks(guide.more)}
+      </div>
     </div>
   </div>
 </article>`,
@@ -93,6 +102,14 @@ const index = GUIDES.map(
   (guide, i) =>
     `<li><a href="#guide-${i + 1}"><span class="r-kind">${guide.kind}</span><div><h3>${guide.title}</h3><p>${guide.intro}</p></div>${icon("arrow-up")}</a></li>`,
 ).join("");
+
+// The full articles, each with its own page under /resources/<slug>.
+const articleIndex = articles
+  .map(
+    (article) =>
+      `<li><a href="${article.path}"><span class="r-kind">${article.kind}</span><div><h3>${article.shortName}</h3><p>${article.summary}</p></div>${icon("arrow-up")}</a></li>`,
+  )
+  .join("");
 
 const body = `      <section class="hero">
         <div class="container">
@@ -105,8 +122,22 @@ const body = `      <section class="hero">
         </div>
       </section>
 
+      <section class="section tight" id="articles">
+        <div class="container">
+          <div class="section-head sp-stacked-head">
+            <p class="eyebrow">Articles</p>
+            <h2>Guides to read in full</h2>
+          </div>
+          <ul class="resource-list reveal">${articleIndex}</ul>
+        </div>
+      </section>
+
       <section class="section tight">
         <div class="container">
+          <div class="section-head sp-stacked-head">
+            <p class="eyebrow">Quick guides</p>
+            <h2>Short guides you can read on this page</h2>
+          </div>
           <ul class="resource-list reveal">${index}</ul>
         </div>
       </section>

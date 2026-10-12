@@ -21,6 +21,7 @@ import notFound from "./pages/not-found.js";
 import pricing from "./pages/pricing.js";
 import privacy from "./pages/privacy.js";
 import resources from "./pages/resources.js";
+import { articles } from "./pages/resources/index.js";
 import services from "./pages/services.js";
 import terms from "./pages/terms.js";
 import webDesignTrades from "./pages/web-design-for-trades-teesside.js";
@@ -55,6 +56,7 @@ export const pages = [
   freeAudit,
   contact,
   resources,
+  ...articles,
   pricing,
   medSpa,
   privacy,

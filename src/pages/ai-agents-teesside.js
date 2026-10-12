@@ -142,6 +142,11 @@ export default stackedPage({
           label: "Websites for trades",
           text: "What the website around the chat needs.",
         },
+        {
+          href: "/resources/what-is-an-ai-receptionist",
+          label: "What is an AI receptionist?",
+          text: "How one handles a call, and how it compares with voicemail or an answering service.",
+        },
       ],
     },
   ],
