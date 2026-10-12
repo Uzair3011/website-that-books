@@ -12,7 +12,7 @@ export default serviceSalesPage({
   h1: "Local SEO in Middlesbrough and across Teesside",
   h1Highlight: "Local SEO",
   hook: "If customers can’t find you on Google Maps, you are handing your best local jobs to your competitors.",
-  lede: "We hijack the Google Map Pack so when Teesside customers search for your service, your phone rings first.",
+  lede: "We set up and optimise your Google Business Profile so it is complete, accurate and relevant to the searches Teesside customers use to find your service.",
   heroVisual: {
     src: "/assets/work/example-local-search.svg",
     width: 1280,
@@ -32,7 +32,7 @@ export default serviceSalesPage({
     cases: [
       {
         title: "Example scenario: a local plumber",
-        intro: "Went from Page 3 of Google to the #1 Map Pack spot in Middlesbrough for “Emergency Plumber.”",
+        intro: "Set up a complete, accurate Google Business Profile and a matching service page for “emergency plumber” searches in Middlesbrough.",
         stats: [
           { label: "The Result", value: "45", text: "inbound calls generated directly from Google Maps last month. Zero ad spend." },
         ],
@@ -57,7 +57,7 @@ export default serviceSalesPage({
       {
         icon: "star",
         title: "Review Automation",
-        text: "We install a system that automatically extracts 5-star reviews from your happy customers, building massive trust and forcing Google to rank you higher.",
+        text: "We install a system that automatically extracts 5-star reviews from your happy customers, so new visitors see recent, genuine feedback.",
       },
       {
         icon: "shield",
@@ -71,7 +71,7 @@ export default serviceSalesPage({
     highlight: "Map Pack Domination System:",
     items: [
       { icon: "pin", title: "Google Business Profile Weaponization", text: "Fully optimized for your exact Teesside service areas." },
-      { icon: "search", title: "Hyper-Local Keyword Targeting", text: "We rank you for the high-intent terms your best customers actually search for." },
+      { icon: "search", title: "Hyper-Local Keyword Targeting", text: "We map your services and pages to the terms your best customers actually search for." },
       { icon: "star", title: "Automated 5-Star Review Generation System", text: "Software that extracts glowing reviews from your past customers automatically." },
       { icon: "shield", title: "Local Authority & Citation Build", text: "The same business name, phone number and service areas across the main directories, so Google sees consistent details everywhere." },
     ],

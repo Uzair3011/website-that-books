@@ -2,7 +2,7 @@
 
 Written 12 Oct 2026 on branch `seo/tees-valley`, after the keyword-map changes in the same commit. It lists every numeric or outcome claim on the site that a visitor would read as a real result, guarantee, valuation or deadline. Line numbers in sections A to F are for the files as they were before the owner decisions were applied.
 
-**Update, 12 Oct 2026:** the owner's decisions have been applied. Section I records the action taken for every row. Rows C7, C8 and C9 had no decision and are unchanged.
+**Update, 12 Oct 2026:** the owner's decisions have been applied. Section I records the action taken for every row.
 
 **Who decides.** Each row needs an owner decision: **prove** it (add evidence to the repo and keep it), **relabel** it as an illustrative example in the visible copy, or **remove** it. The recommendation column is a starting point, not a decision.
 
@@ -141,7 +141,7 @@ Applied 12 Oct 2026 on branch `seo/tees-valley`. The owner decided:
 | A1 | Heading "Don’t take our word for it. Look at the numbers." renamed to "Example scenarios" (two cards). |
 | A2 | Kept, labelled "Illustrative example, not a real client result". Title now "Example scenario: a local electrician". Stat label "The Veltra Way" renamed to "The new way". Figures unchanged. |
 | A3 | Kept and labelled. Title now "Example scenario: a local joinery firm". "312%" unchanged. |
-| A4 | Kept and labelled. Section heading "The Proof is in the Pipeline." renamed to "Example scenario". Title now "Example scenario: a local plumber". Text unchanged, including "#1 Map Pack spot", which still reads as a ranking outcome (hard rule 5). Flagged for the owner. |
+| A4 | Kept and labelled. Section heading "The Proof is in the Pipeline." renamed to "Example scenario". Title now "Example scenario: a local plumber". Ranking intro ("Went from Page 3 of Google to the #1 Map Pack spot…") replaced with a description of the work: "Set up a complete, accurate Google Business Profile and a matching service page for “emergency plumber” searches in Middlesbrough." The "45" calls figure is unchanged. |
 | A5 | Kept and labelled. Section heading "We Buy Clients For Pennies On The Pound." renamed to "Example scenario". Title "Google Ads Client" now "Example scenario: a business running Google Ads". Stat label "The Veltra Fix" renamed to "The fix". Figures unchanged. |
 | A6 | Kept and labelled. "Real Lead Captured" renamed to "Example scenario: an after-hours enquiry". Section heading "The Employee That Never Sleeps." kept, as it does not imply a client. "£250" unchanged. |
 | A7 | Kept and labelled. Title now "Example scenario: automated follow-up". Stat labels "Before Veltra" and "After Veltra" renamed to "Before" and "After". Section heading "From Chaos to Clockwork." kept. Figures unchanged. |
@@ -175,9 +175,9 @@ Applied 12 Oct 2026 on branch `seo/tees-valley`. The owner decided:
 | C4 | Removed: the hero point (now "Answers you approve: With clear handover to you when needed") and the guarantee section. |
 | C5 | All four "in 14 days" points changed. `/landing-page-design` now says "Typically live in around 7 working days". `/local-seo-middlesbrough`, `/ai-receptionist-middlesbrough` and `/crm-booking-automation` now say "Timeline agreed in writing", which matches their FAQs and `/how-it-works`. |
 | C6 | Removed, with B8. |
-| C7 | **No owner decision. Unchanged.** "We hijack the Google Map Pack…" is still the lede on `/local-seo-middlesbrough`. |
-| C8 | **No owner decision. Unchanged.** "forcing Google to rank you higher" and "We rank you for the high-intent terms…" remain. The £800 value was removed under D2. |
-| C9 | **No owner decision. Unchanged.** "so you rank faster" remains in the bonus text. The £350 value was removed under D1. |
+| C7 | Rewritten: "We set up and optimise your Google Business Profile so it is complete, accurate and relevant to the searches Teesside customers use to find your service." |
+| C8 | Rewritten: the review text now ends "so new visitors see recent, genuine feedback", and the keyword item reads "We map your services and pages to the terms your best customers actually search for." |
+| C9 | Rewritten: "We set up your Google Business Profile so it is complete, accurate and matches your website." |
 
 ### D. Value stacks
 
@@ -206,7 +206,5 @@ Applied 12 Oct 2026 on branch `seo/tees-valley`. The owner decided:
 
 ### Still open
 
-- C7, C8 and C9 (ranking language on `/local-seo-middlesbrough` and `/web-design-middlesbrough`) need a decision. Hard rule 5 says never promise rankings.
-- A4 keeps the "#1 Map Pack spot" wording inside a labelled example. The owner may want the figure removed too.
 - F5-F7 need a visible caption or removal on the homepage and `/services`.
-- If a real, evidenced client result is added later, it needs a card without the illustrative label. The template currently labels every case card.
+- **Note:** `serviceSalesPage()` labels every case card "Illustrative example, not a real client result". A real, evidenced client result (with evidence and written permission) will need a separate card style without that label.
