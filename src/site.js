@@ -160,10 +160,6 @@ export function header(path) {
     <a class="wordmark" href="/" aria-label="${SITE.name} home"><span class="logo-mark" aria-hidden="true">V</span>Veltra Media</a>
     <nav class="nav-links" id="nav-links" aria-label="Main">${navLinks(path)}</nav>
     <div class="nav-actions">
-      <a class="phone-pill" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp ${SITE.name} on ${SITE.phoneLabel}">
-        <span>${SITE.phoneLabel}</span>
-        <span class="phone-pill-icon">${icon("whatsapp")}</span>
-      </a>
       <a class="btn small dark header-cta" href="${planHref}">${CTA.primary}${icon("arrow-up")}</a>
       <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links">${icon("menu")}</button>
     </div>

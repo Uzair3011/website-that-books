@@ -2613,65 +2613,6 @@ svg.icon {
   }
 }
 
-/* ═════════════════════════ Phone pill ═════════════════════════
-   A bordered pill with a solid mint circle at its trailing edge, the way
-   the reference's nav treats its phone number as a small CTA rather than
-   plain text. Own colours (mint/lime), own icon, own proportions. */
-.phone-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  height: 44px;
-  padding-left: 18px;
-  padding-right: 4px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  white-space: nowrap;
-  transition:
-    border-color 0.2s var(--ease),
-    background-color 0.2s var(--ease);
-}
-.phone-pill-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--accent-mint);
-  color: #071313;
-  flex: none;
-  transition:
-    background-color 0.2s var(--ease),
-    transform 0.2s var(--ease);
-}
-.phone-pill-icon .icon {
-  width: 17px;
-  height: 17px;
-  stroke-width: 2;
-}
-.phone-pill:hover {
-  border-color: var(--ink);
-}
-.phone-pill:hover .phone-pill-icon {
-  background: var(--accent-lime);
-  transform: scale(1.06);
-}
-@media (max-width: 1360px) {
-  .phone-pill span:first-child {
-    display: none;
-  }
-  .phone-pill {
-    padding-left: 4px;
-  }
-}
-@media (max-width: 1120px) {
-  .phone-pill {
-    display: none;
-  }
-}
-
 /* ═════════════════════════ Ambient glow ═════════════════════════
    The reference's dark canvas is never a flat block — a soft teal wash
    bleeds through the hero, the marquee band and the sections beneath it.
