@@ -60,7 +60,7 @@ export default areaPage({
           <li>A phone button and a short form near the top of every page on a phone.</li>
           <li>The same business name, number and areas on the site and on your Google Business Profile.</li>
         </ul>`,
-        `Our page on <a href="/web-design-middlesbrough">web design packages for Middlesbrough and nearby towns</a> explains what each build includes. To be found more often, add <a href="/local-seo-middlesbrough">local SEO for Stockton and the rest of Teesside</a> and <a href="/google-business-profile">a properly set-up Google Business Profile</a>. If you miss calls while you are on a job, <a href="/ai-receptionist-middlesbrough">an AI receptionist can answer and take the details</a>.`,
+        `Our page on <a href="/web-design-middlesbrough">web design packages for Middlesbrough and nearby towns</a> explains what each build includes. To be found more often, add <a href="/local-seo-middlesbrough">local SEO for Stockton and the rest of Teesside</a> and <a href="/google-business-profile">a properly set-up Google Business Profile</a>. If you miss calls while you are on a job, <a href="/ai-receptionist-middlesbrough">an AI receptionist can answer and take the details</a>, and <a href="/crm-booking-automation">booking reminders and quote follow-up</a> keep the work moving once it is in.`,
       ],
     },
     {

@@ -311,6 +311,8 @@ ${EXPLORE.map(
                   <a class="text-link" href="/web-design-middlesbrough">Web design Middlesbrough${icon("arrow-up")}</a>
                   <a class="text-link" href="/local-seo-middlesbrough">Local SEO Middlesbrough${icon("arrow-up")}</a>
                   <a class="text-link" href="/web-design-teesside">Web design Teesside${icon("arrow-up")}</a>
+                  <a class="text-link" href="/areas">Every Tees Valley town we cover${icon("arrow-up")}</a>
+                  <a class="text-link" href="/resources">Free guides for local businesses${icon("arrow-up")}</a>
                 </div>
               </div>
             </div>

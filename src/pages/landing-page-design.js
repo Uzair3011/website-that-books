@@ -113,5 +113,15 @@ export default serviceSalesPage({
       label: "Free website audit",
       text: "Find out whether a landing page is the right fix before you spend.",
     },
+    {
+      href: "/resources/how-much-does-a-website-cost",
+      label: "What a website really costs",
+      text: "Build, running costs and extras, with worked examples from our own prices.",
+    },
+    {
+      href: "/areas",
+      label: "Areas we cover",
+      text: "Landing pages for businesses across Middlesbrough and the Tees Valley.",
+    },
   ],
 });

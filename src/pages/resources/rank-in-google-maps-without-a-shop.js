@@ -62,7 +62,7 @@ export default articlePage({
         "These are the levers you control. Work through them in order.",
         "<h3>Relevance</h3>",
         checklist([
-          "Primary category: the most specific one that describes your main service.",
+          `Primary category: the most specific one that describes your main service. Getting this right is the first thing our <a href="/google-business-profile">Google Business Profile setup service</a> checks.`,
           "Secondary categories: only for services you really offer.",
           "Services list: every service, named the way customers say it, with a short description.",
           "Description: what you do and where, in plain sentences, not a keyword list.",
@@ -107,7 +107,7 @@ export default articlePage({
           "Your business name, phone number and areas identical to the profile.",
           "Photos of real jobs, with a short note on what the job was and where.",
         ]),
-        "<h3>If you cover several towns</h3><p>Start with the town you are based in and the one or two where most of your work comes from. For each, ask whether you can write something a customer there would find useful: the kinds of jobs you do there, how quickly you can usually get there, whether parking or access is ever an issue, the questions people there tend to ask. If you can, a page for that town is worth writing. If all you can say is the town’s name, leave it as a line in your list of areas instead.</p>",
+        "<h3>If you cover several towns</h3><p>Start with the town you are based in and the one or two where most of your work comes from. For each, ask whether you can write something a customer there would find useful: the kinds of jobs you do there, how quickly you can usually get there, whether parking or access is ever an issue, the questions people there tend to ask. If you can, a page for that town is worth writing; our <a href=\"/web-design-for-trades-teesside\">guide to websites for trades</a> and <a href=\"/areas\">our own area pages</a> show the kind of detail that helps. If all you can say is the town’s name, leave it as a line in your list of areas instead.</p>",
         "<h3>Link the profile to the right page</h3><p>If most of your work is one service, link your profile to that service’s page rather than a general homepage, so people who tap through land on the answer they wanted.</p>",
       ],
     },

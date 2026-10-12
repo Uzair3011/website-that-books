@@ -158,7 +158,7 @@ export default articlePage({
       heading: "How AI receptionists are usually priced.",
       body: [
         "Most are priced in two parts: a setup cost for writing the answers, connecting your phone, website or calendar and testing; then an ongoing usage cost from the AI provider, which rises and falls with the number of conversations.",
-        `Our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> is ${price("ai-receptionist-website-chat")} setup, excluding VAT, with the AI provider’s usage passed on at cost and confirmed in writing before work starts. It is also part of the ${growth.name} at ${price("growth-launch-package")}, alongside a website, local SEO and <a href="/crm-booking-automation">booking and follow-up automation</a>. Every price is on our <a href="/pricing">published price list</a>.`,
+        `Our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> is ${price("ai-receptionist-website-chat")} setup, excluding VAT, with the AI provider’s usage passed on at cost and confirmed in writing before work starts. It is also part of the ${growth.name} at ${price("growth-launch-package")}, alongside a website, local SEO and <a href="/crm-booking-automation">booking and follow-up automation</a>. Every price is on our <a href="/pricing">published price list</a>, and we set it up for businesses across <a href="/areas">Middlesbrough and the Tees Valley</a>.`,
       ],
     },
     {

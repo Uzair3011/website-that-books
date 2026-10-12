@@ -173,8 +173,13 @@ ${related(
       label: "AI agents, explained",
       text: "What AI can do for a local business, where a person should take over, and the UK GDPR basics.",
     },
+    {
+      href: "/areas",
+      label: "Areas we cover",
+      text: "Middlesbrough, Stockton-on-Tees and Billingham, Redcar, Hartlepool and the wider Tees Valley.",
+    },
   ],
-  "More on trades and AI",
+  "Trades, AI and the areas we cover",
 )}
 
 ${faqSection(FAQS, { heading: "Choosing the right service", eyebrow: "Services FAQ" })}

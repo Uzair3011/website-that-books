@@ -67,14 +67,14 @@ export default stackedPage({
       body: [
         `A trades website does most of its work alongside your Google Business Profile, so add <a href="/google-business-profile">Google Business Profile setup</a> to make the two match, and <a href="/local-seo-middlesbrough">local SEO for Middlesbrough and Teesside</a> to work on how often you appear in Maps. Most trades have no shop, so read <a href="/resources/google-business-profile-service-area-business">how to set up a Google Business Profile as a service area business</a> before you touch the address. If your Facebook page brings in most of your work today, our guide on <a href="/resources/do-i-need-a-website-if-i-have-facebook">whether a Facebook page is enough</a> sets out what a website adds.`,
         `If you are up a ladder when the phone rings, <a href="/ai-receptionist-middlesbrough">an AI receptionist can take the job details</a> and pass them to you; our <a href="/ai-agents-teesside">plain guide to AI agents</a> explains what that should and should not do. Quotes that go quiet can be chased automatically with <a href="/crm-booking-automation">quote follow-up and reminders</a>.`,
-        `The packages are set out in full on <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. The designs on our <a href="/work">work page</a> include labelled concepts for fictional trades businesses; they show how we structure a site, not results for a client.`,
+        `The packages are set out in full on <a href="/web-design-middlesbrough">our Middlesbrough web design page</a>. The designs on our <a href="/work">work page</a> include labelled concepts for fictional trades businesses; they show how we structure a site, not results for a client.`,
       ],
     },
   ],
   faqs: [
     {
       q: "How much does a website for a tradesperson cost?",
-      a: '<p>A one-page site is £99 and a website of up to five pages is £179, both one-off and excluding VAT. Larger sites are quoted in writing. Every price is on the <a href="/pricing">pricing page</a>.</p>',
+      a: '<p>A one-page site is £99 and a website of up to five pages is £179, both one-off and excluding VAT. Larger sites are quoted in writing. Every price is on <a href="/pricing">our price list for websites and add-ons</a>.</p>',
     },
     {
       q: "Most of my work comes from word of mouth. Do I need a website?",

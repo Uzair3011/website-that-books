@@ -116,5 +116,15 @@ export default serviceSalesPage({
       label: "Websites for trades",
       text: "Areas covered, tap-to-call and a quote form that feeds your follow-up.",
     },
+    {
+      href: "/resources/rank-in-google-maps-without-a-shop",
+      label: "Reviews and Google Maps",
+      text: "Why a steady flow of review requests matters, and how to ask without breaking Google’s rules.",
+    },
+    {
+      href: "/areas",
+      label: "Areas we cover",
+      text: "Booking and follow-up set up for businesses across the Tees Valley.",
+    },
   ],
 });

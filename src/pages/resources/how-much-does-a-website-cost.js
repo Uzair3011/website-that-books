@@ -99,7 +99,7 @@ export default articlePage({
           ],
         }),
         `<h3>Working out the first year</h3><p>Take the second example and add the optional care plan at its starting price: ${gbp(site + seo)} one-off, plus 12 × ${gbp(care)} = ${gbp(care * 12)}, gives ${gbp(site + seo + care * 12)} for the first year, before VAT and before your domain and email. In year two, if nothing else changes, the cost is the care plan alone. If you would rather look after the site yourself, the first-year cost is the one-off figure plus your own domain and hosting.</p>`,
-        `Every price and what it includes is on our <a href="/pricing">published price list</a>. If your project needs ecommerce, memberships or unusual integrations, it gets a written quote instead of a package.`,
+        `Every price and what it includes is on <a href="/pricing">our website and SEO price list</a>. If your project needs ecommerce, memberships or unusual integrations, it gets a written quote instead of a package.`,
       ],
     },
     {
@@ -155,7 +155,7 @@ export default articlePage({
           <li><strong>Check who owns your domain.</strong> If you already have one, find the registrar login and confirm it is in your business’s name.</li>
           <li><strong>Set a first-year budget, not a build budget.</strong> Include the build, a year of running costs and any tools you need, so you compare quotes on the same basis.</li>
         </ol>`,
-        `If you are in Middlesbrough or nearby and want a fixed price, our <a href="/web-design-middlesbrough">web design service in Middlesbrough</a> publishes every price up front.`,
+        `If you are in Middlesbrough or nearby and want a fixed price, our <a href="/web-design-middlesbrough">web design service in Middlesbrough</a> publishes every price up front, and we work with businesses in <a href="/areas">every Tees Valley town we cover</a>.`,
       ],
     },
   ],

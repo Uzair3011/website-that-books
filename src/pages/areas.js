@@ -39,7 +39,7 @@ const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Areas we serve</p>
           <h1>Areas we serve across the Tees Valley</h1>
-          <p class="lede">Veltra Media is based in Middlesbrough and works with businesses across the Tees Valley. We have no offices in the other towns: projects run online, and we can meet in person around Teesside when that helps. Each area below has its own page on how customers there search and what a website needs to be found.</p>
+          <p class="lede"><a href="/about">Veltra Media</a> is based in Middlesbrough and works with businesses across the Tees Valley. We have no offices in the other towns: projects run online, and we can meet in person around Teesside when that helps. Each area below has its own page on how customers there search and what a website needs to be found.</p>
         </div>
       </section>
 

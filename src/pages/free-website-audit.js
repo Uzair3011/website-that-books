@@ -69,7 +69,7 @@ const body = `      <section class="hero">
             </li>
             <li>
               <h3>The three changes to prioritise</h3>
-              <p>Ranked by likely impact — including the ones you can do yourself for nothing, and the ones that are not worth doing at all.</p>
+              <p>Ranked by likely impact — including the ones you can do yourself for nothing (our <a href="/resources">free guides for small businesses</a> cover many of them), and the ones that are not worth doing at all.</p>
             </li>
           </ol>
         </div>

@@ -84,7 +84,7 @@ export default servicePage({
   },
   price: {
     heading: "Profile and local SEO setup is £99.",
-    body: 'Google Business Profile and local SEO setup is £99 one-off, excluding VAT. Everything is confirmed in writing before work begins. Compare it with every service on our <a href="/pricing">published price list</a>, or start with a <a href="/free-website-audit">free audit of your website and Google profile</a>.',
+    body: 'Google Business Profile and local SEO setup is £99 one-off, excluding VAT. Everything is confirmed in writing before work begins. Compare it with <a href="/pricing">every service and price we publish</a>, or start with a <a href="/free-website-audit">free audit of your website and Google profile</a>.',
   },
   faqs: [
     {
@@ -124,6 +124,11 @@ export default servicePage({
       href: "/pricing",
       label: "Pricing",
       text: "Every service, priced separately, in one place.",
+    },
+    {
+      href: "/areas",
+      label: "Areas we cover",
+      text: "The Tees Valley towns we set up profiles for, each with its own page.",
     },
   ],
 });

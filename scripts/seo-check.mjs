@@ -30,6 +30,8 @@ export const LIMITS = {
   descMin: 120,
   descMax: 158,
   contextualLinks: 3,
+  maxClickDepth: 3,
+  maxAnchorRepeats: 3,
   imageBytes: 150 * 1024,
 };
 
@@ -257,6 +259,7 @@ export function analyse(page, html) {
   jsonLd.referenced = nodes.filter(isReference).map((node) => node["@id"]);
 
   const main = mainOf(html);
+  const anchors = bodyAnchors(html);
   const images = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
 
   // The visible FAQ (faqSection in src/site.js) and breadcrumb (breadcrumbNav).
@@ -279,7 +282,9 @@ export function analyse(page, html) {
     jsonLd,
     words: textOf(main).split(/\s+/).filter(Boolean).length,
     linksAll: new Set(internalLinks(html)),
-    linksMain: new Set(internalLinks(main)),
+    // Body links: <main> without the breadcrumb.
+    anchors,
+    linksMain: new Set(anchors.map((anchor) => anchor.href)),
     images: images.map(imageFacts),
     faq,
     crumbs,
@@ -355,16 +360,175 @@ const resolved = (site, path) => site.resolveRedirect(path) ?? path;
 export function linkGraph(site, analyses) {
   const inAll = new Map();
   const inMain = new Map();
+  // Body links only count from indexable pages: the 404 and checkout pages
+  // pass nothing on to search engines.
+  const indexable = new Set(site.pages.map((page) => page.path));
   for (const a of analyses.values()) {
-    for (const [set, bucket] of [[a.linksAll, inAll], [a.linksMain, inMain]])
+    for (const [set, bucket] of [[a.linksAll, inAll], [a.linksMain, inMain]]) {
+      if (bucket === inMain && !indexable.has(a.path)) continue;
       for (const target of set) {
         const to = resolved(site, target);
         if (to === a.path) continue;
         if (!bucket.has(to)) bucket.set(to, new Set());
         bucket.get(to).add(a.path);
       }
+    }
   }
   return { inAll, inMain };
+}
+
+/**
+ * Clicks from the homepage to every indexable page, following every link a
+ * visitor or crawler could follow (header and footer included). Unreachable
+ * pages get Infinity.
+ */
+export function clickDepth(site, analyses) {
+  const indexable = new Set(site.pages.map((page) => page.path));
+  const depth = new Map([["/", 0]]);
+  const queue = ["/"];
+  while (queue.length) {
+    const from = queue.shift();
+    for (const target of analyses.get(from)?.linksAll ?? []) {
+      const to = resolved(site, target);
+      if (!indexable.has(to) || depth.has(to)) continue;
+      depth.set(to, depth.get(from) + 1);
+      queue.push(to);
+    }
+  }
+  for (const path of indexable) if (!depth.has(path)) depth.set(path, Infinity);
+  return depth;
+}
+
+/**
+ * Pages that may have fewer than 3 body links in: the homepage is the root
+ * every page reaches through the logo, and the legal pages are not ranking
+ * targets (docs/seo/keyword-map.md); all four are linked from every footer.
+ */
+export const BODY_INBOUND_EXEMPT = new Set(["/", "/privacy", "/cookie-policy", "/terms"]);
+
+const SERVICE_PAGES = [
+  "/web-design-middlesbrough",
+  "/local-seo-middlesbrough",
+  "/google-business-profile",
+  "/landing-page-design",
+  "/ai-receptionist-middlesbrough",
+  "/crm-booking-automation",
+  "/website-care",
+];
+// The four services in the Growth Launch Package.
+const MAIN_SERVICES = [
+  "/web-design-middlesbrough",
+  "/local-seo-middlesbrough",
+  "/ai-receptionist-middlesbrough",
+  "/crm-booking-automation",
+];
+// Middlesbrough's area page is its web design page.
+const AREA_PAGES = [
+  "/web-design-middlesbrough",
+  "/web-design-teesside",
+  "/web-design-stockton-on-tees",
+  "/web-design-redcar",
+  "/web-design-hartlepool",
+];
+const TOPIC_PAGES = [...SERVICE_PAGES, "/ai-agents-teesside", "/web-design-for-trades-teesside", "/pricing"];
+const isArticle = (path) => path.startsWith("/resources/");
+
+/**
+ * Where body links must go (the internal-linking brief of 13 Oct 2026):
+ * `all` lists required targets; `some` is [label, candidates, min, max].
+ */
+export const LINK_RULES = [
+  { pages: ["/"], all: ["/services", "/areas", "/resources", ...MAIN_SERVICES] },
+  { pages: ["/services"], all: [...SERVICE_PAGES, "/ai-agents-teesside", "/web-design-for-trades-teesside", "/areas"] },
+  {
+    pages: SERVICE_PAGES,
+    all: ["/areas", "/pricing", "/free-website-audit"],
+    some: [
+      ["a related service", SERVICE_PAGES, 1],
+      ["the most relevant articles", isArticle, 1, 3],
+    ],
+  },
+  { pages: AREA_PAGES.filter((path) => path !== "/web-design-middlesbrough"), all: [...AREA_PAGES, ...MAIN_SERVICES, "/areas"] },
+  {
+    pages: isArticle,
+    some: [
+      ["a matching service page", TOPIC_PAGES, 1],
+      ["a matching area page", [...AREA_PAGES, "/areas"], 1],
+    ],
+  },
+];
+
+export function linkRuleProblems(site, analyses) {
+  const problems = [];
+  const matches = (test, path) => (typeof test === "function" ? test(path) : test.includes(path));
+  for (const page of site.pages)
+    for (const rule of LINK_RULES) {
+      if (!matches(rule.pages, page.path)) continue;
+      const links = new Set([...analyses.get(page.path).linksMain].map((t) => resolved(site, t)));
+      links.delete(page.path);
+      for (const target of rule.all ?? [])
+        if (target !== page.path && !links.has(target)) problems.push([page.path, `no body link to ${target}`]);
+      for (const [label, test, min, max = Infinity] of rule.some ?? []) {
+        const n = [...links].filter((path) => matches(test, path)).length;
+        if (n < min || n > max)
+          problems.push([page.path, `${n} body links to ${label} (want ${max === Infinity ? `${min}+` : `${min}-${max}`})`]);
+      }
+    }
+  return problems;
+}
+
+/**
+ * Anchor text that tells neither a reader nor Google where a link goes. An
+ * anchor fails if its whole visible text (or aria-label) is one of these.
+ */
+export const VAGUE_ANCHORS = new Set([
+  "click here",
+  "here",
+  "read more",
+  "more",
+  "learn more",
+  "find out more",
+  "see more",
+  "this",
+  "this page",
+  "link",
+  "go",
+  "continue",
+]);
+
+/**
+ * Every internal link in the page's own content: <main> without the
+ * breadcrumb (header, footer and breadcrumb are navigation, not copy).
+ * `kind` is one of:
+ * - "inline": a link inside a sentence of copy (no class), the "body copy"
+ *   the repeated-anchor rule applies to;
+ * - "card": a block of text, as in the related links;
+ * - "button": class btn;
+ * - "styled": any other class, such as a standalone text-link or price link;
+ * - "form": inside a form, such as the consent line's privacy link.
+ */
+export function bodyAnchors(html) {
+  const main = mainOf(html).replace(/<nav class="breadcrumbs"[\s\S]*?<\/nav>/, "");
+  const forms = [...main.matchAll(/<form\b[\s\S]*?<\/form>/g)].map((m) => [m.index, m.index + m[0].length]);
+  const anchors = [];
+  for (const match of main.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)) {
+    const [whole, attrs, inner] = match;
+    const [href] = internalLinks(` ${attrs}`);
+    if (!href) continue;
+    const cls = attr(` ${attrs}`, "class");
+    const kind = forms.some(([start, end]) => match.index > start && match.index < end)
+      ? "form"
+      : /\bbtn\b/.test(cls ?? "")
+        ? "button"
+        : /<(b|p|h\d|span class="card-body")\b/.test(inner)
+          ? "card"
+          : cls !== undefined
+            ? "styled"
+            : "inline";
+    const text = textOf(inner) || decode(attr(` ${attrs}`, "aria-label") ?? "");
+    anchors.push({ href, text, kind, html: whole });
+  }
+  return anchors;
 }
 
 // ───────────────────────── Redirects ─────────────────────────
@@ -563,15 +727,35 @@ export function runChecks(site = loadSite(), { dist = null } = {}) {
         warn("link to redirect", a.path, `${target} → ${site.resolveRedirect(target)}; link to the final URL`);
     }
 
-  // Orphans: no other page links here at all. Nav and footer count, so this
-  // only catches pages nobody linked; the contextual-link warning is stricter.
+  // Orphans: no other page links here at all, nav and footer included.
+  // Body links: at least 3 other indexable pages link here from their content.
+  const depth = clickDepth(site, analyses);
   for (const page of site.pages) {
     if (!inAll.get(page.path)?.size) fail("orphan page", page.path, "no inbound internal links from any other page");
     const out = [...analyses.get(page.path).linksMain].filter((t) => resolved(site, t) !== page.path).length;
     const into = inMain.get(page.path)?.size ?? 0;
     if (out < LIMITS.contextualLinks) warn("contextual links out", page.path, `${out} distinct internal links in the body (want ${LIMITS.contextualLinks}+)`);
-    if (into < LIMITS.contextualLinks) warn("contextual links in", page.path, `${into} other pages link here from their body (want ${LIMITS.contextualLinks}+)`);
+    if (into < LIMITS.contextualLinks && !BODY_INBOUND_EXEMPT.has(page.path))
+      fail("body links in", page.path, `${into} other pages link here from their body (need ${LIMITS.contextualLinks}+)`);
+    if (depth.get(page.path) > LIMITS.maxClickDepth)
+      fail("click depth", page.path, `${depth.get(page.path)} clicks from the homepage (max ${LIMITS.maxClickDepth})`);
   }
+
+  // Anchor text: never vague, and no in-sentence anchor repeated across the site.
+  const inlineUses = new Map();
+  for (const page of site.pages)
+    for (const anchor of analyses.get(page.path).anchors) {
+      const text = anchor.text.toLowerCase().replace(/[.!?:]+$/, "").trim();
+      if (!text) fail("anchor text", page.path, `link to ${anchor.href} has no text or aria-label`);
+      else if (VAGUE_ANCHORS.has(text)) fail("anchor text", page.path, `"${anchor.text}" → ${anchor.href} does not say where it goes`);
+      if (anchor.kind === "inline" && text) inlineUses.set(text, [...(inlineUses.get(text) ?? []), page.path]);
+    }
+  for (const [text, where] of inlineUses)
+    if (where.length > LIMITS.maxAnchorRepeats)
+      fail("anchor repeated", where[0], `"${text}" is used ${where.length} times in body copy (max ${LIMITS.maxAnchorRepeats}): ${where.join(", ")}`);
+
+  // The linking patterns in LINK_RULES.
+  for (const [path, problem] of linkRuleProblems(site, analyses)) fail("required links", path, problem);
 
   // Images: complete attributes, at most one high-priority (LCP) image, and
   // the homepage hero loads first. Heavy files are reported, not failed.

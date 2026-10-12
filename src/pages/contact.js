@@ -25,7 +25,7 @@ const body = `      <section class="hero">
               <h2>WhatsApp, email or send a message.</h2>
               <div class="prose">
                 <p><strong>Not sure where to start?</strong> The <a href="${CTA.href}">free website plan</a> is usually the most useful first step. You get a practical starting point and a short video review, and you are under no obligation afterwards.</p>
-                <p>We work with businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, and remotely elsewhere in the UK.</p>
+                <p>We work with businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, and remotely elsewhere in the UK. You can read <a href="/about">who is behind Veltra Media</a> before you get in touch.</p>
               </div>
               <ul class="contact-methods">
                 <li><a data-contact="whatsapp" href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}<span>${SITE.phoneLabel}<small>WhatsApp &mdash; Monday to Friday</small></span></a></li>

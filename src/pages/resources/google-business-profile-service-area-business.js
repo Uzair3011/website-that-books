@@ -94,7 +94,7 @@ export default articlePage({
             ["Not: Leeds or Newcastle", "Too far to serve properly, and it confuses customers"],
           ],
         }),
-        `Setting a wide area does not mean you will appear across all of it. Where your profile shows depends on more than this setting; our guide on <a href="/resources/rank-in-google-maps-without-a-shop">how to rank in Google Maps without a shop</a> explains what else matters. List the same areas on your website, so the two agree.`,
+        `Setting a wide area does not mean you will appear across all of it. Where your profile shows depends on more than this setting; our guide on <a href="/resources/rank-in-google-maps-without-a-shop">how to rank in Google Maps without a shop</a> explains what else matters. List the same areas on your website, so the two agree; our own <a href="/areas">page of the areas we serve</a> is one way to set them out, and <a href="/local-seo-middlesbrough">local SEO for Teesside businesses</a> covers the website side.`,
       ],
     },
     {

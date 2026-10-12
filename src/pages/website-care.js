@@ -82,7 +82,7 @@ export default servicePage({
   },
   price: {
     heading: "From £49 a month.",
-    body: 'Website care starts at £49 a month, excluding VAT, with no long tie-in. Any third-party costs, such as a domain name, are shown at cost and confirmed in writing before work begins. See every service on our <a href="/pricing">published price list</a>, or ask for a <a href="/free-website-audit">free website audit</a> to find out whether care makes sense for your current site.',
+    body: 'Website care starts at £49 a month, excluding VAT, with no long tie-in. Any third-party costs, such as a domain name, are shown at cost and confirmed in writing before work begins. See <a href="/pricing">what every other service costs</a>, or ask for a <a href="/free-website-audit">free website audit</a> to find out whether care makes sense for your current site.',
   },
   faqs: [
     {
@@ -122,6 +122,16 @@ export default servicePage({
       href: "/free-website-audit",
       label: "Free website plan",
       text: "A practical starting point and the gaps worth fixing first.",
+    },
+    {
+      href: "/resources/how-much-does-a-website-cost",
+      label: "Website running costs, explained",
+      text: "Domain, hosting, email and care: what you pay for after launch.",
+    },
+    {
+      href: "/areas",
+      label: "Areas we cover",
+      text: "Websites looked after for businesses across the Tees Valley.",
     },
   ],
 });

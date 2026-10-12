@@ -51,7 +51,7 @@ export default areaPage({
           <li>“Tees Valley” rather than “Teesside” whenever you describe a wider area you work in.</li>
           <li>A Google Business Profile whose service areas, name and phone number match the website exactly.</li>
         </ul>`,
-        `What goes into each build is set out on <a href="/web-design-middlesbrough">our main web design page</a>. For SEO in Hartlepool, <a href="/local-seo-middlesbrough">our local SEO service</a> and <a href="/google-business-profile">Google Business Profile setup and optimisation</a> work on how often you appear in Search and Maps. If the phone rings while you are up a ladder, <a href="/ai-receptionist-middlesbrough">an AI receptionist can take the call and the details</a>.`,
+        `What goes into each build is set out on <a href="/web-design-middlesbrough">our main web design page</a>. For SEO in Hartlepool, <a href="/local-seo-middlesbrough">our local SEO service</a> and <a href="/google-business-profile">Google Business Profile setup and optimisation</a> work on how often you appear in Search and Maps. If the phone rings while you are up a ladder, <a href="/ai-receptionist-middlesbrough">an AI receptionist can take the call and the details</a>, and <a href="/crm-booking-automation">follow-up automation for quotes and bookings</a> chases the ones that go quiet.`,
       ],
     },
     {

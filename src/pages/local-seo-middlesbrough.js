@@ -97,8 +97,8 @@ export default serviceSalesPage({
     body: [
       "Google says it ranks local results on relevance, distance and prominence. That is why someone searching “roofer near me” in Redcar sees different businesses from someone in central Middlesbrough, and why a firm based in Stockton-on-Tees can struggle to appear in Hartlepool or Billingham unless its website and profile say it works there.",
       "Most trades have no shop, so their Google Business Profile should be a service-area business that lists the towns they cover. The website backs it up: a page for each main service, plain statements of your areas, the same name and phone number everywhere, and local business markup. Real reviews, asked for consistently, help with prominence.",
-      'For the detail, read <a href="/resources/google-business-profile-service-area-business">setting up a Google Business Profile as a service area business</a> and <a href="/resources/rank-in-google-maps-without-a-shop">how to rank in Google Maps without a shop</a>. If you would rather do the groundwork yourself, work through our <a href="/resources/local-seo-checklist">local SEO checklist for small businesses</a>.',
-      'Our local SEO setup covers that groundwork across Middlesbrough and Teesside for a one-off £99: <a href="/google-business-profile">Google Business Profile optimisation</a>, service and area pages, local schema and consistent business details. Many businesses pair it with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>.',
+      'For the detail, read <a href="/resources/google-business-profile-service-area-business">setting up a Google Business Profile as a service area business</a> and <a href="/resources/rank-in-google-maps-without-a-shop">how to rank in Google Maps without a shop</a>. If you would rather do the groundwork yourself, work through our <a href="/resources/local-seo-checklist">local SEO checklist for small businesses</a>, or browse <a href="/resources">our other free guides for local businesses</a>.',
+      'Our local SEO setup covers that groundwork across Middlesbrough and Teesside for a one-off £99: <a href="/google-business-profile">Google Business Profile setup and optimisation</a>, service and area pages, local schema and consistent business details. Many businesses pair it with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>.',
       'Compare every service on our <a href="/pricing">price list</a>, or ask for a <a href="/free-website-audit">free audit of your website and Google profile</a> first.',
     ],
   },
@@ -113,7 +113,7 @@ export default serviceSalesPage({
     },
     {
       q: "Do you cover Stockton, Hartlepool, Redcar and Billingham?",
-      a: "<p>Yes. We work with businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley. If you serve several of those towns, we set your service areas on your Google Business Profile and recommend whether any town deserves its own page. We only suggest that where there is something genuinely local to say.</p>",
+      a: "<p>Yes. We work with businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley. If you serve several of those towns, we set your service areas on your Google Business Profile and recommend whether any town deserves its own page. We only suggest that where there is something genuinely local to say. Our <a href=\"/areas\">list of the Tees Valley areas we work in</a> links to a page for each town.</p>",
     },
     {
       q: "Who owns my Google Business Profile?",

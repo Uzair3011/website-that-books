@@ -51,7 +51,7 @@ export default areaPage({
           <li>Directions and parking written for someone who has never been to Redcar, if customers come to you.</li>
         </ul>`,
         "Postcodes help too. Redcar itself is TS10, and Marske, Saltburn and Guisborough each have their own TS district, so listing the ones you serve saves a wasted call.",
-        `The build itself is the same one we offer in Middlesbrough, explained on <a href="/web-design-middlesbrough">how our web design packages work</a>. For SEO in Redcar, <a href="/local-seo-middlesbrough">local search work for Teesside businesses</a> improves how often you appear in Search and Maps, and <a href="/google-business-profile">Google Business Profile optimisation</a> keeps your hours, photos and service areas accurate. Summer calls you cannot pick up can go to <a href="/ai-receptionist-middlesbrough">an AI receptionist that answers when you are busy</a>.`,
+        `The build itself is the same one we offer in Middlesbrough, explained on <a href="/web-design-middlesbrough">how our web design packages work</a>. For SEO in Redcar, <a href="/local-seo-middlesbrough">local search work for Teesside businesses</a> improves how often you appear in Search and Maps, and <a href="/google-business-profile">a well set-up Google Business Profile</a> keeps your hours, photos and service areas accurate. Summer calls you cannot pick up can go to <a href="/ai-receptionist-middlesbrough">an AI receptionist that answers when you are busy</a>, with <a href="/crm-booking-automation">automatic booking confirmations and reminders</a> for the jobs it books.`,
       ],
     },
     {

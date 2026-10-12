@@ -169,3 +169,42 @@ test("articleJsonLd() output passes every structured-data check", () => {
     .failures.filter((f) => f.check.startsWith("json-ld"));
   assert.deepEqual(failures, []);
 });
+
+test("the checker catches vague anchors, repeated in-sentence anchors and missing required links", () => {
+  const inject = (html, extra) => html.replace('<main id="main">', `<main id="main"><p>${extra}</p>`);
+  let details = failureDetails(withPage("/pricing", (page) => inject(page, '<a href="/contact">click here</a>')), "anchor text");
+  assert.ok(details.some((d) => d.includes("click here")), details.join("\n"));
+
+  const site = loadSite();
+  const html = new Map(site.html);
+  for (const path of ["/about", "/work", "/contact", "/pricing"])
+    html.set(path, inject(html.get(path), '<a href="/areas">the same words everywhere</a>'));
+  details = failureDetails({ html }, "anchor repeated");
+  assert.ok(details.some((d) => d.includes("the same words everywhere")), details.join("\n"));
+
+  details = failureDetails(withPage("/services", (page) => page.replaceAll('href="/areas"', 'href="/contact"')), "required links");
+  assert.ok(details.some((d) => d.startsWith("/services: no body link to /areas")), details.join("\n"));
+});
+
+test("the checker catches pages with too few body links in, and pages too many clicks deep", () => {
+  const site = loadSite();
+  const [, services] = site.pages;
+  const page = (path, next) => ({
+    ...services,
+    path,
+    title: `Deep page ${path}`,
+    description: `A test page at ${path}.`,
+    jsonLd: [],
+    body: next ? `<p><a href="${next}">the next page down</a></p>` : "<p>The end.</p>",
+  });
+  // /pricing (1 click) → /deep-1 → /deep-2 → /deep-3 (4 clicks).
+  const pages = [...site.pages, page("/deep-1", "/deep-2"), page("/deep-2", "/deep-3"), page("/deep-3")];
+  const html = new Map(site.html);
+  html.set("/pricing", html.get("/pricing").replace('<main id="main">', '<main id="main"><p><a href="/deep-1">a deeper test page</a></p>'));
+  const deep = loadSite({ pages });
+  for (const [path, value] of html) deep.html.set(path, value);
+  const failures = runChecks(deep).failures;
+  const of = (check) => failures.filter((f) => f.check === check).map((f) => f.page);
+  assert.ok(of("click depth").includes("/deep-3"), JSON.stringify(failures.filter((f) => f.check === "click depth")));
+  assert.ok(of("body links in").includes("/deep-2"));
+});

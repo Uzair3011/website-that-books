@@ -56,7 +56,7 @@ const body = `      <section class="hero">
 
       <section class="section">
         <div class="container">
-          <p class="disclosure" style="margin-bottom: 40px">Veltra Media is a young studio and we would rather show you our thinking than pad this page. Projects marked <strong>Veltra build</strong> are real systems we have built and run. Projects marked <strong>Concept</strong> are designs for fictional businesses that show how we structure a given kind of site &mdash; they are not client projects. We publish client case studies only with permission, and only with results we can evidence.</p>
+          <p class="disclosure" style="margin-bottom: 40px"><a href="/about">Veltra Media is a young Middlesbrough studio</a>, and we would rather show you our thinking than pad this page. Projects marked <strong>Veltra build</strong> are real systems we have built and run. Projects marked <strong>Concept</strong> are designs for fictional businesses that show how we structure a given kind of site &mdash; they are not client projects. We publish client case studies only with permission, and only with results we can evidence.</p>
           <div class="work-list reveal">
 ${grid}
           </div>

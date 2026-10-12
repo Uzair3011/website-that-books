@@ -154,7 +154,7 @@ export default articlePage({
           <li>Check your website header has a tappable phone number, and send yourself a test enquiry.</li>
           <li>Search for your business name and note every listing that has an old phone number or address. Fix one a day.</li>
         </ol>`,
-        `If you would rather hand it over, our <a href="/local-seo-middlesbrough">local SEO service for Middlesbrough and Teesside</a> covers parts one to three, and <a href="/google-business-profile">Google Business Profile optimisation</a> is included in the same ${price("local-seo-google-business-profile")} setup.`,
+        `If you would rather hand it over, our <a href="/local-seo-middlesbrough">local SEO service for Middlesbrough and Teesside</a> covers parts one to three for businesses in <a href="/areas">Middlesbrough and the towns around it</a>, and <a href="/google-business-profile">our Google Business Profile setup</a> is included in the same ${price("local-seo-google-business-profile")} setup.`,
       ],
     },
   ],

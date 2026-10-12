@@ -141,7 +141,7 @@ export default articlePage({
           <li><strong>Write down your services, prices and areas</strong> in one place. It is the content of your first web page.</li>
           <li><strong>Ask your last five new customers how they found you.</strong> The answer tells you whether a website is urgent.</li>
         </ol>`,
-        `If you are near Middlesbrough and decide a website is worth it, our <a href="/web-design-middlesbrough">web design service in Middlesbrough</a> publishes every price before you get in touch.`,
+        `If you are near Middlesbrough and decide a website is worth it, our <a href="/web-design-middlesbrough">web design service in Middlesbrough</a> publishes every price before you get in touch. We also build sites for businesses in <a href="/web-design-stockton-on-tees">Stockton-on-Tees and Billingham</a>, <a href="/web-design-redcar">Redcar</a> and <a href="/web-design-hartlepool">Hartlepool</a>.`,
       ],
     },
   ],

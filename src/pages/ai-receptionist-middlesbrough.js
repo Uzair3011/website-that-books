@@ -92,13 +92,13 @@ export default serviceSalesPage({
     body: [
       "People in Middlesbrough search for the job and the place, often adding “emergency”, “same day” or “open now”, then contact the first few businesses they find. Many of those searches come in the evening or at the weekend, when a sole trader is on a job. The business that replies first, with a straight answer, often gets the enquiry.",
       "A useful AI receptionist knows your real services, prices, hours and towns, so it can answer “do you come out to Billingham?” or “are you in Stockton-on-Tees?” correctly. It hands over to you by a clear rule, takes the details you need to quote, and never makes up an answer. The same approved answers run your website chat, so a visitor from Redcar or Hartlepool hears what a caller hears.",
-      'Setup is £199, with the AI provider’s usage passed through at cost; see the <a href="/pricing">full price list</a>. Add <a href="/crm-booking-automation">booking and CRM automation</a> to keep every enquiry in one place, or pair it with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. Not sure yet? Ask for a <a href="/free-website-audit">free website audit</a>.',
+      'Setup is £199, with the AI provider’s usage passed through at cost; see the <a href="/pricing">full price list</a>. Add <a href="/crm-booking-automation">booking and CRM automation</a> to keep every enquiry in one place, or pair it with <a href="/web-design-middlesbrough">a new website for your Middlesbrough business</a>. Not sure yet? Ask for a <a href="/free-website-audit">free website audit</a>.',
     ],
   },
   faqs: [
     {
       q: "How much does an AI receptionist cost?",
-      a: '<p>Setup is £199, excluding VAT. The AI provider behind it charges for usage; that is passed through at cost, not marked up, and the expected figure is confirmed in writing before work begins. Website care is optional. Every price is on the <a href="/pricing">pricing page</a>.</p>',
+      a: '<p>Setup is £199, excluding VAT. The AI provider behind it charges for usage; that is passed through at cost, not marked up, and the expected figure is confirmed in writing before work begins. Website care is optional. Every price is on <a href="/pricing">our list of service prices</a>.</p>',
     },
     {
       q: "How long does it take to set up?",
@@ -106,7 +106,7 @@ export default serviceSalesPage({
     },
     {
       q: "Do you cover Stockton, Hartlepool, Redcar and Billingham?",
-      a: "<p>Yes. We work with businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, in person or online. The receptionist is told which towns you serve, so it can answer area questions correctly for your customers.</p>",
+      a: "<p>Yes. We work with businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, in person or online. The receptionist is told which towns you serve, so it can answer area questions correctly for your customers. See <a href=\"/areas\">the Teesside towns we work in</a>.</p>",
     },
     {
       q: "What happens if it does not know the answer?",

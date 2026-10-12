@@ -32,8 +32,8 @@ export default servicePage({
       "Teesside is several towns, and people search with their own. A customer in Hartlepool types “plumber Hartlepool”, not “plumber Teesside”. Billingham sits within the Borough of Stockton-on-Tees, so people there may use either name, and Redcar searches can bring up businesses from across Redcar and Cleveland. Hartlepool is part of the Tees Valley, but many there would not call it Teesside.",
       "A website that serves several towns names the ones you genuinely cover on the page, not only in the footer. It gives a town its own page only when there is something real to say, because pages that just swap the town name count as doorway pages under Google’s spam policies. And it matches your Google Business Profile service areas, name and phone number.",
       'Each town has its own page on how people there search: <a href="/web-design-stockton-on-tees">Stockton-on-Tees and Billingham</a>, <a href="/web-design-redcar">Redcar</a> and <a href="/web-design-hartlepool">Hartlepool</a>, or see <a href="/areas">every area we serve</a>.',
-      'We are based in Middlesbrough and meet clients around Teesside or online. If Middlesbrough is your main market, start with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. To be found more widely, add <a href="/local-seo-middlesbrough">local SEO across Teesside</a> and <a href="/google-business-profile">Google Business Profile optimisation</a>.',
-      'Every package is on the <a href="/pricing">published price list</a>, or get a <a href="/free-website-audit">free website audit</a> first.',
+      'We are based in Middlesbrough and meet clients around Teesside or online. If Middlesbrough is your main market, start with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. To be found more widely, add <a href="/local-seo-middlesbrough">local SEO across Teesside</a> and <a href="/google-business-profile">Google Business Profile optimisation</a>. If enquiries slip through when you are busy, <a href="/ai-receptionist-middlesbrough">an AI receptionist and website chat</a> can answer them, and <a href="/crm-booking-automation">booking and CRM automation for small businesses</a> keeps every one followed up.',
+      'Every package is on the <a href="/pricing">published price list</a>, or get a <a href="/free-website-audit">free audit of the site you have now</a> first.',
     ],
   },
   includedHeading: "How we handle a wider area",
@@ -104,7 +104,7 @@ export default servicePage({
     },
     {
       q: "How much does a website cost?",
-      a: '<p>A Simple Landing Page is £99 for a focused one-page site, and a Multi-Page Website is £179 for up to five pages, both one-off and excluding VAT. Larger sites with several town or service pages get a written quote. Care is optional, from £49 a month. Every price is on the <a href="/pricing">pricing page</a>.</p>',
+      a: '<p>A Simple Landing Page is £99 for a focused one-page site, and a Multi-Page Website is £179 for up to five pages, both one-off and excluding VAT. Larger sites with several town or service pages get a written quote. Care is optional, from £49 a month. Every price is on <a href="/pricing">our page of website and care prices</a>.</p>',
     },
     {
       q: "How long will it take?",

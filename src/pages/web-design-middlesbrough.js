@@ -129,7 +129,7 @@ export default serviceSalesPage({
     },
     {
       q: "Do you cover Stockton, Hartlepool, Redcar and Billingham?",
-      a: '<p>Yes. We are based in Middlesbrough and work with businesses in Stockton-on-Tees, Redcar, Billingham, Hartlepool and across the Tees Valley. Meetings can be in person around Teesside or online, and we also work remotely with businesses elsewhere in the UK. If you serve several towns, see how we approach <a href="/web-design-teesside">web design across Teesside</a>.</p>',
+      a: '<p>Yes. We are based in Middlesbrough and work with businesses in Stockton-on-Tees, Redcar, Billingham, Hartlepool and across the Tees Valley. Meetings can be in person around Teesside or online, and we also work remotely with businesses elsewhere in the UK. If you serve several towns, see how we approach <a href="/web-design-teesside">web design across Teesside</a>, or the <a href="/areas">towns we cover across the Tees Valley</a>.</p>',
     },
     {
       q: "Will I own the website?",
