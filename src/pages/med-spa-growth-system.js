@@ -71,8 +71,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-grid">
             <div class="hero-copy">
-              <p class="eyebrow">Specialist system &middot; Med spas &amp; aesthetic clinics</p>
-              <h1>Your next client is calling. Be there.</h1>
+              <p class="eyebrow">Your next client is calling. Be there.</p>
+              <h1>A growth system for med spas: website, AI reception and booking</h1>
               <p class="lede">A complete growth system for med spas and aesthetic clinics: a conversion-focused website, an AI receptionist, website chat, online booking and follow-up &mdash; built and connected as one.</p>
               <div class="button-row">
                 <a class="btn" href="/contact">Book a free strategy call${icon("arrow-up")}</a>
@@ -214,7 +214,7 @@ ${faqSection(FAQS, { heading: "Questions clinics actually ask.", eyebrow: "Clini
 ${related(
   [
     {
-      href: "/ai-automation-middlesbrough",
+      href: "/ai-receptionist-middlesbrough",
       label: "AI receptionist + website chat",
       text: "The reception layer, available on its own in GBP.",
     },
@@ -222,6 +222,21 @@ ${related(
       href: "/crm-booking-automation",
       label: "CRM, booking + follow-up",
       text: "Live calendar booking, confirmations and reminders.",
+    },
+    {
+      href: "/web-design-middlesbrough",
+      label: "Website design",
+      text: "The multi-page website on its own, with local search foundations.",
+    },
+    {
+      href: "/local-seo-middlesbrough",
+      label: "Local SEO + Google Business Profile",
+      text: "Profile, service pages and local schema, set up on their own.",
+    },
+    {
+      href: "/free-website-audit",
+      label: "Free website audit",
+      text: "A review of your clinic’s current website and Google presence first.",
     },
     {
       href: "/pricing",
@@ -241,9 +256,9 @@ ${finalCta({
 
 export default {
   path: "/med-spa-growth-system",
-  title: "Med Spa Growth System | Website, AI Reception & Booking | Veltra Media",
+  title: "Med Spa Websites, AI Reception & Booking | Veltra Media",
   description:
-    "A growth system for med spas and aesthetic clinics in Middlesbrough and Teesside: website, AI receptionist, website chat and booking automation. The £499 Growth Launch Package, with each part also available on its own.",
+    "Websites, AI reception and online booking for med spas and aesthetic clinics: the £499 Growth Launch Package, with each part also available on its own.",
   jsonLd: [
     organizationJsonLd(),
     serviceJsonLd({

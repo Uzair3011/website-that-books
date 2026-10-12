@@ -123,7 +123,7 @@ export const SERVICES = [
     tags: ["One offer per page", "Conversion copy", "Measurement"],
   },
   {
-    href: "/ai-automation-middlesbrough",
+    href: "/ai-receptionist-middlesbrough",
     name: "AI Receptionist + Website Chat",
     nav: "AI receptionist",
     icon: "chat",

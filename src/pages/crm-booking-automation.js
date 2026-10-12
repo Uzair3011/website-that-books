@@ -3,14 +3,15 @@ import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
 export default serviceSalesPage({
   path: "/crm-booking-automation",
-  title: "CRM, Booking & Follow-up Automation | Teesside | Veltra Media",
+  title: "Booking & CRM Automation for Small Business | Veltra Media",
   description:
-    "Automated quote follow-up, self-serve booking, job reminders and one lead dashboard, so fewer good enquiries disappear between first contact and booked work.",
+    "Booking and CRM automation for small businesses in Teesside: every enquiry in one place, live calendar booking, reminders and follow-up. £199 setup.",
   breadcrumbName: "CRM & booking automation",
   serviceName: "CRM, booking and follow-up automation",
   eyebrow: "CRM & booking automation",
-  h1: "Stop Losing Jobs Because You Forgot to Follow Up. Automate Your Lead Chasing and Get Your Evenings Back.",
-  h1Highlight: "Get Your Evenings Back.",
+  h1: "Booking and CRM automation for small businesses in Teesside",
+  h1Highlight: "Booking and CRM automation",
+  hook: "Stop losing jobs because you forgot to follow up. Automate your lead chasing and get your evenings back.",
   lede: "You did the hard work to get the lead. Don’t lose the money because it got lost in a spreadsheet or a sticky note. We automate your entire sales pipeline.",
   heroVisual: V.crmHero,
   points: [
@@ -84,4 +85,26 @@ export default serviceSalesPage({
     heading: "Ready to scale your business",
     highlight: "without drowning in admin?",
   },
+  relatedItems: [
+    {
+      href: "/ai-receptionist-middlesbrough",
+      label: "AI receptionist and website chat",
+      text: "Answers and captures enquiries after hours, then hands them to your pipeline. £199 setup.",
+    },
+    {
+      href: "/web-design-middlesbrough",
+      label: "Web design in Middlesbrough",
+      text: "A website whose enquiry forms feed straight into the system, from £99.",
+    },
+    {
+      href: "/google-business-profile",
+      label: "Google Business Profile optimisation",
+      text: "Where the review requests send happy customers, set up for £99.",
+    },
+    {
+      href: "/free-website-audit",
+      label: "Free website audit",
+      text: "Find out where enquiries are being lost before you automate anything.",
+    },
+  ],
 });

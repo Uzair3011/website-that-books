@@ -57,7 +57,7 @@ const SERVICES = [
   },
   {
     name: "AI receptionist + website chat",
-    href: "/ai-automation-middlesbrough",
+    href: "/ai-receptionist-middlesbrough",
     cta: "Explore AI reception",
     text: "<strong>Never Miss a Lead at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, you get the job, not the guy who opens at 9 AM.",
     included: [
@@ -116,8 +116,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 46rem">
             <p class="eyebrow">Services</p>
-            <h1>Everything that turns a local search into a booked enquiry.</h1>
-            <p class="lede">Six services that each fix one part of the journey, from being found to following up. Buy the one you need now and add the others only when they earn their place.</p>
+            <h1>Web design, SEO and AI services for Teesside businesses</h1>
+            <p class="lede"><strong>Everything that turns a local search into a booked enquiry.</strong> Six services that each fix one part of the journey, from being found to following up. Buy the one you need now and add the others only when they earn their place.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/pricing">See pricing</a>
@@ -171,9 +171,9 @@ ${finalCta({
 
 export default {
   path: "/services",
-  title: "Services | Web Design, Local SEO & Automation | Veltra Media",
+  title: "Services: Web Design, Local SEO & AI | Veltra Media",
   description:
-    "Website design, local SEO, landing pages, AI reception, booking automation and website care for Middlesbrough and Teesside businesses. Every service can be bought on its own.",
+    "Web design, local SEO, landing pages, AI receptionist, booking automation and website care for Teesside businesses. Each is priced and sold on its own.",
   jsonLd: [
     organizationJsonLd(),
     faqJsonLd(FAQS),

@@ -8,7 +8,7 @@ import { SITE, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
 const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Cookies</p>
-          <h1>Cookie policy.</h1>
+          <h1>Cookie policy</h1>
           <p class="lede">Last updated 29 September 2026. This page explains what this website stores in your browser and why. In short: no cookies are set by this site, analytics runs only if you allow it, and nothing is used to track you for advertising.</p>
         </div>
       </section>

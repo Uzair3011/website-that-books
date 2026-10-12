@@ -170,8 +170,8 @@ const body = `      <section class="hero hero-feature">
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="eyebrow">Web design in Middlesbrough and Teesside</p>
-              <h1>Stop Losing Local Customers to Outdated Web Design.</h1>
-              <p class="lede">We build lead-generating websites for businesses in Teesside. Get a fast, mobile-ready site with built-in AI chat and booking automation to turn your visitors into paying customers—while your competitors sleep.</p>
+              <h1>Veltra Media: web design, local SEO and AI for Teesside businesses</h1>
+              <p class="lede"><strong>Stop Losing Local Customers to Outdated Web Design.</strong> We build lead-generating websites for businesses in Teesside. Get a fast, mobile-ready site with built-in AI chat and booking automation to turn your visitors into paying customers—while your competitors sleep.</p>
               <div class="button-row">
                 <a class="btn" href="#plan">${PLAN_CTA}${icon("arrow-up")}</a>
                 <a class="btn secondary" href="/services">${CTA.secondary}</a>
@@ -347,9 +347,9 @@ ${inquiryForm({
 
 export default {
   path: "/",
-  title: "Web Design Middlesbrough & Teesside | Websites That Win Enquiries | Veltra Media",
+  title: "Veltra Media | Web Design, SEO & AI for Teesside Businesses",
   description:
-    "Premium conversion-focused websites for Middlesbrough and Teesside businesses, with local SEO foundations, a written scope before work starts, and booking and AI automation when you need them.",
+    "Veltra Media builds websites, local SEO and AI reception for businesses in Middlesbrough and Teesside. Websites from £99, a written scope and a site you own.",
   jsonLd: [
     organizationJsonLd(),
     serviceJsonLd({

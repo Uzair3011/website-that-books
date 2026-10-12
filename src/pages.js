@@ -4,7 +4,7 @@ import about from "./pages/about.js";
 import checkout from "./pages/checkout.js";
 import checkoutCancelled from "./pages/checkout-cancelled.js";
 import checkoutSuccess from "./pages/checkout-success.js";
-import aiAutomation from "./pages/ai-automation-middlesbrough.js";
+import aiReceptionist from "./pages/ai-receptionist-middlesbrough.js";
 import contact from "./pages/contact.js";
 import cookiePolicy from "./pages/cookie-policy.js";
 import crmBooking from "./pages/crm-booking-automation.js";
@@ -34,7 +34,7 @@ export const pages = [
   localSeo,
   googleBusinessProfile,
   landingPages,
-  aiAutomation,
+  aiReceptionist,
   crmBooking,
   websiteCare,
   work,
@@ -73,7 +73,9 @@ export const redirects = {
   "/med-spa-online-booking": "/med-spa-growth-system",
   // Routes named in the strategy brief that are served by an existing page.
   "/landing-pages": "/landing-page-design",
-  "/ai-receptionist": "/ai-automation-middlesbrough",
+  "/ai-receptionist": "/ai-receptionist-middlesbrough",
+  // Renamed so the URL matches what the page sells (docs/seo/keyword-map.md section 2).
+  "/ai-automation-middlesbrough": "/ai-receptionist-middlesbrough",
   "/booking-follow-up-automation": "/crm-booking-automation",
   // Pages from the previous Veltra site that are still indexed in Google.
   "/contact-us": "/contact",

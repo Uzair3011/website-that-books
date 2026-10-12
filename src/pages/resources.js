@@ -99,8 +99,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 46rem">
             <p class="eyebrow">Resources</p>
-            <h1>Practical things you can do without hiring anyone.</h1>
-            <p class="lede">Short, specific guides for local business owners. Nothing gated, no email required, and no download that turns out to be a sales brochure.</p>
+            <h1>Free guides for small business websites and local search</h1>
+            <p class="lede"><strong>Practical things you can do without hiring anyone.</strong> Short, specific guides for local business owners. Nothing gated, no email required, and no download that turns out to be a sales brochure.</p>
             <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
           </div>
         </div>
@@ -141,9 +141,9 @@ ${finalCta({
 
 export default {
   path: "/resources",
-  title: "Resources for Local Businesses | Veltra Media",
+  title: "Website & Local SEO Guides for Small Business | Veltra Media",
   description:
-    "Free, practical guides for Middlesbrough and Teesside business owners: website fixes, getting a Google Business Profile right, why enquiries go quiet, and what AI can sensibly do.",
+    "Free guides for small business websites and local search: website fixes, Google Business Profile basics, why enquiries go quiet and what AI can sensibly do.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

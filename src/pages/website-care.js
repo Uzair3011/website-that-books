@@ -3,14 +3,14 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/website-care",
-  title: "Website Care Plans from £49 a Month | Veltra Media",
+  title: "Website Maintenance Middlesbrough | Veltra Media",
   description:
-    "Optional website care for Middlesbrough and Teesside businesses: hosting, updates, backups, monitoring and practical support from £49 a month, month to month with no long tie-in.",
+    "Website maintenance in Middlesbrough and Teesside: hosting, updates, backups, monitoring and practical support from £49 a month, with no long tie-in.",
   breadcrumbName: "Website care",
   serviceName: "Website care",
   eyebrow: "Website care · Optional, month to month",
-  h1: "Website care, for owners who would rather not manage the technical side.",
-  lede: "Hosting, updates, backups, monitoring and practical support from £49 a month. It is always optional, and you own the website either way.",
+  h1: "Website maintenance and care for Middlesbrough businesses",
+  lede: "<strong>Website care, for owners who would rather not manage the technical side.</strong> Hosting, updates, backups, monitoring and practical support from £49 a month. It is always optional, and you own the website either way.",
   image: {
     src: "/assets/work/hero-devices.svg",
     width: 1200,
@@ -81,7 +81,7 @@ export default servicePage({
   },
   price: {
     heading: "From £49 a month.",
-    body: "Website care starts at £49 a month, excluding VAT, with no long tie-in. Any third-party costs, such as a domain name, are shown at cost and confirmed in writing before work begins.",
+    body: 'Website care starts at £49 a month, excluding VAT, with no long tie-in. Any third-party costs, such as a domain name, are shown at cost and confirmed in writing before work begins. See every service on our <a href="/pricing">published price list</a>, or ask for a <a href="/free-website-audit">free website audit</a> to find out whether care makes sense for your current site.',
   },
   faqs: [
     {
@@ -106,6 +106,11 @@ export default servicePage({
       href: "/web-design-middlesbrough",
       label: "Website design",
       text: "Clear packages from £99, with a written scope and price up front.",
+    },
+    {
+      href: "/local-seo-middlesbrough",
+      label: "Local SEO",
+      text: "A one-off £99 setup that sits alongside care.",
     },
     {
       href: "/pricing",

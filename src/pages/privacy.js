@@ -10,8 +10,8 @@ const payOnline = checkoutEnabled();
 const body = `      <section class="hero">
         <div class="container narrow">
           <p class="eyebrow">Privacy</p>
-          <h1>Your information, handled with care.</h1>
-          <p class="lede">Last updated 30 September 2026. This page explains the information used by the Veltra Media marketing website: its audit and enquiry forms, strategy-call booking, the chat assistant and the AI voice assistant.</p>
+          <h1>Privacy policy</h1>
+          <p class="lede"><strong>Your information, handled with care.</strong> Last updated 30 September 2026. This page explains the information used by the Veltra Media marketing website: its audit and enquiry forms, strategy-call booking, the chat assistant and the AI voice assistant.</p>
         </div>
       </section>
 
@@ -84,7 +84,7 @@ export default {
   path: "/privacy",
   title: "Privacy Policy | Veltra Media",
   description:
-    "How Veltra Media handles the information you share through the website: enquiry forms, booking, the chat assistant and the AI voice assistant, with your rights and how to complain.",
+    "How Veltra Media handles information shared through this website: enquiry forms, booking, the chat assistant and the AI voice assistant, and your rights.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

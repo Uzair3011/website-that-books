@@ -21,6 +21,8 @@ export function servicePage({
   serviceName,
   image,
   intro,
+  // Optional local search copy, shown after the intro: { eyebrow, heading, body: [paragraph HTML] }
+  local = null,
   included,
   includedHeading = "What is included",
   // Optional HTML shown beside the included list (/website-care's health panel).
@@ -68,7 +70,23 @@ export function servicePage({
           </div>
         </div>
       </section>
-
+${
+  local
+    ? `
+      <section class="section tight" id="local">
+        <div class="container">
+          <div class="two-col">
+            <div class="section-head" style="margin-bottom: 0">
+              <p class="eyebrow">${local.eyebrow}</p>
+              <h2>${local.heading}</h2>
+            </div>
+            <div class="prose">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          </div>
+        </div>
+      </section>
+`
+    : ""
+}
       <section class="section band-light">
         <div class="container">
           <div class="section-head">

@@ -1,8 +1,19 @@
 // The long-form sales layout for the five core service pages, in the order of
 // the approved template: hook, proof, the old way, the new way, the offer
 // stack, the bonuses and total value, the guarantee, then the call to action.
-// Each page passes its own copy; nothing here is page-specific.
-import { CTA, SITE, breadcrumbJsonLd, icon, serviceJsonLd } from "./site.js";
+// Each page passes its own copy; nothing here is page-specific. Optional
+// sections: local search copy, an FAQ (with matching FAQPage JSON-LD) and
+// related services, all rendered before the call to action.
+import {
+  CTA,
+  SITE,
+  breadcrumbJsonLd,
+  faqJsonLd,
+  faqSection,
+  icon,
+  related,
+  serviceJsonLd,
+} from "./site.js";
 import { catalogItemByHref } from "../assets/catalog.js";
 import { checkoutEnabled } from "../lib/payments.js";
 
@@ -48,6 +59,9 @@ export function serviceSalesPage({
   eyebrow,
   h1,
   h1Highlight,
+  // The persuasive opening line, shown in bold at the start of the lede so the
+  // H1 can carry the search phrase.
+  hook = "",
   lede,
   heroVisual,
   // Three short facts from the page's own copy: the hero strip and the
@@ -63,6 +77,10 @@ export function serviceSalesPage({
   closing,
   // Shown with the price wherever it appears, e.g. a running cost billed at cost.
   priceNote = "",
+  // { eyebrow, heading, body: [paragraph HTML] }
+  local = null,
+  faqs = [],
+  relatedItems = [],
 }) {
   // The price comes from the catalogue behind /pricing, so the two can never disagree.
   const price = catalogItemByHref(path);
@@ -92,7 +110,7 @@ export function serviceSalesPage({
             <div class="sp-hero-copy">
               <p class="eyebrow">${eyebrow}</p>
               <h1>${highlight(h1, h1Highlight)}</h1>
-              <p class="lede">${lede}</p>
+              <p class="lede">${hook ? `<strong>${hook}</strong> ` : ""}${lede}</p>
               <div class="sp-hero-actions">
                 ${ctaButton()}
                 <a class="sp-scroll" href="#offer">${icon("arrow-down")}See the full offer</a>
@@ -152,7 +170,23 @@ export function serviceSalesPage({
           </ol>
         </div>
       </section>
-
+${
+  local
+    ? `
+      <section class="section" id="local">
+        <div class="container">
+          <div class="two-col">
+            <div class="section-head" style="margin-bottom: 0">
+              <p class="eyebrow">${local.eyebrow}</p>
+              <h2>${local.heading}</h2>
+            </div>
+            <div class="prose">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          </div>
+        </div>
+      </section>
+`
+    : ""
+}
       <section class="sp-section sp-offer" id="offer">
         <div class="container sp-split">
           <div class="sp-head">
@@ -217,6 +251,7 @@ export function serviceSalesPage({
           <p>${guarantee.body}</p>
         </div>
       </section>
+${faqs.length ? `\n${faqSection(faqs, { heading: "Common questions", eyebrow: "Before you ask" })}\n` : ""}${relatedItems.length ? `\n${related(relatedItems)}\n` : ""}
 
       <section class="band-dark sp-close">
         <img class="sp-close-photo" src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="" aria-hidden="true" />
@@ -247,6 +282,7 @@ export function serviceSalesPage({
     description,
     jsonLd: [
       serviceJsonLd({ name: serviceName, description, path }),
+      ...(faqs.length ? [faqJsonLd(faqs)] : []),
       breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: breadcrumbName, path },

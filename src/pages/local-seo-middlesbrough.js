@@ -3,14 +3,15 @@ import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
 export default serviceSalesPage({
   path: "/local-seo-middlesbrough",
-  title: "Local SEO Middlesbrough & Google Business Profile | Veltra Media",
+  title: "Local SEO Middlesbrough & Teesside | Veltra Media",
   description:
-    "Local SEO and Google Business Profile management for Middlesbrough and Teesside businesses. Service and area pages, local schema, consistent business details and honest reporting.",
+    "Local SEO in Middlesbrough and across Teesside: Google Business Profile, service and area pages, local schema and consistent details, set up for £99 one-off.",
   breadcrumbName: "Local SEO Middlesbrough",
   serviceName: "Local SEO and Google Business Profile",
   eyebrow: "Local SEO & Google Business Profile",
-  h1: "If You Aren’t in the Top 3 on Google Maps, You Are Handing Your Best Local Jobs to Your Competitors.",
-  h1Highlight: "Top 3 on Google Maps",
+  h1: "Local SEO in Middlesbrough and across Teesside",
+  h1Highlight: "Local SEO",
+  hook: "If customers can’t find you on Google Maps, you are handing your best local jobs to your competitors.",
   lede: "We hijack the Google Map Pack so when Teesside customers search for your service, your phone rings first.",
   heroVisual: {
     src: "/assets/work/example-local-search.svg",
@@ -90,4 +91,61 @@ export default serviceSalesPage({
     heading: "Only 3 businesses can fit in the Map Pack.",
     highlight: "Claim your spot before your competitor does.",
   },
+  local: {
+    eyebrow: "Local search in Teesside",
+    heading: "How local search works across Middlesbrough and Teesside.",
+    body: [
+      "Google says it ranks local results on three things: relevance (does the business match the search), distance (how far it is from the person searching) and prominence (how well known and well reviewed it is). That is why someone searching “roofer near me” in Redcar can see different businesses from someone in central Middlesbrough, and why a business based in Stockton-on-Tees can struggle to appear in Hartlepool or Billingham searches unless its website and profile make clear that it works there.",
+      "Many trades and service businesses have no shop, so their Google Business Profile should be set up as a service-area business, with the towns they cover listed and no address customers cannot visit. The website then has to back the profile up: a page for each main service, plain statements of the areas you work in, the same business name and phone number everywhere, and local business markup so Google can read it. Reviews from real customers help with prominence, and asking for them consistently matters more than any trick.",
+      'Our local SEO setup covers that groundwork for a one-off £99: <a href="/google-business-profile">Google Business Profile optimisation</a>, service and area page structure, local schema and consistent business details. It works best on a site built for it, so many businesses pair it with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. Compare every service on our <a href="/pricing">price list</a>, or ask for a <a href="/free-website-audit">free audit of your website and Google profile</a> first.',
+    ],
+  },
+  faqs: [
+    {
+      q: "How much does local SEO cost?",
+      a: '<p>Local SEO and Google Business Profile setup is £99, one-off, excluding VAT. It covers Google Business Profile setup and optimisation, service and area page structure, local schema and technical setup, and consistent business details. There is no monthly retainer, and the scope is confirmed in writing before work begins. Every service is on the <a href="/pricing">pricing page</a>.</p>',
+    },
+    {
+      q: "How long does local SEO take?",
+      a: "<p>The setup is a one-off piece of work with a timeline agreed in your written proposal, running from when we have access to your profile and website. Results take longer and are less predictable: Google has to recrawl your pages and reassess your profile, and how quickly visibility changes depends on the competition where you work. We will not promise a date for a ranking, because nobody honestly can.</p>",
+    },
+    {
+      q: "Do you cover Stockton, Hartlepool, Redcar and Billingham?",
+      a: "<p>Yes. We work with businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley. If you serve several of those towns, we set your service areas on your Google Business Profile and recommend whether any town deserves its own page. We only suggest that where there is something genuinely local to say.</p>",
+    },
+    {
+      q: "Who owns my Google Business Profile?",
+      a: "<p>You do. It stays under your own Google account, and we are given access only for as long as the work needs it. Pages and content we create for your website are yours once the agreed fees are paid.</p>",
+    },
+    {
+      q: "How do you measure local SEO progress?",
+      a: "<p>With figures you can check yourself. Google Search Console shows which searches your pages appear for, how often, and how many people click. Your Business Profile’s performance view shows calls, website clicks and direction requests from Search and Maps. Analytics shows which pages lead to enquiries. We show you where to find these numbers and judge progress by enquiries, not positions alone. No ranking is guaranteed, by us or by anyone else.</p>",
+    },
+    {
+      q: "Do I need a new website for local SEO to work?",
+      a: '<p>Not always. Local SEO can sit alongside an existing site, and we will tell you honestly if the current site is what is holding you back. If it is, the <a href="/web-design-middlesbrough">multi-page website</a> includes local keyword and page mapping from the start.</p>',
+    },
+  ],
+  relatedItems: [
+    {
+      href: "/google-business-profile",
+      label: "Google Business Profile optimisation",
+      text: "Categories, services, service areas, hours and photos, set up properly.",
+    },
+    {
+      href: "/web-design-middlesbrough",
+      label: "Web design in Middlesbrough",
+      text: "A website built to support your local search, from £99.",
+    },
+    {
+      href: "/web-design-teesside",
+      label: "Web design across Teesside",
+      text: "For businesses that cover several towns in the Tees Valley.",
+    },
+    {
+      href: "/landing-page-design",
+      label: "Landing page design",
+      text: "A focused page for one service, town or campaign.",
+    },
+  ],
 });

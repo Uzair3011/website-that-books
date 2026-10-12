@@ -1,0 +1,141 @@
+import { serviceSalesPage } from "../service-sales-page.js";
+import { SERVICE_VISUALS as V } from "../service-visuals.js";
+
+export default serviceSalesPage({
+  path: "/ai-receptionist-middlesbrough",
+  title: "AI Receptionist Middlesbrough | Calls & Chat | Veltra Media",
+  description:
+    "An AI receptionist and website chat for Middlesbrough businesses: approved answers, enquiry capture after hours and clear handover. £199 setup, usage at cost.",
+  breadcrumbName: "AI receptionist Middlesbrough",
+  serviceName: "AI receptionist and website chat",
+  eyebrow: "AI receptionist & website chat",
+  h1: "An AI receptionist for Middlesbrough businesses that miss calls",
+  h1Highlight: "AI receptionist",
+  hook: "Missed calls = missed money. Hire a 24/7 AI receptionist for less than the cost of your monthly coffee bill.",
+  lede: "Every time a local lead goes to voicemail, they call your competitor. Our AI answers instantly, answers their questions, and books them onto your calendar while you sleep.",
+  heroVisual: V.aiHero,
+  priceNote: "AI provider usage is billed at cost.",
+  points: [
+    { label: "Deployed in 14 days", text: "Built, trained and live" },
+    { label: "24/7/365", text: "Every chat and text answered instantly" },
+    { label: "Never miss a lead", text: "Or we work for free" },
+  ],
+  cta: { label: "Book Your AI Automation Demo & Strategy Call" },
+  proof: {
+    heading: "The Employee That Never Sleeps.",
+    visual: V.aiChat,
+    cases: [
+      {
+        title: "Real Lead Captured",
+        intro: "“Hey, do you do emergency callouts in Billingham?” → AI confirms, gives pricing, and books the appointment at 2:15 AM.",
+        stats: [
+          { label: "The Result", value: "£250", text: "That is £250 in revenue that would have been lost to a voicemail box." },
+        ],
+      },
+    ],
+  },
+  problem: {
+    heading: "You’re under a sink, on a roof, or having dinner with your family. Your phone rings. You can’t answer it. The customer hears your voicemail, hangs up, and immediately searches for the next business on Google.",
+    body: "You just lost a £1,500 job because you were 3 minutes late to the phone. Hiring a human receptionist costs £25,000+ a year. Letting it go to voicemail is costing you even more.",
+    visual: V.missedCall,
+  },
+  solution: {
+    eyebrow: "Instant Lead Capture",
+    heading: "Our AI is custom-trained on your specific business. It isn’t a dumb bot; it talks like a local.",
+    highlight: "it talks like a local.",
+    items: [
+      {
+        icon: "chat",
+        title: "Instant Answering",
+        text: "It answers every chat and text instantly, 24/7/365.",
+      },
+      {
+        icon: "filter",
+        title: "Smart Qualification",
+        text: "It asks the customer what their problem is, where they live, and if they need it fixed today.",
+      },
+      {
+        icon: "calendar",
+        title: "Direct Booking",
+        text: "It checks your actual calendar and books the job in a free slot automatically. You just wake up and see a new job on your schedule.",
+      },
+    ],
+  },
+  offer: {
+    heading: "Here is everything included when you hire your 24/7 AI Employee:",
+    highlight: "24/7 AI Employee:",
+    items: [
+      { icon: "users", title: "Custom-Trained AI Teesside Receptionist", text: "Trained on your specific business, pricing, and FAQs.", value: "£1,500/yr" },
+      { icon: "chat", title: "Omnichannel Website Chat Integration", text: "Answers questions instantly on your site so visitors never bounce.", value: "£600" },
+      { icon: "calendar", title: "Live Calendar Booking Sync", text: "The AI checks your availability and books jobs directly into your schedule.", value: "£800" },
+      { icon: "filter", title: "Intelligent Lead Qualification Flow", text: "Filters out time-wasters and only books high-value local jobs.", value: "£500" },
+    ],
+  },
+  bonuses: {
+    items: [
+      { icon: "phone", title: "Missed-Call-to-Text Automation", text: "If someone calls your actual phone and you miss it, the AI instantly texts them to start the booking process.", value: "£400" },
+      { icon: "tool", title: "30 Days of Conversation Fine-Tuning", text: "We monitor the AI’s chats for the first month and tweak its brain to make it a lethal closer.", value: "£300" },
+    ],
+    total: "£4,100",
+  },
+  guarantee: {
+    heading: "The “Never Miss a Lead” Guarantee",
+    body: "We will build, train, and deploy your custom AI Receptionist in 14 days. If it doesn’t capture a lead you would have otherwise missed in your first 30 days, we’ll work for free.",
+  },
+  closing: {
+    heading: "Stop losing £1,000 jobs because you were",
+    highlight: "3 minutes late to the phone.",
+  },
+  local: {
+    eyebrow: "Local enquiries in Middlesbrough",
+    heading: "How Middlesbrough customers look for help, and what an AI receptionist needs to know.",
+    body: [
+      "When something goes wrong at home, people in Middlesbrough search for the job and the place, often adding “emergency”, “same day” or “open now”, then call or message the first few businesses they find. Plenty of those searches happen in the evening or at the weekend, when a sole trader is on a job or off the clock. The business that replies first, with a straight answer, is often the one that gets the enquiry.",
+      "A useful AI receptionist is not a generic chatbot. It needs your real services, prices and hours, and the towns you cover, so it can answer “do you come out to Billingham?” or “are you in Stockton-on-Tees?” correctly. It needs a clear rule for when to hand over to you. It should take down the details you need to quote, offer a booking where your calendar allows, and never make up an answer it was not given. On your website, the same approved answers run the chat, so a visitor from Redcar or Hartlepool gets the same information as a caller.",
+      'We set it up with answers you sign off, test it with the questions your customers really ask, and connect it to <a href="/crm-booking-automation">booking and CRM automation</a> if you want every enquiry in one place. Setup is £199, with the AI provider’s usage passed through at cost; see the <a href="/pricing">full price list</a>. It works best on a clear site, so it pairs well with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. Not sure it is worth it yet? Ask for a <a href="/free-website-audit">free website audit</a> and we will tell you honestly.',
+    ],
+  },
+  faqs: [
+    {
+      q: "How much does an AI receptionist cost?",
+      a: '<p>Setup is £199, excluding VAT. The AI provider behind it charges for usage; that is passed through at cost, not marked up, and the expected figure is confirmed in writing before work begins. Website care is optional. Every price is on the <a href="/pricing">pricing page</a>.</p>',
+    },
+    {
+      q: "How long does it take to set up?",
+      a: "<p>The timeline is set in your written proposal and runs from when we have your approved answers and access to the calendar, phone or website it will work with. The technology is the quick part; agreeing what it is allowed to say takes the most care.</p>",
+    },
+    {
+      q: "Do you cover Stockton, Hartlepool, Redcar and Billingham?",
+      a: "<p>Yes. We work with businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, in person or online. The receptionist is told which towns you serve, so it can answer area questions correctly for your customers.</p>",
+    },
+    {
+      q: "What happens if it does not know the answer?",
+      a: "<p>It hands over. It only gives answers you have approved, takes the customer’s details and passes the enquiry to you or your team. It does not give professional, clinical, legal or financial advice, and it does not replace your judgement.</p>",
+    },
+    {
+      q: "Does it answer phone calls as well as website chat?",
+      a: "<p>It can do both: approved answers on calls and in a chat widget on your website, with enquiry details captured after hours. The phone and calendar connections supported for your setup are confirmed in writing before work begins.</p>",
+    },
+    {
+      q: "Who owns the enquiries it captures?",
+      a: "<p>Your business does. Enquiry details are captured for you, and an export of your lead data is available. Any additional migration work is quoted separately.</p>",
+    },
+  ],
+  relatedItems: [
+    {
+      href: "/crm-booking-automation",
+      label: "Booking and CRM automation",
+      text: "Every enquiry in one place, live calendar booking and reminders, £199 setup.",
+    },
+    {
+      href: "/web-design-middlesbrough",
+      label: "Web design in Middlesbrough",
+      text: "A clear website for the chat to sit on, from £99.",
+    },
+    {
+      href: "/local-seo-middlesbrough",
+      label: "Local SEO in Middlesbrough",
+      text: "More nearby customers finding you in the first place, £99 setup.",
+    },
+  ],
+});

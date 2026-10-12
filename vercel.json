@@ -38,7 +38,12 @@
     },
     {
       "source": "/ai-receptionist",
-      "destination": "/ai-automation-middlesbrough",
+      "destination": "/ai-receptionist-middlesbrough",
+      "permanent": true
+    },
+    {
+      "source": "/ai-automation-middlesbrough",
+      "destination": "/ai-receptionist-middlesbrough",
       "permanent": true
     },
     {

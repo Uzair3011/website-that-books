@@ -12,8 +12,8 @@ const body = `      <section class="hero">
         <div class="container">
           <div class="hero-copy" style="max-width: 44rem">
             <p class="eyebrow">Contact</p>
-            <h1>Let's work out what you actually need.</h1>
-            <p class="lede">Tell us about the business and what you want more of. We will reply with a practical starting point, the service that fits, and anything worth fixing first &mdash; including when that is nothing we sell.</p>
+            <h1>Contact Veltra Media</h1>
+            <p class="lede"><strong>Let's work out what you actually need.</strong> Tell us about the business and what you want more of. We will reply with a practical starting point, the service that fits, and anything worth fixing first &mdash; including when that is nothing we sell.</p>
           </div>
         </div>
       </section>
@@ -53,7 +53,7 @@ export default {
   path: "/contact",
   title: "Contact Veltra Media | Middlesbrough & Teesside",
   description:
-    "Contact Veltra Media in Middlesbrough. WhatsApp, email or send a message about web design, local SEO, landing pages, AI reception or booking automation across Teesside.",
+    "Contact Veltra Media in Middlesbrough by WhatsApp, email or the enquiry form about web design, local SEO, landing pages, AI reception or booking automation.",
   jsonLd: [
     organizationJsonLd(),
     breadcrumbJsonLd([

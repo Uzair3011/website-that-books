@@ -3,14 +3,15 @@ import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
 export default serviceSalesPage({
   path: "/landing-page-design",
-  title: "Landing Page Design & CRO | Teesside | Veltra Media",
+  title: "Landing Page Design Middlesbrough | From £99 | Veltra Media",
   description:
-    "Focused landing pages for one service, location or campaign — written and designed around a single conversion goal, with tracking so you can see what the page actually did.",
+    "Landing page design for Middlesbrough businesses running ads: one offer, one page, a short form and tracking to show what each click becomes. From £99.",
   breadcrumbName: "Landing page design",
   serviceName: "Landing page design and conversion rate optimisation",
   eyebrow: "High-converting landing pages (paid ads)",
-  h1: "Getting Clicks but No Calls? Here is the 1-Page System We Use to Turn Expensive Ad Traffic into Booked Jobs.",
-  h1Highlight: "1-Page System",
+  h1: "Landing page design for Middlesbrough businesses running ads",
+  h1Highlight: "Landing page design",
+  hook: "Getting clicks but no calls? Here is the 1-page system we use to turn expensive ad traffic into booked jobs.",
   lede: "Stop setting your ad budget on fire by sending paid traffic to a confusing homepage.",
   heroVisual: {
     src: "/assets/work/example-landing.svg",
@@ -91,4 +92,26 @@ export default serviceSalesPage({
     heading: "Ready to halve your cost-per-lead and",
     highlight: "double your booked jobs?",
   },
+  relatedItems: [
+    {
+      href: "/web-design-middlesbrough",
+      label: "Web design in Middlesbrough",
+      text: "A full website when one page is not enough, from £99.",
+    },
+    {
+      href: "/crm-booking-automation",
+      label: "Booking and CRM automation",
+      text: "Every landing page enquiry followed up and booked, £199 setup.",
+    },
+    {
+      href: "/local-seo-middlesbrough",
+      label: "Local SEO in Middlesbrough",
+      text: "Enquiries from Google Search and Maps without paying per click, £99.",
+    },
+    {
+      href: "/free-website-audit",
+      label: "Free website audit",
+      text: "Find out whether a landing page is the right fix before you spend.",
+    },
+  ],
 });

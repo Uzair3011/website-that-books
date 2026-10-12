@@ -66,7 +66,7 @@ export const CATALOG = Object.freeze([
   item({
     slug: "ai-receptionist-website-chat",
     name: "AI Receptionist + Website Chat",
-    href: "/ai-automation-middlesbrough",
+    href: "/ai-receptionist-middlesbrough",
     price: 199,
     unit: "setup",
     purchasable: true,
