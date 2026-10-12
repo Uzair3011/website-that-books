@@ -1,6 +1,7 @@
 // Every public route in one place. The dev server, the production build and
 // the sitemap all read from this list, so a new page cannot be half-wired.
 import about from "./pages/about.js";
+import areas from "./pages/areas.js";
 import checkout from "./pages/checkout.js";
 import checkoutCancelled from "./pages/checkout-cancelled.js";
 import checkoutSuccess from "./pages/checkout-success.js";
@@ -22,6 +23,9 @@ import resources from "./pages/resources.js";
 import services from "./pages/services.js";
 import terms from "./pages/terms.js";
 import webDesign from "./pages/web-design-middlesbrough.js";
+import webDesignHartlepool from "./pages/web-design-hartlepool.js";
+import webDesignRedcar from "./pages/web-design-redcar.js";
+import webDesignStockton from "./pages/web-design-stockton-on-tees.js";
 import webDesignTeesside from "./pages/web-design-teesside.js";
 import websiteCare from "./pages/website-care.js";
 import work from "./pages/work.js";
@@ -31,6 +35,10 @@ export const pages = [
   services,
   webDesign,
   webDesignTeesside,
+  webDesignStockton,
+  webDesignRedcar,
+  webDesignHartlepool,
+  areas,
   localSeo,
   googleBusinessProfile,
   landingPages,
