@@ -51,8 +51,8 @@ export default serviceSalesPage({
     items: [
       {
         icon: "pin",
-        title: "Profile Weaponization",
-        text: "We optimize your Google listing to make it the most attractive, authoritative option in your specific postcode.",
+        title: "Profile Weaponisation",
+        text: "We optimise your Google listing to make it the most attractive, authoritative option in your specific postcode.",
       },
       {
         icon: "star",
@@ -70,7 +70,7 @@ export default serviceSalesPage({
     heading: "Here is exactly what you get when we deploy the Map Pack Domination System:",
     highlight: "Map Pack Domination System:",
     items: [
-      { icon: "pin", title: "Google Business Profile Weaponization", text: "Fully optimized for your exact Teesside service areas." },
+      { icon: "pin", title: "Google Business Profile Weaponisation", text: "Fully optimised for your exact Teesside service areas." },
       { icon: "search", title: "Hyper-Local Keyword Targeting", text: "We map your services and pages to the terms your best customers actually search for." },
       { icon: "star", title: "Automated 5-Star Review Generation System", text: "Software that extracts glowing reviews from your past customers automatically." },
       { icon: "shield", title: "Local Authority & Citation Build", text: "The same business name, phone number and service areas across the main directories, so Google sees consistent details everywhere." },

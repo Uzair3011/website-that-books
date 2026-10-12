@@ -64,7 +64,7 @@ export default serviceSalesPage({
     heading: "Here is the exact architecture you get with the Automated Revenue Engine:",
     highlight: "Automated Revenue Engine:",
     items: [
-      { icon: "chart", title: "Centralized Lead Command Dashboard", text: "Every lead, text, call, and quote organized in one single view." },
+      { icon: "chart", title: "Centralised Lead Command Dashboard", text: "Every lead, text, call, and quote organised in one single view." },
       { icon: "refresh", title: "The “Relentless Follow-Up” Sequence", text: "Automated SMS and email follow-ups to close quotes you sent days ago." },
       { icon: "calendar", title: "Self-Serve Client Booking System", text: "Let clients pick their own times without the back-and-forth messaging." },
       { icon: "bell", title: "Automated Pre & Post-Job SMS Reminders", text: "Reminds clients before each job to help cut no-shows, and asks for a review afterwards." },

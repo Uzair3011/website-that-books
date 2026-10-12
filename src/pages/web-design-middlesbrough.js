@@ -63,7 +63,7 @@ export default serviceSalesPage({
       {
         icon: "calendar",
         title: "Zero-Friction Booking",
-        text: "We strip out the useless “About Us” fluff and put exactly what the customer wants front and center: a big, easy button to book you.",
+        text: "We strip out the useless “About Us” fluff and put exactly what the customer wants front and centre: a big, easy button to book you.",
       },
       {
         icon: "smartphone",
