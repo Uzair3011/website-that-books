@@ -1,6 +1,8 @@
 # Claims review, October 2026
 
-Written 12 Oct 2026 on branch `seo/tees-valley`, after the keyword-map changes in the same commit. It lists every numeric or outcome claim on the site that a visitor would read as a real result, guarantee, valuation or deadline. **No claim listed here was edited in this task.** Line numbers are for the files as committed.
+Written 12 Oct 2026 on branch `seo/tees-valley`, after the keyword-map changes in the same commit. It lists every numeric or outcome claim on the site that a visitor would read as a real result, guarantee, valuation or deadline. Line numbers in sections A to F are for the files as they were before the owner decisions were applied.
+
+**Update, 12 Oct 2026:** the owner's decisions have been applied. Section I records the action taken for every row. Rows C7, C8 and C9 had no decision and are unchanged.
 
 **Who decides.** Each row needs an owner decision: **prove** it (add evidence to the repo and keep it), **relabel** it as an illustrative example in the visible copy, or **remove** it. The recommendation column is a starting point, not a decision.
 
@@ -117,3 +119,94 @@ These are recorded so nobody thinks a claim moved without a decision. None of th
 4. Decide on the guarantees (C1, C3-C6). Either write them into `/terms` with triggers and limits, or remove them.
 5. Remove the value stacks (D), or document a basis for each figure. If they go, `serviceSalesPage()` needs its "Total Real-World Value" block made optional.
 6. Fix the scarcity lines (E) and the unsourced statistics (B).
+
+## I. Owner decisions and action taken
+
+Applied 12 Oct 2026 on branch `seo/tees-valley`. The owner decided:
+
+1. Keep the client-result case studies, but label each one visibly as "Illustrative example, not a real client result", and rename headings that imply a real client to "Example scenario".
+2. Remove every "work for free" guarantee and the "Top 3" Promise, including headings, CTAs and repeated mentions.
+3. Replace "Live in 14 days or you don't pay" and similar delivery promises with wording that matches `/how-it-works` and `/terms`. Keep a refund or guarantee only if `/terms` already sets it out. None of these pages' guarantees is in `/terms`, so all were removed.
+4. Rewrite unsourced statistics as plain statements without figures, or remove them. No sources were invented.
+5. Remove the £ value of each item and the "Total Real-World Value", but keep the list of what is included.
+6. Remove scarcity and urgency wording, and keep a neutral CTA.
+7. Leave the figures drawn inside the illustrative images unchanged.
+
+**Template changes (`src/service-sales-page.js`).** Every case card now shows a visible "Illustrative example, not a real client result" label. The section eyebrow changed from "The proof" to "Illustrative examples", which also covers the proof image in that section. The item values, the "Total Real-World Value" block, the value-against-price bars and the closing "Total Real-World Value" line are gone, along with the check that the values added up. The price box now shows only "Your Investment". The guarantee section became an "In writing" section (prop `commitment`) that states the timeline and ownership in the same terms as `/how-it-works` and `/terms`. It is not a guarantee.
+
+### A. Client results
+
+| # | Action taken |
+|---|---|
+| A1 | Heading "Don’t take our word for it. Look at the numbers." renamed to "Example scenarios" (two cards). |
+| A2 | Kept, labelled "Illustrative example, not a real client result". Title now "Example scenario: a local electrician". Stat label "The Veltra Way" renamed to "The new way". Figures unchanged. |
+| A3 | Kept and labelled. Title now "Example scenario: a local joinery firm". "312%" unchanged. |
+| A4 | Kept and labelled. Section heading "The Proof is in the Pipeline." renamed to "Example scenario". Title now "Example scenario: a local plumber". Text unchanged, including "#1 Map Pack spot", which still reads as a ranking outcome (hard rule 5). Flagged for the owner. |
+| A5 | Kept and labelled. Section heading "We Buy Clients For Pennies On The Pound." renamed to "Example scenario". Title "Google Ads Client" now "Example scenario: a business running Google Ads". Stat label "The Veltra Fix" renamed to "The fix". Figures unchanged. |
+| A6 | Kept and labelled. "Real Lead Captured" renamed to "Example scenario: an after-hours enquiry". Section heading "The Employee That Never Sleeps." kept, as it does not imply a client. "£250" unchanged. |
+| A7 | Kept and labelled. Title now "Example scenario: automated follow-up". Stat labels "Before Veltra" and "After Veltra" renamed to "Before" and "After". Section heading "From Chaos to Clockwork." kept. Figures unchanged. |
+
+### B. Unsourced statistics
+
+| # | Action taken |
+|---|---|
+| B1 | Rewritten: "A website built to win more local enquiries, without adding to your ad spend." |
+| B2 | Rewritten: "Most local customers search on a phone." |
+| B3 | Rewritten: "Short, simple forms that make it easy to get in touch." |
+| B4 | Rewritten: "You could be losing work to competitors who are worse at the job than you are…" |
+| B5 | Rewritten: "Missed calls = missed money. Let a 24/7 AI receptionist answer when you can’t." Coffee-bill comparison removed. |
+| B6 | Rewritten without figures: "That could be a big job lost because you were a few minutes late to the phone. A full-time human receptionist is a serious yearly cost, and letting calls go to voicemail costs you work too." |
+| B7 | Closing rewritten: "Stop losing jobs because you were a few minutes late to the phone." |
+| B8 | Removed. The hero point is now "Every enquiry in one place: Calls, texts and emails logged together", taken from the page's own description. |
+| B9 | Rewritten: "Reminds clients before each job to help cut no-shows, and asks for a review afterwards." |
+| B10 | Closing rewritten: "Ready to get more from every ad click?" |
+| B11 | Figures removed from the heading and body ("£10" twice, "12 different services", "2 seconds"). |
+| B12 | Rewritten: "Some SEO agencies will sell you a monthly retainer to write blog posts nobody reads." |
+| B13 | Rewritten to match the published scope ("consistent business details"): "The same business name, phone number and service areas across the main directories, so Google sees consistent details everywhere." |
+| B14 | Both files: heading "Never Miss a Lead at 11 PM" now "Answer Enquiries at 11 PM", and the closing sentence now says the customer "get[s] an answer straight away instead of waiting until morning." |
+
+### C. Guarantees and ranking promises
+
+| # | Action taken |
+|---|---|
+| C1 | Removed from the lede, hero point and guarantee section. The lede now says "Typically live in 10 to 15 working days after content approval." The hero point now says "Typically live in 10–15 working days, after content approval." The "In writing" section gives the `/how-it-works` timelines (around 7 working days for one page, 10 to 15 for up to five) and the `/terms` ownership wording. |
+| C2 | Removed in every place: the hero point (now "You own your profile: It stays under your own Google account") and the guarantee section (now "A fixed scope and a timeline in writing"). No "Top 3" wording remains in the page copy. |
+| C3 | Removed: the hero point (now "Tracking included: See what each click turns into") and the guarantee section. The landing page is the £99 one-page product, so the delivery wording is "typically live in around seven working days after content approval", from `/how-it-works`. |
+| C4 | Removed: the hero point (now "Answers you approve: With clear handover to you when needed") and the guarantee section. |
+| C5 | All four "in 14 days" points changed. `/landing-page-design` now says "Typically live in around 7 working days". `/local-seo-middlesbrough`, `/ai-receptionist-middlesbrough` and `/crm-booking-automation` now say "Timeline agreed in writing", which matches their FAQs and `/how-it-works`. |
+| C6 | Removed, with B8. |
+| C7 | **No owner decision. Unchanged.** "We hijack the Google Map Pack…" is still the lede on `/local-seo-middlesbrough`. |
+| C8 | **No owner decision. Unchanged.** "forcing Google to rank you higher" and "We rank you for the high-intent terms…" remain. The £800 value was removed under D2. |
+| C9 | **No owner decision. Unchanged.** "so you rank faster" remains in the bonus text. The £350 value was removed under D1. |
+
+### D. Value stacks
+
+| # | Action taken |
+|---|---|
+| D1 | All six item values and the £3,800 total removed. "A fraction of that." was removed because it only made sense next to the total. The list of what is included is kept. |
+| D2 | All six values and the £3,800 total removed. List kept. |
+| D3 | All six values and the £3,100 total removed. List kept. |
+| D4 | All six values and the £4,100 total removed. List kept. |
+| D5 | All six values and the £5,500 total removed. List kept. |
+
+### E. Scarcity and urgency
+
+| # | Action taken |
+|---|---|
+| E1 | Rewritten: "Plus, these bonuses are included at no extra cost:" |
+| E2 | Closing rewritten as a neutral prompt: "Ready to be easier to find on Google Maps?" The CTA button is unchanged ("Book Your Local SEO Strategy Call"). |
+| E3 | Softened: "Google usually shows them a few businesses on a map. If you aren’t one of them, most of those customers will never see you." |
+
+### F. Illustrative visuals
+
+| # | Action taken |
+|---|---|
+| F1-F4 | Image figures unchanged (decision 7). On the sales pages they sit in the section now headed "Illustrative examples", and every case card next to them carries the visible label. |
+| F5-F7 | Unchanged (decision 7). These are on the homepage and `/services`, outside the sales template, so no visible "illustration" caption has been added. Still open. |
+
+### Still open
+
+- C7, C8 and C9 (ranking language on `/local-seo-middlesbrough` and `/web-design-middlesbrough`) need a decision. Hard rule 5 says never promise rankings.
+- A4 keeps the "#1 Map Pack spot" wording inside a labelled example. The owner may want the figure removed too.
+- F5-F7 need a visible caption or removal on the homepage and `/services`.
+- If a real, evidenced client result is added later, it needs a card without the illustrative label. The template currently labels every case card.

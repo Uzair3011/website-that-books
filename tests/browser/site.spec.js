@@ -231,10 +231,16 @@ test("retired med-spa URLs and legacy paths redirect to their replacements", asy
     "/ai-receptionist": "/ai-receptionist-middlesbrough",
     "/website-that-books-fixed.html": "/",
   };
+  // Follow hop by hop, as Vercel answers: cleanUrls first turns `/x.html` into
+  // `/x`, then the vercel.json rule moves `/x` on. Every hop must be a 308.
   for (const [from, to] of Object.entries(moved)) {
-    const response = await request.get(from, { maxRedirects: 0 });
-    expect(response.status(), from).toBe(308);
-    expect(response.headers().location, from).toBe(to);
+    let at = from;
+    for (let hop = 0; hop < 3 && at !== to; hop++) {
+      const response = await request.get(at, { maxRedirects: 0 });
+      expect(response.status(), at).toBe(308);
+      at = response.headers().location;
+    }
+    expect(at, from).toBe(to);
   }
 });
 

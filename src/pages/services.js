@@ -59,7 +59,7 @@ const SERVICES = [
     name: "AI receptionist + website chat",
     href: "/ai-receptionist-middlesbrough",
     cta: "Explore AI reception",
-    text: "<strong>Never Miss a Lead at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, you get the job, not the guy who opens at 9 AM.",
+    text: "<strong>Answer Enquiries at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, they get an answer straight away instead of waiting until morning.",
     included: [
       "Approved answer set",
       "Clear handover rules",

@@ -21,28 +21,28 @@ export default serviceSalesPage({
     eager: true,
   },
   points: [
-    { label: "Deployed in 14 days", text: "Mapped to your specific ad offer" },
+    { label: "Typically live in around 7 working days", text: "after content approval, mapped to your ad offer" },
     { label: "Zero distractions", text: "No menus. No external links." },
-    { label: "The “Profitable Click” Guarantee", text: "Beat your homepage, or we work for free" },
+    { label: "Tracking included", text: "See what each click turns into" },
   ],
   cta: { label: "Book Your Landing Page ROI Call" },
   proof: {
-    heading: "We Buy Clients For Pennies On The Pound.",
+    heading: "Example scenario",
     visual: V.landingSplit,
     cases: [
       {
-        title: "Google Ads Client",
+        title: "Example scenario: a business running Google Ads",
         stats: [
           { label: "The Problem", text: "They were spending £500/mo on Google Ads sending traffic to their homepage. Cost per lead: £85." },
-          { label: "The Veltra Fix", text: "We built a dedicated, single-offer landing page." },
+          { label: "The fix", text: "We built a dedicated, single-offer landing page." },
           { label: "The Result", value: "4x", text: "Cost per lead dropped to £12. They got 4x the leads for the exact same ad spend." },
         ],
       },
     ],
   },
   problem: {
-    heading: "If you are paying Mark Zuckerberg or Google £10 every time someone clicks your ad, you cannot afford to confuse them.",
-    body: "When you send an ad click to your main website, they see your “About Us,” your “Mission Statement,” and a list of 12 different services. They get overwhelmed, they don’t see the specific thing they clicked on, and they bounce. You just paid £10 for a stranger to look at your logo for 2 seconds.",
+    heading: "If you are paying Mark Zuckerberg or Google every time someone clicks your ad, you cannot afford to confuse them.",
+    body: "When you send an ad click to your main website, they see your “About Us,” your “Mission Statement,” and a long list of different services. They get overwhelmed, they don’t see the specific thing they clicked on, and they bounce. You just paid for a stranger to glance at your logo and leave.",
     visual: V.adBounce,
   },
   solution: {
@@ -71,26 +71,25 @@ export default serviceSalesPage({
     heading: "Stop burning ad spend. Here is what is included in the Single-Offer Squeeze System:",
     highlight: "Single-Offer Squeeze System:",
     items: [
-      { icon: "layout", title: "Distraction-Free Landing Page Architecture", text: "Built specifically to convert paid traffic into phone calls.", value: "£1,000" },
-      { icon: "flow", title: "Ad-to-Page “Message Match” Copywriting", text: "Seamless transition from the ad they clicked to the offer they read.", value: "£600" },
-      { icon: "doc", title: "Psychology-Driven Lead Capture Forms", text: "Multi-step flows that eliminate abandonment.", value: "£500" },
-      { icon: "star", title: "High-Fidelity Trust & Proof Integration", text: "Strategic placement of your best reviews to kill skepticism.", value: "£400" },
+      { icon: "layout", title: "Distraction-Free Landing Page Architecture", text: "Built specifically to convert paid traffic into phone calls." },
+      { icon: "flow", title: "Ad-to-Page “Message Match” Copywriting", text: "Seamless transition from the ad they clicked to the offer they read." },
+      { icon: "doc", title: "Psychology-Driven Lead Capture Forms", text: "Multi-step flows that eliminate abandonment." },
+      { icon: "star", title: "High-Fidelity Trust & Proof Integration", text: "Strategic placement of your best reviews to kill skepticism." },
     ],
   },
   bonuses: {
     items: [
-      { icon: "chart", title: "Existing Ad Campaign Audit", text: "We will look at your current Google/Meta ads and tell you exactly where you are wasting money.", value: "£350" },
-      { icon: "bell", title: "Automated Instant SMS Lead Alerts", text: "The second someone fills out the landing page, your phone gets a text so you can call them in 60 seconds.", value: "£250" },
+      { icon: "chart", title: "Existing Ad Campaign Audit", text: "We will look at your current Google/Meta ads and tell you exactly where you are wasting money." },
+      { icon: "bell", title: "Automated Instant SMS Lead Alerts", text: "The second someone fills out the landing page, your phone gets a text so you can call them in 60 seconds." },
     ],
-    total: "£3,100",
   },
-  guarantee: {
-    heading: "The “Profitable Click” Guarantee",
-    body: "We deploy your high-converting landing page in 14 days, completely mapped to your specific ad offer. If it doesn’t beat the conversion rate of your current homepage, we work for free.",
+  commitment: {
+    heading: "A clear timeline and a fixed price",
+    body: "Your landing page is typically live in around seven working days after content approval, completely mapped to your specific ad offer. The price and scope are agreed in writing before work starts, and tracking shows you what each click turns into.",
   },
   closing: {
-    heading: "Ready to halve your cost-per-lead and",
-    highlight: "double your booked jobs?",
+    heading: "Ready to get more from",
+    highlight: "every ad click?",
   },
   relatedItems: [
     {

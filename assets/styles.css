@@ -5436,6 +5436,16 @@ svg.icon {
 .sp-case-body h3 {
   font-size: 1.125rem;
 }
+/* Visible on every example card: none is a real client result. */
+.sp-case-label {
+  justify-self: start;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
 .sp-case-intro {
   color: var(--ink);
   font-weight: 500;
@@ -5545,22 +5555,7 @@ svg.icon {
 
 /* Offer stack */
 .sp-stack li {
-  grid-template-columns: auto minmax(0, 1fr) auto;
-}
-.sp-value {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--ink);
-  padding-top: 2px;
-}
-@media (max-width: 559px) {
-  .sp-stack li {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-  .sp-value {
-    grid-column: 2;
-  }
+  grid-template-columns: auto minmax(0, 1fr);
 }
 
 /* Bonuses */
@@ -5618,10 +5613,6 @@ svg.icon {
   font-size: 0.9375rem;
   color: var(--text-muted-dark);
 }
-.sp-bonus-list b {
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
 .sp-total {
   display: grid;
   gap: 16px;
@@ -5631,7 +5622,7 @@ svg.icon {
   border: 1px solid var(--accent-lime);
   background: rgba(201, 255, 74, 0.06);
 }
-/* Value against price: two bars on one scale, so the gap is visible. */
+/* The price. */
 .sp-compare {
   display: grid;
   gap: 6px;
@@ -5642,15 +5633,9 @@ svg.icon {
   color: var(--text-muted-dark);
 }
 .sp-compare strong {
-  font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
-  color: var(--text-on-dark);
-}
-.sp-compare.now {
-  padding-top: 16px;
-  border-top: 1px solid var(--border-dark);
 }
 .sp-compare.now p {
   color: var(--accent-lime);
@@ -5664,28 +5649,6 @@ svg.icon {
   font-weight: 600;
   letter-spacing: 0;
   color: var(--text-muted-dark);
-}
-.sp-bar {
-  display: block;
-  height: 8px;
-  margin-top: 6px;
-  border-radius: 999px;
-  background: var(--border-dark);
-}
-.sp-bar i {
-  display: block;
-  height: 100%;
-  width: var(--w, 100%);
-  border-radius: inherit;
-  background: var(--text-muted-dark);
-}
-.sp-compare.now .sp-bar i {
-  background: var(--accent-lime);
-}
-.sp-invest {
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
 }
 .sp-price-link {
   display: inline-flex;
@@ -5826,10 +5789,6 @@ svg.icon {
   line-height: 1.1;
   letter-spacing: -0.04em;
   color: var(--text-on-dark);
-}
-.sp-close-value {
-  margin-top: 6px;
-  font-weight: 600;
 }
 .sp-checks {
   list-style: none;

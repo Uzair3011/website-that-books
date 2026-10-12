@@ -1,6 +1,7 @@
 // The long-form sales layout for the five core service pages, in the order of
-// the approved template: hook, proof, the old way, the new way, the offer
-// stack, the bonuses and total value, the guarantee, then the call to action.
+// the approved template: hook, example scenarios, the old way, the new way, the
+// offer stack, the bonuses and price, what we commit to in writing, then the
+// call to action.
 // Each page passes its own copy; nothing here is page-specific. Optional
 // sections: local search copy, an FAQ (with matching FAQPage JSON-LD) and
 // related services, all rendered before the call to action.
@@ -20,7 +21,6 @@ import { checkoutEnabled } from "../lib/payments.js";
 // The same photo as the homepage map section (credited in docs/image-credits.md).
 const BRIDGE = "/assets/work/tees-transporter-bridge.webp";
 const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
-const pounds = (value) => Number(value.replace(/[^\d]/g, ""));
 
 /** Wraps the first occurrence of `phrase` in `text` with a highlight span. */
 const highlight = (text, phrase) =>
@@ -41,9 +41,13 @@ const stat = (item) =>
     item.value ? `<b>${item.value}</b>` : ""
   }<span>${item.text}</span></dd></div>`;
 
+// No case on these pages is a real client result (see docs/seo/claims-review.md),
+// so every card carries a visible label. A real, evidenced result needs its
+// own card without it.
 const caseCard = (item) => `<article class="sp-case reveal">
             ${item.visual ? `<figure class="sp-case-media">${media(item.visual)}</figure>` : ""}
             <div class="sp-case-body">
+              <p class="sp-case-label">Illustrative example, not a real client result</p>
               <h3>${item.title}</h3>
               ${item.intro ? `<p class="sp-case-intro">${item.intro}</p>` : ""}
               <dl class="sp-stats">${item.stats.map(stat).join("")}</dl>
@@ -73,7 +77,9 @@ export function serviceSalesPage({
   solution,
   offer,
   bonuses,
-  guarantee,
+  // { heading, body }: delivery and ownership terms that match /how-it-works
+  // and /terms. Not a guarantee: only /terms can set one.
+  commitment,
   closing,
   // Shown with the price wherever it appears, e.g. a running cost billed at cost.
   priceNote = "",
@@ -85,16 +91,8 @@ export function serviceSalesPage({
   // The price comes from the catalogue behind /pricing, so the two can never disagree.
   const price = catalogItemByHref(path);
   if (!price) throw new Error(`${path} has no entry in assets/catalog.js`);
-  // The stated total must be the real sum of the values listed on the page.
-  const valueTotal = [...offer.items, ...bonuses.items].reduce(
-    (sum, item) => sum + pounds(item.value),
-    0,
-  );
-  if (valueTotal !== pounds(bonuses.total))
-    throw new Error(`${path}: values add up to ${gbp(valueTotal)}, not ${bonuses.total}`);
   const amount = gbp(price.price);
   const terms = `${price.unit}, excl. VAT${priceNote ? `. ${priceNote}` : ""}`;
-  const pricePct = Math.max(2, (price.price / valueTotal) * 100).toFixed(1);
 
   const ctaButton = (extra = "") =>
     `<a class="btn${extra}" href="${CTA.href}">${cta.label}${icon("arrow-up")}</a>`;
@@ -133,7 +131,7 @@ export function serviceSalesPage({
       <section class="sp-section sp-proof" aria-labelledby="proof-title">
         <div class="container">
           <div class="sp-head">
-            <p class="eyebrow">The proof</p>
+            <p class="eyebrow">Illustrative examples</p>
             <h2 id="proof-title">${proof.heading}</h2>
           </div>
           <div class="sp-cases${proof.visual ? " has-visual" : ""}">
@@ -197,7 +195,7 @@ ${
             ${offer.items
               .map(
                 (item) =>
-                  `<li class="reveal"><span class="sp-tile light">${icon(item.icon)}</span><div><h3>${item.title}</h3><p>${item.text}</p></div><span class="sp-value">(Value: ${item.value})</span></li>`,
+                  `<li class="reveal"><span class="sp-tile light">${icon(item.icon)}</span><div><h3>${item.title}</h3><p>${item.text}</p></div></li>`,
               )
               .join("")}
           </ul>
@@ -218,22 +216,15 @@ ${
               ${bonuses.items
                 .map(
                   (item, i) =>
-                    `<li class="reveal"><span class="sp-tile accent">${icon(item.icon)}</span><h3><span>Bonus ${i + 1}:</span> ${item.title}</h3><p>${item.text}</p><b>(Value: ${item.value})</b></li>`,
+                    `<li class="reveal"><span class="sp-tile accent">${icon(item.icon)}</span><h3><span>Bonus ${i + 1}:</span> ${item.title}</h3><p>${item.text}</p></li>`,
                 )
                 .join("")}
             </ul>
             <div class="sp-total reveal">
-              <div class="sp-compare">
-                <p>Total Real-World Value:</p>
-                <strong>${bonuses.total}</strong>
-                <span class="sp-bar" aria-hidden="true"><i></i></span>
-              </div>
               <div class="sp-compare now">
                 <p>Your Investment:</p>
                 <strong>${amount} <small>${price.unit}</small></strong>
-                <span class="sp-bar" aria-hidden="true"><i style="--w: ${pricePct}%"></i></span>
               </div>
-              ${bonuses.investment ? `<p class="sp-invest">${bonuses.investment}</p>` : ""}
               <p class="sp-invest-note">${bonuses.investmentNote || "Fixed price."} Prices exclude VAT.${priceNote ? ` ${priceNote}` : ""}</p>
               <a class="sp-price-link" href="/pricing">See the full price list${icon("arrow-up")}</a>
             </div>
@@ -242,13 +233,13 @@ ${
         </div>
       </section>
 
-      <section class="sp-guarantee" aria-labelledby="guarantee-title">
+      <section class="sp-guarantee" aria-labelledby="commitment-title">
         <figure class="sp-guarantee-art"><img src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." /></figure>
         <div class="sp-guarantee-copy">
-          <span class="sp-badge">${icon("shield")}</span>
-          <p class="eyebrow">The guarantee</p>
-          <h2 id="guarantee-title">${guarantee.heading}</h2>
-          <p>${guarantee.body}</p>
+          <span class="sp-badge">${icon("doc")}</span>
+          <p class="eyebrow">In writing</p>
+          <h2 id="commitment-title">${commitment.heading}</h2>
+          <p>${commitment.body}</p>
         </div>
       </section>
 ${faqs.length ? `\n${faqSection(faqs, { heading: "Common questions", eyebrow: "Before you ask" })}\n` : ""}${relatedItems.length ? `\n${related(relatedItems)}\n` : ""}
@@ -261,7 +252,7 @@ ${faqs.length ? `\n${faqSection(faqs, { heading: "Common questions", eyebrow: "B
             <h2>${closing.heading}${closing.highlight ? ` <span class="sp-accent">${closing.highlight}</span>` : ""}</h2>
           </div>
           <div class="sp-close-side">
-            <p class="sp-close-price"><span>Your Investment:</span><b>${amount}</b><span>${terms}</span><span class="sp-close-value">Total Real-World Value: ${bonuses.total}</span></p>
+            <p class="sp-close-price"><span>Your Investment:</span><b>${amount}</b><span>${terms}</span></p>
             <ul class="sp-checks">
               ${points.map((point) => `<li>${icon("check")}${point.label}</li>`).join("")}
             </ul>

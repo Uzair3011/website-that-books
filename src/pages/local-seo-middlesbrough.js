@@ -21,17 +21,17 @@ export default serviceSalesPage({
     eager: true,
   },
   points: [
-    { label: "Built in 14 days", text: "Your Local SEO foundation" },
+    { label: "Timeline agreed in writing", text: "Your Local SEO foundation" },
     { label: "Zero ad spend", text: "Calls directly from Google Maps" },
-    { label: "The “Top 3” Promise", text: "We work for free until calls increase" },
+    { label: "You own your profile", text: "It stays under your own Google account" },
   ],
   cta: { label: "Book Your Local SEO Strategy Call" },
   proof: {
-    heading: "The Proof is in the Pipeline.",
+    heading: "Example scenario",
     visual: V.gbpInsights,
     cases: [
       {
-        title: "Local Plumber",
+        title: "Example scenario: a local plumber",
         intro: "Went from Page 3 of Google to the #1 Map Pack spot in Middlesbrough for “Emergency Plumber.”",
         stats: [
           { label: "The Result", value: "45", text: "inbound calls generated directly from Google Maps last month. Zero ad spend." },
@@ -41,12 +41,12 @@ export default serviceSalesPage({
   },
   problem: {
     heading: "Right now, someone in Teesside is standing in their kitchen with a broken boiler, a leaky roof, or a blown fuse. They pull out their phone and type your service into Google.",
-    body: "Google shows them exactly three businesses on a map. If you aren’t one of those three, you do not exist. You could have 20 years of experience and the best pricing in town, but the guy who started his business 6 months ago is getting the job because he shows up first.",
+    body: "Google usually shows them a few businesses on a map. If you aren’t one of them, most of those customers will never see you. You could have 20 years of experience and the best pricing in town, but the guy who started his business 6 months ago is getting the job because he shows up first.",
     visual: V.mapPack,
   },
   solution: {
     eyebrow: "Total Map Domination",
-    heading: "SEO agencies will sell you a £1,000/month retainer to write blog posts nobody reads. We don’t do that. We focus strictly on the actions that generate phone calls.",
+    heading: "Some SEO agencies will sell you a monthly retainer to write blog posts nobody reads. We don’t do that. We focus strictly on the actions that generate phone calls.",
     highlight: "the actions that generate phone calls.",
     items: [
       {
@@ -70,26 +70,25 @@ export default serviceSalesPage({
     heading: "Here is exactly what you get when we deploy the Map Pack Domination System:",
     highlight: "Map Pack Domination System:",
     items: [
-      { icon: "pin", title: "Google Business Profile Weaponization", text: "Fully optimized for your exact Teesside service areas.", value: "£1,200" },
-      { icon: "search", title: "Hyper-Local Keyword Targeting", text: "We rank you for the high-intent terms your best customers actually search for.", value: "£800" },
-      { icon: "star", title: "Automated 5-Star Review Generation System", text: "Software that extracts glowing reviews from your past customers automatically.", value: "£600" },
-      { icon: "shield", title: "Local Authority & Citation Build", text: "50+ directory syncs to build undeniable trust with Google’s algorithm.", value: "£500" },
+      { icon: "pin", title: "Google Business Profile Weaponization", text: "Fully optimized for your exact Teesside service areas." },
+      { icon: "search", title: "Hyper-Local Keyword Targeting", text: "We rank you for the high-intent terms your best customers actually search for." },
+      { icon: "star", title: "Automated 5-Star Review Generation System", text: "Software that extracts glowing reviews from your past customers automatically." },
+      { icon: "shield", title: "Local Authority & Citation Build", text: "The same business name, phone number and service areas across the main directories, so Google sees consistent details everywhere." },
     ],
   },
   bonuses: {
     items: [
-      { icon: "target", title: "The Competitor Blindspot Audit", text: "We pull the exact data on why your #1 competitor is beating you and how to steal their traffic.", value: "£400" },
-      { icon: "tool", title: "On-Site Conversion Tweaks", text: "We’ll tweak your existing website’s contact buttons to make sure the new SEO traffic actually converts.", value: "£300" },
+      { icon: "target", title: "The Competitor Blindspot Audit", text: "We pull the exact data on why your #1 competitor is beating you and how to steal their traffic." },
+      { icon: "tool", title: "On-Site Conversion Tweaks", text: "We’ll tweak your existing website’s contact buttons to make sure the new SEO traffic actually converts." },
     ],
-    total: "£3,800",
   },
-  guarantee: {
-    heading: "The “Top 3” Promise",
-    body: "We don’t charge you for useless vanity metrics. We build your Local SEO foundation in 14 days. If your local visibility and inbound calls don’t measurably increase, we work for free until they do.",
+  commitment: {
+    heading: "A fixed scope and a timeline in writing",
+    body: "We don’t charge you for useless vanity metrics. The scope and timeline for your Local SEO foundation are agreed in your written proposal, and the clock starts when we have access to your profile and website. Your Google Business Profile stays under your own account.",
   },
   closing: {
-    heading: "Only 3 businesses can fit in the Map Pack.",
-    highlight: "Claim your spot before your competitor does.",
+    heading: "Ready to be easier to find",
+    highlight: "on Google Maps?",
   },
   local: {
     eyebrow: "Local search in Teesside",
