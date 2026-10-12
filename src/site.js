@@ -357,7 +357,8 @@ export function faqJsonLd(items) {
 /**
  * Organization + WebSite graph, emitted on every page by src/layout.js.
  * Claims only what the business can evidence: a name, a URL, an email, the
- * WhatsApp number, the tagline on the social card and a service area. No
+ * WhatsApp link, the tagline on the social card and a service area. No
+ * `telephone`: the number takes WhatsApp messages, not calls. No
  * address, opening hours, price range, ratings, review counts, employee or
  * client numbers. (/pricing quotes larger sites separately, so no upper
  * price can be stated.)
@@ -375,7 +376,6 @@ export function organizationJsonLd() {
         image: `${SITE.origin}/assets/social-card.png`,
         slogan: SITE.tagline,
         email: SITE.email,
-        telephone: SITE.phone,
         contactPoint: [
           {
             "@type": "ContactPoint",
