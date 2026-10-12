@@ -2125,6 +2125,44 @@ svg.icon {
   color: var(--accent-lime);
 }
 
+/* Larger tap areas without moving anything. Small text links get an invisible
+   hit area that reaches halfway into the gap around them, so stacked links
+   never overlap; each inset is half of that group's gap. */
+.footer-col a,
+.footer-legal a,
+.footer-link-button,
+.article-toc a,
+.cta-contacts a,
+.sp-scroll,
+.sp-price-link {
+  position: relative;
+}
+.footer-col a::after,
+.footer-legal a::after,
+.footer-link-button::after,
+.article-toc a::after,
+.cta-contacts a::after,
+.sp-scroll::after,
+.sp-price-link::after {
+  content: "";
+  position: absolute;
+  inset: -6px 0;
+}
+.footer-legal a::after,
+.footer-link-button::after {
+  inset: -3px -12px;
+}
+.article-toc a::after {
+  inset: -4px 0;
+}
+.cta-contacts a::after {
+  inset: -6px -14px;
+}
+.sp-scroll::after,
+.sp-price-link::after {
+  inset: -7px 0;
+}
+
 /* ───────────────────────── Mobile action bar ───────────────────────── */
 .mobile-bar {
   display: none;

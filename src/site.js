@@ -257,10 +257,11 @@ export function footer() {
 }
 
 export function mobileBar() {
-  return `<div class="mobile-bar">
+  // A labelled landmark, so screen-reader users can find it and no content sits outside one.
+  return `<nav class="mobile-bar" aria-label="Quick contact">
   <a class="btn small secondary" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp ${SITE.name} on ${SITE.phoneLabel}">${icon("whatsapp")}WhatsApp</a>
   <a class="btn small" href="${CTA.href}">${CTA.primaryShort}</a>
-</div>`;
+</nav>`;
 }
 
 // ───────────────────────── Reusable sections ─────────────────────────

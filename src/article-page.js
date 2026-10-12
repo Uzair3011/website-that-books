@@ -19,8 +19,9 @@ export const price = (slug) => `£${catalogItem(slug).price.toLocaleString("en-G
 // A body item that is already HTML (a list, a table, an h3) is used as is; plain text is a paragraph.
 const block = (item) => (item.startsWith("<") ? item : `<p>${item}</p>`);
 
-/** A table that scrolls sideways on a phone instead of widening the page. */
-export const table = ({ caption, head, rows }) => `<div class="table-wrap"><table>
+/** A table that scrolls sideways on a phone instead of widening the page. The
+ * wrapper is focusable so keyboard users can scroll it too. */
+export const table = ({ caption, head, rows }) => `<div class="table-wrap" tabindex="0" role="region" aria-label="${(caption || "Table").replace(/<[^>]+>/g, "")}"><table>
   ${caption ? `<caption>${caption}</caption>` : ""}
   <thead><tr>${head.map((cell) => `<th scope="col">${cell}</th>`).join("")}</tr></thead>
   <tbody>${rows.map((row) => `<tr>${row.map((cell, i) => (i === 0 ? `<th scope="row">${cell}</th>` : `<td>${cell}</td>`)).join("")}</tr>`).join("")}</tbody>

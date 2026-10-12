@@ -126,8 +126,9 @@ const body = `      <section class="hero">
         </div>
       </section>
 
-      <section class="section tight flush-top svc">
+      <section class="section tight flush-top svc" aria-labelledby="services-list">
         <div class="container">
+          <h2 class="visually-hidden" id="services-list">Our services</h2>
 ${servicesShowcase(Object.fromEntries(SERVICES.map((service) => [service.href, service])))}
         </div>
       </section>
