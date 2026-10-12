@@ -1,7 +1,8 @@
-// Versioned asset URLs. vercel.json lets browsers reuse /assets/* for up to a day, so a deploy that
-// changes a stylesheet or script would otherwise run next to the old cached copy (new HTML, old CSS
-// and JavaScript). Every page references assets as /assets/x.js?v=<hash of their contents>, and the
-// build stamps the same version on relative module imports, so a changed file always gets a new URL.
+// Versioned asset URLs. Every page references scripts and stylesheets as /assets/x.js?v=<hash of
+// their contents>, and the build stamps the same version on relative module imports, so a changed
+// file always gets a new URL. vercel.json therefore caches any /assets/ request carrying ?v= for a
+// year (immutable); everything else under /assets/ (images, vendor files) keeps a one-hour cache.
+// Only put ?v= on a URL whose content this hash covers.
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { renderConfigScript } from "../lib/public-config.js";
@@ -14,6 +15,8 @@ for (const name of readdirSync(dir)
   .sort())
   hash.update(name).update(readFileSync(new URL(name, dir)));
 hash.update(renderConfigScript());
+// The build rewrites stylesheets with this minifier, so a change to it must change the version too.
+hash.update(readFileSync(new URL("../scripts/minify-css.mjs", import.meta.url)));
 
 export const ASSET_VERSION = hash.digest("hex").slice(0, 10);
 

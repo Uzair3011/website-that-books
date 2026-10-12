@@ -277,7 +277,7 @@ test("reviews stay hidden until there are real ones, and each says where it came
 });
 
 test("every deploy gets fresh asset URLs, including imported modules", async () => {
-  // Browsers may reuse /assets/* for a day, so stale CSS or JS must never pair with new HTML.
+  // Versioned assets are cached for a year, so stale CSS or JS must never pair with new HTML.
   const { ASSET_VERSION } = await import("../src/asset-version.js");
   execFileSync(process.execPath, ["scripts/build.mjs"], {
     env: { ...process.env, SITE_URL: `${ORIGIN}/` },
@@ -291,5 +291,30 @@ test("every deploy gets fresh asset URLs, including imported modules", async () 
     const source = await readFile(resolve("dist", "assets", name), "utf8");
     for (const [, specifier] of source.matchAll(/\bfrom\s*"(\.\/[^"]+)"/g))
       assert.match(specifier, new RegExp(`\\?v=${ASSET_VERSION}$`), `${name} imports ${specifier}`);
+  }
+});
+
+test("the stylesheet ships minified, and only versioned assets get a long cache", async () => {
+  const { minifyCss } = await import("../scripts/minify-css.mjs");
+  assert.equal(
+    minifyCss('a  >  b { color : red ; /* note */ width: calc(100% - 2px); }\n.x::before { content: "/* a ; b */"; }'),
+    'a > b{color : red;width: calc(100% - 2px)}.x::before{content: "/* a ; b */"}',
+  );
+  execFileSync(process.execPath, ["scripts/build.mjs"], {
+    env: { ...process.env, SITE_URL: `${ORIGIN}/` },
+    stdio: "pipe",
+  });
+  const source = await readFile(resolve("assets", "styles.css"), "utf8");
+  const built = await readFile(resolve("dist", "assets", "styles.css"), "utf8");
+  assert.ok(built.length < source.length * 0.8, "styles.css is not minified");
+  assert.equal(built, minifyCss(source));
+
+  // Images and vendor files are referenced without ?v=, so a year-long cache
+  // must apply only to requests that carry a version.
+  const { headers } = JSON.parse(await readFile("vercel.json", "utf8"));
+  for (const rule of headers) {
+    const cache = rule.headers.find((header) => header.key === "Cache-Control")?.value || "";
+    if (!/immutable/.test(cache) || rule.source === "/assets/fonts/(.*)") continue;
+    assert.deepEqual(rule.has, [{ type: "query", key: "v" }], `${rule.source} is immutable without ?v=`);
   }
 });

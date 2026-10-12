@@ -6,6 +6,7 @@ import { renderPage } from "../src/layout.js";
 import { notFoundPage, pages, utilityPages } from "../src/pages.js";
 import { publicConfig, renderConfigScript } from "../lib/public-config.js";
 import { bookingSettings } from "../lib/schedule.js";
+import { minifyCss } from "./minify-css.mjs";
 import { llmsTxt, robotsTxt, sitemapXml } from "./seo-files.mjs";
 import { vendorFiles } from "./vendor.mjs";
 
@@ -44,9 +45,12 @@ await emit("admin.html", renderAdminPage());
 await cp("assets", resolve(output, "assets"), { recursive: true });
 // Pages load assets as ?v=<version>; imported modules need the same stamp to escape stale caches.
 for (const name of await readdir(resolve(output, "assets"))) {
-  if (!name.endsWith(".js")) continue;
   const file = resolve(output, "assets", name);
-  await writeFile(file, versionImports(await readFile(file, "utf8")));
+  if (name.endsWith(".js"))
+    await writeFile(file, versionImports(await readFile(file, "utf8")));
+  // The stylesheet is render-blocking, so it ships without comments or spare whitespace.
+  else if (name.endsWith(".css"))
+    await writeFile(file, minifyCss(await readFile(file, "utf8")));
 }
 // Fail the deploy on malformed public contact or booking settings instead of
 // shipping a broken page.

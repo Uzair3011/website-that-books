@@ -190,9 +190,6 @@ p {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.dim {
-  color: var(--body);
-}
 
 /* ───────────────────────── Layout primitives ───────────────────────── */
 .container {
@@ -930,46 +927,6 @@ svg.icon {
 .journey p {
   font-size: 0.9375rem;
   grid-column: 2;
-}
-
-/* ───────────────────────── Audit offer ───────────────────────── */
-.audit-grid {
-  display: grid;
-  gap: clamp(32px, 4vw, 56px);
-  align-items: start;
-}
-@media (min-width: 900px) {
-  .audit-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
-  }
-}
-.audit-copy {
-  display: grid;
-  gap: 24px;
-  justify-items: start;
-}
-.deliverables {
-  display: grid;
-  gap: 0;
-  list-style: none;
-  border-top: 1px solid var(--line);
-  width: 100%;
-}
-.deliverables li {
-  padding-block: 20px;
-  border-bottom: 1px solid var(--line);
-  display: grid;
-  gap: 5px;
-}
-.deliverables b {
-  font-size: 1.0625rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-}
-.deliverables p {
-  font-size: 0.9375rem;
-  max-width: 48ch;
 }
 
 /* ───────────────────────── Pricing ───────────────────────── */
@@ -2268,17 +2225,6 @@ svg.icon {
 .roi-split b {
   color: var(--ink);
 }
-.offer-banner {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  background: var(--accent-lime);
-  color: #071313;
-  padding: 8px 18px;
-  border-radius: 999px;
-  justify-self: start;
-}
 .offer-price {
   display: flex;
   align-items: baseline;
@@ -2293,9 +2239,7 @@ svg.icon {
   font-size: 1.125rem;
 }
 .offer-price span,
-.monthly-price,
-.offer-savings,
-.offer-launch-note {
+.monthly-price {
   font-size: 0.9375rem;
   color: var(--body);
 }
@@ -2435,24 +2379,6 @@ svg.icon {
   color: #071313;
   padding-block: 16px;
 }
-.marquee-track {
-  display: flex;
-  width: max-content;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-track {
-    animation: marquee 38s linear infinite;
-  }
-}
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.marquee-group {
-  display: flex;
-  align-items: center;
-}
 .marquee span {
   display: inline-flex;
   align-items: center;
@@ -2552,25 +2478,6 @@ svg.icon {
   background: var(--accent-lime);
   color: #071313;
 }
-.deliverables li {
-  position: relative;
-}
-.deliverables li::before {
-  content: "";
-  position: absolute;
-  left: -14px;
-  top: 20px;
-  bottom: 20px;
-  width: 2px;
-  background: var(--accent-mint);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.3s var(--ease);
-}
-.deliverables li:hover::before {
-  transform: scaleY(1);
-}
-
 /* ── Resources rows ── */
 .resource-list a {
   transition: padding-left 0.3s var(--ease);
@@ -2865,34 +2772,6 @@ svg.icon {
 .card-icon .icon {
   width: 22px;
   height: 22px;
-}
-
-/* Packages: custom-quote row and small print. */
-.custom-row {
-  display: grid;
-  gap: 16px 32px;
-  margin-top: 20px;
-  padding: 24px 28px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-.custom-row h3 {
-  font-size: 1.125rem;
-  margin-bottom: 4px;
-}
-.custom-row p {
-  font-size: 1rem;
-  max-width: 62ch;
-}
-/* The call to action sits below the copy, at the row gap, not floated beside it. */
-.custom-row > :last-child {
-  justify-self: start;
-}
-.price-note {
-  margin-top: 20px;
-  font-size: 0.875rem;
-  max-width: 72ch;
 }
 
 /* Why Veltra: the sensible middle. */
