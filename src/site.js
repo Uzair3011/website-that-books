@@ -185,12 +185,13 @@ export function footer() {
           <a href="/google-business-profile">Google Business Profile</a>
           <a href="/website-care">Website care</a>
           <a href="/med-spa-growth-system">Med-spa growth system</a>
+          <a href="/web-design-for-trades-teesside">Websites for trades</a>
         </div>
       </div>
       <div class="footer-col footer-company">
         <h2>Company</h2>
         <div class="footer-links">
-          <a href="/work">Work</a><a href="/how-it-works">How it works</a><a href="/about">About</a><a href="/resources">Resources</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a>
+          <a href="/work">Work</a><a href="/how-it-works">How it works</a><a href="/about">About</a><a href="/resources">Resources</a><a href="/ai-agents-teesside">AI agents explained</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a>
         </div>
       </div>
       <div class="footer-col footer-areas">

@@ -5,6 +5,7 @@ import areas from "./pages/areas.js";
 import checkout from "./pages/checkout.js";
 import checkoutCancelled from "./pages/checkout-cancelled.js";
 import checkoutSuccess from "./pages/checkout-success.js";
+import aiAgents from "./pages/ai-agents-teesside.js";
 import aiReceptionist from "./pages/ai-receptionist-middlesbrough.js";
 import contact from "./pages/contact.js";
 import cookiePolicy from "./pages/cookie-policy.js";
@@ -22,6 +23,7 @@ import privacy from "./pages/privacy.js";
 import resources from "./pages/resources.js";
 import services from "./pages/services.js";
 import terms from "./pages/terms.js";
+import webDesignTrades from "./pages/web-design-for-trades-teesside.js";
 import webDesign from "./pages/web-design-middlesbrough.js";
 import webDesignHartlepool from "./pages/web-design-hartlepool.js";
 import webDesignRedcar from "./pages/web-design-redcar.js";
@@ -44,6 +46,8 @@ export const pages = [
   landingPages,
   aiReceptionist,
   crmBooking,
+  aiAgents,
+  webDesignTrades,
   websiteCare,
   work,
   howItWorks,

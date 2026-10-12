@@ -6,6 +6,7 @@ import {
   finalCta,
   icon,
   organizationJsonLd,
+  related,
 } from "../site.js";
 import { servicesShowcase } from "../services-showcase.js";
 
@@ -160,6 +161,22 @@ ${servicesShowcase(Object.fromEntries(SERVICES.map((service) => [service.href, s
           </div>
         </div>
       </section>
+
+${related(
+  [
+    {
+      href: "/web-design-for-trades-teesside",
+      label: "Websites for trades",
+      text: "What an electrician’s, plumber’s or roofer’s website must show: areas, tap-to-call, real photos and a quote form.",
+    },
+    {
+      href: "/ai-agents-teesside",
+      label: "AI agents, explained",
+      text: "What AI can do for a local business, where a person should take over, and the UK GDPR basics.",
+    },
+  ],
+  "More on trades and AI",
+)}
 
 ${faqSection(FAQS, { heading: "Choosing the right service", eyebrow: "Services FAQ" })}
 

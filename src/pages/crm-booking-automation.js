@@ -105,5 +105,15 @@ export default serviceSalesPage({
       label: "Free website audit",
       text: "Find out where enquiries are being lost before you automate anything.",
     },
+    {
+      href: "/ai-agents-teesside",
+      label: "AI agents, explained",
+      text: "Answering, booking and follow-up in plain English, with human handover.",
+    },
+    {
+      href: "/web-design-for-trades-teesside",
+      label: "Websites for trades",
+      text: "Areas covered, tap-to-call and a quote form that feeds your follow-up.",
+    },
   ],
 });

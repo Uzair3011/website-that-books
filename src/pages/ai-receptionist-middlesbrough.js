@@ -136,5 +136,10 @@ export default serviceSalesPage({
       label: "Local SEO in Middlesbrough",
       text: "More nearby customers finding you in the first place, £99 setup.",
     },
+    {
+      href: "/ai-agents-teesside",
+      label: "AI agents, explained",
+      text: "What AI can sensibly do for a local business, where it should stop, and UK GDPR basics.",
+    },
   ],
 });

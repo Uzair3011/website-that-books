@@ -110,7 +110,7 @@ export default serviceSalesPage({
     body: [
       "Local searches are short: the job and the place. Someone in Linthorpe types “electrician Middlesbrough”, someone in Acklam types “boiler repair near me”, and most are on a phone. Your website is where they decide whether to ring you or try the next business.",
       "Good web design in Middlesbrough answers those searches simply. A page for each main service, in the words customers use. A plain statement of the areas you cover, including Stockton-on-Tees, Redcar, Billingham or Hartlepool if you work there. Business details that match your Google Business Profile, a phone number that can be tapped, and pages that load quickly on mobile data.",
-      'The multi-page website includes local keyword and page mapping, enquiry tracking and Search Console at launch. To go further, add <a href="/local-seo-middlesbrough">local SEO for Middlesbrough and Teesside</a> or <a href="/google-business-profile">Google Business Profile optimisation</a>, or see how we handle <a href="/web-design-teesside">web design across Teesside</a>.',
+      'The multi-page website includes local keyword and page mapping, enquiry tracking and Search Console at launch. To go further, add <a href="/local-seo-middlesbrough">local SEO for Middlesbrough and Teesside</a> or <a href="/google-business-profile">Google Business Profile optimisation</a>, or see how we handle <a href="/web-design-teesside">web design across Teesside</a>. Electricians, plumbers and roofers should read <a href="/web-design-for-trades-teesside">what a website for trades needs</a>.',
       'Every package is on our <a href="/pricing">published price list</a>, or start with a <a href="/free-website-audit">free audit of your current website</a>.',
     ],
   },
