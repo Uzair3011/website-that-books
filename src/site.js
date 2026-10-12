@@ -20,7 +20,39 @@ export const SITE = {
     "Hartlepool",
     "Tees Valley",
   ],
+  // Official profiles of this business, for the organisation's `sameAs`. It
+  // will hold the LinkedIn, Facebook and Google Business Profile URLs once
+  // they exist. Only add a profile that is live and belongs to Veltra Media;
+  // `sameAs` is left out of the JSON-LD while this is empty.
+  sameAs: [],
 };
+
+// Every Service node points here, and layout.js puts the node itself on every page.
+export const ORG_ID = `${SITE.origin}/#organization`;
+
+// Tees Valley is a combined-authority area; every other entry in SITE.areas is a town.
+const REGIONS = new Set(["Tees Valley"]);
+const place = (name) => ({
+  "@type": REGIONS.has(name) ? "AdministrativeArea" : "City",
+  name,
+});
+
+// The few entities authored copy uses, decoded so JSON-LD carries plain text.
+const ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", mdash: "—", ndash: "–", middot: "·", pound: "£", rsquo: "’", lsquo: "‘", hellip: "…" };
+
+/** Visible text of authored HTML: tags become spaces, entities are decoded. */
+export const plainText = (html) =>
+  String(html)
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&(#x[\da-f]+|#\d+|[a-z]+);/gi, (whole, name) =>
+      name[0] === "#"
+        ? String.fromCodePoint(
+            name[1].toLowerCase() === "x" ? parseInt(name.slice(2), 16) : Number(name.slice(1)),
+          )
+        : (ENTITIES[name.toLowerCase()] ?? whole),
+    )
+    .replace(/\s+/g, " ")
+    .trim();
 
 export const CTA = {
   primary: "Get my free website plan",
@@ -301,26 +333,34 @@ export function faqSection(items, { heading, eyebrow = "Questions" } = {}) {
 </section>`;
 }
 
-/** FAQPage JSON-LD. Only ever emitted alongside the same visible questions. */
+/**
+ * FAQPage JSON-LD. Only ever emitted alongside the same visible questions
+ * (faqSection), as the same plain text; scripts/seo-check.mjs compares them.
+ * Google shows FAQ rich results for very few kinds of site, so this is kept
+ * for clarity to machines, not for a search snippet.
+ */
 export function faqJsonLd(items) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: items.map((item) => ({
       "@type": "Question",
-      name: item.q,
+      name: plainText(item.q),
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.a.replace(/<[^>]+>/g, ""),
+        text: plainText(item.a),
       },
     })),
   };
 }
 
 /**
- * Organization + WebSite graph. Claims only what the business can evidence:
- * a name, a URL, an email, a phone number and a service area. No address,
- * no ratings, no review counts, no employee or client numbers.
+ * Organization + WebSite graph, emitted on every page by src/layout.js.
+ * Claims only what the business can evidence: a name, a URL, an email, the
+ * WhatsApp number, the tagline on the social card and a service area. No
+ * address, opening hours, price range, ratings, review counts, employee or
+ * client numbers. (/pricing quotes larger sites separately, so no upper
+ * price can be stated.)
  */
 export function organizationJsonLd() {
   return {
@@ -328,19 +368,33 @@ export function organizationJsonLd() {
     "@graph": [
       {
         "@type": "ProfessionalService",
-        "@id": `${SITE.origin}/#organization`,
+        "@id": ORG_ID,
         name: SITE.name,
         url: `${SITE.origin}/`,
         logo: `${SITE.origin}/assets/apple-touch-icon.png`,
         image: `${SITE.origin}/assets/social-card.png`,
+        slogan: SITE.tagline,
         email: SITE.email,
         telephone: SITE.phone,
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "customer service",
+            email: SITE.email,
+            availableLanguage: "en-GB",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer service",
+            name: "WhatsApp",
+            url: SITE.whatsapp,
+            availableLanguage: "en-GB",
+          },
+        ],
+        ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),
         description:
           "Veltra Media builds websites, local SEO, landing pages and enquiry automation for businesses in Middlesbrough and across Teesside.",
-        areaServed: SITE.areas.map((name) => ({
-          "@type": "AdministrativeArea",
-          name,
-        })),
+        areaServed: SITE.areas.map(place),
         knowsAbout: [
           "Web design",
           "Local SEO",
@@ -354,30 +408,59 @@ export function organizationJsonLd() {
         "@id": `${SITE.origin}/#website`,
         name: SITE.name,
         url: `${SITE.origin}/`,
-        publisher: { "@id": `${SITE.origin}/#organization` },
+        publisher: { "@id": ORG_ID },
+        inLanguage: "en-GB",
       },
     ],
   };
 }
 
 /**
- * Service JSON-LD. `areaServed` narrows a town page to its own towns (as
- * City); every other page serves all of SITE.areas.
+ * Service JSON-LD. `areaServed` narrows an area page to its own town(s);
+ * every other page serves all of SITE.areas. The provider resolves because
+ * layout.js puts the organisation node on every page.
  */
-export function serviceJsonLd({ name, description, path, areaServed = null }) {
+export function serviceJsonLd({ name, serviceType, description, path, areaServed = null }) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     name,
+    serviceType,
     description,
     url: SITE.origin + path,
-    provider: { "@id": `${SITE.origin}/#organization` },
-    areaServed: areaServed
-      ? areaServed.map((town) => ({ "@type": "City", name: town }))
-      : SITE.areas.map((area) => ({
-          "@type": "AdministrativeArea",
-          name: area,
-        })),
+    provider: { "@id": ORG_ID },
+    areaServed: (areaServed ?? SITE.areas).map(place),
+  };
+}
+
+/**
+ * BlogPosting JSON-LD for the articles under /resources. Dates are
+ * YYYY-MM-DD; `image` is a site path or absolute URL. `author` defaults to
+ * the organisation until a named author is confirmed (docs/seo/owner-todo.md).
+ */
+export function articleJsonLd({
+  headline,
+  description,
+  path,
+  datePublished,
+  dateModified = datePublished,
+  image = "/assets/social-card.png",
+  author = { "@id": ORG_ID },
+}) {
+  const url = SITE.origin + path;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline,
+    description,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    datePublished,
+    dateModified,
+    image: /^https?:\/\//.test(image) ? image : SITE.origin + image,
+    author,
+    publisher: { "@id": ORG_ID },
+    inLanguage: "en-GB",
   };
 }
 
@@ -392,4 +475,24 @@ export function breadcrumbJsonLd(trail) {
       item: SITE.origin + item.path,
     })),
   };
+}
+
+/**
+ * The visible breadcrumb, drawn by layout.js from the page's own
+ * BreadcrumbList so the two always match. The last item is the current page.
+ */
+export function breadcrumbNav(list) {
+  const items = list.itemListElement;
+  return `<nav class="breadcrumbs" aria-label="Breadcrumb">
+      <div class="container">
+        <ol>${items
+          .map((item, index) => {
+            const path = item.item.slice(SITE.origin.length) || "/";
+            return index === items.length - 1
+              ? `<li><a href="${path}" aria-current="page">${esc(item.name)}</a></li>`
+              : `<li><a href="${path}">${esc(item.name)}</a></li>`;
+          })
+          .join("")}</ol>
+      </div>
+    </nav>`;
 }

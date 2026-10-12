@@ -1,5 +1,5 @@
 import { checkoutEnabled } from "../../lib/payments.js";
-import { SITE, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
+import { SITE, breadcrumbJsonLd } from "../site.js";
 
 // Online payments are described only in builds that take them.
 const payOnline = checkoutEnabled();
@@ -86,7 +86,6 @@ export default {
   description:
     "How Veltra Media handles information shared through this website: enquiry forms, booking, the chat assistant and the AI voice assistant, and your rights.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Privacy policy", path: "/privacy" },

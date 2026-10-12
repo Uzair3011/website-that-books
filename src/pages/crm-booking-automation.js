@@ -8,6 +8,7 @@ export default serviceSalesPage({
     "Booking and CRM automation for small businesses in Teesside: every enquiry in one place, live calendar booking, reminders and follow-up. £199 setup.",
   breadcrumbName: "CRM & booking automation",
   serviceName: "CRM, booking and follow-up automation",
+  serviceType: "CRM and booking automation",
   eyebrow: "CRM & booking automation",
   h1: "Booking and CRM automation for small businesses in Teesside",
   h1Highlight: "Booking and CRM automation",

@@ -8,6 +8,7 @@ export default serviceSalesPage({
     "Local SEO in Middlesbrough and across Teesside: Google Business Profile, service and area pages, local schema and consistent details, set up for £99 one-off.",
   breadcrumbName: "Local SEO Middlesbrough",
   serviceName: "Local SEO and Google Business Profile",
+  serviceType: "Local SEO",
   eyebrow: "Local SEO & Google Business Profile",
   h1: "Local SEO in Middlesbrough and across Teesside",
   h1Highlight: "Local SEO",

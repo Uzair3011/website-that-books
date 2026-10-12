@@ -8,6 +8,9 @@ export default serviceSalesPage({
     "Web design in Middlesbrough for local service businesses. Mobile-first websites from £99, local SEO foundations, a fixed written price and a site you own.",
   breadcrumbName: "Web design Middlesbrough",
   serviceName: "Web design",
+  serviceType: "Web design",
+  // The Middlesbrough entry on /areas, so the Service covers Middlesbrough only.
+  areaServed: ["Middlesbrough"],
   eyebrow: "High-converting website design",
   h1: "Web design in Middlesbrough that turns visits into enquiries",
   h1Highlight: "turns visits into enquiries",

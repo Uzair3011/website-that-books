@@ -3,7 +3,6 @@ import {
   breadcrumbJsonLd,
   finalCta,
   icon,
-  organizationJsonLd,
   related,
 } from "../site.js";
 
@@ -145,7 +144,6 @@ export default {
   description:
     "Free guides for small business websites and local search: website fixes, Google Business Profile basics, why enquiries go quiet and what AI can sensibly do.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Resources", path: "/resources" },

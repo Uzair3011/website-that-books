@@ -33,16 +33,49 @@ export const LIMITS = {
   imageBytes: 150 * 1024,
 };
 
-// Keys that must never appear anywhere in structured data (hard rule 1).
+// Keys that must never appear anywhere in structured data (hard rule 1): the
+// site publishes no address, no opening hours and no reviews or ratings.
 const FORBIDDEN_JSON_LD_KEYS = new Set([
+  "address",
   "streetAddress",
+  "openingHours",
+  "openingHoursSpecification",
   "aggregateRating",
   "review",
   "reviews",
   "reviewCount",
   "ratingValue",
 ]);
-const FORBIDDEN_JSON_LD_TYPES = new Set(["Review", "AggregateRating"]);
+const FORBIDDEN_JSON_LD_TYPES = new Set([
+  "Review",
+  "AggregateRating",
+  "PostalAddress",
+  "OpeningHoursSpecification",
+]);
+
+// Every @type the site emits. A new type is added here on purpose, after
+// checking it against schema.org, so a typo cannot ship.
+const KNOWN_JSON_LD_TYPES = new Set([
+  "ProfessionalService",
+  "WebSite",
+  "WebPage",
+  "CollectionPage",
+  "ItemList",
+  "ListItem",
+  "BreadcrumbList",
+  "Service",
+  "FAQPage",
+  "Question",
+  "Answer",
+  "ContactPoint",
+  "City",
+  "AdministrativeArea",
+  "BlogPosting",
+  "Person",
+  "ImageObject",
+]);
+
+export const ORG_ID = `${ORIGIN}/#organization`;
 
 // ───────────────────────── Loading ─────────────────────────
 
@@ -134,6 +167,42 @@ function walk(node, visit) {
     }
 }
 
+/** Every object node in a parsed JSON-LD value, nested ones included. */
+function nodesOf(data) {
+  const nodes = [];
+  const visit = (node) => {
+    if (Array.isArray(node)) return node.forEach(visit);
+    if (!node || typeof node !== "object") return;
+    nodes.push(node);
+    Object.values(node).forEach(visit);
+  };
+  visit(data);
+  return nodes;
+}
+
+/** What is wrong with one parsed JSON-LD block on its own. */
+function blockProblems(data) {
+  const problems = [];
+  if (data["@context"] !== "https://schema.org") problems.push(`@context is ${JSON.stringify(data["@context"])}, want "https://schema.org"`);
+  const top = Array.isArray(data["@graph"]) ? data["@graph"] : [data];
+  if (!top.length) problems.push("empty @graph");
+  for (const node of top) if (!node["@type"]) problems.push("a top-level node has no @type");
+  for (const node of nodesOf(data))
+    for (const [key, value] of Object.entries(node)) {
+      if (key === "@type")
+        for (const type of [value].flat())
+          if (!KNOWN_JSON_LD_TYPES.has(type)) problems.push(`unknown @type "${type}"`);
+      if (typeof value === "string" && !value.trim()) problems.push(`empty string in "${key}"`);
+      if (Array.isArray(value) && !value.length) problems.push(`empty array in "${key}"`);
+      if (Array.isArray(value) && value.some((item) => typeof item === "string" && !item.trim()))
+        problems.push(`empty string in "${key}"`);
+    }
+  return problems;
+}
+
+/** `{ "@id": x }` with nothing else is a reference; any other node with an @id defines it. */
+const isReference = (node) => typeof node["@id"] === "string" && Object.keys(node).length === 1;
+
 const attr = (tag, name) => new RegExp(`\\s${name}="([^"]*)"`).exec(tag)?.[1];
 
 /** One <img>: its src and anything wrong with its alt, size or loading hints. */
@@ -164,11 +233,12 @@ export function analyse(page, html) {
   const h1Tags = html.match(/<h1[\s>]/g)?.length ?? 0;
   const noindex = /<meta name="robots" content="[^"]*noindex/i.test(html);
 
-  const jsonLd = { parsed: [], errors: [], types: new Set(), forbidden: [] };
+  const jsonLd = { parsed: [], errors: [], types: new Set(), forbidden: [], problems: [] };
   jsonLdBlocks(html).forEach((block, index) => {
     try {
       const data = JSON.parse(block);
       jsonLd.parsed.push(data);
+      for (const problem of blockProblems(data)) jsonLd.problems.push(`block ${index + 1}: ${problem}`);
       walk(data, (key, value) => {
         if (key === "@type") [value].flat().forEach((type) => jsonLd.types.add(type));
         if (FORBIDDEN_JSON_LD_KEYS.has(key)) jsonLd.forbidden.push(key);
@@ -180,8 +250,23 @@ export function analyse(page, html) {
     }
   });
 
+  // Every node across the page's blocks, for @id resolution and per-type checks.
+  const nodes = jsonLd.parsed.flatMap(nodesOf);
+  jsonLd.nodes = nodes;
+  jsonLd.defined = nodes.filter((node) => node["@id"] && !isReference(node)).map((node) => node["@id"]);
+  jsonLd.referenced = nodes.filter(isReference).map((node) => node["@id"]);
+
   const main = mainOf(html);
   const images = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
+
+  // The visible FAQ (faqSection in src/site.js) and breadcrumb (breadcrumbNav).
+  const faq = [...main.matchAll(/<details><summary>([\s\S]*?)<\/summary><div>([\s\S]*?)<\/div><\/details>/g)].map(
+    ([, q, a]) => ({ q: textOf(q), a: textOf(a) }),
+  );
+  const crumbNav = /<nav class="breadcrumbs" aria-label="Breadcrumb">([\s\S]*?)<\/nav>/.exec(main);
+  const crumbs = crumbNav
+    ? [...crumbNav[1].matchAll(/<a href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)].map(([, href, name]) => ({ path: href, name: textOf(name) }))
+    : null;
 
   return {
     path: page.path,
@@ -196,8 +281,67 @@ export function analyse(page, html) {
     linksAll: new Set(internalLinks(html)),
     linksMain: new Set(internalLinks(main)),
     images: images.map(imageFacts),
+    faq,
+    crumbs,
     hasTodo: html.includes("TODO(owner)"),
   };
+}
+
+/**
+ * Structured-data checks that need the whole page: references resolve, the
+ * organisation is defined once, Service nodes are complete, FAQPage matches
+ * the visible FAQ and BreadcrumbList matches the visible breadcrumb.
+ */
+export function structuredDataProblems(a, { origin, indexable }) {
+  const problems = [];
+  const add = (check, detail) => problems.push([check, detail]);
+  const { nodes, defined, referenced } = a.jsonLd;
+  const ofType = (type) => nodes.filter((node) => [node["@type"]].flat().includes(type));
+  const pathOf = (url) => (typeof url === "string" ? new URL(url, origin).pathname : "");
+
+  for (const problem of a.jsonLd.problems) add("json-ld shape", problem);
+
+  for (const id of new Set(referenced))
+    if (!defined.includes(id)) add("json-ld @id", `${id} is referenced but not defined on this page`);
+  const orgs = defined.filter((id) => id === ORG_ID).length;
+  if (orgs !== 1) add("json-ld organisation", `${ORG_ID} is defined ${orgs} times (want exactly 1)`);
+
+  for (const service of ofType("Service")) {
+    if (![service.serviceType].flat().filter(Boolean).length) add("json-ld service", `"${service.name}" has no serviceType`);
+    if (service.provider?.["@id"] !== ORG_ID) add("json-ld service", `"${service.name}" provider is not ${ORG_ID}`);
+    if (!Array.isArray(service.areaServed) || !service.areaServed.length) add("json-ld service", `"${service.name}" has no areaServed`);
+  }
+
+  // FAQPage questions and answers, in order, exactly as the visitor reads them.
+  const faqPages = ofType("FAQPage");
+  if (faqPages.length > 1) add("json-ld faq", `${faqPages.length} FAQPage blocks (want at most 1)`);
+  if (faqPages.length) {
+    const marked = faqPages[0].mainEntity ?? [];
+    if (marked.length !== a.faq.length)
+      add("json-ld faq", `FAQPage has ${marked.length} questions, the page shows ${a.faq.length}`);
+    marked.forEach((question, index) => {
+      const shown = a.faq[index];
+      if (!shown) return;
+      if (question.name !== shown.q) add("json-ld faq", `question ${index + 1}: "${question.name}" ≠ visible "${shown.q}"`);
+      if (question.acceptedAnswer?.text !== shown.a) add("json-ld faq", `answer ${index + 1} ("${shown.q}") does not match the visible answer`);
+    });
+  } else if (a.faq.length) add("json-ld faq", `the page shows ${a.faq.length} FAQs but has no FAQPage markup`);
+
+  // Every indexable page below the homepage has one BreadcrumbList, from Home
+  // to itself, drawn as the visible breadcrumb.
+  const lists = ofType("BreadcrumbList");
+  if (indexable && a.path !== "/") {
+    if (lists.length !== 1) add("breadcrumb", `${lists.length} BreadcrumbList blocks (want exactly 1)`);
+    const items = lists[0]?.itemListElement ?? [];
+    const trail = items.map((item) => ({ path: pathOf(item.item), name: item.name }));
+    if (items.some((item, index) => item.position !== index + 1)) add("breadcrumb", "positions are not 1, 2, 3…");
+    if (trail.length && trail[0].path !== "/") add("breadcrumb", `starts at ${trail[0].path}, not /`);
+    if (trail.length && trail.at(-1).path !== a.path) add("breadcrumb", `ends at ${trail.at(-1).path}, not this page`);
+    if (!a.crumbs) add("breadcrumb", "no visible breadcrumb");
+    else if (JSON.stringify(a.crumbs) !== JSON.stringify(trail))
+      add("breadcrumb", `visible ${a.crumbs.map((c) => c.name).join(" > ")} ≠ JSON-LD ${trail.map((c) => c.name).join(" > ")}`);
+  }
+  return problems;
 }
 
 /** Redirects a page's links through the redirect table (one hop). */
@@ -350,6 +494,8 @@ export function runChecks(site = loadSite(), { dist = null } = {}) {
     if (a.jsonLd.forbidden.length)
       fail("json-ld claims", a.path, `forbidden: ${[...new Set(a.jsonLd.forbidden)].join(", ")}`);
     if (a.hasTodo) fail("todo in html", a.path, 'rendered HTML contains "TODO(owner)"');
+    for (const [check, detail] of structuredDataProblems(a, { origin: site.origin, indexable: isIndexable }))
+      fail(check, a.path, detail);
   }
 
   // Sitemap, robots.txt and llms.txt: build.mjs must write the shared output.
@@ -425,8 +571,6 @@ export function runChecks(site = loadSite(), { dist = null } = {}) {
     const into = inMain.get(page.path)?.size ?? 0;
     if (out < LIMITS.contextualLinks) warn("contextual links out", page.path, `${out} distinct internal links in the body (want ${LIMITS.contextualLinks}+)`);
     if (into < LIMITS.contextualLinks) warn("contextual links in", page.path, `${into} other pages link here from their body (want ${LIMITS.contextualLinks}+)`);
-    if (!analyses.get(page.path).jsonLd.types.has("BreadcrumbList") && page.path !== "/")
-      warn("breadcrumb", page.path, "no BreadcrumbList JSON-LD");
   }
 
   // Images: complete attributes, at most one high-priority (LCP) image, and

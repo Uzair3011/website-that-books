@@ -8,6 +8,7 @@ export default servicePage({
     "Website maintenance in Middlesbrough and Teesside: hosting, updates, backups, monitoring and practical support from £49 a month, with no long tie-in.",
   breadcrumbName: "Website care",
   serviceName: "Website care",
+  serviceType: "Website maintenance and hosting",
   eyebrow: "Website care · Optional, month to month",
   h1: "Website maintenance and care for Middlesbrough businesses",
   lede: "<strong>Website care, for owners who would rather not manage the technical side.</strong> Hosting, updates, backups, monitoring and practical support from £49 a month. It is always optional, and you own the website either way.",

@@ -2,7 +2,15 @@
 // production build call this, so every route ships identical chrome.
 import { voiceConfigured } from "../api/voice.js";
 import { asset } from "./asset-version.js";
-import { SITE, esc, footer, header, mobileBar } from "./site.js";
+import {
+  SITE,
+  breadcrumbNav,
+  esc,
+  footer,
+  header,
+  mobileBar,
+  organizationJsonLd,
+} from "./site.js";
 
 const SOCIAL_CARD = {
   src: "/assets/social-card.png",
@@ -39,8 +47,11 @@ export function renderPage(
 ) {
   const canonical = origin + path;
   const image = /^https?:\/\//.test(ogImage.src) ? ogImage.src : origin + ogImage.src;
-  const ld = jsonLd
-    .filter(Boolean)
+  // The organisation graph goes on every page, so each Service's provider
+  // @id resolves wherever it appears. Pages list only their own nodes.
+  const blocks = [organizationJsonLd(), ...jsonLd.filter(Boolean)];
+  const breadcrumb = blocks.find((data) => data["@type"] === "BreadcrumbList");
+  const ld = blocks
     .map(
       (data) =>
         // Authored objects only; escaping "<" keeps a stray sequence from
@@ -97,7 +108,7 @@ export function renderPage(
     <a class="skip-link" href="#main">Skip to content</a>
     ${header(path)}
     <main id="main">
-${body}
+${breadcrumb ? `    ${breadcrumbNav(breadcrumb)}\n` : ""}${body}
     </main>
     ${footer()}
     ${mobileBar()}

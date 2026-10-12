@@ -10,7 +10,6 @@ import {
   faqSection,
   finalCta,
   icon,
-  organizationJsonLd,
 } from "../site.js";
 
 // "Buy now" buttons and payment wording only appear when online checkout is switched on.
@@ -226,7 +225,6 @@ export default {
   description:
     "Website costs in Middlesbrough: landing page £99, multi-page website £179, local SEO £99, AI receptionist £199 setup, website care from £49 a month. Ex VAT.",
   jsonLd: [
-    organizationJsonLd(),
     faqJsonLd(FAQS),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },

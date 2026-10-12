@@ -3,7 +3,6 @@ import {
   breadcrumbJsonLd,
   finalCta,
   icon,
-  organizationJsonLd,
 } from "../site.js";
 import { PROJECTS } from "../projects.js";
 
@@ -92,7 +91,6 @@ export default {
   description:
     "Veltra Media's web design portfolio: a live med-spa booking system, plus clearly labelled concept designs for a trades site, a landing page and local search.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Work", path: "/work" },

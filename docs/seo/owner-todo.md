@@ -48,5 +48,8 @@ These describe how people search and talk. They come from the keyword map and ar
 
 ## Other open items
 
+- [ ] **Founder details for /about.** The About page names no person, so it has no `Person` structured data. If you are happy to be named publicly, send your name as you want it shown, a two- or three-sentence bio (what you do and your relevant experience, no claims you cannot back up) and a photo you own the rights to. The page and a `Person` entity can then be added together.
+- [ ] **Official profiles for `sameAs`.** Add the LinkedIn, Facebook and Google Business Profile URLs to `SITE.sameAs` in `src/site.js` once each profile is live and belongs to Veltra Media. Nothing is emitted while the list is empty.
+- [ ] **Price range.** The organisation markup has no `priceRange`, because /pricing quotes larger sites, ecommerce and unusual integrations in writing, so there is no published upper price. If you want one, confirm a range you are happy to stand behind.
 - Search volume for every keyword in `keyword-map.md` is unknown. Check it in Search Console or Keyword Planner.
 - If you have real, permitted examples of work in any of these towns, they would make the town pages much stronger. Until then, the pages say they do not name clients.

@@ -1,7 +1,7 @@
 // /checkout/cancelled?service=<slug>: where Stripe sends a customer who backs out. Nothing is
 // charged and nothing is changed here; the unused session simply expires and Stripe tells the
 // webhook, which marks the record expired.
-import { SITE, icon, organizationJsonLd } from "../site.js";
+import { SITE, icon } from "../site.js";
 
 const body = `      <section class="checkout checkout-result">
         <div class="container narrow">
@@ -26,6 +26,5 @@ export default {
   noindex: true,
   bodyClass: "page-checkout",
   scripts: ["/assets/checkout.js"],
-  jsonLd: [organizationJsonLd()],
   body,
 };

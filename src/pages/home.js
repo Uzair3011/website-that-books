@@ -10,7 +10,6 @@ import {
   faqJsonLd,
   faqSection,
   icon,
-  organizationJsonLd,
   serviceJsonLd,
 } from "../site.js";
 
@@ -351,9 +350,9 @@ export default {
   description:
     "Veltra Media builds websites, local SEO and AI reception for businesses in Middlesbrough and Teesside. Websites from £99, a written scope and a site you own.",
   jsonLd: [
-    organizationJsonLd(),
     serviceJsonLd({
       name: "Website design",
+      serviceType: "Web design",
       description:
         "Conversion-focused websites with local search foundations for Middlesbrough and Teesside businesses, each with a fixed written scope before work begins.",
       path: "/",

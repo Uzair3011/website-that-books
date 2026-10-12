@@ -60,6 +60,10 @@ export function serviceSalesPage({
   description,
   breadcrumbName,
   serviceName,
+  // schema.org serviceType: the kind of service, in plain words.
+  serviceType,
+  // Places for the Service JSON-LD areaServed; null serves every SITE.areas entry.
+  areaServed = null,
   eyebrow,
   h1,
   h1Highlight,
@@ -270,7 +274,7 @@ ${faqs.length ? `\n${faqSection(faqs, { heading: "Common questions", eyebrow: "B
     title,
     description,
     jsonLd: [
-      serviceJsonLd({ name: serviceName, description, path }),
+      serviceJsonLd({ name: serviceName, serviceType, description, path, areaServed }),
       ...(faqs.length ? [faqJsonLd(faqs)] : []),
       breadcrumbJsonLd([
         { name: "Home", path: "/" },

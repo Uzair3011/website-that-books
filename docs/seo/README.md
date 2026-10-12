@@ -14,15 +14,17 @@ npm run seo:check -- --dist    # also checks dist/sitemap.xml (run after npm run
 
 The checker fails on:
 
-- Titles, descriptions, H1 count, canonicals, JSON-LD, TODO text and orphan pages (see the rules file).
+- Titles, descriptions, H1 count, canonicals, JSON-LD parsing, TODO text and orphan pages (see the rules file).
 - **Sitemap.** Every indexable page is listed and nothing else is. Every `<url>` has a `<lastmod>` in `YYYY-MM-DD` form, and there is no `<priority>`.
 - **Redirects.** `src/pages.js` (`redirects`, `redirectPrefixes`) and `vercel.json` (`redirects`) must hold exactly the same rules. Every destination must be a live page, so there are no chains. No source may end in `.html`, `/index` or `/` (see below). `vercel.json` must keep `cleanUrls: true` and `trailingSlash: false`.
 - **robots.txt and /admin.** robots.txt must not disallow `/admin`, so crawlers can fetch it and see its `noindex` meta tag and `X-Robots-Tag` header.
 - **404.** The 404 page is `noindex` and links to every service page. `vercel.json` has no catch-all rewrite or legacy `routes`, either of which would answer unknown URLs with a 200.
 - **llms.txt.** It links only to live, indexable pages.
+- **Structured data.** Every JSON-LD block has `"@context": "https://schema.org"`, only `@type`s listed in `KNOWN_JSON_LD_TYPES`, and no empty strings or arrays. No `address`, `streetAddress`, `openingHours`, `aggregateRating`, `review` or rating keys anywhere. Every `{"@id": …}` reference resolves to a node on the same page, and the organisation node (`/#organization`, emitted by `src/layout.js`) is defined exactly once per page. Every `Service` has a `serviceType`, the organisation as `provider` and an `areaServed`. `FAQPage` questions and answers match the visible FAQ text, in order.
+- **Breadcrumbs.** Every indexable page below the homepage has one `BreadcrumbList` from Home to itself, and the visible breadcrumb (drawn by `src/layout.js` from that list) shows the same names and links.
 - **Images.** Every `<img>` has a non-empty `alt` (or `alt=""` plus `aria-hidden="true"` for a purely decorative image), and a numeric `width` and `height`. Each page's hero/LCP image has `loading="eager" fetchpriority="high"`, and no page has more than one. Every other image has `loading="lazy" decoding="async"`. The homepage's first image must be the priority image.
 
-The checker warns on (does not fail): title length outside 50-60, fewer than 3 contextual links in or out, a missing breadcrumb, and image files over 150 KB.
+The checker warns on (does not fail): title length outside 50-60, fewer than 3 contextual links in or out, and image files over 150 KB.
 
 ## Generated files
 

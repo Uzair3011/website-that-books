@@ -7,6 +7,7 @@ export default servicePage({
     "Google Business Profile optimisation for Middlesbrough businesses: categories, services, service areas, hours and photos, with local SEO setup, for £99.",
   breadcrumbName: "Google Business Profile",
   serviceName: "Google Business Profile setup",
+  serviceType: "Google Business Profile management",
   eyebrow: "Google Business Profile · Middlesbrough & Teesside",
   h1: "Google Business Profile optimisation for Middlesbrough businesses",
   lede: "<strong>A Google Business Profile that helps nearby customers choose you.</strong> Your profile is often the first thing a local customer sees. We set it up accurately, so it is complete, consistent with your website and easy to trust.",

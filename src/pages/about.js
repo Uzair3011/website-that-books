@@ -4,7 +4,6 @@ import {
   breadcrumbJsonLd,
   finalCta,
   icon,
-  organizationJsonLd,
   related,
 } from "../site.js";
 
@@ -119,7 +118,6 @@ export default {
   description:
     "About Veltra Media, a Middlesbrough studio building websites, local SEO and AI reception for Teesside businesses, with written scopes and separate services.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "About", path: "/about" },

@@ -5,7 +5,6 @@ import {
   breadcrumbJsonLd,
   finalCta,
   icon,
-  organizationJsonLd,
 } from "../site.js";
 
 const body = `      <section class="hero">
@@ -55,7 +54,6 @@ export default {
   description:
     "Contact Veltra Media in Middlesbrough by WhatsApp, email or the enquiry form about web design, local SEO, landing pages, AI reception or booking automation.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Contact", path: "/contact" },

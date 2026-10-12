@@ -1,4 +1,4 @@
-import { SITE, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
+import { SITE, breadcrumbJsonLd } from "../site.js";
 
 // Written from what the site actually does: it sets no cookies of its own, keeps
 // the consent choice and one appearance preference in local storage, and loads
@@ -49,7 +49,6 @@ export default {
   description:
     "What the Veltra Media website stores in your browser: no cookies of its own, your privacy choice, and analytics only with your permission.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Cookie policy", path: "/cookie-policy" },

@@ -2,6 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { formatTable, loadSite, runChecks } from "../scripts/seo-check.mjs";
+import { articleJsonLd } from "../src/site.js";
 
 test("every page passes the SEO guardrails", () => {
   const { failures } = runChecks(loadSite());
@@ -101,4 +102,70 @@ test("the checker catches a 404 page missing service links, and llms.txt links t
   html.set("/404", html.get("/404").replaceAll('href="/landing-page-design"', 'href="/"'));
   assert.ok(failedChecks({ html }).has("404"));
   assert.ok(failedChecks({ llms: `${site.llms}\n- [Old](${site.origin}/contact-us)\n` }).has("llms.txt"));
+});
+
+const ld = (data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
+const withPage = (path, edit) => {
+  const site = loadSite();
+  const html = new Map(site.html);
+  html.set(path, edit(html.get(path)));
+  return { html };
+};
+
+test("the checker catches malformed JSON-LD: no @context, unknown types, empty values, dangling @ids and invented facts", () => {
+  const injected = [
+    { "@type": "WebPage", name: "No context" },
+    { "@context": "https://schema.org", "@type": "Servce", name: "" },
+    { "@context": "https://schema.org", "@type": "WebPage", sameAs: [], isPartOf: { "@id": "https://www.veltramedia.com/#nowhere" } },
+    { "@context": "https://schema.org", "@type": "WebPage", openingHours: "Mo-Fr 09:00-17:00" },
+  ];
+  const details = failureDetails(withPage("/about", (page) => page.replace("</head>", `${injected.map(ld).join("")}</head>`)), "json-ld shape");
+  for (const expected of ["@context", 'unknown @type "Servce"', 'empty string in "name"', 'empty array in "sameAs"'])
+    assert.ok(details.some((d) => d.includes(expected)), `expected "${expected}" in:\n${details.join("\n")}`);
+  const checks = failedChecks(withPage("/about", (page) => page.replace("</head>", `${injected.map(ld).join("")}</head>`)));
+  for (const expected of ["json-ld @id", "json-ld claims"]) assert.ok(checks.has(expected), `expected ${expected} to fail`);
+});
+
+test("the checker catches a Service whose provider is missing from the page, or that lacks serviceType", () => {
+  const site = loadSite();
+  // Drop the organisation graph (always the first block) from a service page.
+  let details = failureDetails(
+    withPage("/local-seo-middlesbrough", (page) => page.replace(/<script type="application\/ld\+json">\{"@context":"https:\/\/schema.org","@graph".*?<\/script>/, "")),
+    "json-ld @id",
+  );
+  assert.ok(details.some((d) => d.includes("#organization")), details.join("\n"));
+
+  details = failureDetails(withPage("/local-seo-middlesbrough", (page) => page.replace(/"serviceType":"[^"]*",/, "")), "json-ld service");
+  assert.ok(details.some((d) => d.includes("no serviceType")), details.join("\n"));
+  assert.ok(site.html.get("/local-seo-middlesbrough").includes('"serviceType"'));
+});
+
+test("the checker catches FAQPage markup that differs from the visible FAQ", () => {
+  const details = failureDetails(
+    withPage("/pricing", (page) => page.replace("<summary>Do I have to buy a package?</summary>", "<summary>Must I buy a package?</summary>")),
+    "json-ld faq",
+  );
+  assert.ok(details.some((d) => d.includes("Must I buy a package?")), details.join("\n"));
+});
+
+test("the checker catches a missing or mismatched breadcrumb", () => {
+  let details = failureDetails(withPage("/contact", (page) => page.replace(/<nav class="breadcrumbs"[\s\S]*?<\/nav>/, "")), "breadcrumb");
+  assert.ok(details.some((d) => d.includes("no visible breadcrumb")), details.join("\n"));
+
+  details = failureDetails(withPage("/contact", (page) => page.replace('aria-current="page">Contact<', 'aria-current="page">Get in touch<')), "breadcrumb");
+  assert.ok(details.some((d) => d.includes("Get in touch")), details.join("\n"));
+});
+
+test("articleJsonLd() output passes every structured-data check", () => {
+  const article = articleJsonLd({
+    headline: "A test article",
+    description: "Only used to check the helper.",
+    path: "/resources",
+    datePublished: "2026-10-13",
+  });
+  assert.equal(article.dateModified, "2026-10-13");
+  assert.equal(article.mainEntityOfPage["@id"], "https://www.veltramedia.com/resources");
+  const failures = runChecks(loadSite(withPage("/resources", (page) => page.replace("</head>", `${ld(article)}</head>`))))
+    .failures.filter((f) => f.check.startsWith("json-ld"));
+  assert.deepEqual(failures, []);
 });

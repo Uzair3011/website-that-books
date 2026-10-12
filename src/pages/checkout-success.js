@@ -1,7 +1,7 @@
 // /checkout/success?session_id=cs_…: where Stripe returns a customer after paying. The page asks
 // /api/checkout-status for the real outcome, so it shows "paid" only when Stripe says so, and
 // otherwise the true state: processing, still waiting, failed, expired or refunded.
-import { SITE, icon, organizationJsonLd } from "../site.js";
+import { SITE, icon } from "../site.js";
 
 const body = `      <section class="checkout checkout-result">
         <div class="container narrow">
@@ -49,6 +49,5 @@ export default {
   noindex: true,
   bodyClass: "page-checkout",
   scripts: ["/assets/checkout.js"],
-  jsonLd: [organizationJsonLd()],
   body,
 };

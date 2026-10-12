@@ -116,7 +116,7 @@ test("every internal link resolves to a real route or a declared redirect", () =
 });
 
 test("structured data on every page is valid JSON and claims nothing unverifiable", () => {
-  const banned = /aggregateRating|reviewCount|ratingValue|streetAddress/;
+  const banned = /aggregateRating|reviewCount|ratingValue|streetAddress|openingHours/;
   for (const page of pages) {
     const html = renderPage(page, { origin: ORIGIN });
     const blocks = [

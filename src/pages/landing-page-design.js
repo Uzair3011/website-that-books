@@ -8,6 +8,7 @@ export default serviceSalesPage({
     "Landing page design for Middlesbrough businesses running ads: one offer, one page, a short form and tracking to show what each click becomes. From £99.",
   breadcrumbName: "Landing page design",
   serviceName: "Landing page design and conversion rate optimisation",
+  serviceType: "Landing page design",
   eyebrow: "High-converting landing pages (paid ads)",
   h1: "Landing page design for Middlesbrough businesses running ads",
   h1Highlight: "Landing page design",

@@ -5,7 +5,6 @@ import {
   faqSection,
   finalCta,
   icon,
-  organizationJsonLd,
   related,
 } from "../site.js";
 
@@ -138,7 +137,6 @@ export default {
   description:
     "A free website audit for local businesses in Middlesbrough and Teesside: a short video review, a one-page summary and the three changes worth making first.",
   jsonLd: [
-    organizationJsonLd(),
     faqJsonLd(FAQS),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },

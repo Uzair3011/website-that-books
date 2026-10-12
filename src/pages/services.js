@@ -5,7 +5,6 @@ import {
   faqSection,
   finalCta,
   icon,
-  organizationJsonLd,
   related,
 } from "../site.js";
 import { servicesShowcase } from "../services-showcase.js";
@@ -192,7 +191,6 @@ export default {
   description:
     "Web design, local SEO, landing pages, AI receptionist, booking automation and website care for Teesside businesses. Each is priced and sold on its own.",
   jsonLd: [
-    organizationJsonLd(),
     faqJsonLd(FAQS),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },

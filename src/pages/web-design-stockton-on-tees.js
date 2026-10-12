@@ -10,6 +10,7 @@ export default areaPage({
   areaServed: ["Stockton-on-Tees", "Billingham"],
   breadcrumbName: "Stockton-on-Tees & Billingham",
   serviceName: "Web design in Stockton-on-Tees and Billingham",
+  serviceType: "Web design",
   eyebrow: "Stockton-on-Tees · Billingham · Norton · Thornaby",
   h1: "Web design in Stockton-on-Tees and Billingham",
   lede: "Websites for service businesses across the Borough of Stockton-on-Tees, from the town centre out to Norton, Thornaby and Billingham. Veltra Media is based in Middlesbrough and runs Stockton projects online.",

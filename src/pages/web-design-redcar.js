@@ -10,6 +10,7 @@ export default areaPage({
   areaServed: ["Redcar"],
   breadcrumbName: "Redcar",
   serviceName: "Web design and local SEO in Redcar",
+  serviceType: ["Web design", "Local SEO"],
   eyebrow: "Redcar · Marske · Saltburn · Guisborough",
   h1: "Web design in Redcar for local businesses",
   lede: "Websites and local SEO for businesses in Redcar and across Redcar and Cleveland, from the seafront to Guisborough and East Cleveland. Veltra Media is based in Middlesbrough and works with Redcar businesses online.",

@@ -5,7 +5,7 @@
 import { purchasableItems } from "../../assets/catalog.js";
 import { checkoutEnabled } from "../../lib/payments.js";
 import { paymentSettings } from "../../lib/stripe.js";
-import { CTA, SITE, icon, organizationJsonLd } from "../site.js";
+import { CTA, SITE, icon } from "../site.js";
 
 const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
 const enabled = checkoutEnabled();
@@ -122,6 +122,5 @@ export default {
   noindex: true,
   bodyClass: "page-checkout",
   scripts: enabled ? ["/assets/checkout.js"] : [],
-  jsonLd: [organizationJsonLd()],
   body,
 };

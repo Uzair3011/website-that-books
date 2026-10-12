@@ -10,6 +10,7 @@ export default areaPage({
   areaServed: ["Hartlepool"],
   breadcrumbName: "Hartlepool",
   serviceName: "Web design and local SEO in Hartlepool",
+  serviceType: ["Web design", "Local SEO"],
   eyebrow: "Hartlepool · the Headland · Seaton Carew · Tees Valley",
   h1: "Web design in Hartlepool for local businesses",
   lede: "Websites and local SEO for Hartlepool businesses, from the Headland and the Marina to Seaton Carew. Veltra Media is based in Middlesbrough, works across the Tees Valley and runs Hartlepool projects online.",

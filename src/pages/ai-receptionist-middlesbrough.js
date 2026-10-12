@@ -8,6 +8,7 @@ export default serviceSalesPage({
     "An AI receptionist and website chat for Middlesbrough businesses: approved answers, enquiry capture after hours and clear handover. £199 setup, usage at cost.",
   breadcrumbName: "AI receptionist Middlesbrough",
   serviceName: "AI receptionist and website chat",
+  serviceType: "AI receptionist and website chat",
   eyebrow: "AI receptionist & website chat",
   h1: "An AI receptionist for Middlesbrough businesses that miss calls",
   h1Highlight: "AI receptionist",

@@ -5,7 +5,6 @@ import {
   faqSection,
   finalCta,
   icon,
-  organizationJsonLd,
   related,
 } from "../site.js";
 
@@ -193,7 +192,6 @@ export default {
   description:
     "Our website design process: a written scope and fixed price first, a private preview during the build, launch with analytics connected, and typical timelines.",
   jsonLd: [
-    organizationJsonLd(),
     faqJsonLd(FAQS),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },

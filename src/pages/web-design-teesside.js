@@ -7,6 +7,7 @@ export default servicePage({
     "Web design for businesses across Teesside and the Tees Valley, including Stockton-on-Tees, Redcar, Billingham and Hartlepool. Websites from £99, yours to own.",
   breadcrumbName: "Web design Teesside",
   serviceName: "Web design",
+  serviceType: "Web design",
   eyebrow: "Website design · Teesside & the Tees Valley",
   h1: "Web design for businesses across Teesside and the Tees Valley",
   lede: "Conversion-focused websites for service businesses in Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley, with clear packages from £99.",

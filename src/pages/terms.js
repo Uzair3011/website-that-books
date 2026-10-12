@@ -1,5 +1,5 @@
 import { checkoutEnabled } from "../../lib/payments.js";
-import { CTA, breadcrumbJsonLd, organizationJsonLd } from "../site.js";
+import { CTA, breadcrumbJsonLd } from "../site.js";
 
 // Online checkout is switched on per build; the payment clause says what this build really does.
 const payments = checkoutEnabled()
@@ -64,7 +64,6 @@ export default {
   description:
     "Veltra Media's terms and conditions: GBP pricing, scope and revisions, ownership, third-party costs, the med-spa growth system and the launch guarantee.",
   jsonLd: [
-    organizationJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Terms", path: "/terms" },

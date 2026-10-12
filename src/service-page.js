@@ -19,6 +19,10 @@ export function servicePage({
   h1,
   lede,
   serviceName,
+  // schema.org serviceType: the kind of service, in plain words.
+  serviceType,
+  // Places for the Service JSON-LD areaServed; null serves every SITE.areas entry.
+  areaServed = null,
   image,
   intro,
   // Optional local search copy, shown after the intro: { eyebrow, heading, body: [paragraph HTML] }
@@ -144,7 +148,7 @@ ${finalCta()}`;
     title,
     description,
     jsonLd: [
-      serviceJsonLd({ name: serviceName, description, path }),
+      serviceJsonLd({ name: serviceName, serviceType, description, path, areaServed }),
       faqJsonLd(faqs),
       breadcrumbJsonLd([
         { name: "Home", path: "/" },

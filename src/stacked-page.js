@@ -38,6 +38,8 @@ export function stackedPage({
   // [{ name, path }] after Home, ending with this page.
   breadcrumbs,
   serviceName,
+  // schema.org serviceType: the kind of service, in plain words.
+  serviceType,
   // Places for the Service JSON-LD areaServed; null serves every SITE.areas entry.
   areaServed = null,
   eyebrow,
@@ -94,7 +96,7 @@ ${finalCta({ heading: closing.heading, body: closing.body })}`;
     title,
     description,
     jsonLd: [
-      serviceJsonLd({ name: serviceName, description, path, areaServed }),
+      serviceJsonLd({ name: serviceName, serviceType, description, path, areaServed }),
       faqJsonLd(faqs),
       breadcrumbJsonLd([{ name: "Home", path: "/" }, ...breadcrumbs]),
     ],

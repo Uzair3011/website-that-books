@@ -6,7 +6,6 @@ import {
   faqSection,
   finalCta,
   icon,
-  organizationJsonLd,
   related,
   serviceJsonLd,
 } from "../site.js";
@@ -260,9 +259,9 @@ export default {
   description:
     "Websites, AI reception and online booking for med spas and aesthetic clinics: the £499 Growth Launch Package, with each part also available on its own.",
   jsonLd: [
-    organizationJsonLd(),
     serviceJsonLd({
       name: "Med spa growth system",
+      serviceType: ["Web design", "AI receptionist", "Booking automation"],
       description:
         "A managed website, AI receptionist, website chat, online booking and follow-up system for med spas and aesthetic clinics.",
       path: "/med-spa-growth-system",

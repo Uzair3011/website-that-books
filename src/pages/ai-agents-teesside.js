@@ -16,6 +16,7 @@ export default stackedPage({
     { name: "AI agents Teesside", path: "/ai-agents-teesside" },
   ],
   serviceName: "AI agents and AI automation for small businesses",
+  serviceType: "AI automation",
   eyebrow: "AI agents · Middlesbrough & Teesside",
   h1: "AI agents for Teesside businesses: answering, booking and follow-up",
   lede: "An AI agent is software that does one job in your business, such as replying to an enquiry at 10pm or reminding a customer about tomorrow’s appointment. Here is what that can sensibly do for a local business, and where it should stop.",

@@ -13,6 +13,7 @@ export default stackedPage({
     { name: "Websites for trades", path: "/web-design-for-trades-teesside" },
   ],
   serviceName: "Website design for trades",
+  serviceType: "Web design",
   eyebrow: "Websites for trades · Middlesbrough & Teesside",
   h1: "Website design for tradesmen across Teesside",
   lede: "Websites for electricians, plumbers, roofers, joiners and heating engineers across Middlesbrough and the Tees Valley, built around one job: getting the right customer to ring you or ask for a quote. Every price is published before we talk.",
