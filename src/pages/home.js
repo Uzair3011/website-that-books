@@ -179,7 +179,9 @@ const body = `      <section class="hero hero-feature">
             </div>
             <div class="hero-media">
               <img
-                src="/assets/work/hero-poster.png"
+                src="/assets/work/hero-poster.webp"
+                srcset="/assets/work/hero-poster-800.webp 800w, /assets/work/hero-poster.webp 1200w"
+                sizes="(min-width: 960px) 600px, calc(100vw - 40px)"
                 width="1200"
                 height="880"
                 loading="eager"
@@ -303,7 +305,7 @@ ${EXPLORE.map(
             </div>
             <div class="local-side">
               <figure class="local-map reveal">
-                <img src="/assets/work/tees-transporter-bridge.webp" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
+                <img src="/assets/work/tees-transporter-bridge.webp" srcset="/assets/work/tees-transporter-bridge-800.webp 800w, /assets/work/tees-transporter-bridge.webp 1600w" sizes="(min-width: 960px) 600px, calc(100vw - 40px)" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." />
               </figure>
               <div class="local-group">
                 <p class="local-label">Popular pages</p>

@@ -20,6 +20,8 @@ import { checkoutEnabled } from "../lib/payments.js";
 
 // The same photo as the homepage map section (credited in docs/image-credits.md).
 const BRIDGE = "/assets/work/tees-transporter-bridge.webp";
+const BRIDGE_SRCSET =
+  "/assets/work/tees-transporter-bridge-800.webp 800w, /assets/work/tees-transporter-bridge.webp 1600w";
 const gbp = (amount) => `£${amount.toLocaleString("en-GB")}`;
 
 /** Wraps the first occurrence of `phrase` in `text` with a highlight span. */
@@ -236,7 +238,7 @@ ${
       </section>
 
       <section class="sp-guarantee" aria-labelledby="commitment-title">
-        <figure class="sp-guarantee-art"><img src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." /></figure>
+        <figure class="sp-guarantee-art"><img src="${BRIDGE}" srcset="${BRIDGE_SRCSET}" sizes="(min-width: 900px) 50vw, 100vw" width="1600" height="1047" loading="lazy" decoding="async" alt="The Tees Transporter Bridge in Middlesbrough, its blue steel towers and high girder against a cloudy sunset sky." /></figure>
         <div class="sp-guarantee-copy">
           <span class="sp-badge">${icon("doc")}</span>
           <p class="eyebrow">In writing</p>
@@ -247,7 +249,7 @@ ${
 ${faqs.length ? `\n${faqSection(faqs, { heading: "Common questions", eyebrow: "Before you ask" })}\n` : ""}${relatedItems.length ? `\n${related(relatedItems)}\n` : ""}
 
       <section class="band-dark sp-close">
-        <img class="sp-close-photo" src="${BRIDGE}" width="1600" height="1047" loading="lazy" decoding="async" alt="" aria-hidden="true" />
+        <img class="sp-close-photo" src="${BRIDGE}" srcset="${BRIDGE_SRCSET}" sizes="100vw" width="1600" height="1047" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         <div class="container sp-close-grid">
           <div>
             <p class="eyebrow">Next step</p>

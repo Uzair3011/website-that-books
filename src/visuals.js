@@ -325,6 +325,6 @@ const SCREENSHOTS = {
 export const cardMedia = (name) =>
   `<figure class="card-media">${
     SCREENSHOTS[name]
-      ? `<img src="/assets/img/${name}.webp" width="1200" height="600" loading="lazy" decoding="async" alt="${SCREENSHOTS[name]}" />`
+      ? `<img src="/assets/img/${name}.webp" srcset="/assets/img/${name}-600.webp 600w, /assets/img/${name}.webp 1200w" sizes="(min-width: 600px) 510px, 50vw" width="1200" height="600" loading="lazy" decoding="async" alt="${SCREENSHOTS[name]}" />`
       : VISUALS[name]
   }</figure>`;
