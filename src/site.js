@@ -251,12 +251,19 @@ export function finalCta({
 </section>`;
 }
 
-/** Three related pages. Used for internal linking on every service page. */
+// Columns that divide the list evenly, so no row ends in an empty cell: 4 items
+// sit 2x2 (4 across on wide screens). Any remainder stretches across its row.
+const relatedCols = (n) =>
+  n === 4
+    ? "cols-2 cols-4-wide"
+    : `cols-${n <= 3 ? n : n % 3 === 0 ? 3 : n % 2 === 0 ? 2 : 3}`;
+
+/** Related pages. Used for internal linking on every service page. */
 export function related(items, heading = "Related services") {
   return `<section class="section tight">
   <div class="container">
     <h2 class="section-head">${heading}</h2>
-    <ul class="related reveal">
+    <ul class="related ${relatedCols(items.length)} reveal">
       ${items
         .map(
           (item) =>

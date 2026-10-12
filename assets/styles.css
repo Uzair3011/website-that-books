@@ -309,6 +309,11 @@ p {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+/* Local search copy under a full-width heading, at a reading measure. */
+.prose.local-copy {
+  max-width: 70ch;
+  gap: 16px;
+}
 
 /* Deep bands invert the canvas locally. */
 .band-dark {
@@ -1861,8 +1866,14 @@ svg.icon {
 }
 
 /* ───────────────────────── Related links ───────────────────────── */
+/* Flex rather than grid: the 1px gap shows the --line background as dividers,
+   and an empty grid cell would show it as a grey block. Items grow, so a short
+   last row stretches to fill. related() in src/site.js picks a column count
+   that divides the list evenly where it can. */
 .related {
-  display: grid;
+  --cols: 3;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
@@ -1870,9 +1881,24 @@ svg.icon {
   overflow: hidden;
   list-style: none;
 }
-@media (min-width: 720px) {
-  .related {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.related > li {
+  flex: 1 1 100%;
+  display: grid;
+}
+.related.cols-1 {
+  --cols: 1;
+}
+.related.cols-2 {
+  --cols: 2;
+}
+@media (min-width: 800px) {
+  .related > li {
+    flex-basis: calc(100% / var(--cols) - 1px);
+  }
+}
+@media (min-width: 1200px) {
+  .related.cols-4-wide {
+    --cols: 4;
   }
 }
 .related a {
@@ -5257,18 +5283,17 @@ svg.icon {
   max-width: 30ch;
   line-height: 1.18;
 }
-.sp-split {
+/* Heading on top at the full content width, list underneath. */
+.sp-stacked {
   display: grid;
-  gap: clamp(32px, 5vw, 72px);
+  gap: clamp(28px, 4vw, 48px);
 }
-@media (min-width: 960px) {
-  .sp-split {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  }
-  .sp-split > .sp-head {
-    position: sticky;
-    top: calc(var(--header-h) + 32px);
-  }
+.sp-stacked > .sp-head h2 {
+  max-width: 28ch;
+  text-wrap: balance;
+}
+.sp-stacked > .sp-head h2.sp-long {
+  max-width: 46ch;
 }
 
 /* Hero */
@@ -5543,6 +5568,10 @@ svg.icon {
 .sp-steps p,
 .sp-stack p {
   font-size: 0.9688rem;
+  max-width: 70ch;
+}
+.sp-steps li > .sp-tile {
+  align-self: center;
 }
 @media (max-width: 559px) {
   .sp-steps li {
@@ -5559,32 +5588,37 @@ svg.icon {
 }
 
 /* Bonuses */
-.sp-bonus-grid {
-  display: grid;
-  gap: clamp(24px, 3vw, 32px);
-}
-@media (min-width: 1040px) {
-  .sp-bonus-grid {
-    grid-template-columns: minmax(0, 3.6fr) minmax(0, 6.4fr) minmax(0, 4fr);
-    align-items: stretch;
-  }
-}
+/* Heading on top, then three equal cards: the two bonuses and the price. The
+   list spans two of the three tracks and uses the same gap, so all three cards
+   come out the same width. */
 .sp-bonus-head {
   display: grid;
   gap: 14px;
-  align-content: start;
+  margin-bottom: clamp(28px, 4vw, 44px);
 }
 .sp-bonus-head h2:not(.eyebrow) {
   font-size: clamp(1.625rem, 1.2rem + 1.4vw, 2.25rem);
   line-height: 1.15;
+  max-width: 34ch;
+  text-wrap: balance;
+}
+.sp-bonus-grid {
+  --bonus-gap: 16px;
+  display: grid;
+  gap: var(--bonus-gap);
 }
 .sp-bonus-list {
   list-style: none;
   display: grid;
-  gap: 16px;
+  gap: var(--bonus-gap);
 }
-@media (min-width: 640px) {
+@media (min-width: 800px) {
+  .sp-bonus-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
   .sp-bonus-list {
+    grid-column: span 2;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -5616,7 +5650,7 @@ svg.icon {
 .sp-total {
   display: grid;
   gap: 16px;
-  align-content: center;
+  align-content: start;
   padding: 26px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--accent-lime);

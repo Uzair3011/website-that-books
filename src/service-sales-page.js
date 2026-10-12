@@ -153,7 +153,7 @@ export function serviceSalesPage({
       </section>
 
       <section class="sp-section sp-solution">
-        <div class="container sp-split">
+        <div class="container sp-stacked">
           <div class="sp-head">
             <p class="eyebrow">${solution.eyebrow}</p>
             <h2${headingClass(solution.heading)}>${highlight(solution.heading, solution.highlight)}</h2>
@@ -173,20 +173,18 @@ ${
     ? `
       <section class="section" id="local">
         <div class="container">
-          <div class="two-col">
-            <div class="section-head" style="margin-bottom: 0">
-              <p class="eyebrow">${local.eyebrow}</p>
-              <h2>${local.heading}</h2>
-            </div>
-            <div class="prose">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          <div class="section-head">
+            <p class="eyebrow">${local.eyebrow}</p>
+            <h2>${local.heading}</h2>
           </div>
+          <div class="prose local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
         </div>
       </section>
 `
     : ""
 }
       <section class="sp-section sp-offer" id="offer">
-        <div class="container sp-split">
+        <div class="container sp-stacked">
           <div class="sp-head">
             <p class="eyebrow">The offer stack</p>
             <h2 class="sp-long">${highlight(offer.heading, offer.highlight)}</h2>
@@ -204,14 +202,14 @@ ${
 
       <section class="section band-dark sp-bonuses">
         <div class="container">
+          <div class="sp-bonus-head">
+            ${
+              bonuses.heading
+                ? `<p class="eyebrow">Free bonuses</p><h2>${highlight(bonuses.heading, bonuses.highlight)}</h2>`
+                : `<h2 class="eyebrow">Free bonuses</h2>`
+            }
+          </div>
           <div class="sp-bonus-grid">
-            <div class="sp-bonus-head">
-              ${
-                bonuses.heading
-                  ? `<p class="eyebrow">Free bonuses</p><h2>${highlight(bonuses.heading, bonuses.highlight)}</h2>`
-                  : `<h2 class="eyebrow">Free bonuses</h2>`
-              }
-            </div>
             <ul class="sp-bonus-list">
               ${bonuses.items
                 .map(

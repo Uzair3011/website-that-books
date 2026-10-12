@@ -75,13 +75,11 @@ ${
     ? `
       <section class="section tight" id="local">
         <div class="container">
-          <div class="two-col">
-            <div class="section-head" style="margin-bottom: 0">
-              <p class="eyebrow">${local.eyebrow}</p>
-              <h2>${local.heading}</h2>
-            </div>
-            <div class="prose">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          <div class="section-head">
+            <p class="eyebrow">${local.eyebrow}</p>
+            <h2>${local.heading}</h2>
           </div>
+          <div class="prose local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
         </div>
       </section>
 `
