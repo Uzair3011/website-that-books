@@ -1,6 +1,6 @@
 # SEO tooling
 
-The rules are in `.cursor/rules/seo.mdc`. The latest audit is `audit-2026-10.md`. This page covers the scripts and files that enforce the rules.
+The rules are in `.cursor/rules/seo.mdc`. The latest audit is `audit-2026-10.md`. Core Web Vitals measurements, before and after, are in `performance-baseline.md`. This page covers the scripts and files that enforce the rules.
 
 ## Checks
 

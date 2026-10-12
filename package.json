@@ -7,6 +7,7 @@
     "dev": "node --env-file-if-exists=.env scripts/dev.mjs",
     "start": "node --env-file-if-exists=.env scripts/dev.mjs",
     "build": "node --env-file-if-exists=.env scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
     "seo:check": "node scripts/seo-check.mjs",
     "seo:links": "node scripts/link-graph.mjs",
     "google:auth": "node --env-file-if-exists=.env scripts/google-auth.mjs",
