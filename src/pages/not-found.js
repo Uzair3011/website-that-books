@@ -24,6 +24,11 @@ ${related(
       label: "Pricing",
       text: "Every service priced separately, in one place.",
     },
+    {
+      href: "/areas",
+      label: "Areas we serve",
+      text: "Middlesbrough, Stockton-on-Tees, Billingham, Redcar, Hartlepool and the Tees Valley.",
+    },
   ],
   "Popular pages",
 )}`;

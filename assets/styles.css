@@ -1956,10 +1956,10 @@ svg.icon {
   padding-block: clamp(56px, 6vw, 88px) 28px;
 }
 /* Brand on top or to the left, then the link columns, then a quiet bottom bar.
-   Areas keep the order the same while the number of columns changes:
-   phones stack; from 560px Company and Contact sit side by side; from 900px the
-   three link columns share a row under the brand; from 1200px all four sit in
-   one row, with the long Services list split into two columns. */
+   Grid areas keep the order the same while the number of columns changes:
+   phones stack; from 560px Company and Areas sit side by side; from 900px the
+   four link columns share a row under the brand; from 1200px all five sit in
+   one row. */
 .footer-grid {
   display: grid;
   gap: 40px 32px;
@@ -1967,6 +1967,7 @@ svg.icon {
     "brand"
     "services"
     "company"
+    "areas"
     "contact";
 }
 .footer-brand {
@@ -1978,6 +1979,9 @@ svg.icon {
 .footer-company {
   grid-area: company;
 }
+.footer-areas {
+  grid-area: areas;
+}
 .footer-contact {
   grid-area: contact;
 }
@@ -1987,22 +1991,23 @@ svg.icon {
     grid-template-areas:
       "brand brand"
       "services services"
-      "company contact";
+      "company areas"
+      "contact contact";
   }
 }
 @media (min-width: 900px) {
   .footer-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-areas:
-      "brand brand brand"
-      "services company contact";
+      "brand brand brand brand"
+      "services company areas contact";
   }
 }
 @media (min-width: 1200px) {
   .footer-grid {
     grid-template-columns:
-      minmax(0, 1.3fr) minmax(0, 2fr) minmax(0, 0.8fr) minmax(0, 1.1fr);
-    grid-template-areas: "brand services company contact";
+      minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.7fr) minmax(0, 1fr) minmax(0, 1.2fr);
+    grid-template-areas: "brand services company areas contact";
     gap: 40px 48px;
   }
 }
@@ -2044,9 +2049,9 @@ svg.icon {
 .footer-col a:hover {
   color: var(--accent-lime);
 }
-/* Services is the long list: two columns wherever it has the room (tablets and
-   the full-width desktop row), one column on phones, where two would be too
-   narrow for the longer names, and in the 900-1199px row. */
+/* Services is the long list: two columns on tablets, where it has a row to
+   itself, and one column on phones, where two would be too narrow for the
+   longer names, and from 900px, where it shares a row with the other columns. */
 .footer-services .footer-links {
   display: block;
   column-gap: 28px;
@@ -2061,7 +2066,7 @@ svg.icon {
   margin-bottom: 12px;
   break-inside: avoid;
 }
-@media (min-width: 900px) and (max-width: 1199px) {
+@media (min-width: 900px) {
   .footer-services .footer-links {
     columns: 1;
   }

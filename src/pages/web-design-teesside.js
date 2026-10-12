@@ -30,6 +30,7 @@ export default servicePage({
     body: [
       "Teesside is several towns, and people search with their own. A customer in Hartlepool types “plumber Hartlepool”, not “plumber Teesside”. Billingham sits within the Borough of Stockton-on-Tees, so people there may use either name, and Redcar searches can bring up businesses from across Redcar and Cleveland. Hartlepool is part of the Tees Valley, but many there would not call it Teesside.",
       "A website that serves several towns names the ones you genuinely cover on the page, not only in the footer. It gives a town its own page only when there is something real to say, because pages that just swap the town name count as doorway pages under Google’s spam policies. And it matches your Google Business Profile service areas, name and phone number.",
+      'Each town has its own page on how people there search: <a href="/web-design-stockton-on-tees">Stockton-on-Tees and Billingham</a>, <a href="/web-design-redcar">Redcar</a> and <a href="/web-design-hartlepool">Hartlepool</a>, or see <a href="/areas">every area we serve</a>.',
       'We are based in Middlesbrough and meet clients around Teesside or online. If Middlesbrough is your main market, start with <a href="/web-design-middlesbrough">web design in Middlesbrough</a>. To be found more widely, add <a href="/local-seo-middlesbrough">local SEO across Teesside</a> and <a href="/google-business-profile">Google Business Profile optimisation</a>.',
       'Every package is on the <a href="/pricing">published price list</a>, or get a <a href="/free-website-audit">free website audit</a> first.',
     ],
@@ -126,6 +127,21 @@ export default servicePage({
       href: "/web-design-middlesbrough",
       label: "Web design in Middlesbrough",
       text: "The same packages, written for Middlesbrough businesses.",
+    },
+    {
+      href: "/web-design-stockton-on-tees",
+      label: "Stockton-on-Tees & Billingham",
+      text: "How customers across the borough search, Billingham included.",
+    },
+    {
+      href: "/web-design-redcar",
+      label: "Redcar",
+      text: "Websites for a seaside town with residents and visitors to serve.",
+    },
+    {
+      href: "/web-design-hartlepool",
+      label: "Hartlepool",
+      text: "A town that searches for itself, not for Teesside.",
     },
     {
       href: "/local-seo-middlesbrough",

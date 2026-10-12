@@ -193,6 +193,12 @@ export function footer() {
           <a href="/work">Work</a><a href="/how-it-works">How it works</a><a href="/about">About</a><a href="/resources">Resources</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a>
         </div>
       </div>
+      <div class="footer-col footer-areas">
+        <h2>Areas we serve</h2>
+        <div class="footer-links">
+          <a href="/areas">All areas</a><a href="/web-design-middlesbrough">Middlesbrough</a><a href="/web-design-stockton-on-tees">Stockton-on-Tees &amp; Billingham</a><a href="/web-design-redcar">Redcar</a><a href="/web-design-hartlepool">Hartlepool</a><a href="/web-design-teesside">Tees Valley</a>
+        </div>
+      </div>
       <div class="footer-col footer-contact">
         <h2>Get in touch</h2>
         <div class="footer-links">
@@ -353,7 +359,11 @@ export function organizationJsonLd() {
   };
 }
 
-export function serviceJsonLd({ name, description, path }) {
+/**
+ * Service JSON-LD. `areaServed` narrows a town page to its own towns (as
+ * City); every other page serves all of SITE.areas.
+ */
+export function serviceJsonLd({ name, description, path, areaServed = null }) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -361,10 +371,12 @@ export function serviceJsonLd({ name, description, path }) {
     description,
     url: SITE.origin + path,
     provider: { "@id": `${SITE.origin}/#organization` },
-    areaServed: SITE.areas.map((area) => ({
-      "@type": "AdministrativeArea",
-      name: area,
-    })),
+    areaServed: areaServed
+      ? areaServed.map((town) => ({ "@type": "City", name: town }))
+      : SITE.areas.map((area) => ({
+          "@type": "AdministrativeArea",
+          name: area,
+        })),
   };
 }
 
