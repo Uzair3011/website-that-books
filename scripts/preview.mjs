@@ -1,8 +1,10 @@
 // Serves the production build in dist/ the way Vercel does, for performance
 // measurement (Lighthouse): cleanUrls, the headers from vercel.json and
-// brotli/gzip compression. Static files only: no API routes or redirects.
+// brotli/gzip compression, and the same 308 redirects (resolveRedirect, which
+// mirrors vercel.json plus cleanUrls/trailingSlash). No API routes, no apex host.
 // Usage: npm run build && npm run preview  →  http://localhost:4175
 import { createServer } from "node:http";
+import { resolveRedirect } from "../src/pages.js";
 import { readFile } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 import { brotliCompressSync, gzipSync } from "node:zlib";
@@ -46,6 +48,11 @@ async function find(pathname) {
 createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const pathname = decodeURIComponent(url.pathname);
+  const redirectTo = resolveRedirect(pathname);
+  if (redirectTo) {
+    res.writeHead(308, { Location: redirectTo + url.search });
+    return res.end();
+  }
   for (const rule of config.headers)
     if (
       matches(rule.source, pathname) &&
