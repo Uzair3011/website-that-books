@@ -1,6 +1,48 @@
 # SEO tooling
 
-The rules are in `.cursor/rules/seo.mdc`. The latest audit is `audit-2026-10.md`. Core Web Vitals measurements, before and after, are in `performance-baseline.md`. This page covers the scripts and files that enforce the rules.
+The rules are in `.cursor/rules/seo.mdc`. The latest audit is `audit-2026-10.md`. Core Web Vitals measurements, before and after, are in `performance-baseline.md`. This page covers the scripts and files that enforce the rules, and how to fill in the monthly rank tracker.
+
+Handover documents (13 Oct 2026):
+
+- `owner-summary.md`: what was done, and what is still needed from the owner.
+- `launch-checklist.md`: the final QA results, plus the Search Console, Bing and Rich Results Test steps.
+- `30-60-90.md`: what to do and measure in the first three months.
+- `rank-tracking.csv`: the monthly keyword tracker (see "Monthly rank tracking" below).
+
+## Monthly rank tracking
+
+`rank-tracking.csv` has one row for each page's main keyword, taken from `keyword-map.md`. Once a month, ideally in the first week, copy the rows from Search Console into it. It takes about 30 minutes.
+
+**What the columns mean**
+
+- **date**: the month the figures cover, written as `2026-11` for November 2026.
+- **keyword**, **target URL**, **area**: already filled in. The area is the town the keyword is about, "UK" for keywords with no town, or "Brand".
+- **impressions**: how many times the site showed up in Google results for searches like this.
+- **clicks**: how many of those people clicked through to the site.
+- **average position**: where the site usually appeared. 1 is the top result; 1-10 is page one; 11-20 is page two.
+- **notes**: anything worth remembering, for example "page rewritten 4 Nov" or "first click".
+
+**How to fill it in**
+
+1. Open Search Console, choose the `veltramedia.com` property, then **Performance → Search results**.
+2. Set the **Date** filter to the previous full month: click **Date**, then **Custom**, then pick the first and last day of that month.
+3. Make sure **Total clicks**, **Total impressions** and **Average position** are all switched on (click each box so it is coloured).
+4. Click **+ Add filter** → **Query** → **Queries containing**. Type a short, distinctive part of the keyword:
+   - For town keywords, type the town name: `middlesbrough`, `teesside`, `stockton`, `billingham`, `redcar`, `hartlepool`, `tees valley`.
+   - For keywords without a town, type the distinctive part: `ai receptionist`, `facebook`, `local seo checklist`, `service area`, `google maps`, `med spa`, `website cost`.
+   - For the brand, type `veltra media`.
+5. Click the **Pages** tab below the chart and find the row for the target URL. Copy its clicks, impressions and position into that keyword's row. Then click the **Queries** tab to see the actual searches people used. If one of them looks like a new page idea, write it in the notes.
+6. Clear the filter (click the **x** on it) and repeat for the next keyword. One town filter covers every row for that town, so do all the Middlesbrough rows together.
+7. Next month, **add new rows** with the new date rather than overwriting old ones. Copy the previous month's rows, change the date and replace the numbers. Sorting by keyword then shows the trend for each one.
+
+**Reading it**
+
+- Blank or zero rows are normal for the first few months. A new page often takes 4-12 weeks to collect impressions.
+- **Impressions rising** means Google is starting to show the page. That comes before clicks.
+- **Average position between 8 and 20** means the page is close to page one. These are the pages to improve first (see `30-60-90.md`).
+- Average position is unreliable on very small numbers. A position of 3 from 4 impressions means little. Look at trends over 2-3 months.
+- Search Console keeps 16 months of data and its figures are 2-3 days behind, so fill in a month after its first few days have passed.
+- The figures are Google's own. They are better than any third-party rank checker for a site this size, because they show real searches in your area.
 
 ## Checks
 
@@ -11,6 +53,8 @@ npm run seo:check -- --dist    # also checks dist/sitemap.xml (run after npm run
 ```
 
 `npm test` runs the same checks (`tests/seo.test.mjs`), plus tests that feed the checker a broken site to prove each check still fires.
+
+`npm run seo:crawl -- <base URL>` (`scripts/site-crawl.mjs`) checks a running site over HTTP. Point it at `npm run preview` (http://localhost:4175) or the live site. Add `--live` to also check the apex and `http://` redirects. It checks robots.txt, that every sitemap URL is 200, self-canonical and indexable, that no crawled indexable page is missing from the sitemap, every internal link and asset, every redirect in `src/pages.js`, a real 404 for unknown URLs, and one H1, a unique title and description and parseable JSON-LD per page. `npm run preview` applies the same redirects as Vercel, so the built site can be checked before deploy.
 
 The checker fails on:
 
