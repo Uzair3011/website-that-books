@@ -2505,6 +2505,19 @@ svg.icon {
   color: #071313;
   transform: translateY(-2px);
 }
+/* A linked pill: the link fills the whole pill so the tap area matches it. */
+.area-list li:has(> a) {
+  padding: 0;
+}
+.area-list li > a {
+  display: block;
+  padding: 6px 16px;
+  border-radius: inherit;
+}
+.area-more a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 /* ── Steps and deliverables mark themselves ── */
 .steps li::before {

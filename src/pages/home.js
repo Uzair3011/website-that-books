@@ -13,6 +13,16 @@ import {
   serviceJsonLd,
 } from "../site.js";
 
+// Each area pill links to its location page; Billingham is covered on the Stockton page.
+const AREA_PAGES = {
+  Middlesbrough: "/web-design-middlesbrough",
+  "Stockton-on-Tees": "/web-design-stockton-on-tees",
+  Redcar: "/web-design-redcar",
+  Billingham: "/web-design-stockton-on-tees",
+  Hartlepool: "/web-design-hartlepool",
+  "Tees Valley": "/web-design-teesside",
+};
+
 const FAQS = [
   {
     q: "How long will the website take?",
@@ -300,7 +310,8 @@ ${EXPLORE.map(
               <p>We work with service businesses across Middlesbrough, Stockton-on-Tees, Redcar, Billingham, Hartlepool and the wider Tees Valley. Meetings can be handled locally or online.</p>
               <div class="local-group">
                 <p class="local-label">Areas we cover</p>
-                <ul class="area-list">${SITE.areas.map((area) => `<li>${area}</li>`).join("")}</ul>
+                <ul class="area-list">${SITE.areas.map((area) => `<li><a href="${AREA_PAGES[area]}">${area}</a></li>`).join("")}</ul>
+                <p class="area-more"><a href="/areas">See every area we cover across Teesside</a>.</p>
               </div>
             </div>
             <div class="local-side">
