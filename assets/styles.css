@@ -2825,99 +2825,6 @@ svg.icon {
   height: 22px;
 }
 
-/* Why Veltra: the sensible middle. */
-.compare {
-  display: grid;
-  gap: 16px;
-  align-items: stretch;
-}
-@media (min-width: 900px) {
-  .compare {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: 20px;
-  }
-}
-@media (max-width: 899px) {
-  .compare-col.us {
-    order: -1;
-  }
-}
-/* All three cards share one structure (kicker, headline, list), padding,
-   border weight and list rhythm, so the middle card reads as an accented
-   version of the same component rather than a different one. Content sits at
-   the top of each card so the kickers and headlines line up across the row. */
-.compare-col {
-  display: grid;
-  gap: 14px;
-  align-content: start;
-  padding: clamp(24px, 2.6vw, 32px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-.compare-col .kicker {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--body);
-}
-.compare-col h3 {
-  font-size: 1.375rem;
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-.compare-col ul {
-  display: grid;
-  gap: 14px;
-  list-style: none;
-  font-size: 1rem;
-  color: var(--body);
-}
-.compare-col li {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-/* Each icon sits in a small tinted circle: a soft red for the two
-   alternatives, solid ink with a lime tick for Veltra. */
-.compare-col li .icon {
-  box-sizing: border-box;
-  width: 24px;
-  height: 24px;
-  padding: 6px;
-  border-radius: 50%;
-  stroke-width: 2.6;
-}
-.compare-col:not(.us) li .icon {
-  color: #c2413a;
-  background: color-mix(in srgb, #e5484d 12%, transparent);
-}
-/* The recommended column gets a lime border and a faint lime wash over the
-   same card surface, instead of a solid saturated fill next to two plain
-   outlined cards. */
-.compare-col.us {
-  border-color: var(--accent-lime);
-  background: var(--surface);
-  background-image: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--accent-lime) 16%, transparent),
-    transparent 65%
-  );
-}
-.compare-col.us .kicker {
-  color: var(--ink);
-}
-.compare-col.us ul {
-  color: var(--ink);
-  font-weight: 500;
-}
-.compare-col.us li .icon {
-  color: var(--accent-lime);
-  background: var(--ink);
-}
-
 .disclosure {
   margin-top: 28px;
 }
@@ -4020,6 +3927,14 @@ svg.icon {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+@media (min-width: 1100px) {
+  .project-grid.count-1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .project-grid.count-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 .work-list {
   display: grid;
   gap: 24px;
@@ -4142,21 +4057,54 @@ svg.icon {
 }
 
 /* ───────────────────────── Reviews (homepage) ───────────────────────── */
-.review-grid {
-  display: grid;
-  gap: 20px;
+/* The cards sit in a tape (see Marquee tape) that drifts left to right. */
+.reviews .tape-band {
+  margin-top: clamp(24px, 3vw, 40px);
 }
-@media (min-width: 760px) {
-  .review-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.tape-band.tone-cards {
+  background: none;
+  color: var(--ink);
+  padding-block: 6px 10px;
+}
+.tape-band.tone-cards .tape-list {
+  align-items: stretch;
+  gap: 20px;
+  padding-right: 20px;
+}
+.tape-band.tone-cards .tape-list li {
+  display: flex;
+  align-items: stretch;
+  flex: none;
+  width: min(320px, 82vw);
+  gap: 0;
+  white-space: normal;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+.tape-band.tone-cards .tape-list li::before {
+  content: none;
+}
+/* The tape scrolls left by default; reversing the same keyframes sends it right. */
+.tape-band.dir-right .tape-track {
+  animation-direction: reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No motion means a static, wrapping set: show each review once. */
+  .tape-band.tone-cards .tape-list li[aria-hidden="true"] {
+    display: none;
+  }
+  .tape-band.tone-cards .tape-list {
+    gap: 20px;
   }
 }
 .review-card {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   margin: 0;
-  padding: 28px;
+  padding: 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
@@ -4179,22 +4127,22 @@ svg.icon {
 }
 .review-card blockquote p {
   color: var(--ink);
-  font-size: 1.0625rem;
+  font-size: 0.9688rem;
   line-height: 1.55;
 }
 .review-card figcaption {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-top: 16px;
+  padding-top: 14px;
   border-top: 1px solid var(--line);
 }
 .review-avatar {
   display: grid;
   flex-shrink: 0;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   background: var(--accent-lime);
   color: #071313;

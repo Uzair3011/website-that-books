@@ -1,5 +1,7 @@
 import { inquiryForm } from "../form.js";
 import { marquee } from "../marquee.js";
+import { projectCard } from "../project-cards.js";
+import { PROJECTS } from "../projects.js";
 import { REVIEWS } from "../reviews.js";
 import { servicesShowcase } from "../services-showcase.js";
 import { cardMedia } from "../visuals.js";
@@ -71,14 +73,6 @@ const OUTCOMES = [
   },
 ];
 
-const STANDARDS = [
-  "A clear recommendation instead of a menu of things you do not need",
-  "A written scope and price before work begins",
-  "Copy, design and local search considered together",
-  "Direct feedback and visible progress during the build",
-  "A website you own, with support available rather than forced",
-];
-
 const HIGHLIGHTS = [
   "Fixed price agreed upfront",
   "Custom quotes available",
@@ -116,7 +110,6 @@ const EXPLORE = [
   },
 ];
 
-const tick = (text) => `<li>${icon("check")}<span>${text}</span></li>`;
 
 const outcomes = OUTCOMES.map(
   (item) => `<article class="card has-media">
@@ -137,11 +130,21 @@ const initials = (name) =>
     .join("")
     .toUpperCase();
 
-// Hidden until src/reviews.js holds at least one real review.
+const reviewCard = (review) => {
+  const stars = review.rating
+    ? `<p class="review-stars" role="img" aria-label="Rated ${review.rating} out of 5">${[1, 2, 3, 4, 5].map((n) => `<svg viewBox="0 0 24 24" aria-hidden="true"${n > review.rating ? ' class="off"' : ""}><path d="m12 2.8 2.8 5.8 6.3.9-4.6 4.4 1.1 6.3-5.6-3-5.6 3 1.1-6.3-4.6-4.4 6.3-.9Z"/></svg>`).join("")}</p>`
+    : "";
+  const detail = [review.business, review.service].filter(Boolean).join(" &middot; ");
+  return `<figure class="review-card">${stars}<blockquote><p>${review.text}</p></blockquote><figcaption><span class="review-avatar" aria-hidden="true">${initials(review.name)}</span><span><b>${review.name}</b>${detail ? `<span>${detail}</span>` : ""}</span></figcaption></figure>`;
+};
+
+// Hidden until src/reviews.js holds at least one real review. The cards drift
+// left to right; a short list is repeated (hidden from screen readers) so the
+// loop never shows a gap, so a single review still fills the strip.
 export const reviewsSection = (reviews) =>
   reviews.length
     ? `
-      <section class="section" id="reviews">
+      <section class="section reviews" id="reviews">
         <div class="container">
           <div class="head-split">
             <div>
@@ -150,26 +153,41 @@ export const reviewsSection = (reviews) =>
             </div>
             <p>Real reviews from real clients, in their own words.</p>
           </div>
-          <div class="review-grid reveal">
-${reviews
-  .map(
-    (review) => `            <figure class="review-card">
-              <p class="review-stars" role="img" aria-label="Rated ${review.rating} out of 5">${[1, 2, 3, 4, 5].map((n) => `<svg viewBox="0 0 24 24" aria-hidden="true"${n > review.rating ? ' class="off"' : ""}><path d="m12 2.8 2.8 5.8 6.3.9-4.6 4.4 1.1 6.3-5.6-3-5.6 3 1.1-6.3-4.6-4.4 6.3-.9Z"/></svg>`).join("")}</p>
-              <blockquote><p>${review.text}</p></blockquote>
-              <figcaption>
-                <span class="review-avatar" aria-hidden="true">${initials(review.name)}</span>
-                <span><b>${review.name}</b><span>${review.business}${review.service ? ` &middot; ${review.service}` : ""}</span></span>
-              </figcaption>
-            </figure>`,
-  )
-  .join("\n")}
-          </div>
         </div>
+${marquee(reviews.map(reviewCard), { label: "Client reviews", duration: "80s", tone: "cards", direction: "right", minItems: 8 })}
       </section>
 `
     : "";
 
 // The free plan, worded for what the visitor gets rather than what it is called.
+// Real projects only: concepts stay on /work. Shows up to three, side by side.
+const showcase = PROJECTS.filter((project) => !project.concept).slice(0, 3);
+export const workSection = (projects) =>
+  projects.length === 0
+    ? ""
+    : `      <section class="section band-light" id="work">
+        <div class="container">
+          <div class="head-split">
+            <div>
+              <p class="eyebrow">Our work</p>
+              <h2>Don't take our word for it. Open the work.</h2>
+            </div>
+            <p>Every project below is live. Click through, try the booking flow, read the pages the way a customer would &mdash; then decide whether this is the kind of site you want representing your business.</p>
+          </div>
+          <div class="project-grid count-${projects.length} reveal">
+${projects.map((project) => projectCard(project)).join("\n")}
+          </div>
+          <div class="section-action">
+            <div class="button-row">
+              <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
+              <a class="btn secondary" href="/work">See all our work</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+`;
+
 const PLAN_CTA = "Get Your Custom Website Blueprint (Free)";
 const PLAN_NOTE =
   "Takes 60 seconds. No obligation. Discover exactly why your current site isn't converting and the 3 steps to fix it.";
@@ -246,43 +264,7 @@ ${marquee(
   { label: "Veltra services", duration: "48s" },
 )}
 
-      <section class="section" id="why-veltra">
-        <div class="container">
-          <div class="head-split">
-            <div>
-              <p class="eyebrow">Why Veltra</p>
-              <h2>A smarter way to get a website and digital presence for your local business.</h2>
-            </div>
-            <p>A low price is not useful if the site looks generic, says very little and needs rebuilding six months later. A large agency process is not useful if a straightforward local business site becomes slow, expensive and hard to understand. Veltra keeps the work that matters and removes the unnecessary overhead.</p>
-          </div>
-          <div class="compare reveal">
-            <div class="compare-col">
-              <p class="kicker">A bargain build</p>
-              <h3>Looks cheap, causes problems later</h3>
-              <ul>
-                <li>${icon("x")}Looks generic</li>
-                <li>${icon("x")}Says very little</li>
-                <li>${icon("x")}Needs rebuilding six months later</li>
-              </ul>
-            </div>
-            <div class="compare-col us">
-              <p class="kicker">Veltra</p>
-              <h3>Five standards on every project</h3>
-              <ul>${STANDARDS.map(tick).join("")}</ul>
-            </div>
-            <div class="compare-col">
-              <p class="kicker">A traditional agency project</p>
-              <h3>Slow, expensive and overcomplicated</h3>
-              <ul>
-                <li>${icon("x")}Slow</li>
-                <li>${icon("x")}Expensive</li>
-                <li>${icon("x")}Hard to understand</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
+${workSection(showcase)}
 ${reviewsSection(REVIEWS)}
       <section class="section band-light" id="explore">
         <div class="container">

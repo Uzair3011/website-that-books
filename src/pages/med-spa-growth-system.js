@@ -80,7 +80,7 @@ const body = `      <section class="hero">
               <p class="hero-note">The Growth Launch Package, £499 one-off, and you can buy any part of it on its own. <a href="/pricing" style="color: inherit; text-decoration: underline">See the full price list.</a></p>
             </div>
             <figure class="hero-media reveal">
-              <img src="/assets/work/example-clinic.svg" width="1280" height="900" loading="eager" fetchpriority="high" alt="A clinic website design with a treatment list and a live booking panel showing selectable dates and times." />
+              <img src="/assets/work/hero-med-spa-dashboard.webp" width="1600" height="941" loading="eager" fetchpriority="high" style="border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 40px 70px -34px rgba(7, 19, 19, 0.45)" alt="The Lumière Aesthetics lead dashboard: counts of new leads, treatment interest, consultations awaiting review and upcoming bookings, a lead conversion chart for the week and a table of incoming enquiries with their status." />
             </figure>
           </div>
         </div>

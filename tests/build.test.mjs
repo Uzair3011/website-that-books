@@ -259,21 +259,40 @@ test("/work lists every project, labels concepts, and its images exist", async (
   assert.equal(PROJECTS.filter((project) => project.featured).length, 1, "exactly one featured project");
 });
 
+test("the homepage shows real projects only and links to /work", async () => {
+  const { PROJECTS } = await import("../src/projects.js");
+  const home = pages.find((page) => page.path === "/");
+  const html = renderPage(home, { origin: ORIGIN });
+  const block = html.slice(html.indexOf('id="work"'), html.indexOf('id="explore"'));
+  assert.ok(block.length > 0, "the homepage has no work section");
+  assert.ok(!block.includes("project-flag\">Concept"), "a concept is on the homepage");
+  for (const project of PROJECTS.filter((project) => !project.concept))
+    assert.ok(block.includes(project.name), `${project.name} is not on the homepage`);
+  assert.ok(html.includes('href="/work"'), "the homepage does not link to /work");
+});
+
 test("reviews stay hidden until there are real ones, and each says where it came from", async () => {
   const { REVIEWS } = await import("../src/reviews.js");
   const { reviewsSection } = await import("../src/pages/home.js");
   assert.equal(reviewsSection([]), "");
   // Every review must be checkable: invented reviews are illegal in the UK.
   for (const review of REVIEWS) {
-    for (const field of ["name", "business", "text", "source"])
+    for (const field of ["name", "text", "source"])
       assert.ok(review[field]?.trim(), `a review is missing its ${field}`);
-    assert.ok(Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5);
+    // A rating is optional (not every client gives one), but never a made-up one.
+    if (review.rating !== undefined) assert.ok(Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5);
     assert.notEqual(review.source, "preview", "a preview review was left in src/reviews.js");
   }
   const sample = { name: "Ann Lee", business: "Lee Florist, Redcar", rating: 4, text: "Quick and clear.", source: "Email" };
   const html = reviewsSection([sample]);
   assert.match(html, /Rated 4 out of 5/);
   assert.match(html, /Ann Lee/);
+  // One review still fills the strip, but screen readers hear it once, and it drifts left to right.
+  const single = reviewsSection([{ name: "Ann Lee", text: "Quick and clear.", source: "Email" }]);
+  assert.equal(single.match(/<li>/g).length, 2, "the visible list should hold the review once per copy");
+  assert.equal(single.match(/<li aria-hidden="true">/g).length, 14, "filler copies must be hidden from assistive tech");
+  assert.match(single, /dir-right/);
+  assert.ok(!single.includes("review-stars"), "stars appeared without a rating");
 });
 
 test("every deploy gets fresh asset URLs, including imported modules", async () => {

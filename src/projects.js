@@ -12,14 +12,26 @@ export const PROJECTS = [
     name: "Med-spa growth system",
     category: "Website + booking + AI reception",
     summary:
-      "Our own build, and all of our services working as one: a clinic website on live Google Calendar availability, with confirmation and reminder emails and an AI receptionist that hands over to a person when a question needs judgement.",
+      "A clinic website that fills its own diary. Visitors book a real slot from live Google Calendar availability, reminders send themselves, and an AI receptionist answers questions instantly, handing over to a person when judgement is needed. Our own build, with every Veltra service working as one.",
     status: "Live: you can try the booking flow on this site",
     image: "/assets/work/project-med-spa.webp",
-    imageAlt: "A client relaxing during a facial treatment at a spa",
+    imageAlt: "The Lumière Aesthetics clinic homepage: a headline reading Advanced skin and aesthetic treatments beside a live appointment picker with dates, times and a confirm button",
     url: "/med-spa-growth-system",
     linkLabel: "See the med-spa system",
     concept: false,
     featured: true,
+  },
+  {
+    name: "Estate Resolve",
+    category: "Multi-page website + CRM dashboard + email automation",
+    summary:
+      "A website that earns trust at a difficult time. Calm, clear pages guide executors, families and solicitors towards starting a case, while a custom CRM dashboard and automated emails keep every enquiry moving behind the scenes.",
+    status: "Live: estateresolve.co.uk",
+    image: "/assets/work/project-estate-resolve.webp",
+    imageAlt: "The Estate Resolve homepage: a navy and gold design headed Locating Hidden Assets After a Loved One Has Passed, with a four-step process panel",
+    url: "https://www.estateresolve.co.uk/",
+    linkLabel: "Visit Estate Resolve",
+    concept: false,
   },
   {
     name: "Teesside Boiler Care",

@@ -4,40 +4,16 @@ import {
   finalCta,
   icon,
 } from "../site.js";
+import { projectCard } from "../project-cards.js";
 import { PROJECTS } from "../projects.js";
 
 // Cards come from src/projects.js: the featured build gets a wide card, the
-// rest sit in a compact grid. Concepts are labelled and are not links.
-const flag = (project) =>
-  `<span class="project-flag${project.concept ? "" : " live"}">${project.concept ? "Concept" : "Veltra build"}</span>`;
-
-const media = (project) => `<figure class="project-media">
-      <img src="${project.image}" width="1280" height="900" loading="lazy" decoding="async" alt="${project.imageAlt}" />
-      ${flag(project)}
-    </figure>`;
-
-const link = (project) => {
-  if (!project.url) return "";
-  const external = /^https?:/.test(project.url);
-  return `<a class="text-link" href="${project.url}"${external ? ' target="_blank" rel="noopener"' : ""}>${project.linkLabel || (external ? "Visit the site" : "See the project")}${icon("arrow-up")}</a>`;
-};
-
-const card = (project) => `<article class="project-card${project.featured ? " featured" : ""}">
-    ${media(project)}
-    <div class="project-body">
-      <p class="project-kind">${project.category}</p>
-      <h3>${project.name}</h3>
-      <p class="project-summary">${project.summary}</p>
-      ${project.status ? `<p class="project-status"><span aria-hidden="true"></span>${project.status}</p>` : ""}
-      ${link(project)}
-    </div>
-  </article>`;
-
+// rest sit in a compact grid.
 const featured = PROJECTS.filter((project) => project.featured);
 const rest = PROJECTS.filter((project) => !project.featured);
-const grid = `${featured.map(card).join("\n")}
+const grid = `${featured.map((project) => projectCard(project, { wide: true })).join("\n")}
           <div class="project-grid">
-${rest.map(card).join("\n")}
+${rest.map((project) => projectCard(project)).join("\n")}
           </div>`;
 
 const body = `      <section class="hero">
@@ -56,7 +32,7 @@ const body = `      <section class="hero">
 
       <section class="section">
         <div class="container">
-          <p class="disclosure" style="margin-bottom: 40px"><a href="/about">Veltra Media is a young Middlesbrough studio</a>, and we would rather show you our thinking than pad this page. Projects marked <strong>Veltra build</strong> are real systems we have built and run. Projects marked <strong>Concept</strong> are designs for fictional businesses that show how we structure a given kind of site &mdash; they are not client projects. We publish client case studies only with permission, and only with results we can evidence.</p>
+          <p class="disclosure" style="margin-bottom: 40px"><a href="/about">Veltra Media is a young Middlesbrough studio</a>, and we would rather show you our thinking than pad this page. Projects marked <strong>Veltra build</strong> are real, live sites and systems we have built. Projects marked <strong>Concept</strong> are designs for fictional businesses that show how we structure a given kind of site &mdash; they are not client projects. We publish client case studies only with permission, and only with results we can evidence.</p>
           <div class="work-list reveal">
 ${grid}
           </div>
@@ -89,7 +65,7 @@ export default {
   path: "/work",
   title: "Web Design Portfolio, Teesside | Veltra Media",
   description:
-    "Veltra Media's web design portfolio: a live med-spa booking system, plus clearly labelled concept designs for a trades site, a landing page and local search.",
+    "Veltra Media's work: a live med-spa booking system, the Estate Resolve site with CRM dashboard and email automation, plus clearly labelled concept designs.",
   jsonLd: [
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
