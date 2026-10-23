@@ -43,9 +43,8 @@ export const workVisual = panel(
   <span class="pv-tag pv-tag-b">Live sites you can click through</span>`,
 );
 
-// /about: the studio and the five standards from "How we work".
-// TODO(owner): swap the logo mark for the founder's photo and name once
-// supplied (docs/seo/owner-todo.md, "Founder details for /about").
+// /about: the studio and the five standards from "How we work". The owner
+// chose not to be named or pictured, so the card carries the logo mark.
 export const aboutVisual = panel(
   "studio",
   `<div class="pv-card">
