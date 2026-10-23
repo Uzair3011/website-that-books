@@ -70,11 +70,11 @@
     '<a href="/privacy">Privacy policy</a> <span aria-hidden="true">&middot;</span> <a href="/cookie-policy">Cookie policy</a>';
 
   function summaryView() {
-    return `<p id="consent-desc">Essential storage keeps the website working and remembers your choice. Optional analytics counts page visits so we can improve the site, and only runs with your permission. ${policyLinks}</p>
+    return `<p id="consent-desc">Essential storage remembers this choice. Optional analytics counts page visits to help us improve the site, and only runs if you allow it. ${policyLinks}</p>
       <div class="cookie-actions">
         <button type="button" class="btn small" data-consent="accept">Accept all</button>
         <button type="button" class="btn small secondary" data-consent="reject">Decline optional</button>
-        <button type="button" class="cookie-text-button" data-consent="manage">Manage preferences</button>
+        <button type="button" class="cookie-text-button" data-consent="manage">Manage<span class="cookie-more"> preferences</span></button>
       </div>`;
   }
 
@@ -116,7 +116,8 @@
       document.addEventListener("keydown", onKey);
     }
     const render = (current) => {
-      banner.innerHTML = `<div class="cookie-inner">
+      // The first ask is a slim bar; the full panel only opens on request.
+      banner.innerHTML = `<div class="cookie-inner${current === "preferences" ? "" : " is-summary"}">
         <div class="cookie-head">
           <div>
             <p class="eyebrow">Privacy controls</p>

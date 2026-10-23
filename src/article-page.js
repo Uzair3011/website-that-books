@@ -97,7 +97,7 @@ ${sections
 
 ${related(relatedItems, "Read next")}
 
-${finalCta({ heading: closing.heading, body: closing.body, primary: "Get a free website audit", href: CTA.href })}`;
+${finalCta({ heading: closing.heading, body: closing.body, href: CTA.href })}`;
 
   return {
     path,

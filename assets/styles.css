@@ -2906,7 +2906,7 @@ svg.icon {
 @media (min-width: 960px) {
   /* The form takes the wider share, so its two columns have room to breathe. */
   .plan-split {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   }
 }
 .plan-split .form-shell {
@@ -2918,8 +2918,13 @@ svg.icon {
 .plan-split .field textarea {
   min-height: 88px;
 }
+/* The panel beside the form owns the section's h2; the form's own heading is
+   a step under it, so it stays small. */
+.plan-split .form-head h3 {
+  font-size: 1.25rem;
+}
 
-/* Intro panel beside the form: the form comes first, this panel follows it
+/* Intro panel beside the form: the panel comes first, the form follows it
    (below on narrow screens, to its right from 960px), same surface as the
    form, a faint accent tint and a corner glow standing in for the old solid
    teal block, and the contact lines behind a hairline at the bottom. Text
@@ -2938,12 +2943,12 @@ svg.icon {
     color-mix(in srgb, var(--accent-mint) 16%, transparent),
     transparent 65%
   );
-  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 @media (min-width: 960px) {
   .plan-copy {
-    border-top: none;
-    border-left: 1px solid var(--line);
+    border-bottom: none;
+    border-right: 1px solid var(--line);
   }
 }
 .plan-copy h2 {
@@ -2964,29 +2969,34 @@ svg.icon {
   border-bottom-color: var(--accent-lime);
 }
 
-/* The lime disc is centred exactly on a panel corner, so what shows is a clean
-   quarter-disc that follows the corner radius instead of an arbitrary slice.
-   Stacked (phones, tablets): a small one in the bottom-right corner, clear of
-   the contact lines. Side by side: a large one in the bottom-right corner, in
-   the space below the contacts, its diameter equal to the panel width so the
-   arc meets the bottom edge at the panel's midpoint. Low opacity, since it now
-   sits on the panel's own surface colour rather than a solid teal fill. */
+/* The lime disc is centred exactly on an outer corner of the card, so what
+   shows is a clean quarter-disc that follows the corner radius instead of an
+   arbitrary slice. Stacked (phones, tablets): a small one in the top-right
+   corner, clear of the contact lines. Side by side: a large one in the
+   bottom-left corner, in the space below the contacts, its diameter equal to
+   the panel width so the arc meets the bottom edge at the panel's midpoint.
+   Low opacity, since it sits on the panel's own surface colour. */
 .plan-copy::after {
   content: "";
   position: absolute;
   z-index: -1;
   right: 0;
-  bottom: 0;
+  top: 0;
   width: clamp(100px, 28vw, 150px);
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--accent-lime);
   opacity: 0.22;
-  transform: translate(50%, 50%);
+  transform: translate(50%, -50%);
 }
 @media (min-width: 960px) {
   .plan-copy::after {
+    top: auto;
+    right: auto;
+    left: 0;
+    bottom: 0;
     width: 100%;
+    transform: translate(-50%, 50%);
   }
 }
 
@@ -3842,6 +3852,76 @@ svg.icon {
     flex: 1 1 100%;
   }
 }
+/* The first ask: one slim bar along the bottom edge, copy beside the buttons
+   from 760px, so it never covers the hero. */
+.cookie-inner.is-summary {
+  display: grid;
+  gap: 4px 28px;
+  max-width: 64rem;
+  padding: 14px 18px;
+  border-top-width: 3px;
+  box-shadow: 0 16px 48px rgba(7, 19, 19, 0.22);
+}
+.is-summary .eyebrow {
+  display: none;
+}
+.cookie .is-summary h2 {
+  font-size: 1rem;
+}
+.cookie .is-summary p {
+  margin-top: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.is-summary .cookie-actions {
+  gap: 8px;
+  margin-top: 10px;
+}
+.is-summary .cookie-actions .btn {
+  flex: 1 1 0;
+}
+.is-summary .cookie-text-button {
+  font-size: 0.8125rem;
+}
+/* Phones: the heading stays for screen readers only, and all three actions
+   share one row, so the bar is about a sixth of the screen. */
+@media (max-width: 759px) {
+  .is-summary h2,
+  .is-summary .cookie-more {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .cookie .is-summary p {
+    font-size: 0.75rem;
+  }
+  .is-summary .cookie-actions {
+    flex-wrap: nowrap;
+  }
+  .is-summary .cookie-actions .btn {
+    flex: 1 1 auto;
+    padding-inline: 14px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 760px) {
+  .cookie-inner.is-summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  .is-summary .cookie-actions {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+  }
+  .is-summary .cookie-actions .btn {
+    flex: none;
+  }
+}
 
 /* ───────────────────────── Card visuals (homepage) ─────────────────────────
    An inline SVG illustration (src/visuals.js) runs edge to edge across the
@@ -4096,6 +4176,14 @@ svg.icon {
   }
   .tape-band.tone-cards .tape-list {
     gap: 20px;
+  }
+  .tape-band.tone-cards .tape-list {
+    padding-right: max(var(--gutter), calc((100% - 1200px) / 2));
+  }
+  /* Cards grow to fill their row, so a short last row never leaves a gap. */
+  .tape-band.tone-cards .tape-list li {
+    flex: 1 1 300px;
+    width: auto;
   }
 }
 .review-card {
@@ -5212,9 +5300,10 @@ svg.icon {
   max-width: 30ch;
   line-height: 1.18;
 }
-/* Heading on top at the full content width, content underneath, at every
-   width: no side column and no narrow measure on the heading. Long headings
-   step down a size so they stay within two lines on desktop. */
+/* Heading on top at the full content width, content underneath: no narrow
+   measure on the heading. Long headings step down a size so they stay within
+   two lines on desktop. Long reading sections move the heading beside the
+   copy from 1100px (below). */
 .sp-stacked {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -5230,6 +5319,26 @@ svg.icon {
 @media (min-width: 960px) {
   .sp-stacked > .sp-head h2.sp-long {
     font-size: clamp(1.625rem, 0.9rem + 1.05vw, 2rem);
+  }
+}
+/* Long reading sections (town pages, guides, service local copy): from
+   1100px the heading moves into a left column and stays in view while the
+   copy beside it scrolls, so the copy keeps its measure without leaving
+   half the page empty. Narrower screens keep the heading on top. */
+@media (min-width: 1100px) {
+  .container:has(> .sp-stacked-head + .sp-local-copy) {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    margin-bottom: 0;
+  }
+  .container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) > h2 {
+    font-size: clamp(1.75rem, 1rem + 1.1vw, 2.25rem);
   }
 }
 
@@ -6196,4 +6305,393 @@ svg.icon {
   flex-wrap: wrap;
   gap: 10px 24px;
   margin-top: 18px;
+}
+
+/* ───────────────────────── Page hero panels (src/hero-visuals.js) ─────────────────────────
+   One picture per inner page, in the homepage hero's language: a card in
+   front of a lime disc, with a hand-placed tag. The disc and tags are
+   decoration; the card restates the page's own copy. */
+.pv {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 420px;
+  padding: 28px 8px 36px;
+  overflow: visible;
+  border-radius: 0;
+}
+.pv::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -4%;
+  top: 50%;
+  width: min(78%, 440px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  transform: translateY(-50%);
+}
+.pv-card {
+  width: min(100%, 440px);
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 40px 70px -34px rgba(7, 19, 19, 0.45);
+}
+.pv-card.pv-dark {
+  border-color: var(--border-dark);
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgba(131, 231, 218, 0.22), transparent 70%),
+    var(--bg-dark);
+  color: var(--text-on-dark);
+}
+.pv-label {
+  margin-bottom: 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+.pv-dark .pv-label {
+  color: var(--text-muted-dark);
+}
+.pv-tag {
+  position: absolute;
+  z-index: 2;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--accent-lime);
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 14px 30px -14px rgba(7, 19, 19, 0.5);
+}
+.pv-tag-a {
+  top: 6px;
+  right: 4%;
+  transform: rotate(3deg);
+}
+.pv-tag-b {
+  bottom: 4px;
+  left: 2%;
+  transform: rotate(-2deg);
+}
+
+/* /services: the four stages. */
+.pv [data-tone="lime"] { --tone: #c9ff4a; }
+.pv [data-tone="mint"] { --tone: #83e7da; }
+.pv [data-tone="coral"] { --tone: #ff6b4a; }
+.pv [data-tone="violet"] { --tone: #a98bff; }
+.pv [data-tone="amber"] { --tone: #ffb020; }
+.pv-stages {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+.pv-stages li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-dark);
+  border-left: 4px solid var(--tone);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.pv-stages b,
+.pv-studio-head b,
+.pv-doc b {
+  display: block;
+  font-size: 1rem;
+}
+.pv-stages small {
+  color: var(--text-muted-dark);
+  font-size: 0.8125rem;
+}
+.pv-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--tone);
+  color: #071313;
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+.pv-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-dark);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.pv-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+/* /work: three screenshots, fanned. */
+.pv-work {
+  min-height: 460px;
+}
+.pv-shot {
+  position: absolute;
+  margin: 0;
+  width: 66%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 30px 60px -30px rgba(7, 19, 19, 0.55);
+}
+.pv-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+.pv-shot .project-flag {
+  top: 10px;
+  left: 10px;
+  font-size: 0.6875rem;
+}
+.pv-shot-back {
+  top: 4%;
+  left: 0;
+  transform: rotate(-5deg);
+}
+.pv-shot-mid {
+  top: 10%;
+  right: 0;
+  transform: rotate(4deg);
+}
+.pv-shot-front {
+  bottom: 9%;
+  left: 15%;
+  width: 72%;
+}
+
+/* /about: the studio card. */
+.pv-studio-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.pv-studio-head small,
+.pv-doc small {
+  color: var(--body);
+  font-size: 0.8125rem;
+}
+.pv-checks {
+  display: grid;
+  gap: 11px;
+  list-style: none;
+}
+.pv-checks li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.pv-checks .icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  color: #071313;
+  stroke-width: 3;
+}
+.pv-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+.pv-pills span {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* /how-it-works: the project tracker. */
+.pv-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.pv-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-lime);
+  color: #071313;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.pv-track {
+  display: grid;
+  gap: 4px;
+  list-style: none;
+}
+.pv-track li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  color: var(--body);
+  font-weight: 600;
+}
+.pv-track li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 40px;
+  height: 12px;
+  border-left: 2px dashed var(--line);
+}
+.pv-step {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+.pv-step .icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 3;
+}
+.pv-track .is-done,
+.pv-track .is-now {
+  color: var(--ink);
+}
+.pv-track .is-done .pv-step {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--accent-lime);
+}
+.pv-track .is-now .pv-step {
+  border-color: var(--ink);
+  background: var(--accent-lime);
+  color: #071313;
+}
+.pv-docs {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.pv-doc {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--canvas);
+}
+.pv-doc > .icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+/* Phones: the panel follows the copy, a little smaller. */
+@media (max-width: 959px) {
+  .pv {
+    min-height: 0;
+    padding-block: 24px 40px;
+  }
+  .pv-work {
+    min-height: 0;
+    aspect-ratio: 1 / 0.82;
+  }
+  .pv-card {
+    padding: 22px;
+  }
+}
+
+/* Contact and resources lead with their own content (the form, the guides),
+   so their heroes are a short heading block with no picture beside it. */
+.hero.compact .hero-copy {
+  max-width: 46rem;
+}
+.hero.compact h1 {
+  max-width: 18ch;
+}
+
+/* Service pages: the local search copy keeps its reading measure, and from
+   960px the price, the page's three points and the button sit beside it,
+   staying in view while the copy scrolls. */
+.sp-local-grid {
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+@media (min-width: 960px) {
+  .sp-local-grid {
+    grid-template-columns: minmax(0, 60ch) minmax(280px, 360px);
+    justify-content: space-between;
+  }
+  .sp-local-aside {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+}
+.sp-local-aside {
+  display: grid;
+  gap: 20px;
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.sp-aside-price {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.875rem;
+  color: var(--body);
+}
+.sp-aside-price b {
+  font-size: 2.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.hero.compact {
+  padding-bottom: clamp(8px, 2vw, 24px);
+}
+/* Inner-page heroes with a panel: a step smaller than the homepage, and a
+   wider measure, so the heading stays within four lines beside the panel. */
+.hero-grid:has(> .pv) .hero-copy h1 {
+  max-width: 16ch;
+  font-size: clamp(2.25rem, 1.4rem + 2.6vw, 3.5rem);
 }

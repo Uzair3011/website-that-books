@@ -12,8 +12,8 @@ export default serviceSalesPage({
   eyebrow: "AI receptionist & website chat",
   h1: "An AI receptionist for Middlesbrough businesses that miss calls",
   h1Highlight: "AI receptionist",
-  hook: "Missed calls = missed money. Let a 24/7 AI receptionist answer when you can’t.",
-  lede: "Every time a local lead goes to voicemail, they call your competitor. Our AI answers instantly, answers their questions, and books them onto your calendar while you sleep.",
+  hook: "A missed call is often a missed job. An AI receptionist answers when you can’t.",
+  lede: "When a local lead reaches voicemail, they usually try the next business. The AI answers straight away with replies you have approved, books them into your calendar and hands over to you when a person is needed.",
   heroVisual: V.aiHero,
   priceNote: "AI provider usage is billed at cost.",
   points: [
@@ -21,7 +21,6 @@ export default serviceSalesPage({
     { label: "24/7/365", text: "Every chat and text answered instantly" },
     { label: "Answers you approve", text: "With clear handover to you when needed" },
   ],
-  cta: { label: "Book Your AI Automation Demo & Strategy Call" },
   proof: {
     heading: "The Employee That Never Sleeps.",
     visual: V.aiChat,

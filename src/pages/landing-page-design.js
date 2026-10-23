@@ -26,7 +26,6 @@ export default serviceSalesPage({
     { label: "Zero distractions", text: "No menus. No external links." },
     { label: "Tracking included", text: "See what each click turns into" },
   ],
-  cta: { label: "Book Your Landing Page ROI Call" },
   proof: {
     heading: "Example scenario",
     visual: V.landingSplit,

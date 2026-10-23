@@ -1,3 +1,4 @@
+import { aboutVisual } from "../hero-visuals.js";
 import {
   CTA,
   SITE,
@@ -9,14 +10,17 @@ import {
 
 const body = `      <section class="hero">
         <div class="container">
-          <div class="hero-copy" style="max-width: 46rem">
+          <div class="hero-grid">
+          <div class="hero-copy">
             <p class="eyebrow">About</p>
-            <h1>About Veltra Media, a Middlesbrough studio for local businesses</h1>
+            <h1>About Veltra Media: straight answers from a Middlesbrough studio</h1>
             <p class="lede"><strong>A local studio for businesses that want more enquiries.</strong> Veltra Media builds websites, local search foundations, landing pages and enquiry automation for businesses in Middlesbrough, Teesside and the wider Tees Valley.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/work">See our work</a>
             </div>
+          </div>
+          ${aboutVisual}
           </div>
         </div>
       </section>

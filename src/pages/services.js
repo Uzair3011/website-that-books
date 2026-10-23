@@ -1,3 +1,4 @@
+import { servicesVisual } from "../hero-visuals.js";
 import {
   CTA,
   breadcrumbJsonLd,
@@ -17,7 +18,7 @@ const SERVICES = [
     name: "Website design",
     href: "/web-design-middlesbrough",
     cta: "Explore website design",
-    text: "<strong>Stop Losing Visitors to a Site That Does Not Convince</strong> - A fast, mobile-first website built around your offer, your customers and the action you want them to take. Copy, design and local search are planned together, so the site looks right and gets enquiries.",
+    text: "<strong>Turn visits into enquiries.</strong> A fast, mobile-first website built around your offer, your customers and the action you want them to take. Copy, design and local search are planned together, so the site looks right and gets enquiries.",
     included: [
       "Message and page mapping",
       "Custom mobile-first design",
@@ -31,7 +32,7 @@ const SERVICES = [
     name: "Local SEO + Google Business Profile",
     href: "/local-seo-middlesbrough",
     cta: "Explore local SEO",
-    text: "<strong>Stop Being Invisible When Locals Search</strong> - We improve the signals that help nearby customers find and trust you in Google Search and Maps, starting with an accurate, complete business profile and service pages that match what people search for.",
+    text: "<strong>Be found when locals search.</strong> We improve the signals that help nearby customers find and trust you in Google Search and Maps, starting with an accurate, complete business profile and service pages that match what people search for.",
     included: [
       "Google Business Profile setup and optimisation",
       "Consistent business details everywhere",
@@ -46,7 +47,7 @@ const SERVICES = [
     name: "Landing pages + CRO",
     href: "/landing-page-design",
     cta: "Explore landing pages",
-    text: "<strong>Make Every Click on Your Ad or Campaign Count</strong> - A focused page for one service, location or campaign. One offer, one audience and one action, with the real objections answered in order and the form where people decide.",
+    text: "<strong>Make each campaign click count.</strong> A focused page for one service, location or campaign. One offer, one audience and one action, with the real objections answered in order and the form where people decide.",
     included: [
       "Offer and audience definition",
       "Message and objection mapping",
@@ -59,7 +60,7 @@ const SERVICES = [
     name: "AI receptionist + website chat",
     href: "/ai-receptionist-middlesbrough",
     cta: "Explore AI reception",
-    text: "<strong>Answer Enquiries at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, they get an answer straight away instead of waiting until morning.",
+    text: "<strong>Answer enquiries at 11pm.</strong> Our AI receptionist answers questions and books appointments around the clock, using answers you have approved. When a customer lands on your site after hours, they get an answer straight away instead of waiting until morning.",
     included: [
       "Approved answer set",
       "Clear handover rules",
@@ -73,7 +74,7 @@ const SERVICES = [
     name: "CRM, booking + follow-up automation",
     href: "/crm-booking-automation",
     cta: "Explore automation",
-    text: "<strong>Stop Chasing Leads</strong> - We build a secure, lightning-fast database that automatically follows up with your leads so no one falls through the cracks.",
+    text: "<strong>Stop chasing leads.</strong> Every enquiry lands in one place, booking and reminders run themselves, and follow-up goes out on time, so good leads do not slip away.",
     included: [
       "Enquiry capture into one place",
       "Live calendar booking",
@@ -87,7 +88,7 @@ const SERVICES = [
     name: "Website care",
     href: "/website-care",
     cta: "Explore website care",
-    text: "<strong>Stop Worrying About Your Website</strong> - Hosting, updates, backups, monitoring and practical support, month to month, so you can get on with running the business. Always optional.",
+    text: "<strong>Your website, looked after.</strong> Hosting, updates, backups, monitoring and practical support, month to month, so you can get on with running the business. Always optional.",
     included: ["Hosting", "Updates", "Backups", "Monitoring", "Practical support"],
     fit: "Owners who want a competent person keeping an eye on the site.",
   },
@@ -114,14 +115,17 @@ const FAQS = [
 
 const body = `      <section class="hero">
         <div class="container">
-          <div class="hero-copy" style="max-width: 46rem">
+          <div class="hero-grid">
+          <div class="hero-copy">
             <p class="eyebrow">Services</p>
-            <h1>Web design, SEO and AI services for Teesside businesses</h1>
+            <h1>Web design, SEO and AI services that win Teesside enquiries</h1>
             <p class="lede"><strong>Everything that turns a local search into a booked enquiry.</strong> Six services that each fix one part of the journey, from being found to following up. Buy the one you need now and add the others only when they earn their place.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/pricing">See pricing</a>
             </div>
+          </div>
+          ${servicesVisual}
           </div>
         </div>
       </section>

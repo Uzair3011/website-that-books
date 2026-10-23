@@ -15,7 +15,7 @@ export default serviceSalesPage({
   h1: "Web design in Middlesbrough that turns visits into enquiries",
   h1Highlight: "turns visits into enquiries",
   hook: "A website built to win more local enquiries, without adding to your ad spend.",
-  lede: "Most websites are digital paperweights. We build a 24/7 automated sales machine that turns local Teesside browsers into booked jobs. Typically live in 10 to 15 working days after content approval.",
+  lede: "A site that says what you do, where you work and how to get in touch, then makes that step easy on a phone. Typically live in 10 to 15 working days after content approval.",
   heroVisual: {
     src: "/assets/work/hero-devices.svg",
     width: 1200,
@@ -29,8 +29,7 @@ export default serviceSalesPage({
     { label: "You own the site 100%", text: "No hostage situations" },
   ],
   cta: {
-    label: "Book Your Free Teesside Growth Strategy Call",
-    note: "We’ll map out exactly what your new site needs to look like to dominate your local area. No high-pressure sales, just straight answers.",
+    note: "We’ll tell you what your site needs to win more local enquiries, and what it doesn’t. No pressure, just straight answers.",
   },
   proof: {
     heading: "Example scenarios",

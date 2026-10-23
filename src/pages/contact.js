@@ -7,9 +7,9 @@ import {
   icon,
 } from "../site.js";
 
-const body = `      <section class="hero">
+const body = `      <section class="hero compact">
         <div class="container">
-          <div class="hero-copy" style="max-width: 44rem">
+          <div class="hero-copy">
             <p class="eyebrow">Contact</p>
             <h1>Contact Veltra Media</h1>
             <p class="lede"><strong>Let's work out what you actually need.</strong> Tell us about the business and what you want more of. We will reply with a practical starting point, the service that fits, and anything worth fixing first &mdash; including when that is nothing we sell.</p>

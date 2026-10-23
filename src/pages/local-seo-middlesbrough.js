@@ -26,7 +26,6 @@ export default serviceSalesPage({
     { label: "Zero ad spend", text: "Calls directly from Google Maps" },
     { label: "You own your profile", text: "It stays under your own Google account" },
   ],
-  cta: { label: "Book Your Local SEO Strategy Call" },
   proof: {
     heading: "Example scenario",
     visual: V.gbpInsights,

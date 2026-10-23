@@ -1,4 +1,4 @@
-import { inquiryForm } from "../form.js";
+import { planSection } from "../form.js";
 import { marquee } from "../marquee.js";
 import { projectCard } from "../project-cards.js";
 import { PROJECTS } from "../projects.js";
@@ -7,7 +7,6 @@ import { servicesShowcase } from "../services-showcase.js";
 import { cardMedia } from "../visuals.js";
 import {
   CTA,
-  SERVICES as SERVICE_PAGES,
   SITE,
   faqJsonLd,
   faqSection,
@@ -188,19 +187,18 @@ ${projects.map((project) => projectCard(project)).join("\n")}
 
 `;
 
-const PLAN_CTA = "Get Your Custom Website Blueprint (Free)";
 const PLAN_NOTE =
-  "Takes 60 seconds. No obligation. Discover exactly why your current site isn't converting and the 3 steps to fix it.";
+  "It takes about a minute and there is no obligation. A person replies with what is holding your site back and the three changes worth making first.";
 
 const body = `      <section class="hero hero-feature">
         <div class="container">
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="eyebrow">Web design in Middlesbrough and Teesside</p>
-              <h1>Veltra Media: web design, local SEO and AI for Teesside businesses</h1>
-              <p class="lede"><strong>Stop Losing Local Customers to Outdated Web Design.</strong> We build lead-generating websites for businesses in Teesside. Get a fast, mobile-ready site with built-in AI chat and booking automation to turn your visitors into paying customers—while your competitors sleep.</p>
+              <h1>Veltra Media builds websites that win more enquiries</h1>
+              <p class="lede">Fast, mobile-first websites for Teesside businesses, with local SEO, AI chat and booking ready to add when they earn their place. You get a written scope and a fixed price before anything starts.</p>
               <div class="button-row">
-                <a class="btn" href="#plan">${PLAN_CTA}${icon("arrow-up")}</a>
+                <a class="btn" href="#plan">${CTA.primary}${icon("arrow-up")}</a>
                 <a class="btn secondary" href="/services">${CTA.secondary}</a>
               </div>
               <p class="hero-note">${PLAN_NOTE}</p>
@@ -259,11 +257,6 @@ ${servicesShowcase()}
         </div>
       </section>
 
-${marquee(
-  SERVICE_PAGES.map((service) => service.name),
-  { label: "Veltra services", duration: "48s" },
-)}
-
 ${workSection(showcase)}
 ${reviewsSection(REVIEWS)}
       <section class="section band-light" id="explore">
@@ -315,31 +308,9 @@ ${EXPLORE.map(
         </div>
       </section>
 
-${marquee(SITE.areas, { label: "Areas we cover", duration: "30s" })}
-
 ${faqSection(FAQS, { heading: "Straight answers before you start", eyebrow: "Frequently asked questions" })}
 
-      <section class="plan-band" id="plan">
-        <div class="container">
-          <div class="plan-split">
-${inquiryForm({
-  heading: PLAN_CTA,
-  intro: PLAN_NOTE,
-  submitLabel: PLAN_CTA,
-  booking: false,
-})}
-            <div class="plan-copy">
-              <p class="eyebrow">Free website plan</p>
-              <h2>Know what your website needs before you spend money on it</h2>
-              <p class="lede">Tell us about your business and what you want the website to achieve. We will reply with a practical starting point, the package that fits and any gaps worth fixing first.</p>
-              <div class="cta-contacts">
-                <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp Veltra on ${SITE.phoneLabel}</a>
-                <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>`;
+${planSection({ intro: PLAN_NOTE })}`;
 
 export default {
   path: "/",

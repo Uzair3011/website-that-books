@@ -19,7 +19,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Website design",
     image: "service-web-design",
-    text: "<strong>Stop Losing Visitors to a Site That Does Not Convince</strong> - A fast, mobile-first website built around your offer, so people know what you do and what to do next.",
+    text: "<strong>Turn visits into enquiries.</strong> A fast, mobile-first website built around your offer, so people know what you do and what to do next.",
     href: "/web-design-middlesbrough",
     cta: "Explore website design",
     tone: "lime",
@@ -29,7 +29,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Local SEO and Google Business",
     image: "service-local-seo",
-    text: "<strong>Stop Being Invisible When Locals Search</strong> - We improve the signals that help nearby customers find and trust you in Google Search and Maps.",
+    text: "<strong>Be found when locals search.</strong> We improve the signals that help nearby customers find and trust you in Google Search and Maps.",
     href: "/local-seo-middlesbrough",
     cta: "Explore local SEO",
     tone: "mint",
@@ -39,7 +39,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Landing pages",
     image: "service-landing-pages",
-    text: "<strong>Make Every Click on Your Ad or Campaign Count</strong> - One focused page for one service, location or campaign, written and designed to turn attention into an enquiry.",
+    text: "<strong>Make each campaign click count.</strong> One focused page for one service, location or campaign, written and designed to turn attention into an enquiry.",
     href: "/landing-page-design",
     cta: "Explore landing pages",
     tone: "blue",
@@ -49,7 +49,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "AI receptionist and website chat",
     image: "service-ai-reception",
-    text: "<strong>Answer Enquiries at 11 PM</strong> - Our AI receptionist answers questions and books appointments for you 24/7. When a customer lands on your site after hours, they get an answer straight away instead of waiting until morning.",
+    text: "<strong>Answer enquiries at 11pm.</strong> Our AI receptionist answers questions and books appointments around the clock, using answers you have approved. When a customer lands on your site after hours, they get an answer straight away instead of waiting until morning.",
     href: "/ai-receptionist-middlesbrough",
     cta: "Explore AI reception",
     tone: "coral",
@@ -59,7 +59,7 @@ export const SHOWCASE_SERVICES = [
   {
     title: "Booking and follow-up automation",
     image: "service-booking",
-    text: "<strong>Stop Chasing Leads</strong> - We build a secure, lightning-fast database that automatically follows up with your leads so no one falls through the cracks.",
+    text: "<strong>Stop chasing leads.</strong> Every enquiry lands in one place, booking and reminders run themselves, and follow-up goes out on time, so good leads do not slip away.",
     href: "/crm-booking-automation",
     cta: "Explore automation",
     tone: "violet",
@@ -70,7 +70,7 @@ export const SHOWCASE_SERVICES = [
     title: "Website care",
     // Shown as the live health panel rather than a picture.
     health: true,
-    text: "<strong>Stop Worrying About Your Website</strong> - Hosting, updates, backups and practical support, handled for you, so you can get on with running the business.",
+    text: "<strong>Your website, looked after.</strong> Hosting, updates, backups and practical support, handled for you, so you can get on with running the business.",
     href: "/website-care",
     cta: "Explore website care",
     tone: "amber",

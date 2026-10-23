@@ -1,3 +1,4 @@
+import { processVisual } from "../hero-visuals.js";
 import {
   CTA,
   breadcrumbJsonLd,
@@ -88,7 +89,8 @@ const FAQS = [
 
 const body = `      <section class="hero">
         <div class="container">
-          <div class="hero-copy" style="max-width: 46rem">
+          <div class="hero-grid">
+          <div class="hero-copy">
             <p class="eyebrow">How it works</p>
             <h1>Our website design process, from first call to launch</h1>
             <p class="lede"><strong>From first conversation to live website.</strong> Four clear steps, with a written scope and a fixed price before any work begins, a private preview while it is built, and a website you own at the end.</p>
@@ -96,6 +98,8 @@ const body = `      <section class="hero">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/services">Explore our services</a>
             </div>
+          </div>
+          ${processVisual}
           </div>
         </div>
       </section>

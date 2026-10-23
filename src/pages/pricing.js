@@ -1,10 +1,9 @@
 import { SYSTEM } from "../../assets/business.js";
 import { CATALOG, catalogItem } from "../../assets/catalog.js";
 import { checkoutEnabled } from "../../lib/payments.js";
-import { inquiryForm } from "../form.js";
+import { planSection } from "../form.js";
 import {
   CTA,
-  SITE,
   breadcrumbJsonLd,
   faqJsonLd,
   faqSection,
@@ -190,27 +189,9 @@ ${serviceCards}
         </div>
       </section>
 
-      <section class="plan-band" id="plan">
-        <div class="container">
-          <div class="plan-split">
-${inquiryForm({
-  heading: "Get my free website plan",
+${planSection({
   intro: "It takes about a minute. We reply with the package that fits and any gaps worth fixing first.",
-  submitLabel: CTA.primary,
-  booking: false,
 })}
-            <div class="plan-copy">
-              <p class="eyebrow">Free website plan</p>
-              <h2>Know what your website needs before you spend money on it</h2>
-              <p class="lede">Tell us about your business and what you want the website to achieve. We will reply with a practical starting point, the package that fits and any gaps worth fixing first.</p>
-              <div class="cta-contacts">
-                <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp Veltra on ${SITE.phoneLabel}</a>
-                <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 ${faqSection(FAQS, { heading: "Pricing questions, answered plainly.", eyebrow: "Pricing FAQ" })}
 

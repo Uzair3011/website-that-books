@@ -111,9 +111,9 @@ const articleIndex = articles
   )
   .join("");
 
-const body = `      <section class="hero">
+const body = `      <section class="hero compact">
         <div class="container">
-          <div class="hero-copy" style="max-width: 46rem">
+          <div class="hero-copy">
             <p class="eyebrow">Resources</p>
             <h1>Free guides for small business websites and local search</h1>
             <p class="lede"><strong>Practical things you can do without hiring anyone.</strong> Short, specific guides for local business owners. Nothing gated, no email required, and no download that turns out to be a sales brochure.</p>

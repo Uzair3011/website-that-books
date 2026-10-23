@@ -1,7 +1,7 @@
 // The enquiry / booking form. Markup contract is shared with assets/app.js,
 // api/inquiry.js and api/book.js — element ids here must not change casually.
 import { dialCodes, serviceOptions } from "../assets/validation.js";
-import { SITE, icon } from "./site.js";
+import { CTA, SITE, icon } from "./site.js";
 
 export function inquiryForm({
   heading = "Get my free website plan",
@@ -9,6 +9,8 @@ export function inquiryForm({
   submitLabel = "Get my free website plan",
   // The homepage form is a short plan request; it skips the calendar picker.
   booking = true,
+  // 3 where the form sits under a section's own h2 (planSection below).
+  level = 2,
 } = {}) {
   const services = serviceOptions
     .map((service) => `<option>${service}</option>`)
@@ -24,7 +26,7 @@ export function inquiryForm({
 
   return `<div class="form-shell" id="audit-form">
   <div class="form-head">
-    <h2 id="form-heading">${heading}</h2>
+    <h${level} id="form-heading">${heading}</h${level}>
     <p id="form-intro">${intro}</p>
   </div>
   <div class="booking-confirmed" id="booking-confirmed" tabindex="-1" hidden>
@@ -110,4 +112,31 @@ export function inquiryForm({
     </div>
   </form>
 </div>`;
+}
+
+// The free-plan band on the homepage and /pricing: the pitch first (so on a
+// phone people read why before they reach the fields), then the short form.
+export function planSection({ intro }) {
+  return `      <section class="plan-band" id="plan">
+        <div class="container">
+          <div class="plan-split">
+            <div class="plan-copy">
+              <p class="eyebrow">Free website plan</p>
+              <h2>Know what your website needs before you spend money on it</h2>
+              <p class="lede">Tell us about your business and what you want the website to achieve. We will reply with a practical starting point, the package that fits and any gaps worth fixing first.</p>
+              <div class="cta-contacts">
+                <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${icon("whatsapp")}WhatsApp Veltra on ${SITE.phoneLabel}</a>
+                <a href="mailto:${SITE.email}">${icon("mail")}${SITE.email}</a>
+              </div>
+            </div>
+${inquiryForm({
+  heading: "Your details",
+  intro,
+  submitLabel: CTA.primary,
+  booking: false,
+  level: 3,
+})}
+          </div>
+        </div>
+      </section>`;
 }

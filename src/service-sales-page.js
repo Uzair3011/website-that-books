@@ -77,7 +77,9 @@ export function serviceSalesPage({
   // Three short facts from the page's own copy: the hero strip and the
   // closing checklist.
   points,
-  cta,
+  // { note }: an optional line under the closing button. The button itself
+  // always reads CTA.primary, so the offer has one name everywhere.
+  cta = {},
   proof,
   problem,
   solution,
@@ -101,7 +103,7 @@ export function serviceSalesPage({
   const terms = `${price.unit}, excl. VAT${priceNote ? `. ${priceNote}` : ""}`;
 
   const ctaButton = (extra = "") =>
-    `<a class="btn${extra}" href="${CTA.href}">${cta.label}${icon("arrow-up")}</a>`;
+    `<a class="btn${extra}" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>`;
   // Only rendered when online checkout is switched on for this build.
   const buyButton = (extra = "") =>
     price.purchasable && checkoutEnabled()
@@ -183,7 +185,16 @@ ${
             <p class="eyebrow">${local.eyebrow}</p>
             <h2>${local.heading}</h2>
           </div>
-          <div class="prose sp-local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          <div class="sp-local-grid">
+            <div class="prose sp-local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+            <aside class="sp-local-aside" aria-label="${breadcrumbName} at a glance">
+              <p class="sp-aside-price"><b>${amount}</b><span>${terms}</span></p>
+              <ul class="sp-checks">
+                ${points.map((point) => `<li>${icon("check")}${point.label}</li>`).join("")}
+              </ul>
+              ${ctaButton(" block")}
+            </aside>
+          </div>
         </div>
       </section>
 `

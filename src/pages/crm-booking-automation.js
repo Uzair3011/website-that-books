@@ -20,7 +20,6 @@ export default serviceSalesPage({
     { label: "Every enquiry in one place", text: "Calls, texts and emails logged together" },
     { label: "Zero manual admin", text: "Follow-ups and reminders run themselves" },
   ],
-  cta: { label: "Book Your Pipeline Scaling Strategy Call" },
   proof: {
     heading: "From Chaos to Clockwork.",
     visual: V.pipeline,

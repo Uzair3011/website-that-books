@@ -1,3 +1,4 @@
+import { workVisual } from "../hero-visuals.js";
 import {
   CTA,
   breadcrumbJsonLd,
@@ -18,14 +19,17 @@ ${rest.map((project) => projectCard(project)).join("\n")}
 
 const body = `      <section class="hero">
         <div class="container">
-          <div class="hero-copy" style="max-width: 44rem">
+          <div class="hero-grid">
+          <div class="hero-copy">
             <p class="eyebrow">Work</p>
-            <h1>Our web design work, including concept designs</h1>
+            <h1>A web design portfolio you can click through</h1>
             <p class="lede"><strong>Work that is easy to judge.</strong> Good work should not need vague claims. Below is what we build and how we build it — clearly labelled, with nothing dressed up as a client result it is not.</p>
             <div class="button-row">
               <a class="btn" href="${CTA.href}">${CTA.primary}${icon("arrow-up")}</a>
               <a class="btn secondary" href="/pricing">See prices</a>
             </div>
+          </div>
+          ${workVisual}
           </div>
         </div>
       </section>
