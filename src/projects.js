@@ -3,10 +3,11 @@
 // and are labelled "Concept" so nobody mistakes them for clients; entries with
 // `concept: false` are real builds.
 //
-// Photos are 1280×900 WebP in assets/work/; docs/image-credits.md lists where
-// each came from. To add a real client project, save its 1280×900 image there
-// and add an entry with `concept: false` and the live site's `url` (it opens in
-// a new tab). Remove a concept entry when a real one replaces it.
+// Images are 1280×900 WebP in assets/work/; docs/image-credits.md lists where
+// each came from, and concept images are rendered by scripts/concept-mockups/.
+// To add a real client project, save its 1280×900 image there and add an entry
+// with `concept: false` and the live site's `url` (it opens in a new tab).
+// Remove a concept entry when a real one replaces it.
 export const PROJECTS = [
   {
     name: "Med-spa growth system",
@@ -38,8 +39,8 @@ export const PROJECTS = [
     category: "Website design + local SEO",
     summary:
       "A phone-first site for a heating engineer: the number stays in reach, the areas covered are stated plainly and quotes take one form.",
-    image: "/assets/work/project-boiler.webp",
-    imageAlt: "A heating engineer's pipe wrench, spirit level and tools on a workbench",
+    image: "/assets/work/concept-boiler.webp",
+    imageAlt: "Concept homepage for Teesside Boiler Care: a navy header with a call button, the headline Boiler broken? We can be there today, the areas covered and a one-form quote request",
     concept: true,
   },
   {
@@ -47,8 +48,8 @@ export const PROJECTS = [
     category: "Landing page + CRO",
     summary:
       "One offer, one audience, one action: a free-survey landing page with no navigation and the form above the fold.",
-    image: "/assets/work/project-roofline.webp",
-    imageAlt: "A roofer in a hard hat fixing roof boards with a hammer",
+    image: "/assets/work/concept-roofline.webp",
+    imageAlt: "Concept landing page for Northside Roofline: no navigation, a free roof survey offer with three ticks, and the booking form beside it above the fold",
     concept: true,
   },
   {
@@ -56,8 +57,8 @@ export const PROJECTS = [
     category: "Local SEO + Google Business Profile",
     summary:
       "A joinery firm's profile and service pages saying the same thing, so Google and customers see one clear business.",
-    image: "/assets/work/project-joinery.webp",
-    imageAlt: "A joiner planing a piece of wood in a workshop",
+    image: "/assets/work/concept-joinery.webp",
+    imageAlt: "Concept for Ashfield Joinery: the Stockton-on-Tees homepage listing four services beside a business profile that shows the same services, areas and phone number",
     concept: true,
   },
 ];

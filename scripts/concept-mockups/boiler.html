@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>Teesside Boiler Care (concept)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1280px; height: 900px; overflow: hidden; font-family: Archivo, sans-serif; background: #f6f2ea; color: #10263a; }
+  .top { display: flex; align-items: center; justify-content: space-between; padding: 26px 64px; background: #10263a; color: #fff; }
+  .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 22px; }
+  .logo i { width: 38px; height: 38px; border-radius: 10px; background: #ff7a1a; display: grid; place-items: center; }
+  .logo svg { width: 20px; height: 20px; fill: #10263a; }
+  nav { display: flex; gap: 30px; font-size: 16px; color: #c9d4de; font-weight: 500; }
+  .call { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px; background: #ff7a1a; color: #10263a; font-weight: 800; font-size: 17px; }
+  .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; padding: 56px 64px 0; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: #ffe7d4; color: #b4500a; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; }
+  .pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #ff7a1a; }
+  h1 { margin: 22px 0 18px; font-size: 64px; line-height: 1.02; letter-spacing: -.03em; font-weight: 800; }
+  h1 em { font-style: normal; color: #ff7a1a; }
+  .lede { font-size: 20px; line-height: 1.5; color: #46596a; max-width: 30ch; }
+  .actions { display: flex; gap: 14px; margin-top: 30px; }
+  .btn { padding: 17px 26px; border-radius: 14px; font-weight: 800; font-size: 18px; }
+  .btn.main { background: #10263a; color: #fff; }
+  .btn.alt { border: 2px solid #10263a; }
+  .trust { display: flex; gap: 26px; margin-top: 34px; font-weight: 600; font-size: 15px; }
+  .trust span { display: flex; align-items: center; gap: 8px; }
+  .trust span::before { content: "✓"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #10263a; color: #ff7a1a; font-size: 12px; }
+  .side { display: grid; gap: 18px; align-content: start; }
+  .card { padding: 24px; border-radius: 20px; background: #fff; box-shadow: 0 24px 50px -28px rgba(16,38,58,.45); }
+  .card h3 { font-size: 19px; margin-bottom: 14px; }
+  .areas { display: flex; flex-wrap: wrap; gap: 8px; }
+  .areas span { padding: 7px 12px; border-radius: 999px; background: #eef2f5; font-size: 14px; font-weight: 600; }
+  .field { height: 46px; border-radius: 10px; background: #f3f5f7; border: 1px solid #dfe5ea; margin-bottom: 10px; padding: 0 14px; display: flex; align-items: center; color: #8b99a6; font-size: 15px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .submit { margin-top: 4px; height: 50px; border-radius: 12px; background: #ff7a1a; display: grid; place-items: center; font-weight: 800; font-size: 17px; }
+  .note { margin-top: 10px; font-size: 13px; color: #6a7b8a; text-align: center; }
+  .steps { position: absolute; left: 64px; right: 64px; bottom: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .step { display: flex; gap: 14px; align-items: center; padding: 20px 22px; border-radius: 18px; background: #10263a; color: #fff; font-weight: 700; font-size: 17px; }
+  .step b { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #ff7a1a; color: #10263a; flex: none; }
+  .step small { display: block; color: #9fb0bf; font-weight: 500; font-size: 14px; margin-top: 2px; }
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="logo"><i><svg viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-7 0 2 1 3 2 3 0-3 1-6 1-8Z"/></svg></i>Teesside Boiler Care</div>
+    <nav><span>Boiler repair</span><span>Servicing</span><span>New boilers</span><span>Areas</span></nav>
+    <div class="call">Call 01642 000 000</div>
+  </header>
+  <section class="hero">
+    <div>
+      <span class="pill">Same-day callouts across Teesside</span>
+      <h1>Boiler broken? <em>We can be there today.</em></h1>
+      <p class="lede">Repairs, servicing and new boilers for homes in Middlesbrough, Stockton and Redcar. A fixed price before any work starts.</p>
+      <div class="actions"><span class="btn main">Call 01642 000 000</span><span class="btn alt">Get a quote</span></div>
+      <div class="trust"><span>Fixed price first</span><span>Tidy, on-time visits</span><span>Parts guaranteed</span></div>
+    </div>
+    <div class="side">
+      <div class="card">
+        <h3>Areas we cover</h3>
+        <div class="areas"><span>Middlesbrough</span><span>Stockton</span><span>Redcar</span><span>Billingham</span><span>Thornaby</span><span>Guisborough</span></div>
+      </div>
+      <div class="card">
+        <h3>Get a quote in one form</h3>
+        <div class="row"><div class="field">Your name</div><div class="field">Postcode</div></div>
+        <div class="field">Phone number</div>
+        <div class="field">What's wrong with the boiler?</div>
+        <div class="submit">Send my quote request</div>
+        <p class="note">We reply within the hour, 8am to 6pm.</p>
+      </div>
+    </div>
+  </section>
+  <div class="steps">
+    <div class="step"><b>1</b><span>Call or send the form<small>Most callbacks within the hour</small></span></div>
+    <div class="step"><b>2</b><span>Fixed price agreed<small>Before we pick up a tool</small></span></div>
+    <div class="step"><b>3</b><span>Fixed, tidied and tested<small>Paperwork left with you</small></span></div>
+  </div>
+</body>
+</html>
