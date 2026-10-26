@@ -141,6 +141,7 @@ export function serviceSalesPage({
           <div class="sp-head">
             <p class="eyebrow">Illustrative examples</p>
             <h2 id="proof-title">${proof.heading}</h2>
+            ${proof.intro ? `<p>${proof.intro}</p>` : ""}
           </div>
           <div class="sp-cases${proof.visual ? " has-visual" : ""}">
           ${proof.visual ? `<figure class="sp-proof-visual reveal">${media(proof.visual)}</figure>` : ""}

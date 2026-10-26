@@ -3,7 +3,7 @@ import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
 export default serviceSalesPage({
   path: "/local-seo-middlesbrough",
-  title: "Local SEO Middlesbrough & Teesside | Veltra Media",
+  title: "Local SEO Agency in Middlesbrough & Teesside | Veltra Media",
   description:
     "Local SEO in Middlesbrough and across Teesside: Google Business Profile, service and area pages, local schema and consistent details, set up for £99 one-off.",
   breadcrumbName: "Local SEO Middlesbrough",
@@ -28,6 +28,8 @@ export default serviceSalesPage({
   ],
   proof: {
     heading: "Example scenario",
+    intro:
+      "Veltra Media is a local SEO agency based in Middlesbrough, working with businesses in Stockton-on-Tees, Redcar, Billingham, Hartlepool and across Teesside. We set up the groundwork that helps local customers find you: your Google Business Profile, service and area pages, local schema and consistent business details.",
     visual: V.gbpInsights,
     cases: [
       {
@@ -67,8 +69,7 @@ export default serviceSalesPage({
     ],
   },
   offer: {
-    heading: "Here is exactly what you get when we deploy the Map Pack Domination System:",
-    highlight: "Map Pack Domination System:",
+    heading: "What our local SEO service in Middlesbrough includes",
     items: [
       { icon: "pin", title: "Google Business Profile Weaponisation", text: "Fully optimised for your exact Teesside service areas." },
       { icon: "search", title: "Hyper-Local Keyword Targeting", text: "We map your services and pages to the terms your best customers actually search for." },
