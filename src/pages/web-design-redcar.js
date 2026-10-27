@@ -63,6 +63,14 @@ export default areaPage({
         `Every package is priced up front: <a href="/pricing">see what each package costs</a>. Already have a site and not sure it is pulling its weight? <a href="/free-website-audit">Request a free review of your current website</a>.`,
       ],
     },
+    {
+      eyebrow: "Search and Maps",
+      heading: "Local SEO in Redcar",
+      body: [
+        "Local SEO is the work that decides whether your business appears when someone nearby searches Google or Google Maps for what you do. Most Redcar trades have no shop, so the Google Business Profile should be set up as a service-area business that lists the places you actually cover, such as Redcar, Coatham, Marske and Saltburn. Your website should name the same places and show the same business name and phone number as the profile.",
+        `Reviews matter too. Google ranks local results on relevance, distance and prominence, and real reviews, asked for consistently after each job, help with prominence. <a href="/google-business-profile">Google Business Profile setup and optimisation</a> covers the profile itself, and <a href="/local-seo-middlesbrough">our local SEO service</a> adds service and area pages, local schema and consistent business details for a one-off £99.`,
+      ],
+    },
   ],
   faqs: [
     {
