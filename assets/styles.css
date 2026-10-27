@@ -6233,7 +6233,9 @@ svg.icon {
 .article-intro {
   margin-top: 4px;
 }
-.article-toc {
+/* The short-answer box in an article intro uses the same card as the contents. */
+.article-toc,
+.article-summary {
   width: 100%;
   max-width: 60ch;
   padding: 20px 22px;
@@ -6248,6 +6250,9 @@ svg.icon {
   padding-left: 22px;
   list-style: decimal;
   color: var(--body);
+}
+.article-summary ul {
+  margin-top: 10px;
 }
 .article-toc a {
   text-decoration: underline;

@@ -6,6 +6,7 @@ import websiteCost from "./how-much-does-a-website-cost.js";
 import localSeoChecklist from "./local-seo-checklist.js";
 import rankInMaps from "./rank-in-google-maps-without-a-shop.js";
 import aiReceptionist from "./what-is-an-ai-receptionist.js";
+import aiReceptionistCost from "./ai-receptionist-cost-uk.js";
 
 export const articles = [
   websiteCost,
@@ -14,4 +15,5 @@ export const articles = [
   gbpServiceArea,
   rankInMaps,
   aiReceptionist,
+  aiReceptionistCost,
 ];

@@ -127,6 +127,11 @@ export default serviceSalesPage({
       text: "A plain guide to how it works, what it should not do, and how it compares with an answering service.",
     },
     {
+      href: "/resources/ai-receptionist-cost-uk",
+      label: "How much does an AI receptionist cost in the UK?",
+      text: "Published UK prices, per-call costs and how it compares with an answering service.",
+    },
+    {
       href: "/crm-booking-automation",
       label: "Booking and CRM automation",
       text: "Every enquiry in one place, live calendar booking and reminders, £199 setup.",
