@@ -3,11 +3,15 @@
 // underneath) and adds what an article needs: a byline, published and updated
 // dates, a short table of contents, BlogPosting JSON-LD, related reading and a
 // call to action to the free audit. Each article passes all of its own copy.
+// Optional: a section can end in an FAQ (with matching FAQPage JSON-LD), a
+// small sources list can sit above the call to action, and an article can
+// drop the related reading and name its own button.
 import { catalogItem } from "../assets/catalog.js";
 import {
   CTA,
   articleJsonLd,
   breadcrumbJsonLd,
+  faqJsonLd,
   finalCta,
   icon,
   related,
@@ -56,14 +60,18 @@ export function articlePage({
   // YYYY-MM-DD.
   published,
   updated = published,
-  // [{ id, toc, eyebrow, heading, body: [paragraph text or HTML], band }]
+  // [{ id, toc, eyebrow, heading, body: [paragraph text or HTML], band, faq: [{ q, a }] }]
   sections,
-  // [{ href, label, text }]
-  relatedItems,
-  // { heading, body }; the button always goes to the free audit.
+  // { heading, items: [{ label, href }] }, shown just above the call to action.
+  sources = null,
+  // [{ href, label, text }]; empty for no "Read next".
+  relatedItems = [],
+  // { heading, body, button }; the button goes to the free audit.
   closing,
 }) {
   const path = `/resources/${slug}`;
+  // At most one section carries the FAQ; its questions are also the FAQPage JSON-LD.
+  const faqs = sections.flatMap((section) => section.faq ?? []);
   const dates = `<span>Published <time datetime="${published}">${longDate(published)}</time></span><span>Updated <time datetime="${updated}">${longDate(updated)}</time></span>`;
 
   const body = `      <section class="hero article-hero">
@@ -89,15 +97,34 @@ ${sections
             <p class="eyebrow">${section.eyebrow}</p>
             <h2>${section.heading}</h2>
           </div>
-          <div class="prose sp-local-copy">${section.body.map(block).join("")}</div>
+          <div class="prose sp-local-copy">${section.body.map(block).join("")}${
+            section.faq
+              ? `<div class="faq reveal">${section.faq.map((item) => `<details><summary>${item.q}</summary><div>${item.a}</div></details>`).join("")}</div>`
+              : ""
+          }</div>
         </div>
       </section>`,
   )
   .join("\n")}
 
-${related(relatedItems, "Read next")}
+${
+  sources
+    ? `
+      <section class="section tight">
+        <div class="container">
+          <div class="prose">
+            <aside class="article-summary" aria-labelledby="sources-title">
+              <p class="eyebrow" id="sources-title">${sources.heading}</p>
+              <ul>${sources.items.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}</ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+`
+    : ""
+}${relatedItems.length ? related(relatedItems, "Read next") : ""}
 
-${finalCta({ heading: closing.heading, body: closing.body, href: CTA.href })}`;
+${finalCta({ heading: closing.heading, body: closing.body, primary: closing.button, href: CTA.href })}`;
 
   return {
     path,
@@ -115,6 +142,7 @@ ${finalCta({ heading: closing.heading, body: closing.body, href: CTA.href })}`;
         { name: "Resources", path: "/resources" },
         { name: shortName, path },
       ]),
+      ...(faqs.length ? [faqJsonLd(faqs)] : []),
     ],
     body,
   };

@@ -150,7 +150,7 @@ export default serviceSalesPage({
     {
       href: "/resources/ai-receptionist-cost-uk",
       label: "How much does an AI receptionist cost in the UK?",
-      text: "Published UK prices, per-call costs and how it compares with an answering service.",
+      text: "What an AI receptionist costs in the UK, and how to tell whether it would pay for itself.",
     },
     {
       href: "/crm-booking-automation",
