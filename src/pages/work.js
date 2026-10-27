@@ -45,16 +45,14 @@ ${grid}
 
       <section class="section band-dark">
         <div class="container">
-          <div class="two-col">
-            <div>
-              <p class="eyebrow">How we present results</p>
-              <blockquote class="pullquote">If a number cannot be evidenced, we describe what we built instead.</blockquote>
-            </div>
-            <div class="prose">
-              <p>Plenty of agencies publish percentage uplifts with no baseline, no timeframe and no way to check them. We are not going to do that.</p>
-              <p>When a client project produces a result we can evidence &mdash; enquiry volume, booking rate, page speed, search visibility &mdash; and the client is happy for it to be published, we will publish it with the context attached.</p>
-              <p>Until then, this page shows the work itself. You can judge the craft, the structure and the clarity directly, which is harder to fake than a statistic.</p>
-            </div>
+          <div class="section-head">
+            <p class="eyebrow">How we present results</p>
+            <blockquote class="pullquote">If a number cannot be evidenced, we describe what we built instead.</blockquote>
+          </div>
+          <div class="prose">
+            <p>Plenty of agencies publish percentage uplifts with no baseline, no timeframe and no way to check them. We are not going to do that.</p>
+            <p>When a client project produces a result we can evidence &mdash; enquiry volume, booking rate, page speed, search visibility &mdash; and the client is happy for it to be published, we will publish it with the context attached.</p>
+            <p>Until then, this page shows the work itself. You can judge the craft, the structure and the clarity directly, which is harder to fake than a statistic.</p>
           </div>
         </div>
       </section>

@@ -246,7 +246,7 @@ ${outcomes}
       <section class="section band-light svc" id="services">
         <div class="container">
           <div class="svc-head">
-            <p class="eyebrow center">Services</p>
+            <p class="eyebrow">Services</p>
             <h2>Start with what will make the biggest difference</h2>
             <p>You do not need every service on day one. Each Veltra service works on its own and can connect with the others as your business grows.</p>
           </div>

@@ -27,15 +27,13 @@ const body = `      <section class="hero">
 
       <section class="section">
         <div class="container">
-          <div class="two-col">
-            <div>
-              <blockquote class="pullquote">Start with the thing you need now. Add the rest when it earns its place.</blockquote>
-            </div>
-            <div class="prose">
-              <p>Most local businesses are offered one of two things. A cheap website that looks generic, says very little and needs replacing within a year. Or a full agency engagement, with a process and an overhead that a straightforward local business does not need and should not pay for.</p>
-              <p>We sit deliberately between the two. A clear recommendation instead of a menu. A written scope and a price before anything starts. Copy, design and local search considered together, because separating them is how sites end up looking fine and converting badly.</p>
-              <p>And five services you can buy one at a time. If the website is not your problem, we would rather tell you that than sell you one.</p>
-            </div>
+          <div class="section-head">
+            <blockquote class="pullquote">Start with the thing you need now. Add the rest when it earns its place.</blockquote>
+          </div>
+          <div class="prose">
+            <p>Most local businesses are offered one of two things. A cheap website that looks generic, says very little and needs replacing within a year. Or a full agency engagement, with a process and an overhead that a straightforward local business does not need and should not pay for.</p>
+            <p>We sit deliberately between the two. A clear recommendation instead of a menu. A written scope and a price before anything starts. Copy, design and local search considered together, because separating them is how sites end up looking fine and converting badly.</p>
+            <p>And five services you can buy one at a time. If the website is not your problem, we would rather tell you that than sell you one.</p>
           </div>
         </div>
       </section>

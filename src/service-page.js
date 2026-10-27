@@ -66,12 +66,10 @@ export function servicePage({
 
       <section class="section">
         <div class="container">
-          <div class="two-col">
-            <div class="section-head" style="margin-bottom: 0">
-              <h2>${intro.heading}</h2>
-            </div>
-            <div class="prose">${intro.body.map((p) => `<p>${p}</p>`).join("")}</div>
+          <div class="section-head">
+            <h2>${intro.heading}</h2>
           </div>
+          <div class="prose">${intro.body.map((p) => `<p>${p}</p>`).join("")}</div>
         </div>
       </section>
 ${

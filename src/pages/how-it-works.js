@@ -152,15 +152,13 @@ ${TIMELINES.map((item) => `            <li><b>${item.size}</b><h3>${item.time}</
 
       <section class="section">
         <div class="container">
-          <div class="two-col">
-            <div class="section-head" style="margin-bottom: 0">
-              <p class="eyebrow">After launch</p>
-              <blockquote class="pullquote">The website is yours. Support is there if you want it, never forced.</blockquote>
-            </div>
-            <div class="prose">
-              <p>Once the project fees are paid, the website and the original content we wrote for it belong to you. You can manage it yourself, and we will walk you through how, or hand the technical side to us with an optional care plan.</p>
-              <p>Many businesses start with the website and add more later: local SEO once the foundations are in place, or booking and follow-up automation once enquiries pick up. We only recommend those when they solve a clear problem.</p>
-            </div>
+          <div class="section-head">
+            <p class="eyebrow">After launch</p>
+            <blockquote class="pullquote">The website is yours. Support is there if you want it, never forced.</blockquote>
+          </div>
+          <div class="prose">
+            <p>Once the project fees are paid, the website and the original content we wrote for it belong to you. You can manage it yourself, and we will walk you through how, or hand the technical side to us with an optional care plan.</p>
+            <p>Many businesses start with the website and add more later: local SEO once the foundations are in place, or booking and follow-up automation once enquiries pick up. We only recommend those when they solve a clear problem.</p>
           </div>
         </div>
       </section>

@@ -111,7 +111,7 @@ const articleIndex = articles
   )
   .join("");
 
-const body = `      <section class="hero compact">
+const body = `      <section class="hero compact reading-hero">
         <div class="container">
           <div class="hero-copy">
             <p class="eyebrow">Resources</p>

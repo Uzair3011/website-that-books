@@ -196,8 +196,14 @@ p {
   width: min(100% - (var(--gutter) * 2), 1200px);
   margin-inline: auto;
 }
-.container.narrow {
-  width: min(100% - (var(--gutter) * 2), 780px);
+/* Text-only pages and short heroes (areas, privacy, cookies, terms, 404): the
+   full content width, so the copy starts at the logo's left edge, with each
+   block, the hero lede included, held to the 1040px reading measure. */
+.container.narrow > * {
+  max-width: 1040px;
+}
+.hero > .container.narrow > h1 {
+  max-width: 1100px;
 }
 .section {
   padding-block: clamp(56px, 7vw, 96px);
@@ -1936,6 +1942,12 @@ svg.icon {
   font-weight: 500;
   color: var(--ink);
 }
+/* A heading or pull quote stacked above its copy (service intros, about, how
+   it works, work): both share the 1040px reading measure. */
+.container > div.section-head:not(.sp-stacked-head):has(+ .prose) > :is(h2, .pullquote),
+.container > div.section-head:not(.sp-stacked-head) + .prose {
+  max-width: 1040px;
+}
 .two-col {
   display: grid;
   gap: clamp(30px, 4vw, 56px);
@@ -3106,25 +3118,20 @@ svg.icon {
   padding-top: 0;
 }
 
-/* Guides: heading beside the checklist so the page is not one thin column. */
+/* Guides: label, heading and intro, then the checklist or summary, stacked at
+   the logo's left edge and held to a 1040px measure. */
 .guide-grid {
   display: grid;
-  gap: 24px clamp(32px, 6vw, 80px);
-  align-items: start;
+  gap: 24px;
+  max-width: 1040px;
 }
 .guide-head {
   display: grid;
   gap: 14px;
   align-content: start;
 }
-@media (min-width: 900px) {
-  .guide-grid {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  }
-  .guide-head {
-    position: sticky;
-    top: 104px;
-  }
+.guide-head > .lede {
+  max-width: none;
 }
 .guide-grid .tick-list {
   font-size: 1.0625rem;
@@ -4262,29 +4269,21 @@ svg.icon {
 .svc [data-tone="violet"] { --svc: #7c4dff; --svc-ink: #ffffff; --svc-pair: #c9ff4a; }
 .svc [data-tone="amber"] { --svc: #ffb020; --svc-ink: #071313; --svc-pair: #83e7da; }
 
+/* Label, heading and intro start at the logo's left edge, held to the same
+   1040px measure as the reading pages. */
 .svc-head {
   display: grid;
   gap: 18px;
-  justify-items: center;
-  max-width: 62rem;
-  margin: 0 auto clamp(36px, 5vw, 64px);
-  text-align: center;
-}
-.svc-head .eyebrow::after {
-  content: "";
-  width: 22px;
-  height: 2px;
-  background: var(--accent-lime);
-  flex: none;
+  justify-items: start;
+  max-width: 1040px;
+  margin-bottom: clamp(36px, 5vw, 64px);
 }
 .svc-head h2 {
-  max-width: 15em;
   font-size: clamp(2.25rem, 1.3rem + 3.4vw, 3.75rem);
   letter-spacing: -0.045em;
   line-height: 1.02;
 }
 .svc-head > p:not(.eyebrow) {
-  max-width: 54ch;
   font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
   text-wrap: balance;
 }
@@ -5302,8 +5301,8 @@ svg.icon {
 }
 /* Heading on top at the full content width, content underneath: no narrow
    measure on the heading. Long headings step down a size so they stay within
-   two lines on desktop. Long reading sections move the heading beside the
-   copy from 1100px (below). */
+   two lines on desktop. Long reading sections narrow to one reading column
+   (below). */
 .sp-stacked {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -5321,25 +5320,32 @@ svg.icon {
     font-size: clamp(1.625rem, 0.9rem + 1.05vw, 2rem);
   }
 }
-/* Long reading sections (town pages, guides, service local copy): from
-   1100px the heading moves into a left column and stays in view while the
-   copy beside it scrolls, so the copy keeps its measure without leaving
-   half the page empty. Narrower screens keep the heading on top. */
-@media (min-width: 1100px) {
-  .container:has(> .sp-stacked-head + .sp-local-copy) {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 64px;
-    align-items: start;
-  }
-  .container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) {
-    position: sticky;
-    top: calc(var(--header-h) + 40px);
-    margin-bottom: 0;
-  }
-  .container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) > h2 {
-    font-size: clamp(1.75rem, 1rem + 1.1vw, 2.25rem);
-  }
+/* Long reading sections (town pages, guides, the trades and AI agents pages,
+   service local copy): eyebrow, H2 and copy stack in the full content width,
+   starting at the logo's left edge, with text held to a 1040px measure.
+   Tables keep the full width. The H2 sits close to its first paragraph; the
+   section padding keeps the sections apart. Paragraphs take the darker ink of
+   the lists and checklists beside them. */
+.container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) {
+  max-width: 1040px;
+  margin-bottom: 20px;
+}
+.container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) > h2 {
+  font-size: clamp(1.875rem, 1.3rem + 2vw, 2.25rem);
+}
+.container > .sp-stacked-head + .prose.sp-local-copy {
+  max-width: none;
+}
+.container > .sp-stacked-head + .sp-local-copy > :not(.table-wrap) {
+  max-width: 1040px;
+}
+.container > .sp-stacked-head + .sp-local-copy :is(p, ul) {
+  color: var(--ink);
+}
+/* Numbered lists indent like the bulleted ones, so the numbers stay inside
+   the column instead of hanging past its left edge. */
+.container > .sp-stacked-head + .sp-local-copy ol {
+  padding-left: 22px;
 }
 
 /* Hero */
@@ -6063,6 +6069,7 @@ svg.icon {
 /* Payment status and cancelled pages */
 .checkout-result .container.narrow {
   width: min(100% - (var(--gutter) * 2), 720px);
+  margin-inline: auto;
 }
 .result-card {
   display: grid;
@@ -6212,11 +6219,18 @@ svg.icon {
 }
 
 /* ───────────────────────── Articles (/resources/<slug>) ───────────────────────── */
+/* The heading block starts at the logo's left edge, like the sections below:
+   the H1 runs to 1100px, and the intro, summary and contents boxes share the
+   1040px reading measure. */
 .article-head {
-  max-width: 60rem;
+  max-width: none;
+}
+.article-head > .article-intro {
+  justify-self: stretch;
+  max-width: 1040px;
 }
 .article-head h1 {
-  max-width: none;
+  max-width: 1100px;
   text-wrap: balance;
 }
 .article-meta {
@@ -6237,7 +6251,7 @@ svg.icon {
 .article-toc,
 .article-summary {
   width: 100%;
-  max-width: 60ch;
+  max-width: 1040px;
   padding: 20px 22px;
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -6648,6 +6662,16 @@ svg.icon {
 }
 .hero.compact h1 {
   max-width: 18ch;
+}
+/* /resources: the hero shares the reading edges of the guides below it. */
+.hero.compact.reading-hero .hero-copy {
+  max-width: none;
+}
+.hero.compact.reading-hero h1 {
+  max-width: 1100px;
+}
+.hero.compact.reading-hero .lede {
+  max-width: 1040px;
 }
 
 /* Service pages: the local search copy keeps its reading measure, and from
