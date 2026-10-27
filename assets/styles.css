@@ -2165,7 +2165,7 @@ svg.icon {
   inset: -3px -12px;
 }
 .article-toc a::after {
-  inset: -4px 0;
+  inset: -3px 0;
 }
 .cta-contacts a::after {
   inset: -6px -14px;
@@ -6229,8 +6229,12 @@ svg.icon {
   justify-self: stretch;
   max-width: 1040px;
 }
+/* Smaller than the page H1 so long titles hold to two lines on desktop and
+   four on a phone, and still the largest text on the page. */
 .article-head h1 {
   max-width: 1100px;
+  font-size: clamp(2.25rem, 1.4rem + 2.6vw, 3.5rem);
+  line-height: 1.08;
   text-wrap: balance;
 }
 .article-meta {
@@ -6247,8 +6251,7 @@ svg.icon {
 .article-intro {
   margin-top: 4px;
 }
-/* The short-answer box in an article intro uses the same card as the contents. */
-.article-toc,
+/* A boxed aside in an article (the sources list above the call to action). */
 .article-summary {
   width: 100%;
   max-width: 1040px;
@@ -6257,18 +6260,54 @@ svg.icon {
   border-radius: 14px;
   background: var(--surface);
 }
-.article-toc ol {
-  display: grid;
-  gap: 8px;
-  margin-top: 10px;
-  padding-left: 22px;
-  list-style: decimal;
-  color: var(--body);
-}
 .article-summary ul {
   margin-top: 10px;
 }
-.article-toc a {
+/* The short answer in the intro reads as a highlighted summary: a lime tint
+   with a lime bar on the left, the text in ink, 20px below the hook. */
+.article-intro > .article-summary {
+  margin-top: 4px;
+  padding: 22px 24px;
+  border: 0;
+  border-left: 4px solid var(--accent-lime);
+  background: color-mix(in srgb, var(--accent-lime) 22%, transparent);
+}
+.article-intro > .article-summary p:not(.eyebrow) {
+  margin-top: 8px;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+/* The contents: a compact numbered list in a thin outline, two columns from
+   1024px, read down the first column and then the second. */
+.article-toc {
+  width: 100%;
+  max-width: 1040px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.article-toc ol {
+  margin-top: 8px;
+  padding-left: 22px;
+  list-style: decimal;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--body);
+}
+/* Padding rather than a gap, so the spacing holds across the column break. */
+.article-toc li {
+  padding-block: 3px;
+  break-inside: avoid;
+}
+@media (min-width: 1024px) {
+  .article-toc ol {
+    columns: 2;
+    column-gap: 48px;
+  }
+}
+.article-toc a:hover,
+.article-toc a:focus-visible {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
