@@ -1,3 +1,4 @@
+import { price } from "../article-page.js";
 import { serviceSalesPage } from "../service-sales-page.js";
 import { SERVICE_VISUALS as V } from "../service-visuals.js";
 
@@ -118,6 +119,26 @@ export default serviceSalesPage({
     {
       q: "Who owns the enquiries it captures?",
       a: "<p>Your business does. Enquiry details are captured for you, and an export of your lead data is available. Any additional migration work is quoted separately.</p>",
+    },
+    {
+      q: "Do AI receptionists actually work?",
+      a: "<p>For routine calls, yes: they answer common questions, take the caller’s details and pass the enquiry to you, any time of day. They work less well for complicated, unusual or emotional calls, which is why ours hands those to you. How well it works depends mostly on the answers it is given, so we agree those with you and check its conversations closely in the first month.</p>",
+    },
+    {
+      q: "Is an AI receptionist worth it for a small business?",
+      a: '<p>It depends on how many enquiries you lose now. Count the calls you miss over two weeks and estimate how many were real jobs. If even one extra job a month comes from calls you would have missed, it usually covers the cost. If you already answer almost every call, it may not be worth it. Our guide to <a href="/resources/ai-receptionist-cost-uk">what an AI receptionist costs in the UK</a> walks through the numbers.</p>',
+    },
+    {
+      q: "Is there a free AI receptionist?",
+      a: `<p>Not for ongoing business use, among the UK providers we have checked. Some offer free trials, and the AI behind any receptionist charges for usage. Ours is ${price("ai-receptionist-website-chat")} setup, excluding VAT, with that usage passed on at cost. Our guide to <a href="/resources/ai-receptionist-cost-uk">AI receptionist prices in the UK</a> compares published plans.</p>`,
+    },
+    {
+      q: "Will an AI receptionist replace my staff?",
+      a: "<p>No. It covers the calls and chats nobody is free to answer, such as evenings, weekends and busy moments, and hands anything that needs a person to you or your team. Most businesses use it alongside the people they already have.</p>",
+    },
+    {
+      q: "What can’t an AI receptionist do?",
+      a: "<p>It cannot use judgement the way a person can. Ours does not give professional, clinical, legal or financial advice, agree prices for unusual jobs, handle complaints, take payments or card details, or pretend to be human. Those go to you, with the customer’s details already taken.</p>",
     },
   ],
   relatedItems: [

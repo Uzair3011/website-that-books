@@ -37,7 +37,7 @@ export default stackedPage({
           <li><strong>Booking.</strong> Offering times or booking into your calendar, where your setup supports it.</li>
           <li><strong>Follow-up.</strong> A reminder before an appointment, a nudge on a quote, a review request afterwards.</li>
         </ul>`,
-        `The first three are what our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> is built to do. Follow-up, reminders and keeping every enquiry in one place sit in <a href="/crm-booking-automation">booking and CRM automation for small businesses</a>. Both have a fixed scope and a published price.`,
+        `The first three are what our <a href="/ai-receptionist-middlesbrough">AI receptionist</a> and website chat is built to do. Follow-up, reminders and keeping every enquiry in one place sit in <a href="/crm-booking-automation">booking and CRM automation for small businesses</a>. Both have a fixed scope and a published price.`,
       ],
     },
     {
@@ -121,6 +121,26 @@ export default stackedPage({
     {
       q: "Do you work with businesses outside Middlesbrough?",
       a: '<p>Yes. We are based in Middlesbrough and work across the Tees Valley, mostly online; see the <a href="/areas">areas we serve</a>. We also work with businesses elsewhere in the UK.</p>',
+    },
+    {
+      q: "What can an AI agent do for my business?",
+      a: '<p>For most local businesses, a few defined jobs: answering common questions from approved answers, taking the details you need to quote or call back, offering times where it is connected to your calendar, and sending agreed reminders and follow-ups. It hands anything outside those jobs to a person. See our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> and <a href="/crm-booking-automation">booking and CRM automation</a>.</p>',
+    },
+    {
+      q: "How do I start using AI agents?",
+      a: "<p>Start with one job, not a whole system. Pick where you lose the most work, such as missed calls or quotes nobody follows up, and write down the questions customers ask and the answers you would give. Then decide when a person should take over. Those answers are most of the setup work, whichever tool you use.</p>",
+    },
+    {
+      q: "Is ChatGPT an AI agent?",
+      a: "<p>Not on its own. ChatGPT is a general assistant you talk to yourself. A business AI agent uses the same kind of technology but is set up for one job: it answers your customers from approved information, takes an agreed step such as saving an enquiry, and hands over to you by set rules.</p>",
+    },
+    {
+      q: "Are there free AI agents for business?",
+      a: "<p>General assistants such as ChatGPT have free plans, and you can use them yourself for writing and admin. An agent that answers your customers is different: it needs a phone line or website connection, your approved answers and testing, and the AI behind it charges for usage. Free trials exist, but running one for customers costs something.</p>",
+    },
+    {
+      q: "What is an AI voice agent?",
+      a: '<p>An AI agent that answers phone calls and talks to the caller, instead of replying in a chat box. It should say it is an AI at the start, answer from approved information, take the caller’s details and hand over when needed. Our <a href="/ai-receptionist-middlesbrough">AI receptionist</a> can answer calls as well as website chat; the phone connections supported for your setup are confirmed in writing before work begins.</p>',
     },
   ],
   relatedSections: [
