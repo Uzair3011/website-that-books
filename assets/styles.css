@@ -6251,28 +6251,18 @@ svg.icon {
 .article-intro {
   margin-top: 4px;
 }
-/* A boxed aside in an article (the sources list above the call to action). */
+/* The short answer in the intro reads as a highlighted summary: a lime tint
+   with a lime bar on the left, the text in ink, 20px below the hook. */
 .article-summary {
   width: 100%;
   max-width: 1040px;
-  padding: 20px 22px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--surface);
-}
-.article-summary ul {
-  margin-top: 10px;
-}
-/* The short answer in the intro reads as a highlighted summary: a lime tint
-   with a lime bar on the left, the text in ink, 20px below the hook. */
-.article-intro > .article-summary {
   margin-top: 4px;
   padding: 22px 24px;
-  border: 0;
   border-left: 4px solid var(--accent-lime);
+  border-radius: 14px;
   background: color-mix(in srgb, var(--accent-lime) 22%, transparent);
 }
-.article-intro > .article-summary p:not(.eyebrow) {
+.article-summary p:not(.eyebrow) {
   margin-top: 8px;
   font-size: 1.0625rem;
   line-height: 1.6;
@@ -6313,6 +6303,207 @@ svg.icon {
 }
 .article-checklist {
   margin-block: 4px;
+}
+/* Article sections sit closer than the site's other sections: about 96px
+   between them on desktop and 64px on a phone, up to the call to action. */
+.article-hero ~ .section {
+  padding-block: clamp(32px, 3.4vw, 48px);
+}
+.article-hero ~ .cta-band {
+  padding-top: clamp(32px, 3.4vw, 48px);
+}
+/* The long-reading rules indent numbered lists and set text in ink; the
+   blocks below set their own. */
+.container > .sp-stacked-head + .sp-local-copy .article-steps {
+  padding-left: 0;
+}
+.container > .sp-stacked-head + .sp-local-copy p.article-note,
+.container > .sp-stacked-head + .sp-local-copy .article-sources :is(.eyebrow, ul) {
+  color: var(--body);
+}
+/* A worked example: figures joined by arrows on the short-answer tint, the
+   result in a lime fill. Stacked on a phone, in a row from 900px. */
+.article-calc {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--accent-lime) 22%, transparent);
+}
+.article-calc ul {
+  justify-self: stretch;
+  display: grid;
+  gap: 28px;
+  padding: 0;
+  list-style: none;
+}
+.article-calc li {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--body);
+}
+.article-calc b {
+  font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.article-calc li:last-child {
+  background: var(--accent-lime);
+  color: #071313;
+}
+.article-calc li:last-child b {
+  color: #071313;
+}
+.article-calc .icon {
+  position: absolute;
+  left: 18px;
+  bottom: -26px;
+  width: 22px;
+  height: 22px;
+  color: var(--ink);
+  transform: rotate(90deg);
+}
+@media (min-width: 900px) {
+  .article-calc ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .article-calc .icon {
+    left: auto;
+    right: -27px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+}
+.article-note {
+  margin-top: -4px;
+  font-size: 0.9375rem;
+}
+.article-takeaway {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+/* Numbered steps: a lime number circle beside each, in up to three columns. */
+.article-steps {
+  display: grid;
+  gap: 18px 32px;
+  counter-reset: step;
+  list-style: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+@media (min-width: 600px) {
+  .article-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 960px) {
+  .article-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.article-steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.article-steps li::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  color: #071313;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+/* Ticked points with the lead-in as a mini heading, between thin rules. Two
+   columns from 768px. */
+.prose .article-features {
+  gap: 0 40px;
+  padding-left: 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  .prose .article-features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.article-features li {
+  padding-block: 16px;
+  border-top: 1px solid var(--line);
+}
+.article-features .icon {
+  margin-top: 5px;
+}
+.article-features strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+/* A panel led by a large figure, the copy and a two-column checklist below. */
+.article-panel {
+  display: grid;
+  gap: 16px;
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.article-panel .sp-aside-price b {
+  font-size: clamp(2.5rem, 2rem + 2vw, 3.25rem);
+}
+.prose .article-panel .article-checklist {
+  gap: 10px 32px;
+  padding-left: 0;
+}
+@media (min-width: 768px) {
+  .prose .article-panel .article-checklist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* Sources: a small, muted list closing the last section. */
+.article-sources {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+.prose .article-sources ul {
+  gap: 4px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.prose .article-sources a {
+  text-decoration: none;
+}
+.prose .article-sources a:hover,
+.prose .article-sources a:focus-visible {
+  text-decoration: underline;
 }
 .table-wrap {
   max-width: 100%;

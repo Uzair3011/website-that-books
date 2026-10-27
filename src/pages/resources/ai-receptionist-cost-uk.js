@@ -7,7 +7,7 @@
 // example, not a client's results. The FAQ is purchase objections only, and
 // every claim about our setup must match /ai-receptionist-middlesbrough. Our
 // own price is read from assets/catalog.js.
-import { articlePage, checklist, price, table } from "../../article-page.js";
+import { articlePage, calculation, checklist, features, panel, price, steps, table } from "../../article-page.js";
 
 const answerCoUk = "https://www.answer.co.uk/ai-virtual-receptionist-service/";
 const fasthosts = "https://www.fasthosts.co.uk/spark/ai-receptionist";
@@ -65,14 +65,17 @@ export default articlePage({
       body: [
         "Comparing £39 with £99 a month misses the bigger number. The real cost is the work that goes to someone else while your phone rings out.",
         "Here is a simple example for a local trade:",
-        `<ul>
-          <li>10 missed enquiries a month</li>
-          <li>3 of them would have become jobs</li>
-          <li>£300 average job</li>
-          <li>£900 of work a month going to someone else</li>
-        </ul>`,
-        "These are example figures, not a client’s results. To work out your own, count the calls you miss over two weeks, estimate how many were real jobs, and multiply by your average job value.",
-        `If an AI receptionist wins back even one of those jobs, it has already covered its ${setup} setup.`,
+        calculation({
+          tag: "Example",
+          items: [
+            { figure: "10", label: "missed enquiries a month" },
+            { figure: "3", label: "of them would have become jobs" },
+            { figure: "£300", label: "average job" },
+            { figure: "£900", label: "of work a month going to someone else" },
+          ],
+        }),
+        `<p class="article-note">These are example figures, not a client’s results. To work out your own, count the calls you miss over two weeks, estimate how many were real jobs, and multiply by your average job value.</p>`,
+        `<p class="article-takeaway">If an AI receptionist wins back even one of those jobs, it has already covered its ${setup} setup.</p>`,
       ],
     },
     {
@@ -82,14 +85,14 @@ export default articlePage({
       heading: "What an AI receptionist does",
       body: [
         "In plain terms, it does what a good receptionist would do when you cannot get to the phone:",
-        `<ol>
-          <li>Answers every call and chat straight away, including evenings and weekends.</li>
-          <li>Qualifies the enquiry: what the job is, where it is and how urgent.</li>
-          <li>Captures the details you need: name, number and what they need doing.</li>
-          <li>Books the job into your calendar, where it is connected.</li>
-          <li>Hands over to you by rules you set, for urgent jobs, complaints or anything it cannot answer.</li>
-          <li>Keeps working after hours, so the 9pm enquiry is waiting for you in the morning instead of going to a competitor.</li>
-        </ol>`,
+        steps([
+          "Answers every call and chat straight away, including evenings and weekends.",
+          "Qualifies the enquiry: what the job is, where it is and how urgent.",
+          "Captures the details you need: name, number and what they need doing.",
+          "Books the job into your calendar, where it is connected.",
+          "Hands over to you by rules you set, for urgent jobs, complaints or anything it cannot answer.",
+          "Keeps working after hours, so the 9pm enquiry is waiting for you in the morning instead of going to a competitor.",
+        ]),
         `For a fuller explanation, see <a href="/resources/what-is-an-ai-receptionist">What is an AI receptionist?</a>`,
       ],
     },
@@ -101,16 +104,16 @@ export default articlePage({
       band: "band-light",
       body: [
         "The software is the easy part. What decides whether it wins you work is how it is set up:",
-        `<ul>
-          <li><strong>Answers you approve.</strong> It is trained on your services, prices, areas and hours, and only says what you have signed off. It never makes up a price or a promise.</li>
-          <li><strong>One set of answers for calls and website chat.</strong> A visitor on your website hears what a caller hears.</li>
-          <li><strong>Connected to your calendar.</strong> It books into your real availability instead of just taking a message.</li>
-          <li><strong>Clear handover rules.</strong> You decide when a person takes over, and you get the customer’s details straight away.</li>
-          <li><strong>Missed-call text.</strong> If someone calls your own phone and you miss it, it texts them to start the booking.</li>
-          <li><strong>Built and tested before launch.</strong> Your customers never hear a first draft.</li>
-          <li><strong>30 days of fine-tuning.</strong> We read its conversations in the first month and adjust its answers.</li>
-          <li><strong>Your enquiries are yours.</strong> Everything it captures belongs to your business, with an export available.</li>
-        </ul>`,
+        features([
+          { lead: "Answers you approve.", text: "It is trained on your services, prices, areas and hours, and only says what you have signed off. It never makes up a price or a promise." },
+          { lead: "One set of answers for calls and website chat.", text: "A visitor on your website hears what a caller hears." },
+          { lead: "Connected to your calendar.", text: "It books into your real availability instead of just taking a message." },
+          { lead: "Clear handover rules.", text: "You decide when a person takes over, and you get the customer’s details straight away." },
+          { lead: "Missed-call text.", text: "If someone calls your own phone and you miss it, it texts them to start the booking." },
+          { lead: "Built and tested before launch.", text: "Your customers never hear a first draft." },
+          { lead: "30 days of fine-tuning.", text: "We read its conversations in the first month and adjust its answers." },
+          { lead: "Your enquiries are yours.", text: "Everything it captures belongs to your business, with an export available." },
+        ]),
       ],
     },
     {
@@ -119,21 +122,26 @@ export default articlePage({
       eyebrow: "Our price",
       heading: "Price and what you get",
       body: [
-        `Our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> is ${setup} setup, excluding VAT. The AI provider’s usage is passed on at cost, not marked up, and the expected monthly figure is confirmed in writing before work starts. It is on our <a href="/pricing">price list</a>.`,
-        "For that you get:",
-        checklist([
-          "An AI receptionist trained on your business",
-          "Website chat using the same approved answers",
-          "Live calendar booking",
-          "An enquiry qualification flow",
-          "Handover rules agreed with you",
-          "Missed-call-to-text",
-          "30 days of conversation fine-tuning",
-          "A timeline agreed in writing",
-        ]),
-        // Not in the supplied copy: scripts/seo-check.mjs requires every article
-        // to link to an area page or /areas, and this is the old article's line.
-        `We set these up for businesses across <a href="/areas">Middlesbrough and the Tees Valley</a>.`,
+        panel({
+          figure: setup,
+          body: [
+            `Our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> is ${setup} setup, excluding VAT. The AI provider’s usage is passed on at cost, not marked up, and the expected monthly figure is confirmed in writing before work starts. It is on our <a href="/pricing">price list</a>.`,
+            "For that you get:",
+            checklist([
+              "An AI receptionist trained on your business",
+              "Website chat using the same approved answers",
+              "Live calendar booking",
+              "An enquiry qualification flow",
+              "Handover rules agreed with you",
+              "Missed-call-to-text",
+              "30 days of conversation fine-tuning",
+              "A timeline agreed in writing",
+            ]),
+            // Not in the supplied copy: scripts/seo-check.mjs requires every article
+            // to link to an area page or /areas, and this is the old article's line.
+            `We set these up for businesses across <a href="/areas">Middlesbrough and the Tees Valley</a>.`,
+          ],
+        }),
       ],
     },
     {

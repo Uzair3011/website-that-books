@@ -4,8 +4,8 @@
 // dates, a short table of contents, BlogPosting JSON-LD, related reading and a
 // call to action to the free audit. Each article passes all of its own copy.
 // Optional: a section can end in an FAQ (with matching FAQPage JSON-LD), a
-// small sources list can sit above the call to action, and an article can
-// drop the related reading and name its own button.
+// small sources list can close the last section, and an article can drop the
+// related reading and name its own button.
 import { catalogItem } from "../assets/catalog.js";
 import {
   CTA,
@@ -35,6 +35,29 @@ export const table = ({ caption, head, rows }) => `<div class="table-wrap" tabin
 export const checklist = (items) =>
   `<ul class="tick-list article-checklist">${items.map((item) => `<li>${icon("check")}<span>${item}</span></li>`).join("")}</ul>`;
 
+// Blocks for an article body, each held to the 1040px reading width like the text.
+
+/** A worked example: figures joined by arrows, the last one the result, e.g.
+ * [{ figure: "10", label: "missed enquiries a month" }]. Still a list, so it
+ * reads as one line per figure. */
+export const calculation = ({ tag, items }) => `<div class="article-calc">
+          <p><span class="sp-price-label">${tag}</span></p>
+          <ul>${items.map((item, i) => `<li><b>${item.figure}</b> <span>${item.label}</span>${i < items.length - 1 ? icon("arrow") : ""}</li>`).join("")}</ul>
+        </div>`;
+
+/** Numbered steps as a compact grid. */
+export const steps = (items) => `<ol class="article-steps">${items.map((item) => `<li>${item}</li>`).join("")}</ol>`;
+
+/** Ticked points with a bold lead-in on its own line: [{ lead, text }]. */
+export const features = (items) =>
+  `<ul class="tick-list article-features">${items.map((item) => `<li>${icon("check")}<div><strong>${item.lead}</strong> ${item.text}</div></li>`).join("")}</ul>`;
+
+/** A panel led by a large figure (e.g. a price that the copy below also states). */
+export const panel = ({ figure, body }) => `<div class="article-panel">
+          <p class="sp-aside-price" aria-hidden="true"><b>${figure}</b></p>
+          ${body.map(block).join("")}
+        </div>`;
+
 const longDate = (iso) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-GB", {
     day: "numeric",
@@ -62,7 +85,7 @@ export function articlePage({
   updated = published,
   // [{ id, toc, eyebrow, heading, body: [paragraph text or HTML], band, faq: [{ q, a }] }]
   sections,
-  // { heading, items: [{ label, href }] }, shown just above the call to action.
+  // { heading, items: [{ label, href }] }, a small list at the end of the last section.
   sources = null,
   // [{ href, label, text }]; empty for no "Read next".
   relatedItems = [],
@@ -90,7 +113,7 @@ export function articlePage({
       </section>
 ${sections
   .map(
-    (section) => `
+    (section, i) => `
       <section class="section${section.band ? ` ${section.band}` : ""}" id="${section.id}">
         <div class="container">
           <div class="section-head sp-stacked-head">
@@ -101,28 +124,20 @@ ${sections
             section.faq
               ? `<div class="faq reveal">${section.faq.map((item) => `<details><summary>${item.q}</summary><div>${item.a}</div></details>`).join("")}</div>`
               : ""
+          }${
+            sources && i === sections.length - 1
+              ? `<aside class="article-sources" aria-labelledby="sources-title">
+              <p class="eyebrow" id="sources-title">${sources.heading}</p>
+              <ul>${sources.items.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}</ul>
+            </aside>`
+              : ""
           }</div>
         </div>
       </section>`,
   )
   .join("\n")}
 
-${
-  sources
-    ? `
-      <section class="section tight">
-        <div class="container">
-          <div class="prose">
-            <aside class="article-summary" aria-labelledby="sources-title">
-              <p class="eyebrow" id="sources-title">${sources.heading}</p>
-              <ul>${sources.items.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}</ul>
-            </aside>
-          </div>
-        </div>
-      </section>
-`
-    : ""
-}${relatedItems.length ? related(relatedItems, "Read next") : ""}
+${relatedItems.length ? related(relatedItems, "Read next") : ""}
 
 ${finalCta({ heading: closing.heading, body: closing.body, primary: closing.button, href: CTA.href })}`;
 
