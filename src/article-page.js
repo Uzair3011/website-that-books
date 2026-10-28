@@ -16,6 +16,7 @@ import {
   icon,
   related,
 } from "./site.js";
+import { readingSectionClass } from "./reading.js";
 
 /** A published price from assets/catalog.js, e.g. "£179", so articles never drift from /pricing. */
 export const price = (slug) => `£${catalogItem(slug).price.toLocaleString("en-GB")}`;
@@ -48,9 +49,8 @@ export const calculation = ({ tag, items }) => `<div class="article-calc">
 /** Numbered steps as a compact grid. */
 export const steps = (items) => `<ol class="article-steps">${items.map((item) => `<li>${item}</li>`).join("")}</ol>`;
 
-/** Ticked points with a bold lead-in on its own line: [{ lead, text }]. */
-export const features = (items) =>
-  `<ul class="tick-list article-features">${items.map((item) => `<li>${icon("check")}<div><strong>${item.lead}</strong> ${item.text}</div></li>`).join("")}</ul>`;
+/** One column of ticked points in the reading layout (src/reading.js). */
+export const ticks = (items) => `<ul class="rl-ticks">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 
 /** A panel led by a large figure (e.g. a price that the copy below also states). */
 export const panel = ({ figure, body }) => `<div class="article-panel">
@@ -91,6 +91,8 @@ export function articlePage({
   relatedItems = [],
   // { heading, body, button }; the button goes to the free audit.
   closing,
+  // The reading layout's section spacing (src/reading.js).
+  readingLayout = false,
 }) {
   const path = `/resources/${slug}`;
   // At most one section carries the FAQ; its questions are also the FAQPage JSON-LD.
@@ -114,7 +116,7 @@ export function articlePage({
 ${sections
   .map(
     (section, i) => `
-      <section class="section${section.band ? ` ${section.band}` : ""}" id="${section.id}">
+      <section class="${readingLayout ? readingSectionClass(section.band) : `section${section.band ? ` ${section.band}` : ""}`}" id="${section.id}">
         <div class="container">
           <div class="section-head sp-stacked-head">
             <p class="eyebrow">${section.eyebrow}</p>

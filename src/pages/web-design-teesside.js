@@ -160,4 +160,5 @@ export default servicePage({
       text: "Hosting, updates, backups and support from £49 a month, if you want it.",
     },
   ],
+  readingLayout: true,
 });

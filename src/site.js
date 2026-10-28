@@ -299,11 +299,13 @@ const relatedCols = (n) =>
     : `cols-${n <= 3 ? n : n % 3 === 0 ? 3 : n % 2 === 0 ? 2 : 3}`;
 
 /** Related pages. Used for internal linking on every service page. */
-export function related(items, heading = "Related services") {
+// { reading: true } sets the links as separate cards under a reading-size H2
+// (the reading layout in src/reading.js).
+export function related(items, heading = "Related services", { reading = false } = {}) {
   return `<section class="section tight">
   <div class="container">
-    <h2 class="section-head">${heading}</h2>
-    <ul class="related ${relatedCols(items.length)} reveal">
+    <h2 class="${reading ? "rl-h2" : "section-head"}">${heading}</h2>
+    <ul class="${reading ? "rl-link-cards" : `related ${relatedCols(items.length)}`} reveal">
       ${items
         .map(
           (item) =>

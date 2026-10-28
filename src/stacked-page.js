@@ -14,6 +14,7 @@ import {
   related,
   serviceJsonLd,
 } from "./site.js";
+import { readingBody, readingSectionClass } from "./reading.js";
 
 // A body item that is already HTML (a list, say) is used as is; plain text is a paragraph.
 const block = (item) => (item.startsWith("<") ? item : `<p>${item}</p>`);
@@ -55,6 +56,8 @@ export function stackedPage({
   relatedSections = [],
   // { heading, body }; the button always goes to the free audit.
   closing,
+  // The reading layout for the sections (src/reading.js); set by areaPage.
+  readingLayout = false,
 }) {
   const body = `      <section class="hero">
         <div class="container">
@@ -73,8 +76,17 @@ export function stackedPage({
         </div>
       </section>
 ${sections
-  .map(
-    (section) => `
+  .map((section) =>
+    readingLayout
+      ? `
+      <section class="${readingSectionClass(section.band)}"${section.id ? ` id="${section.id}"` : ""}>
+        <div class="container">
+          <p class="eyebrow rl-label">${section.eyebrow}</p>
+          <h2 class="rl-h2">${section.heading}</h2>
+          ${readingBody(section.body)}
+        </div>
+      </section>`
+      : `
       <section class="section${section.band ? ` ${section.band}` : ""}"${section.id ? ` id="${section.id}"` : ""}>
         <div class="container">
           <div class="section-head sp-stacked-head">

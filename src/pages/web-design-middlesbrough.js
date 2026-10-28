@@ -107,6 +107,7 @@ export default serviceSalesPage({
     highlight: "Let’s build your machine.",
   },
   local: {
+    readingLayout: true,
     eyebrow: "Local search in Middlesbrough",
     heading: "What Middlesbrough customers search for, and what your website has to answer.",
     body: [

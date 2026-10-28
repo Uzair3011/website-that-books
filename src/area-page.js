@@ -28,5 +28,6 @@ export function areaPage({
     ],
     hero: { image: { ...MAP, alt: mapAlt } },
     relatedSections: [services, areas],
+    readingLayout: true,
   });
 }

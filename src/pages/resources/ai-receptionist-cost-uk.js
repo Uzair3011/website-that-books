@@ -7,7 +7,7 @@
 // example, not a client's results. The FAQ is purchase objections only, and
 // every claim about our setup must match /ai-receptionist-middlesbrough. Our
 // own price is read from assets/catalog.js.
-import { articlePage, calculation, checklist, features, panel, price, steps, table } from "../../article-page.js";
+import { articlePage, calculation, panel, price, steps, table, ticks } from "../../article-page.js";
 
 const answerCoUk = "https://www.answer.co.uk/ai-virtual-receptionist-service/";
 const fasthosts = "https://www.fasthosts.co.uk/spark/ai-receptionist";
@@ -104,15 +104,15 @@ export default articlePage({
       band: "band-light",
       body: [
         "The software is the easy part. What decides whether it wins you work is how it is set up:",
-        features([
-          { lead: "Answers you approve.", text: "It is trained on your services, prices, areas and hours, and only says what you have signed off. It never makes up a price or a promise." },
-          { lead: "One set of answers for calls and website chat.", text: "A visitor on your website hears what a caller hears." },
-          { lead: "Connected to your calendar.", text: "It books into your real availability instead of just taking a message." },
-          { lead: "Clear handover rules.", text: "You decide when a person takes over, and you get the customer’s details straight away." },
-          { lead: "Missed-call text.", text: "If someone calls your own phone and you miss it, it texts them to start the booking." },
-          { lead: "Built and tested before launch.", text: "Your customers never hear a first draft." },
-          { lead: "30 days of fine-tuning.", text: "We read its conversations in the first month and adjust its answers." },
-          { lead: "Your enquiries are yours.", text: "Everything it captures belongs to your business, with an export available." },
+        ticks([
+          "<strong>Answers you approve.</strong><br>It is trained on your services, prices, areas and hours, and only says what you have signed off. It never makes up a price or a promise.",
+          "<strong>One set of answers for calls and website chat.</strong><br>A visitor on your website hears what a caller hears.",
+          "<strong>Connected to your calendar.</strong><br>It books into your real availability instead of just taking a message.",
+          "<strong>Clear handover rules.</strong><br>You decide when a person takes over, and you get the customer’s details straight away.",
+          "<strong>Missed-call text.</strong><br>If someone calls your own phone and you miss it, it texts them to start the booking.",
+          "<strong>Built and tested before launch.</strong><br>Your customers never hear a first draft.",
+          "<strong>30 days of fine-tuning.</strong><br>We read its conversations in the first month and adjust its answers.",
+          "<strong>Your enquiries are yours.</strong><br>Everything it captures belongs to your business, with an export available.",
         ]),
       ],
     },
@@ -127,7 +127,7 @@ export default articlePage({
           body: [
             `Our <a href="/ai-receptionist-middlesbrough">AI receptionist and website chat</a> is ${setup} setup, excluding VAT. The AI provider’s usage is passed on at cost, not marked up, and the expected monthly figure is confirmed in writing before work starts. It is on our <a href="/pricing">price list</a>.`,
             "For that you get:",
-            checklist([
+            ticks([
               "An AI receptionist trained on your business",
               "Website chat using the same approved answers",
               "Live calendar booking",
@@ -191,4 +191,5 @@ export default articlePage({
     body: "Tell us how enquiries reach you now and roughly how many calls you miss. We will show you what it would answer, what it would pass to you, and whether it is worth it for your business.",
     button: "See what it could handle",
   },
+  readingLayout: true,
 });

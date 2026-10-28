@@ -10,6 +10,7 @@ import {
   related,
   serviceJsonLd,
 } from "./site.js";
+import { readingBody } from "./reading.js";
 
 export function servicePage({
   path,
@@ -37,6 +38,9 @@ export function servicePage({
   faqs,
   relatedItems,
   breadcrumbName,
+  // The reading layout (src/reading.js) for the intro, the local copy and the
+  // related links; /web-design-teesside only.
+  readingLayout = false,
 }) {
   const steps = `<ol class="steps reveal">
             ${included.items
@@ -64,16 +68,35 @@ export function servicePage({
         </div>
       </section>
 
-      <section class="section">
+${
+  readingLayout
+    ? `      <section class="rl-section">
+        <div class="container">
+          <h2 class="rl-h2">${intro.heading}</h2>
+          ${readingBody(intro.body)}
+        </div>
+      </section>`
+    : `      <section class="section">
         <div class="container">
           <div class="section-head">
             <h2>${intro.heading}</h2>
           </div>
           <div class="prose">${intro.body.map((p) => `<p>${p}</p>`).join("")}</div>
         </div>
-      </section>
+      </section>`
+}
 ${
-  local
+  local && readingLayout
+    ? `
+      <section class="rl-section" id="local">
+        <div class="container">
+          <p class="eyebrow rl-label">${local.eyebrow}</p>
+          <h2 class="rl-h2">${local.heading}</h2>
+          ${readingBody(local.body)}
+        </div>
+      </section>
+`
+    : local
     ? `
       <section class="section tight" id="local">
         <div class="container">
@@ -137,7 +160,7 @@ ${
 
 ${faqSection(faqs, { heading: "Common questions", eyebrow: "Before you ask" })}
 
-${related(relatedItems)}
+${related(relatedItems, undefined, { reading: readingLayout })}
 
 ${finalCta()}`;
 

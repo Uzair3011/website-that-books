@@ -6436,34 +6436,6 @@ svg.icon {
   font-size: 0.8125rem;
   font-weight: 700;
 }
-/* Ticked points with the lead-in as a mini heading, between thin rules. Two
-   columns from 768px. */
-.prose .article-features {
-  gap: 0 40px;
-  padding-left: 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-@media (min-width: 768px) {
-  .prose .article-features {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-.article-features li {
-  padding-block: 16px;
-  border-top: 1px solid var(--line);
-}
-.article-features .icon {
-  margin-top: 5px;
-}
-.article-features strong {
-  display: block;
-  margin-bottom: 2px;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: var(--ink);
-}
 /* A panel led by a large figure, the copy and a two-column checklist below. */
 .article-panel {
   display: grid;
@@ -6954,3 +6926,50 @@ svg.icon {
   max-width: 16ch;
   font-size: clamp(2.25rem, 1.4rem + 2.6vw, 3.5rem);
 }
+
+/* ───────────────────────── Reading layout v2 ─────────────────────────
+   The long reading sections of the town pages, /web-design-teesside, the
+   Middlesbrough local copy and the AI receptionist cost guide
+   (src/reading.js): paragraphs in one column, quoted searches in bold, a list
+   of three as cards, other lists ticked, a paragraph of links in a box. */
+.rl-section{padding:88px 0}
+.rl-label{margin:0 0 14px}
+.rl-h2{margin:0 0 22px;max-width:980px;font-size:40px;line-height:1.12;letter-spacing:-.025em;text-wrap:balance}
+.rl-prose{max-width:720px}
+.rl-prose p{margin:0 0 18px;font-size:18px;line-height:1.7;color:#1d2826}
+.rl-prose p:last-child{margin-bottom:0}
+.rl-quote{font-weight:600;color:var(--text-primary)}
+.rl-ticks{list-style:none;margin:28px 0 0;padding:0;max-width:760px;display:grid;grid-template-columns:1fr;gap:16px}
+.rl-ticks li{position:relative;padding-left:38px;font-size:17px;line-height:1.6;color:#1d2826}
+.rl-ticks li::before{content:"";position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:var(--accent-lime)}
+.rl-ticks li::after{content:"";position:absolute;left:8px;top:7px;width:8px;height:5px;border-left:2px solid var(--text-primary);border-bottom:2px solid var(--text-primary);transform:rotate(-45deg)}
+.rl-cards{list-style:none;margin:28px 0 0;padding:0;max-width:1040px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rl-cards li{background:var(--surface-card-light);border:1px solid #e2e6dc;border-radius:16px;padding:22px 24px;font-size:17px;line-height:1.6;color:#1d2826}
+.rl-on-white .rl-cards li{background:var(--bg-primary);border-color:transparent}
+.rl-cards li::before{content:"";display:block;width:24px;height:24px;margin-bottom:14px;border-radius:50%;background:var(--accent-lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23071313' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
+.rl-related{max-width:768px;margin:32px 0 0;padding:20px 24px;border:1px solid #e2e6dc;border-radius:16px;background:var(--surface-card-light);font-size:16px;line-height:1.7;color:#1d2826}
+.rl-on-white .rl-related{background:var(--bg-primary);border-color:transparent}
+.rl-related a,.rl-prose a{color:var(--text-primary);text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(7,19,19,.35);text-underline-offset:3px}
+.rl-related a:hover,.rl-prose a:hover,.rl-related a:focus-visible,.rl-prose a:focus-visible{text-decoration-color:var(--text-primary);text-decoration-thickness:2px}
+@media (max-width:1023px){.rl-cards{grid-template-columns:1fr}}
+@media (max-width:640px){.rl-section{padding:64px 0}.rl-h2{font-size:30px}.rl-prose p{font-size:17px}}
+/* Copy that follows a list or a link box keeps that block's own top margin
+   as the gap (Redcar, Hartlepool, Teesside, Middlesbrough). */
+.rl-ticks + .rl-prose,.rl-cards + .rl-prose{margin-top:28px}
+.rl-related + .rl-prose{margin-top:32px}
+/* The cost guide's tick lists sit in its .prose body, whose list rules would
+   otherwise win: the values of .rl-ticks again. The body and the price panel
+   already put 16px between rows, so 12px more keeps a list 28px below the
+   text above it, as on the town pages. */
+.prose .rl-ticks{gap:16px;margin-top:12px;padding-left:0;list-style:none}
+.container > .sp-stacked-head + .sp-local-copy > .rl-ticks{max-width:760px}
+/* /web-design-teesside's related links: separate cards, 3, 2 then 1 across,
+   a short last row keeping the column width. */
+.rl-link-cards{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.rl-link-cards > li{display:grid}
+.rl-link-cards a{display:grid;gap:7px;align-content:start;padding:22px;border:1px solid #e2e6dc;border-radius:16px;background:var(--surface-card-light);transition:border-color .25s var(--ease)}
+.rl-link-cards a:hover,.rl-link-cards a:focus-visible{border-color:var(--text-primary)}
+.rl-link-cards b{font-size:18px;font-weight:600;letter-spacing:-.02em;color:var(--text-primary)}
+.rl-link-cards p{font-size:15px;color:var(--text-secondary)}
+@media (max-width:1023px){.rl-link-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.rl-link-cards{grid-template-columns:1fr}}

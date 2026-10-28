@@ -16,6 +16,7 @@ import {
   serviceJsonLd,
 } from "./site.js";
 import { catalogItemByHref } from "../assets/catalog.js";
+import { readingBody } from "./reading.js";
 import { checkoutEnabled } from "../lib/payments.js";
 
 // The same photo as the homepage map section (credited in docs/image-credits.md).
@@ -91,7 +92,8 @@ export function serviceSalesPage({
   closing,
   // Shown with the price wherever it appears, e.g. a running cost billed at cost.
   priceNote = "",
-  // { eyebrow, heading, body: [paragraph HTML] }
+  // { eyebrow, heading, body: [paragraph HTML], readingLayout }: readingLayout
+  // sets the copy column in the reading layout (src/reading.js).
   local = null,
   faqs = [],
   relatedItems = [],
@@ -180,14 +182,23 @@ export function serviceSalesPage({
 ${
   local
     ? `
-      <section class="section" id="local">
+      <section class="${local.readingLayout ? "rl-section" : "section"}" id="local">
         <div class="container">
-          <div class="section-head sp-stacked-head">
+          ${
+            local.readingLayout
+              ? `<p class="eyebrow rl-label">${local.eyebrow}</p>
+          <h2 class="rl-h2">${local.heading}</h2>`
+              : `<div class="section-head sp-stacked-head">
             <p class="eyebrow">${local.eyebrow}</p>
             <h2>${local.heading}</h2>
-          </div>
+          </div>`
+          }
           <div class="sp-local-grid">
-            <div class="prose sp-local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>
+            ${
+              local.readingLayout
+                ? `<div>${readingBody(local.body)}</div>`
+                : `<div class="prose sp-local-copy">${local.body.map((p) => `<p>${p}</p>`).join("")}</div>`
+            }
             <aside class="sp-local-aside" aria-label="${breadcrumbName} at a glance">
               <p class="sp-aside-price"><b>${amount}</b><span>${terms}</span></p>
               <ul class="sp-checks">
