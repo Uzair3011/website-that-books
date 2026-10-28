@@ -52,7 +52,8 @@ export function stackedPage({
   sections,
   faqs,
   faqHeading = "Questions we get asked",
-  // [{ heading, items: [{ href, label, text }] }]
+  // [{ heading, items: [{ href, label, text }], cards }]; cards ("services" |
+  // "areas") sets a group as coloured link cards; set by areaPage.
   relatedSections = [],
   // { heading, body }; the button always goes to the free audit.
   closing,
@@ -100,7 +101,7 @@ ${sections
   .join("\n")}
 
 ${faqSection(faqs, { heading: faqHeading, eyebrow: "Before you ask" })}
-${relatedSections.map((group) => `\n${related(group.items, group.heading)}\n`).join("")}
+${relatedSections.map((group) => `\n${related(group.items, group.heading, { cards: group.cards })}\n`).join("")}
 ${finalCta({ heading: closing.heading, body: closing.body })}`;
 
   return {

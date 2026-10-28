@@ -6934,12 +6934,12 @@ svg.icon {
    of three as cards, other lists ticked, a paragraph of links in a box. */
 .rl-section{padding:88px 0}
 .rl-label{margin:0 0 14px}
-.rl-h2{margin:0 0 22px;max-width:980px;font-size:40px;line-height:1.12;letter-spacing:-.025em;text-wrap:balance}
-.rl-prose{max-width:720px}
+.rl-h2{margin:0 0 22px;max-width:1040px;font-size:40px;line-height:1.12;letter-spacing:-.025em;text-wrap:pretty}
+.rl-prose{max-width:1040px}
 .rl-prose p{margin:0 0 18px;font-size:18px;line-height:1.7;color:#1d2826}
 .rl-prose p:last-child{margin-bottom:0}
 .rl-quote{font-weight:600;color:var(--text-primary)}
-.rl-ticks{list-style:none;margin:28px 0 0;padding:0;max-width:760px;display:grid;grid-template-columns:1fr;gap:16px}
+.rl-ticks{list-style:none;margin:28px 0 0;padding:0;max-width:1040px;display:grid;grid-template-columns:1fr;gap:16px}
 .rl-ticks li{position:relative;padding-left:38px;font-size:17px;line-height:1.6;color:#1d2826}
 .rl-ticks li::before{content:"";position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:var(--accent-lime)}
 .rl-ticks li::after{content:"";position:absolute;left:8px;top:7px;width:8px;height:5px;border-left:2px solid var(--text-primary);border-bottom:2px solid var(--text-primary);transform:rotate(-45deg)}
@@ -6947,7 +6947,7 @@ svg.icon {
 .rl-cards li{background:var(--surface-card-light);border:1px solid #e2e6dc;border-radius:16px;padding:22px 24px;font-size:17px;line-height:1.6;color:#1d2826}
 .rl-on-white .rl-cards li{background:var(--bg-primary);border-color:transparent}
 .rl-cards li::before{content:"";display:block;width:24px;height:24px;margin-bottom:14px;border-radius:50%;background:var(--accent-lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23071313' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
-.rl-related{max-width:768px;margin:32px 0 0;padding:20px 24px;border:1px solid #e2e6dc;border-radius:16px;background:var(--surface-card-light);font-size:16px;line-height:1.7;color:#1d2826}
+.rl-related{max-width:1040px;margin:32px 0 0;padding:20px 24px;border:1px solid #e2e6dc;border-radius:16px;background:var(--surface-card-light);font-size:16px;line-height:1.7;color:#1d2826}
 .rl-on-white .rl-related{background:var(--bg-primary);border-color:transparent}
 .rl-related a,.rl-prose a{color:var(--text-primary);text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(7,19,19,.35);text-underline-offset:3px}
 .rl-related a:hover,.rl-prose a:hover,.rl-related a:focus-visible,.rl-prose a:focus-visible{text-decoration-color:var(--text-primary);text-decoration-thickness:2px}
@@ -6962,14 +6962,30 @@ svg.icon {
    already put 16px between rows, so 12px more keeps a list 28px below the
    text above it, as on the town pages. */
 .prose .rl-ticks{gap:16px;margin-top:12px;padding-left:0;list-style:none}
-.container > .sp-stacked-head + .sp-local-copy > .rl-ticks{max-width:760px}
-/* /web-design-teesside's related links: separate cards, 3, 2 then 1 across,
-   a short last row keeping the column width. */
-.rl-link-cards{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.rl-link-cards > li{display:grid}
-.rl-link-cards a{display:grid;gap:7px;align-content:start;padding:22px;border:1px solid #e2e6dc;border-radius:16px;background:var(--surface-card-light);transition:border-color .25s var(--ease)}
-.rl-link-cards a:hover,.rl-link-cards a:focus-visible{border-color:var(--text-primary)}
-.rl-link-cards b{font-size:18px;font-weight:600;letter-spacing:-.02em;color:var(--text-primary)}
-.rl-link-cards p{font-size:15px;color:var(--text-secondary)}
-@media (max-width:1023px){.rl-link-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.rl-link-cards{grid-template-columns:1fr}}
+/* /web-design-middlesbrough's local copy fills the row up to the price card,
+   64px from it; the card keeps its 280-360px column. */
+@media (min-width:960px){.sp-local-grid.rl-local-grid{grid-template-columns:minmax(0,1fr) minmax(280px,360px);column-gap:64px}}
+
+/* Link cards */
+.lc{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;border:0}
+.lc.lc--3{grid-template-columns:repeat(3,1fr)}
+.lc > li{border:0;padding:0}
+.lc a{position:relative;display:block;height:100%;padding:24px 24px 26px;border-radius:18px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background-color .15s ease}
+.lc a::after{content:"";position:absolute;top:22px;right:22px;width:32px;height:32px;border-radius:50%;background:#071313 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 16L16 8M10 8h6v6' fill='none' stroke='%23c9ff4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
+.lc a:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(7,19,19,.08)}
+.lc a:focus-visible{outline:3px solid #071313;outline-offset:3px}
+.lc .lc-title{display:block;padding-right:44px;margin:0 0 10px;font-size:18px;line-height:1.3;font-weight:600}
+.lc .lc-desc{display:block;font-size:15px;line-height:1.6}
+.lc--services a{background:linear-gradient(150deg,#edffc4 0%,#ffffff 62%);border:1px solid #e2e6dc}
+.lc--services li:nth-child(even) a{background:linear-gradient(150deg,#d6f6ef 0%,#ffffff 62%)}
+.lc--services .lc-title{color:#071313}
+.lc--services .lc-desc{color:#56625f}
+.lc--services a:hover{border-color:#071313}
+.lc--areas a{background:#071313;border:1px solid #071313}
+.lc--areas a::after{background:#c9ff4a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 16L16 8M10 8h6v6' fill='none' stroke='%23071313' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
+.lc--areas .lc-title{color:#ffffff}
+.lc--areas .lc-desc{color:rgba(255,255,255,.72)}
+.lc--areas a:hover{background:#0f2422}
+@media (prefers-reduced-motion:reduce){.lc a{transition:none}.lc a:hover{transform:none}}
+@media (max-width:1023px){.lc,.lc.lc--3{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.lc,.lc.lc--3{grid-template-columns:1fr}}

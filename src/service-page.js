@@ -160,7 +160,7 @@ ${
 
 ${faqSection(faqs, { heading: "Common questions", eyebrow: "Before you ask" })}
 
-${related(relatedItems, undefined, { reading: readingLayout })}
+${related(relatedItems, undefined, { reading: readingLayout, cards: readingLayout ? "services" : "" })}
 
 ${finalCta()}`;
 

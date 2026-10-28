@@ -299,17 +299,23 @@ const relatedCols = (n) =>
     : `cols-${n <= 3 ? n : n % 3 === 0 ? 3 : n % 2 === 0 ? 2 : 3}`;
 
 /** Related pages. Used for internal linking on every service page. */
-// { reading: true } sets the links as separate cards under a reading-size H2
-// (the reading layout in src/reading.js).
-export function related(items, heading = "Related services", { reading = false } = {}) {
+// { reading: true } sets the H2 at reading size (the reading layout in
+// src/reading.js). { cards: "services" | "areas" } sets the links as separate
+// coloured link cards ("Link cards" in assets/styles.css), 4 across, or 3 when
+// the list does not divide by 4.
+export function related(items, heading = "Related services", { reading = false, cards = "" } = {}) {
+  const list = cards
+    ? `lc lc--${cards}${items.length % 4 ? " lc--3" : ""}`
+    : `related ${relatedCols(items.length)}`;
   return `<section class="section tight">
   <div class="container">
     <h2 class="${reading ? "rl-h2" : "section-head"}">${heading}</h2>
-    <ul class="${reading ? "rl-link-cards" : `related ${relatedCols(items.length)}`} reveal">
+    <ul class="${list} reveal">
       ${items
-        .map(
-          (item) =>
-            `<li><a href="${item.href}"><b>${item.label}</b><p>${item.text}</p></a></li>`,
+        .map((item) =>
+          cards
+            ? `<li><a href="${item.href}"><b class="lc-title">${item.label}</b><p class="lc-desc">${item.text}</p></a></li>`
+            : `<li><a href="${item.href}"><b>${item.label}</b><p>${item.text}</p></a></li>`,
         )
         .join("")}
     </ul>

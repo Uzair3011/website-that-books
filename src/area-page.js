@@ -27,7 +27,10 @@ export function areaPage({
       { name: breadcrumbName, path },
     ],
     hero: { image: { ...MAP, alt: mapAlt } },
-    relatedSections: [services, areas],
+    relatedSections: [
+      { ...services, cards: "services" },
+      { ...areas, cards: "areas" },
+    ],
     readingLayout: true,
   });
 }

@@ -193,7 +193,7 @@ ${
             <h2>${local.heading}</h2>
           </div>`
           }
-          <div class="sp-local-grid">
+          <div class="sp-local-grid${local.readingLayout ? " rl-local-grid" : ""}">
             ${
               local.readingLayout
                 ? `<div>${readingBody(local.body)}</div>`
