@@ -15,11 +15,18 @@ const linkCount = (html) => (html.match(/<a\s/g) ?? []).length;
 /** A section body: runs of paragraphs in one single-column block, a list of
  * three as cards and any other list as ticks, and a paragraph with three or
  * more links as a link box. Body items are paragraph text (HTML allowed
- * inside) or an HTML list, in the order given. */
-export function readingBody(items) {
+ * inside) or an HTML list, in the order given. With groupLinks, link-box
+ * paragraphs in a row share one box (/web-design-teesside). */
+export function readingBody(items, { groupLinks = false } = {}) {
   const out = [];
   let prose = [];
+  let links = [];
+  const flushLinks = () => {
+    if (links.length) out.push(`<div class="rl-related rl-related-group">${links.join("")}</div>`);
+    links = [];
+  };
   const flush = () => {
+    flushLinks();
     if (prose.length) out.push(`<div class="rl-prose">${prose.join("")}</div>`);
     prose = [];
   };
@@ -31,10 +38,14 @@ export function readingBody(items) {
     } else if (item.startsWith("<")) {
       flush();
       out.push(item);
+    } else if (linkCount(item) >= 3 && groupLinks) {
+      if (prose.length) flush();
+      links.push(`<p>${quotes(item)}</p>`);
     } else if (linkCount(item) >= 3) {
       flush();
       out.push(`<p class="rl-related">${quotes(item)}</p>`);
     } else {
+      flushLinks();
       prose.push(`<p>${quotes(item)}</p>`);
     }
   }

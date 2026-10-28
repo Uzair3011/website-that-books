@@ -161,4 +161,5 @@ export default servicePage({
     },
   ],
   readingLayout: true,
+  bodyClass: "page-teesside",
 });

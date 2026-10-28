@@ -39,8 +39,11 @@ export function servicePage({
   relatedItems,
   breadcrumbName,
   // The reading layout (src/reading.js) for the intro, the local copy and the
-  // related links; /web-design-teesside only.
+  // related links, the local links in one box and the price as a panel;
+  // /web-design-teesside only.
   readingLayout = false,
+  // Page-scoped body class for this page's own rules in assets/styles.css.
+  bodyClass = "",
 }) {
   const steps = `<ol class="steps reveal">
             ${included.items
@@ -92,7 +95,7 @@ ${
         <div class="container">
           <p class="eyebrow rl-label">${local.eyebrow}</p>
           <h2 class="rl-h2">${local.heading}</h2>
-          ${readingBody(local.body)}
+          ${readingBody(local.body, { groupLinks: true })}
         </div>
       </section>
 `
@@ -145,7 +148,19 @@ ${
         </div>
       </section>
 
-      <section class="section tight">
+${
+  readingLayout
+    ? `      <section class="section tight">
+        <div class="container">
+          <div class="tees-price-panel">
+            <p class="eyebrow rl-label">Price</p>
+            <h2 class="rl-h2">${price.heading}</h2>
+            <p>${price.body}</p>
+            <a class="btn" href="/pricing">See the full price list${icon("arrow-up")}</a>
+          </div>
+        </div>
+      </section>`
+    : `      <section class="section tight">
         <div class="container">
           <div class="split-head">
             <div>
@@ -156,7 +171,8 @@ ${
             <a class="btn" href="/pricing">See the full price list${icon("arrow-up")}</a>
           </div>
         </div>
-      </section>
+      </section>`
+}
 
 ${faqSection(faqs, { heading: "Common questions", eyebrow: "Before you ask" })}
 
@@ -168,6 +184,7 @@ ${finalCta()}`;
     path,
     title,
     description,
+    ...(bodyClass && { bodyClass }),
     jsonLd: [
       serviceJsonLd({ name: serviceName, serviceType, description, path, areaServed }),
       faqJsonLd(faqs),
