@@ -76,7 +76,7 @@ ${
     ? `      <section class="rl-section">
         <div class="container">
           <h2 class="rl-h2">${intro.heading}</h2>
-          ${readingBody(intro.body)}
+          <div class="tees-cards">${intro.body.map((p) => `<p>${p}</p>`).join("")}</div>
         </div>
       </section>`
     : `      <section class="section">
