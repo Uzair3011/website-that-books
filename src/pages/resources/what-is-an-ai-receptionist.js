@@ -8,6 +8,26 @@ import { articlePage, checklist, price, table } from "../../article-page.js";
 
 const growth = catalogItem("growth-launch-package");
 
+const comparedHeading = "AI receptionist vs human receptionist, answering service or voicemail";
+
+// The comparison as a .x-cmp table (assets/styles.css), the AI receptionist
+// column last and tinted. Each row: label, voicemail, in-house receptionist,
+// human answering service, AI receptionist.
+const comparison = [
+  ["Answers questions", "No", "Yes, with full knowledge of the business", "Yes, from a script", "Yes, from approved answers"],
+  ["Available out of hours", "Yes, but only records", "Only if paid to be", "Depends on the plan", "Yes, if set up to"],
+  ["Unusual or emotional calls", "No", "Usually best", "Usually better", "Should hand over"],
+  ["Same answer every time", "Not applicable", "Depends on the person", "Depends on the person", "Yes, if the answers are right"],
+  ["Website chat too", "No", "Only if they also watch it", "Sometimes, separately", "Can use the same answers"],
+  ["How it is usually priced", "Often included with your phone", "Salary, plus National Insurance, pension and holiday cover", "Monthly fee or per call", "Setup, plus usage"],
+];
+const comparisonTable = `<div class="x-cmp" tabindex="0" role="region" aria-label="${comparedHeading}"><table>
+          <thead><tr><th scope="col"></th><th scope="col">Voicemail</th><th scope="col">In-house receptionist</th><th scope="col">Human answering service</th><th scope="col" class="is-ai">AI receptionist<span class="x-badge">Ours</span></th></tr></thead>
+          <tbody>${comparison
+            .map(([label, ...cells]) => `<tr><th scope="row">${label}</th>${cells.map((cell, i) => `<td${i === cells.length - 1 ? ' class="is-ai"' : ""}>${cell}</td>`).join("")}</tr>`)
+            .join("")}</tbody>
+        </table></div>`;
+
 export default articlePage({
   slug: "what-is-an-ai-receptionist",
   title: "What Is an AI Receptionist? A Plain Guide | Veltra Media",
@@ -19,6 +39,7 @@ export default articlePage({
   eyebrow: "Explainer · AI for local businesses",
   h1: "What is an AI receptionist, and what can it actually do?",
   published: "2026-10-13",
+  updated: "2026-10-29",
   intro: [
     "What is an AI receptionist? It is software that answers your phone calls or website chat when you cannot, using information you have approved. It greets the customer, answers common questions, takes the details you need and passes the enquiry to you. This guide explains how it works, where it helps, where it should stop, and what to sort out before you switch one on. It is written by people who sell one, so we have tried to be plain about the limits too.",
   ],
@@ -89,24 +110,32 @@ export default articlePage({
     },
     {
       id: "compared",
-      toc: "Compared with the alternatives",
+      toc: comparedHeading,
       eyebrow: "The alternatives",
-      heading: "AI receptionist, answering service or voicemail?",
+      heading: comparedHeading,
       band: "band-light",
       body: [
-        "Most small businesses choose between three options when they cannot answer the phone. Each has a place:",
-        table({
-          head: ["", "Voicemail", "Human answering service", "AI receptionist"],
-          rows: [
-            ["Answers questions", "No", "Yes, from a script", "Yes, from approved answers"],
-            ["Available out of hours", "Yes, but only records", "Depends on the plan", "Yes, if set up to"],
-            ["Unusual or emotional calls", "No", "Usually better", "Should hand over"],
-            ["Same answer every time", "Not applicable", "Depends on the person", "Yes, if the answers are right"],
-            ["Website chat too", "No", "Sometimes, separately", "Can use the same answers"],
-            ["How it is usually priced", "Often included with your phone", "Monthly fee or per call", "Setup, plus usage"],
-          ],
-        }),
+        "Most small businesses choose between four options when they cannot answer the phone. Each has a place:",
+        comparisonTable,
         "Some callers will not leave a voicemail and will simply try the next business instead. If that is where you lose work, either a human service or an AI receptionist is an improvement. A human service is often the better choice for sensitive calls. An AI receptionist suits businesses with lots of repetitive questions and enquiries outside working hours.",
+      ],
+    },
+    {
+      id: "replace-or-support",
+      toc: "Can an AI receptionist replace a human receptionist?",
+      eyebrow: "Replace or support?",
+      heading: "Can an AI receptionist replace a human receptionist?",
+      // Cream like the section after it, so the "vs" badge's ring (#f4f5ef) matches.
+      className: "x-sec",
+      body: [
+        "Not for most businesses, and it should not try to. A good receptionist does far more than answer the phone: they greet visitors, handle complaints, use judgement and know your regular customers. An AI receptionist is better thought of as cover for the calls nobody can get to.",
+        `<div class="x-vs">
+          <div class="x-side x-side-ai"><h3>Where AI does better</h3><ul><li>Answering at any hour, including weekends</li><li>Handling several calls at once</li><li>Giving the same approved answer every time</li><li>Taking the caller’s details on every call</li></ul></div>
+          <div class="x-vs-badge" aria-hidden="true">vs</div>
+          <div class="x-side x-side-human"><h3>Where a person does better</h3><ul><li>Calming an upset or confused caller</li><li>Judging unusual or complicated jobs</li><li>Handling complaints</li><li>Anything sensitive or personal</li></ul></div>
+        </div>`,
+        '<p class="x-pull">Most small businesses that use one keep their people and let AI cover evenings, weekends and busy moments.</p>',
+        `If you are weighing up the cost of each, see <a href="/resources/ai-receptionist-cost-uk">what an AI receptionist costs in the UK</a>.`,
       ],
     },
     {

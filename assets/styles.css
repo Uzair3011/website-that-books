@@ -7048,3 +7048,44 @@ svg.icon {
 @media (min-width:768px){.page-guide-cards .sp-local-copy ul.ta-clinics{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:767px){.page-guide-cards .sp-local-copy ul.ta-cards{grid-template-columns:1fr}}
 @media (max-width:640px){.page-guide-cards .article-hero{padding-bottom:40px}.page-guide-cards main > section:not(.hero):not(.cta-band){padding-block:40px}.page-guide-cards .cta-band{padding-top:40px}.page-guide-cards .container > div.section-head.sp-stacked-head:has(+ .sp-local-copy) > h2{font-size:30px}}
+
+/* ───────────────────────── Content blocks (x-) ───────────────────────── */
+/* Blocks written for one piece of content each: the comparison table and the
+   AI-or-person split on /resources/what-is-an-ai-receptionist. */
+.x-cmp{max-width:1040px;margin-top:28px;overflow-x:auto;border:1px solid #e2e6dc;border-radius:20px;background:#fff}
+.x-cmp table{width:100%;min-width:760px;border-collapse:collapse;font-size:15px;line-height:1.5}
+.x-cmp th,.x-cmp td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid #eef0e9}
+.x-cmp tr:last-child td,.x-cmp tr:last-child th{border-bottom:0}
+.x-cmp thead th{font-size:14px;font-weight:600;color:#071313;background:#f8f9f4}
+.x-cmp tbody th{font-weight:600;color:#071313;width:20%}
+.x-cmp .is-ai{background:#f3ffd9}
+.x-cmp thead .is-ai{background:#071313;color:#fff}
+.x-cmp .x-badge{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#c9ff4a;color:#071313;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+
+.x-vs{position:relative;max-width:1040px;margin-top:28px;display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;border:1px solid #e2e6dc}
+.x-vs > .x-side{padding:32px 36px 34px}
+.x-vs .x-side-ai{background:#fff}
+.x-vs .x-side-human{background:#071313;color:#fff}
+.x-vs h3{margin:0 0 18px;font-size:20px;line-height:1.3;letter-spacing:-.01em}
+.x-vs .x-side-ai h3{color:#071313}
+.x-vs .x-side-human h3{color:#fff}
+.x-vs ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.x-vs li{position:relative;padding-left:32px;font-size:16px;line-height:1.55}
+.x-vs .x-side-ai li::before{content:"";position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;background:#c9ff4a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23071313' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/15px no-repeat}
+.x-vs .x-side-human li{color:rgba(255,255,255,.82)}
+.x-vs .x-side-human li::before{content:"";position:absolute;left:6px;top:8px;width:8px;height:8px;border-radius:50%;background:#83e7da}
+.x-vs .x-vs-badge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:#c9ff4a;color:#071313;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;box-shadow:0 0 0 6px #f4f5ef}
+.x-pull{max-width:1040px;margin:32px 0 0;padding:4px 0 4px 24px;border-left:4px solid #c9ff4a;font-size:22px;line-height:1.5;color:#071313;font-weight:500}
+
+@media (max-width:767px){
+.x-vs{grid-template-columns:1fr}
+.x-vs .x-vs-badge{position:relative;left:auto;top:auto;transform:none;margin:-26px auto;z-index:1}
+}
+
+/* A section built around these blocks (section className "x-sec"): its own
+   paragraphs in #1d2826 at the 1040px measure, and 120px between its content
+   and its neighbours' (80px at 640px and below). An article's sections have
+   48px padding (32px on a phone), so this one takes 72px (48px). */
+.x-sec .container > .sp-stacked-head + .sp-local-copy > p:not([class]){max-width:1040px;font-size:18px;color:#1d2826}
+.article-hero ~ .section.x-sec{padding-block:72px}
+@media (max-width:640px){.article-hero ~ .section.x-sec{padding-block:48px}}

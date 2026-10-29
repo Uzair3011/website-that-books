@@ -106,7 +106,8 @@ export function articlePage({
   // YYYY-MM-DD.
   published,
   updated = published,
-  // [{ id, toc, eyebrow, heading, body: [paragraph text or HTML], band, faq: [{ q, a }] }]
+  // [{ id, toc, eyebrow, heading, body: [paragraph text or HTML], band, className, faq: [{ q, a }] }];
+  // className is an extra class on the <section>, for a section with styles of its own.
   sections,
   // { heading, items: [{ label, href }] }, a small list at the end of the last section.
   sources = null,
@@ -143,7 +144,7 @@ export function articlePage({
 ${sections
   .map(
     (section, i) => `
-      <section class="${readingLayout ? readingSectionClass(section.band) : `section${section.band ? ` ${section.band}` : ""}`}" id="${section.id}">
+      <section class="${readingLayout ? readingSectionClass(section.band) : `section${section.band ? ` ${section.band}` : ""}`}${section.className ? ` ${section.className}` : ""}" id="${section.id}">
         <div class="container">
           <div class="section-head sp-stacked-head">
             <p class="eyebrow">${section.eyebrow}</p>
