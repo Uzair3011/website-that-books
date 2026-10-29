@@ -153,6 +153,11 @@ export default serviceSalesPage({
       text: "What an AI receptionist costs in the UK, and how to tell whether it would pay for itself.",
     },
     {
+      href: "/resources/ai-receptionist-for-trades-teesside",
+      label: "AI receptionist for trades in Teesside",
+      text: "How an AI receptionist helps plumbers, electricians and builders in Teesside answer every call while on the job.",
+    },
+    {
       href: "/crm-booking-automation",
       label: "Booking and CRM automation",
       text: "Every enquiry in one place, live calendar booking and reminders, £199 setup.",

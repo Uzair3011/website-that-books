@@ -4,8 +4,9 @@
 // dates, a short table of contents, BlogPosting JSON-LD, related reading and a
 // call to action to the free audit. Each article passes all of its own copy.
 // Optional: a section can end in an FAQ (with matching FAQPage JSON-LD), a
-// small sources list can close the last section, and an article can drop the
-// related reading and name its own button.
+// small sources list and a box of related links can close the last section,
+// an article can drop the related reading and name its own button, and it can
+// set a body class for styles of its own.
 import { catalogItem } from "../assets/catalog.js";
 import {
   CTA,
@@ -89,10 +90,14 @@ export function articlePage({
   sources = null,
   // [{ href, label, text }]; empty for no "Read next".
   relatedItems = [],
+  // A paragraph of related links in a box (.rl-related) at the end of the last section.
+  relatedLinks = "",
   // { heading, body, button }; the button goes to the free audit.
   closing,
   // The reading layout's section spacing (src/reading.js).
   readingLayout = false,
+  // A class on <body> for styles that belong to this article only.
+  bodyClass = "",
 }) {
   const path = `/resources/${slug}`;
   // At most one section carries the FAQ; its questions are also the FAQPage JSON-LD.
@@ -133,7 +138,7 @@ ${sections
               <ul>${sources.items.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}</ul>
             </aside>`
               : ""
-          }</div>
+          }${relatedLinks && i === sections.length - 1 ? `<p class="rl-related">${relatedLinks}</p>` : ""}</div>
         </div>
       </section>`,
   )
@@ -148,6 +153,7 @@ ${finalCta({ heading: closing.heading, body: closing.body, primary: closing.butt
     title,
     description,
     ogType: "article",
+    ...(bodyClass && { bodyClass }),
     // Read by /resources to list the article.
     shortName,
     kind,

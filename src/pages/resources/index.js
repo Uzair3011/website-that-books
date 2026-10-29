@@ -7,6 +7,7 @@ import localSeoChecklist from "./local-seo-checklist.js";
 import rankInMaps from "./rank-in-google-maps-without-a-shop.js";
 import aiReceptionist from "./what-is-an-ai-receptionist.js";
 import aiReceptionistCost from "./ai-receptionist-cost-uk.js";
+import aiReceptionistTrades from "./ai-receptionist-for-trades-teesside.js";
 
 export const articles = [
   websiteCost,
@@ -16,4 +17,5 @@ export const articles = [
   rankInMaps,
   aiReceptionist,
   aiReceptionistCost,
+  aiReceptionistTrades,
 ];

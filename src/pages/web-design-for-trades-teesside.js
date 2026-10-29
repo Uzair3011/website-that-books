@@ -117,6 +117,11 @@ export default stackedPage({
           text: "Calls and chats answered while you are with a customer. £199 setup.",
         },
         {
+          href: "/resources/ai-receptionist-for-trades-teesside",
+          label: "AI receptionist for trades in Teesside",
+          text: "How an AI receptionist helps plumbers, electricians and builders in Teesside answer every call while on the job.",
+        },
+        {
           href: "/crm-booking-automation",
           label: "Quote follow-up",
           text: "Reminders and follow-ups so quotes do not go quiet. £199 setup.",
