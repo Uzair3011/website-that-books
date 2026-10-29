@@ -6,6 +6,31 @@
 import { SERVICE_VISUALS as V } from "../service-visuals.js";
 import { stackedPage } from "../stacked-page.js";
 
+// "Choosing one": the .x-dec, .x-spec and .x-path blocks in assets/styles.css.
+// Each problem: { problem, job, text }.
+const decisions = [
+  { problem: "You miss calls or website enquiries while you are busy or closed", job: "Answering calls and chats", text: "Answers, takes details and hands over to you." },
+  { problem: "People want to book a time, or no-shows cost you money", job: "Booking and reminders", text: "Offers free slots and reminds people the day before." },
+  { problem: "Quotes go out and then go quiet", job: "Quote follow-up", text: "A polite, agreed reminder after a set number of days." },
+  { problem: "Writing and admin eat into your evenings", job: "A general assistant, such as ChatGPT", text: "Helps you write and organise. It does not answer your customers." },
+];
+const decisionList = `<ul class="x-dec">${decisions
+  .map((item) => `<li><div class="x-if"><b>If</b>${item.problem}</div><div class="x-arrow" aria-hidden="true"></div><div class="x-then"><strong>${item.job}</strong><span>${item.text}</span></div></li>`)
+  .join("")}</ul>`;
+
+// From the simplest option to the most tailored: { name, text, bestFor, watch }.
+const options = [
+  { name: "Off-the-shelf tool", text: "A monthly subscription you set up yourself.", bestFor: "Simple needs, and owners with time to set it up", watch: "You write the answers and test it yourself" },
+  { name: "Done-for-you setup", text: "A provider builds, connects and tests it, then you pay for usage.", bestFor: "Owners who want it right without learning the tool", watch: "Check what happens when it does not know an answer" },
+  { name: "Custom-built agent", text: "Built around your own systems and process.", bestFor: "Unusual workflows, or several systems to connect", watch: "Higher cost and a longer build; only worth it when simpler options fall short" },
+];
+const optionScale = `<div class="x-spec">
+          <div class="x-ends" aria-hidden="true"><span>Simpler and cheaper</span><span>More tailored, more cost</span></div>
+          <div class="x-stops">${options
+            .map((item) => `<div class="x-stop"><strong>${item.name}</strong><p>${item.text}</p><dl><dt>Best for</dt><dd>${item.bestFor}</dd><dt>Watch out for</dt><dd>${item.watch}</dd></dl></div>`)
+            .join("")}</div>
+        </div>`;
+
 export default stackedPage({
   path: "/ai-agents-teesside",
   title: "AI Agents & AI Automation in Teesside | Veltra Media",
@@ -96,6 +121,18 @@ export default stackedPage({
         "This is a starting point, not legal advice. The Information Commissioner’s Office publishes guidance for small businesses.",
       ],
     },
+    {
+      eyebrow: "Choosing one",
+      heading: "Which AI agents are best for a small business?",
+      className: "x-sec",
+      body: [
+        "The best AI agent is the one that fixes the job you lose most work on. Find your problem on the left.",
+        decisionList,
+        "<h3>Off-the-shelf, done-for-you or custom?</h3>",
+        optionScale,
+        '<ol class="x-path"><li><i aria-hidden="true">1</i>Start with one job</li><li><i aria-hidden="true">2</i>Check it wins back work</li><li><i aria-hidden="true">3</i>Add the next</li></ol>',
+      ],
+    },
   ],
   faqs: [
     {
@@ -141,6 +178,10 @@ export default stackedPage({
     {
       q: "What is an AI voice agent?",
       a: '<p>An AI agent that answers phone calls and talks to the caller, instead of replying in a chat box. It should say it is an AI at the start, answer from approved information, take the caller’s details and hand over when needed. Our <a href="/ai-receptionist-middlesbrough">AI receptionist</a> can answer calls as well as website chat; the phone connections supported for your setup are confirmed in writing before work begins.</p>',
+    },
+    {
+      q: "When is a custom AI agent worth it?",
+      a: "<p>When your process is unusual, or the agent needs to work across several systems that off-the-shelf tools cannot connect to. For most local businesses, an off-the-shelf tool or a done-for-you setup does the job for far less, so start there.</p>",
     },
   ],
   relatedSections: [

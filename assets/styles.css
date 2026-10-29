@@ -7051,7 +7051,9 @@ svg.icon {
 
 /* ───────────────────────── Content blocks (x-) ───────────────────────── */
 /* Blocks written for one piece of content each: the comparison table and the
-   AI-or-person split on /resources/what-is-an-ai-receptionist. */
+   AI-or-person split on /resources/what-is-an-ai-receptionist, and the
+   if-then list, the off-the-shelf-to-custom scale and the three-step path on
+   /ai-agents-teesside. */
 .x-cmp{max-width:1040px;margin-top:28px;overflow-x:auto;border:1px solid #e2e6dc;border-radius:20px;background:#fff}
 .x-cmp table{width:100%;min-width:760px;border-collapse:collapse;font-size:15px;line-height:1.5}
 .x-cmp th,.x-cmp td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid #eef0e9}
@@ -7077,15 +7079,56 @@ svg.icon {
 .x-vs .x-vs-badge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:#c9ff4a;color:#071313;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;box-shadow:0 0 0 6px #f4f5ef}
 .x-pull{max-width:1040px;margin:32px 0 0;padding:4px 0 4px 24px;border-left:4px solid #c9ff4a;font-size:22px;line-height:1.5;color:#071313;font-weight:500}
 
+.x-dec{list-style:none;max-width:1040px;margin:28px 0 0;padding:0;border-top:1px solid #e2e6dc}
+.x-dec li{display:grid;grid-template-columns:1fr 48px 1fr;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid #e2e6dc}
+.x-dec .x-if{font-size:17px;line-height:1.55;color:#1d2826}
+.x-dec .x-if b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#56625f;margin-bottom:4px}
+.x-dec .x-arrow{width:40px;height:40px;border-radius:50%;justify-self:center;background:#071313 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h13M13 7l5 5-5 5' fill='none' stroke='%23c9ff4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/20px no-repeat}
+.x-dec .x-then strong{display:block;font-size:19px;color:#071313;margin-bottom:2px}
+.x-dec .x-then span{font-size:15px;color:#56625f;line-height:1.5}
+
+.x-spec{max-width:1040px;margin-top:8px}
+.x-spec .x-ends{display:flex;justify-content:space-between;margin:0 0 12px;font-size:13px;font-weight:600;color:#56625f}
+.x-spec .x-stops{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.x-spec .x-stops::before{content:"";position:absolute;left:0;right:0;top:9px;height:6px;border-radius:3px;background:linear-gradient(90deg,#c9ff4a,#83e7da 50%,#071313)}
+.x-spec .x-stop{position:relative;padding-top:44px}
+.x-spec .x-stop::before{content:"";position:absolute;top:0;left:0;width:24px;height:24px;border-radius:50%;background:#fff;border:5px solid #071313}
+.x-spec .x-stop strong{display:block;font-size:19px;color:#071313;margin-bottom:6px}
+.x-spec .x-stop p{font-size:15px;line-height:1.6;margin:0 0 10px;color:#1d2826}
+.x-spec dl{margin:0;font-size:14px;line-height:1.55}
+.x-spec dt{font-weight:600;color:#071313;margin-top:8px}
+.x-spec dd{margin:0;color:#56625f}
+
+.x-path{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:36px 0 0;padding:0;font-size:15px;font-weight:600;color:#071313}
+.x-path li{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:#fff;border:1px solid #e2e6dc}
+.x-path li + li{margin-left:26px;position:relative}
+.x-path li + li::before{content:"→";position:absolute;left:-22px;color:#56625f}
+.x-path i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:50%;background:#c9ff4a;align-items:center;justify-content:center;font-size:12px}
+
 @media (max-width:767px){
 .x-vs{grid-template-columns:1fr}
 .x-vs .x-vs-badge{position:relative;left:auto;top:auto;transform:none;margin:-26px auto;z-index:1}
+.x-dec li{grid-template-columns:1fr;gap:10px}
+.x-dec .x-arrow{transform:rotate(90deg);justify-self:start}
+.x-spec .x-stops{grid-template-columns:1fr}
+.x-spec .x-ends,.x-spec .x-stops::before{display:none}
 }
+
+/* These blocks sit in the long-reading copy column, whose list and text rules
+   (.prose ul, the stacked copy's ol indent and ink text) are more specific
+   than the blocks' own; restate the blocks' values. The path's arrow is
+   decoration, so it gets empty alternative text where browsers support it. */
+.sp-local-copy ul.x-dec{display:block;padding-left:0;list-style:none}
+.container > .sp-stacked-head + .sp-local-copy ol.x-path{padding-left:0}
+.container > .sp-stacked-head + .sp-local-copy .x-spec .x-stop p{color:#1d2826}
+.x-path li + li::before{content:"→" / ""}
 
 /* A section built around these blocks (section className "x-sec"): its own
    paragraphs in #1d2826 at the 1040px measure, and 120px between its content
    and its neighbours' (80px at 640px and below). An article's sections have
-   48px padding (32px on a phone), so this one takes 72px (48px). */
+   48px padding (32px on a phone), so this one takes 72px (48px); a stacked
+   page's have 96px (56px), so it takes 24px. */
 .x-sec .container > .sp-stacked-head + .sp-local-copy > p:not([class]){max-width:1040px;font-size:18px;color:#1d2826}
+.section.x-sec{padding-block:24px}
 .article-hero ~ .section.x-sec{padding-block:72px}
 @media (max-width:640px){.article-hero ~ .section.x-sec{padding-block:48px}}

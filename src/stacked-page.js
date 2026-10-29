@@ -48,7 +48,8 @@ export function stackedPage({
   lede,
   // { image, caption }: see heroFigure().
   hero,
-  // [{ id, eyebrow, heading, body: [paragraph text or HTML], band }]
+  // [{ id, eyebrow, heading, body: [paragraph text or HTML], band, className }];
+  // className is an extra class on the <section>, for a section with styles of its own.
   sections,
   faqs,
   faqHeading = "Questions we get asked",
@@ -88,7 +89,7 @@ ${sections
         </div>
       </section>`
       : `
-      <section class="section${section.band ? ` ${section.band}` : ""}"${section.id ? ` id="${section.id}"` : ""}>
+      <section class="section${section.band ? ` ${section.band}` : ""}${section.className ? ` ${section.className}` : ""}"${section.id ? ` id="${section.id}"` : ""}>
         <div class="container">
           <div class="section-head sp-stacked-head">
             <p class="eyebrow">${section.eyebrow}</p>
