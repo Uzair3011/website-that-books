@@ -218,6 +218,11 @@ ${related(
       text: "The reception layer, available on its own in GBP.",
     },
     {
+      href: "/resources/ai-receptionist-for-clinics",
+      label: "AI receptionist for clinics",
+      text: "How an AI receptionist helps dental, beauty and aesthetics clinics answer every enquiry without handling health details.",
+    },
+    {
       href: "/crm-booking-automation",
       label: "CRM, booking + follow-up",
       text: "Live calendar booking, confirmations and reminders.",

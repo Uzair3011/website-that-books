@@ -182,6 +182,7 @@ export default articlePage({
     { href: "/ai-receptionist-middlesbrough", label: "Our AI receptionist and website chat", text: `Approved answers on calls and chat, with handover. ${price("ai-receptionist-website-chat")} setup.` },
     { href: "/ai-agents-teesside", label: "AI agents explained", text: "Answering, booking and follow-up, and where AI should stop." },
     { href: "/crm-booking-automation", label: "Booking and follow-up automation", text: "Reminders, quote follow-up and every enquiry in one place." },
+    { href: "/resources/ai-receptionist-for-clinics", label: "AI receptionist for clinics", text: "How an AI receptionist helps dental, beauty and aesthetics clinics answer every enquiry without handling health details." },
   ],
   closing: {
     heading: "Not sure an AI receptionist would pay its way?",

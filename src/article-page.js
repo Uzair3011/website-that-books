@@ -53,6 +53,28 @@ export const steps = (items) => `<ol class="article-steps">${items.map((item) =>
 /** One column of ticked points in the reading layout (src/reading.js). */
 export const ticks = (items) => `<ul class="rl-ticks">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 
+// Cards and a note box for the guides styled under body.page-guide-cards
+// (assets/styles.css): the trades and clinics AI receptionist guides.
+
+/** A line icon for a card or note marker, drawn in currentColor. */
+export const lineIcon = (paths) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg>`;
+
+/** The ✕ marker on limit cards and the "i" marker on the note box. */
+export const GUIDE_ICONS = {
+  cross: lineIcon('<path d="M7 7l10 10M17 7 7 17"/>'),
+  info: lineIcon('<path d="M12 11v6M12 7.5v.01"/>'),
+};
+
+/** Cards in a grid (2 × 2, or three across for "clinics"), each led by an
+ * icon marker: items are { icon (svg), title, text }. */
+export const iconCards = (kind, items) => `<ul class="ta-cards ta-${kind}">${items
+  .map((item) => `<li><span class="ta-mark">${item.icon}</span><h3>${item.title}</h3><p>${item.text}</p></li>`)
+  .join("")}</ul>`;
+
+/** A short note in a box, led by an "i" marker. */
+export const noteBox = (text) => `<div class="ta-note"><span class="ta-note-mark">${GUIDE_ICONS.info}</span><p>${text}</p></div>`;
+
 /** A panel led by a large figure (e.g. a price that the copy below also states). */
 export const panel = ({ figure, body }) => `<div class="article-panel">
           <p class="sp-aside-price" aria-hidden="true"><b>${figure}</b></p>

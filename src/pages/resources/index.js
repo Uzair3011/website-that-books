@@ -8,6 +8,7 @@ import rankInMaps from "./rank-in-google-maps-without-a-shop.js";
 import aiReceptionist from "./what-is-an-ai-receptionist.js";
 import aiReceptionistCost from "./ai-receptionist-cost-uk.js";
 import aiReceptionistTrades from "./ai-receptionist-for-trades-teesside.js";
+import aiReceptionistClinics from "./ai-receptionist-for-clinics.js";
 
 export const articles = [
   websiteCost,
@@ -18,4 +19,5 @@ export const articles = [
   aiReceptionist,
   aiReceptionistCost,
   aiReceptionistTrades,
+  aiReceptionistClinics,
 ];

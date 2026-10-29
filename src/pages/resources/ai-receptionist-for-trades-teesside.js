@@ -7,27 +7,31 @@
 // results, and every claim about our setup must match
 // /ai-receptionist-middlesbrough. Our own price is read from assets/catalog.js.
 // The trade and limit cards, the note box and the spacing are styled under
-// body.page-ai-trades in assets/styles.css, so no other page changes.
-import { articlePage, calculation, panel, price, steps, ticks } from "../../article-page.js";
+// body.page-guide-cards in assets/styles.css, shared with the clinics guide.
+import {
+  GUIDE_ICONS,
+  articlePage,
+  calculation,
+  iconCards,
+  lineIcon,
+  noteBox,
+  panel,
+  price,
+  steps,
+  ticks,
+} from "../../article-page.js";
 
 const setup = price("ai-receptionist-website-chat");
 
-// Line icons for the card markers, drawn in currentColor.
-const svg = (paths) =>
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg>`;
 const ICONS = {
-  wrench: svg('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'),
-  bolt: svg('<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>'),
-  hardHat: svg('<path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M14 6a6 6 0 0 1 6 6v3"/><path d="M4 15v-3a6 6 0 0 1 6-6"/><rect x="2" y="15" width="20" height="4" rx="1"/>'),
-  key: svg('<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.8-9.8M16 7l3 3M19 4l2 2"/>'),
-  cross: svg('<path d="M7 7l10 10M17 7 7 17"/>'),
-  info: svg('<path d="M12 11v6M12 7.5v.01"/>'),
+  wrench: lineIcon('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'),
+  bolt: lineIcon('<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>'),
+  hardHat: lineIcon('<path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M14 6a6 6 0 0 1 6 6v3"/><path d="M4 15v-3a6 6 0 0 1 6-6"/><rect x="2" y="15" width="20" height="4" rx="1"/>'),
+  key: lineIcon('<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.8-9.8M16 7l3 3M19 4l2 2"/>'),
+  ...GUIDE_ICONS,
 };
 
-/** Cards in a 2 × 2 grid, each led by an icon marker. */
-const cards = (kind, items) => `<ul class="ta-cards ta-${kind}">${items
-  .map((item) => `<li><span class="ta-mark">${ICONS[item.icon]}</span><h3>${item.title}</h3><p>${item.text}</p></li>`)
-  .join("")}</ul>`;
+const cards = (kind, items) => iconCards(kind, items.map((item) => ({ ...item, icon: ICONS[item.icon] })));
 
 export default articlePage({
   slug: "ai-receptionist-for-trades-teesside",
@@ -101,7 +105,7 @@ export default articlePage({
           { icon: "hardHat", title: "Builders, roofers and joiners", text: "Most enquiries are for quotes, so the job details need taking properly." },
           { icon: "key", title: "Locksmiths, drainage and callout trades", text: "The first business to answer usually gets the job." },
         ]),
-        `<div class="ta-note"><span class="ta-note-mark">${ICONS.info}</span><p>It is less useful if you already answer almost every call, or if most of your work comes from a few regular customers who text you directly.</p></div>`,
+        noteBox("It is less useful if you already answer almost every call, or if most of your work comes from a few regular customers who text you directly."),
       ],
     },
     {
@@ -187,5 +191,5 @@ export default articlePage({
     button: "See what it could handle",
   },
   readingLayout: true,
-  bodyClass: "page-ai-trades",
+  bodyClass: "page-guide-cards",
 });
