@@ -6949,8 +6949,8 @@ svg.icon {
 .rl-cards li::before{content:"";display:block;width:24px;height:24px;margin-bottom:14px;border-radius:50%;background:var(--accent-lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23071313' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
 .rl-related{max-width:1040px;margin:32px 0 0;padding:20px 24px;border:1px solid #e2e6dc;border-radius:16px;background:var(--surface-card-light);font-size:16px;line-height:1.7;color:#1d2826}
 .rl-on-white .rl-related{background:var(--bg-primary);border-color:transparent}
-.rl-related a,.rl-prose a{color:var(--text-primary);text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(7,19,19,.35);text-underline-offset:3px}
-.rl-related a:hover,.rl-prose a:hover,.rl-related a:focus-visible,.rl-prose a:focus-visible{text-decoration-color:var(--text-primary);text-decoration-thickness:2px}
+.rl-related a,.rl-prose a,.t-close a{color:var(--text-primary);text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(7,19,19,.35);text-underline-offset:3px}
+.rl-related a:hover,.rl-prose a:hover,.t-close a:hover,.rl-related a:focus-visible,.rl-prose a:focus-visible,.t-close a:focus-visible{text-decoration-color:var(--text-primary);text-decoration-thickness:2px}
 @media (max-width:1023px){.rl-cards{grid-template-columns:1fr}}
 @media (max-width:640px){.rl-section{padding:64px 0}.rl-h2{font-size:30px}.rl-prose p{font-size:17px}}
 /* Copy that follows a list or a link box keeps that block's own top margin
@@ -7132,3 +7132,61 @@ svg.icon {
 .section.x-sec{padding-block:24px}
 .article-hero ~ .section.x-sec{padding-block:72px}
 @media (max-width:640px){.article-hero ~ .section.x-sec{padding-block:48px}}
+
+/* ───────────────────────── Town AI sections (t-) ─────────────────────────
+   The "AI receptionist in [town]" section of three town pages, each with its
+   own design: the Redcar seasons, the Hartlepool phone and checklist, the
+   Stockton question, answers and strip. Their links take the reading-layout
+   link style above. */
+.t-close{max-width:1040px;margin:28px 0 0;font-size:17px;line-height:1.7;color:#1d2826}
+.t-season{max-width:1040px;margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.t-season > div{border-radius:22px;padding:30px 32px 32px}
+.t-summer{background:linear-gradient(160deg,#f0ffc8 0%,#fffbe8 100%);border:1px solid #e6efc9}
+.t-winter{background:linear-gradient(160deg,#e3f3f1 0%,#eef1f6 100%);border:1px solid #d7e5e5}
+.t-season .t-head{display:flex;align-items:center;gap:14px;margin:0 0 18px}
+.t-season .t-ico{flex:none;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#071313}
+.t-season h3{margin:0;font-size:21px;line-height:1.25;color:#071313}
+.t-season .t-sub{display:block;font-size:13px;font-weight:600;color:#56625f;letter-spacing:.04em}
+.t-season ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.t-season li{position:relative;padding-left:28px;font-size:16px;line-height:1.55;color:#1d2826}
+.t-season li::before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:3px;background:#071313}
+.t-chat{max-width:1040px;margin-top:28px;display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
+.t-phone{background:#071313;border-radius:28px;padding:22px 20px 24px}
+.t-phone .t-ex{display:flex;justify-content:space-between;align-items:center;margin:0 4px 16px;color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.t-phone .t-ex b{color:#c9ff4a;font-weight:600}
+.t-msg{max-width:82%;margin:0 0 10px;padding:12px 16px;border-radius:18px;font-size:15px;line-height:1.5}
+.t-msg.t-in{background:#1d2b2a;color:#fff;border-bottom-left-radius:6px}
+.t-msg.t-out{margin-left:auto;background:#c9ff4a;color:#071313;border-bottom-right-radius:6px}
+.t-msg small{display:block;margin-bottom:3px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.t-needs{border-top:3px solid #071313;padding-top:20px}
+.t-needs h3{margin:0 0 6px;font-size:20px;color:#071313}
+.t-needs p{font-size:15px;line-height:1.6;color:#56625f;margin:0 0 18px}
+.t-needs ol{margin:0;padding:0;list-style:none;counter-reset:tn;display:grid;gap:16px}
+.t-needs li{counter-increment:tn;display:grid;grid-template-columns:34px 1fr;gap:12px;font-size:16px;line-height:1.5;color:#1d2826}
+.t-needs li::before{content:counter(tn);width:30px;height:30px;border-radius:50%;border:2px solid #071313;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#071313}
+.t-spot{max-width:1040px;margin-top:28px;border-radius:24px;overflow:hidden;border:1px solid #e2e6dc;background:#fff}
+.t-spot .t-q{padding:30px 34px;background:#071313;color:#fff}
+.t-spot .t-q small{display:block;margin-bottom:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#c9ff4a;font-weight:700}
+.t-spot .t-q span{font-size:28px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
+.t-spot .t-a{display:grid;grid-template-columns:1fr 1fr}
+.t-spot .t-a > div{padding:24px 34px 26px;display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start}
+.t-spot .t-a > div + div{border-left:1px solid #e2e6dc}
+.t-mk{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.t-mk.t-y{background:#c9ff4a}.t-mk.t-n{background:#071313}
+.t-spot .t-a b{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#56625f;margin-bottom:4px}
+.t-spot .t-a p{margin:0;font-size:16px;line-height:1.55;color:#071313}
+.t-strip{list-style:none;max-width:1040px;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr)}
+.t-strip li{padding:4px 28px 4px 0}
+.t-strip li + li{padding-left:28px;border-left:1px solid #d9ddd2}
+.t-strip strong{display:block;font-size:18px;color:#071313;margin-bottom:8px}
+.t-strip span{font-size:15px;line-height:1.6;color:#56625f}
+@media (max-width:767px){
+.t-season,.t-chat{grid-template-columns:1fr}
+.t-spot .t-q{padding:24px 22px}.t-spot .t-q span{font-size:22px}
+.t-spot .t-a{grid-template-columns:1fr}
+.t-spot .t-a > div{padding:20px 22px}
+.t-spot .t-a > div + div{border-left:0;border-top:1px solid #e2e6dc}
+.t-strip{grid-template-columns:1fr;gap:20px}
+.t-strip li,.t-strip li + li{padding:0;border-left:0}
+.t-msg{max-width:90%}
+}

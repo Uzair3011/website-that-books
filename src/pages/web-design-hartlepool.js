@@ -2,6 +2,19 @@
 // "Verify before relying on it". Veltra Media has no premises here.
 import { areaPage } from "../area-page.js";
 
+// "AI receptionist in Hartlepool": the .t-chat phone and checklist in assets/styles.css.
+const chat = `<div class="t-chat">
+          <figure class="t-phone" aria-label="Illustrative example of an AI receptionist conversation" style="margin:0">
+            <div class="t-ex"><span>Incoming call</span><b>Illustrative example</b></div>
+            <p class="t-msg t-in"><small>Caller</small>Do you cover Seaton Carew? I’m in TS25.</p>
+            <p class="t-msg t-out"><small>AI assistant</small>Hi, I’m the AI assistant. Yes, Seaton Carew and TS25 are covered. What do you need doing?</p>
+            <p class="t-msg t-in"><small>Caller</small>My car won’t start. I’m at home.</p>
+            <p class="t-msg t-out"><small>AI assistant</small>Thanks. I’ll take your name and number and pass this straight on, so you get a call back.</p>
+          </figure>
+          <div class="t-needs"><h3>What it needs from you</h3><p>Three things, written once and changed whenever you like:</p>
+            <ol><li>The parts of town and postcodes you cover, such as TS24, TS25 and TS26</li><li>Your prices, or how you price a job</li><li>When a call should come straight to you</li></ol></div>
+        </div>`;
+
 export default areaPage({
   path: "/web-design-hartlepool",
   title: "Web Design Hartlepool | Websites & Local SEO | Veltra Media",
@@ -55,9 +68,18 @@ export default areaPage({
       ],
     },
     {
+      eyebrow: "AI receptionist in Hartlepool",
+      heading: "An AI receptionist for Hartlepool businesses that work on their own",
+      band: "band-light",
+      body: [
+        "Many Hartlepool businesses are one person: a mobile mechanic, a cleaner, a childminder, a tradesperson working the estates. When you are working, nobody answers. An AI receptionist picks up, answers the questions you hear every week, and sends you the details to call back.",
+        chat,
+        `<p class="t-close">For more on how it works for trades, read <a href="/resources/ai-receptionist-for-trades-teesside">AI receptionist for trades in Teesside</a>.</p>`,
+      ],
+    },
+    {
       eyebrow: "How we work",
       heading: "Working with a Middlesbrough studio from Hartlepool.",
-      band: "band-light",
       body: [
         "We have no office in Hartlepool and do not claim one. Veltra Media is based in Middlesbrough. Hartlepool projects run online: a first call, a written scope at a fixed price, drafts for you to check, then launch.",
         `Prices are published, not hidden behind a call: <a href="/pricing">our website and SEO prices</a>. For a second opinion on the site you already have, <a href="/free-website-audit">get a free audit of your website</a>.`,

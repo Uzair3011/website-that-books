@@ -1,6 +1,21 @@
 // Local facts on this page are listed in docs/seo/owner-todo.md under
 // "Verify before relying on it". Veltra Media has no premises here.
+import { price } from "../article-page.js";
 import { areaPage } from "../area-page.js";
+
+// "AI receptionist in Stockton-on-Tees": the .t-spot question and .t-strip in assets/styles.css.
+const coverage = `<div class="t-spot">
+          <div class="t-q"><small>The question it hears most</small><span>“Do you come out to Ingleby Barwick?”</span></div>
+          <div class="t-a">
+            <div><span class="t-mk t-y"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#071313" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></span><div><b>If it is on your list</b><p>It says yes, then takes the job details.</p></div></div>
+            <div><span class="t-mk t-n"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><div><b>If it is not</b><p>It says so plainly, and still takes their details for you to decide.</p></div></div>
+          </div>
+        </div>`;
+const uses = `<ul class="t-strip">
+          <li><strong>Trades</strong><span>Takes the job, the street and how urgent it is, so you can plan your day across the borough.</span></li>
+          <li><strong>Salons and clinics</strong><span>Offers free appointment times where it is connected to your calendar.</span></li>
+          <li><strong>Billingham contractors</strong><span>Takes a site manager’s quote request: the work, the site and the deadline.</span></li>
+        </ul>`;
 
 export default areaPage({
   path: "/web-design-stockton-on-tees",
@@ -64,8 +79,19 @@ export default areaPage({
       ],
     },
     {
+      eyebrow: "AI receptionist in Stockton-on-Tees",
+      heading: "An AI receptionist that knows which parts of the borough you cover",
+      body: [
+        "In the Borough of Stockton-on-Tees, customers name their own patch: Thornaby, Ingleby Barwick, Norton, Yarm or Billingham. The first thing many callers ask is whether you come out to them. An AI receptionist answers that correctly every time, from the list of areas you give it.",
+        coverage,
+        uses,
+        `<p class="t-close">Setup is ${price("ai-receptionist-website-chat")}, with usage passed on at cost. Salons and clinics can read <a href="/resources/ai-receptionist-for-clinics">AI receptionist for dental, beauty and aesthetics clinics</a>.</p>`,
+      ],
+    },
+    {
       eyebrow: "How we work with you",
       heading: "Based in Middlesbrough, working with Stockton businesses online.",
+      band: "band-light",
       body: [
         "Veltra Media has no office in Stockton or Billingham. We are based in Middlesbrough and work across the Tees Valley. Most projects run online: a video call, a written proposal with a fixed price, drafts to check, then launch.",
         `Every package has a price before we talk: <a href="/pricing">see the full price list</a>. If you already have a site and are unsure what is holding it back, <a href="/free-website-audit">ask for a free website audit</a> first.`,

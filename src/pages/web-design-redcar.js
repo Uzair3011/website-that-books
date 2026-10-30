@@ -1,6 +1,15 @@
 // Local facts on this page are listed in docs/seo/owner-todo.md under
 // "Verify before relying on it". Veltra Media has no premises here.
+import { price } from "../article-page.js";
 import { areaPage } from "../area-page.js";
+
+// "AI receptionist in Redcar": the .t-season panels in assets/styles.css.
+const seasons = `<div class="t-season">
+          <div class="t-summer"><div class="t-head"><span class="t-ico"><svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#c9ff4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><div><span class="t-sub">May to September</span><h3>In the summer rush</h3></div></div>
+            <ul><li>Answers “are you open tonight?” and “where can I park?” while you are busy with customers</li><li>Takes table, room and booking requests in the evening</li><li>Explains how to find you to visitors who have never been to Redcar</li></ul></div>
+          <div class="t-winter"><div class="t-head"><span class="t-ico"><svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#c9ff4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></span><div><span class="t-sub">October to April</span><h3>In the quieter months</h3></div></div>
+            <ul><li>Gives your shorter winter hours, the same as on your Google Business Profile</li><li>Takes enquiries on the days you are closed</li><li>Keeps trades work coming in from Coatham, Dormanstown, Kirkleatham and Marske</li></ul></div>
+        </div>`;
 
 export default areaPage({
   path: "/web-design-redcar",
@@ -55,9 +64,18 @@ export default areaPage({
       ],
     },
     {
+      eyebrow: "AI receptionist in Redcar",
+      heading: "An AI receptionist for Redcar’s busy summers and quiet winters",
+      band: "band-light",
+      body: [
+        "Redcar’s phones do not ring evenly through the year. In summer, visitors call about tables, rooms and opening hours while you are serving. In winter, the question is often whether you are open at all. An AI receptionist answers both from the information you approve, and you update it when the season turns.",
+        seasons,
+        `<p class="t-close">Setup is ${price("ai-receptionist-website-chat")}, with the AI provider’s usage passed on at cost. To compare it with other options, see <a href="/resources/ai-receptionist-cost-uk">what an AI receptionist costs in the UK</a>.</p>`,
+      ],
+    },
+    {
       eyebrow: "How we work",
       heading: "We work from Middlesbrough, not the seafront, and we say so.",
-      band: "band-light",
       body: [
         "Veltra Media has no office in Redcar. We are based in Middlesbrough, work across Redcar and Cleveland and the rest of the Tees Valley, and do most of the work online, so a café owner can check a draft between the lunch rush and closing time.",
         `Every package is priced up front: <a href="/pricing">see what each package costs</a>. Already have a site and not sure it is pulling its weight? <a href="/free-website-audit">Request a free review of your current website</a>.`,
@@ -66,6 +84,7 @@ export default areaPage({
     {
       eyebrow: "Search and Maps",
       heading: "Local SEO in Redcar",
+      band: "band-light",
       body: [
         "Local SEO is the work that decides whether your business appears when someone nearby searches Google or Google Maps for what you do. Most Redcar trades have no shop, so the Google Business Profile should be set up as a service-area business that lists the places you actually cover, such as Redcar, Coatham, Marske and Saltburn. Your website should name the same places and show the same business name and phone number as the profile.",
         `Reviews matter too. Google ranks local results on relevance, distance and prominence, and real reviews, asked for consistently after each job, help with prominence. <a href="/google-business-profile">Google Business Profile setup and optimisation</a> covers the profile itself, and <a href="/local-seo-middlesbrough">our local SEO service</a> adds service and area pages, local schema and consistent business details for a one-off £99.`,
