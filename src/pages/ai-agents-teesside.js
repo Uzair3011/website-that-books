@@ -19,10 +19,11 @@ const decisionList = `<ul class="x-dec">${decisions
   .join("")}</ul>`;
 
 // From the simplest option to the most tailored: { name, text, bestFor, watch }.
+// .x-nw keeps a hyphenated word on one line.
 const options = [
-  { name: "Off-the-shelf tool", text: "A monthly subscription you set up yourself.", bestFor: "Simple needs, and owners with time to set it up", watch: "You write the answers and test it yourself" },
-  { name: "Done-for-you setup", text: "A provider builds, connects and tests it, then you pay for usage.", bestFor: "Owners who want it right without learning the tool", watch: "Check what happens when it does not know an answer" },
-  { name: "Custom-built agent", text: "Built around your own systems and process.", bestFor: "Unusual workflows, or several systems to connect", watch: "Higher cost and a longer build; only worth it when simpler options fall short" },
+  { name: '<span class="x-nw">Off-the-shelf</span> tool', text: "A monthly subscription you set up yourself.", bestFor: "Simple needs, and owners with time to set it up", watch: "You write the answers and test it yourself" },
+  { name: '<span class="x-nw">Done-for-you</span> setup', text: "A provider builds, connects and tests it, then you pay for usage.", bestFor: "Owners who want it right without learning the tool", watch: "Check what happens when it does not know an answer" },
+  { name: '<span class="x-nw">Custom-built</span> agent', text: "Built around your own systems and process.", bestFor: "Unusual workflows, or several systems to connect", watch: "Higher cost and a longer build; only worth it when simpler options fall short" },
 ];
 const optionScale = `<div class="x-spec">
           <div class="x-ends" aria-hidden="true"><span>Simpler and cheaper</span><span>More tailored, more cost</span></div>
@@ -126,9 +127,9 @@ export default stackedPage({
       heading: "Which AI agents are best for a small business?",
       className: "x-sec",
       body: [
-        "The best AI agent is the one that fixes the job you lose most work on. Find your problem on the left.",
+        "The best AI agent is the one that fixes the job you lose most work on. Start with the problem that sounds most like yours.",
         decisionList,
-        "<h3>Off-the-shelf, done-for-you or custom?</h3>",
+        '<h3><span class="x-nw">Off-the-shelf</span>, <span class="x-nw">done-for-you</span> or custom?</h3>',
         optionScale,
         '<ol class="x-path"><li><i aria-hidden="true">1</i>Start with one job</li><li><i aria-hidden="true">2</i>Check it wins back work</li><li><i aria-hidden="true">3</i>Add the next</li></ol>',
       ],

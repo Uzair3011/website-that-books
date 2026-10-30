@@ -7103,6 +7103,7 @@ svg.icon {
 .x-path li{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:#fff;border:1px solid #e2e6dc}
 .x-path li + li{margin-left:26px;position:relative}
 .x-path li + li::before{content:"→";position:absolute;left:-22px;color:#56625f}
+.x-nw{white-space:nowrap}
 .x-path i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:50%;background:#c9ff4a;align-items:center;justify-content:center;font-size:12px}
 
 @media (max-width:767px){
@@ -7112,6 +7113,9 @@ svg.icon {
 .x-dec .x-arrow{transform:rotate(90deg);justify-self:start}
 .x-spec .x-stops{grid-template-columns:1fr}
 .x-spec .x-ends,.x-spec .x-stops::before{display:none}
+.x-path{flex-direction:column;align-items:flex-start}
+.x-path li + li{margin-left:0}
+.x-path li + li::before{display:none}
 }
 
 /* These blocks sit in the long-reading copy column, whose list and text rules
@@ -7179,7 +7183,7 @@ svg.icon {
 .t-strip li{padding:4px 28px 4px 0}
 .t-strip li + li{padding-left:28px;border-left:1px solid #d9ddd2}
 .t-strip strong{display:block;font-size:18px;color:#071313;margin-bottom:8px}
-.t-strip span{font-size:15px;line-height:1.6;color:#56625f}
+.t-strip span{display:block;font-size:15px;line-height:1.6;color:#56625f}
 @media (max-width:767px){
 .t-season,.t-chat{grid-template-columns:1fr}
 .t-spot .t-q{padding:24px 22px}.t-spot .t-q span{font-size:22px}
