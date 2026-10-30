@@ -5,7 +5,7 @@ import { articlePage, checklist, price, table } from "../../article-page.js";
 
 export default articlePage({
   slug: "do-i-need-a-website-if-i-have-facebook",
-  title: "Do I Need a Website If I Have a Facebook Page?",
+  title: "Do I Need a Website If I Have a Facebook Page | Veltra Media",
   description:
     "Is a Facebook page enough for a small business? What a page does well, where it falls short, when it can wait and the smallest website worth having.",
   shortName: "Do I need a website if I have Facebook?",

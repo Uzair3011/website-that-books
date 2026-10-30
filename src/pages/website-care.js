@@ -3,7 +3,7 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/website-care",
-  title: "Website Maintenance Middlesbrough | Veltra Media",
+  title: "Website Maintenance Middlesbrough & Teesside | Veltra Media",
   description:
     "Website maintenance in Middlesbrough and Teesside: hosting, updates, backups, monitoring and practical support from £49 a month, with no long tie-in.",
   breadcrumbName: "Website care",

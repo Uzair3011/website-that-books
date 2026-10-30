@@ -2,7 +2,7 @@ import { servicePage } from "../service-page.js";
 
 export default servicePage({
   path: "/web-design-teesside",
-  title: "Web Design Teesside & Tees Valley | Veltra Media",
+  title: "Web Design Teesside & Tees Valley Businesses | Veltra Media",
   description:
     "Web design for businesses across Teesside and the Tees Valley, including Stockton-on-Tees, Redcar, Billingham and Hartlepool. Websites from £99, yours to own.",
   breadcrumbName: "Web design Teesside",

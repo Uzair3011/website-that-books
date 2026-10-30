@@ -50,7 +50,7 @@ ${finalCta({
 
 export default {
   path: "/contact",
-  title: "Contact Veltra Media | Middlesbrough & Teesside",
+  title: "Contact Us in Middlesbrough & Teesside | Veltra Media",
   description:
     "Contact Veltra Media in Middlesbrough by WhatsApp, email or the enquiry form about web design, local SEO, landing pages, AI reception or booking automation.",
   jsonLd: [

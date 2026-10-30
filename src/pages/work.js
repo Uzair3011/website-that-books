@@ -65,7 +65,7 @@ ${finalCta({
 
 export default {
   path: "/work",
-  title: "Web Design Portfolio, Teesside | Veltra Media",
+  title: "Web Design Portfolio, Teesside: Example Sites | Veltra Media",
   description:
     "Veltra Media's work: a live med-spa booking system, the Estate Resolve site with CRM dashboard and email automation, plus clearly labelled concept designs.",
   jsonLd: [

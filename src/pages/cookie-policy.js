@@ -39,13 +39,14 @@ const body = `      <section class="hero">
 
             <h2>More about your information</h2>
             <p>How we handle information you send through our forms is explained in the <a href="/privacy">privacy policy</a>. Questions about this page can be sent to <a href="mailto:${SITE.email}">${SITE.email}</a> or sent on WhatsApp to <a href="${SITE.whatsapp}" target="_blank" rel="noopener">${SITE.phoneLabel}</a>.</p>
+            <p>If you have a question about cookies, use our <a href="/contact">contact page</a>. Our <a href="/terms">terms and conditions</a> explain how we work with clients.</p>
           </div>
         </div>
       </section>`;
 
 export default {
   path: "/cookie-policy",
-  title: "Cookie Policy | Veltra Media",
+  title: "Cookie Policy: What We Store in Your Browser | Veltra Media",
   description:
     "What the Veltra Media website stores in your browser: no cookies of its own, your privacy choice, and analytics only with your permission.",
   jsonLd: [

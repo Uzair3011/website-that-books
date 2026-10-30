@@ -190,7 +190,7 @@ ${finalCta()}`;
 
 export default {
   path: "/how-it-works",
-  title: "Our Website Design Process | Veltra Media",
+  title: "Website Design Process: First Call to Launch | Veltra Media",
   description:
     "Our website design process: a written scope and fixed price first, a private preview during the build, launch with analytics connected, and typical timelines.",
   jsonLd: [

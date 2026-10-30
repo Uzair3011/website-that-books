@@ -60,7 +60,7 @@ const body = `      <section class="hero">
 
 export default {
   path: "/terms",
-  title: "Terms and Conditions | Veltra Media",
+  title: "Terms and Conditions for Our Services | Veltra Media",
   description:
     "Veltra Media's terms and conditions: GBP pricing, scope and revisions, ownership, third-party costs, the med-spa growth system and the launch guarantee.",
   jsonLd: [

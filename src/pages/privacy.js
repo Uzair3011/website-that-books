@@ -54,7 +54,7 @@ ${
             <p>UK data protection law requires a lawful basis for each use of personal information. Ours are:</p>
             <ul>
               <li><strong>Replying to an enquiry, a chat, an AI call or a booking</strong> &mdash; taking steps you have asked for before a possible contract, and our legitimate interest in responding to people who contact us.</li>
-              <li><strong>Delivering work for clients</strong> &mdash; performing our contract with you.</li>
+              <li><strong>Delivering work for clients</strong> &mdash; performing <a href="/terms">our contract with you</a>.</li>
               <li><strong>Analytics</strong> &mdash; your consent, given in the privacy banner. You can withdraw it at any time with the Cookie preferences link, and it does not affect anything before you withdrew it.</li>
               <li><strong>Security and access logs</strong> &mdash; our legitimate interest in keeping the website safe and working.</li>
               <li><strong>Invoices and business records</strong> &mdash; our legal obligations, such as tax record-keeping.</li>
@@ -82,7 +82,7 @@ ${
 
 export default {
   path: "/privacy",
-  title: "Privacy Policy | Veltra Media",
+  title: "Privacy Policy: How We Use Your Information | Veltra Media",
   description:
     "How Veltra Media handles information shared through this website: enquiry forms, booking, the chat assistant and the AI voice assistant, and your rights.",
   jsonLd: [
